@@ -10,6 +10,7 @@ namespace CwispyStudios.TankMania.Tank
     [Header("Firing")]
     [SerializeField] private Projectile projectilePrefab = null;
     [SerializeField, Range(1f, 25f)] private float firingForce = 15f;
+    [SerializeField, Range(0.5f, 3f)] private float intervalBetweenShots = 1.5f;
 
     [Header("Gun Component")]
     [SerializeField] private GameObject gunCannon = null;
