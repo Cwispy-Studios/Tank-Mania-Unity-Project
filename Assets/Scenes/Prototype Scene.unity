@@ -951,11 +951,6 @@ PrefabInstance:
       propertyPath: ammoFillImage
       value: 
       objectReference: {fileID: 20929396}
-    - target: {fileID: 8633598789196614146, guid: d23cfcb9d00038f44831cb8873b5af50,
-        type: 3}
-      propertyPath: verticalRotationLimitFromBaseValue
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 9116554923332464521, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
       propertyPath: m_RootOrder

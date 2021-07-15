@@ -12,6 +12,7 @@ namespace CwispyStudios.TankMania.Tank
     [SerializeField] private Projectile projectilePrefab = null;
     [SerializeField, Range(1f, 25f)] private float firingForce = 15f;
     [SerializeField, Range(0.5f, 3f)] private float intervalBetweenFiring = 1.5f;
+    [SerializeField, Range(0.1f, 0.5f)] private float timeToQueueFiring = 0.2f;
 
     [Header("Gun Components")]
     [SerializeField] private GameObject gunCannon = null;
@@ -27,6 +28,7 @@ namespace CwispyStudios.TankMania.Tank
     private CameraController playerCamera;
 
     private float fireCountdown = 0f;
+    private bool firingIsQueued = false;
 
     private float targetTurretRotation;
 
@@ -45,7 +47,7 @@ namespace CwispyStudios.TankMania.Tank
 
     private void Update()
     {
-      UpdateCooldown();
+      UpdateFiringCooldown();
 
       if (transform.rotation.x != targetTurretRotation)
       {
@@ -68,13 +70,15 @@ namespace CwispyStudios.TankMania.Tank
       gunCannon.transform.Rotate(deltaRotation, 0f, 0f, Space.Self);
     }
 
-    private void UpdateCooldown()
+    private void UpdateFiringCooldown()
     {
       if (fireCountdown > 0f)
       {
         fireCountdown -= Time.deltaTime;
 
         ammoFillImage.fillAmount = 1f - (fireCountdown / intervalBetweenFiring);
+
+        if (firingIsQueued && fireCountdown <= 0f) FireProjectile();
       }
 
       else fireCountdown = 0f;
@@ -90,6 +94,13 @@ namespace CwispyStudios.TankMania.Tank
         ammoFillImage.fillAmount = 0f;
 
         fireCountdown += intervalBetweenFiring;
+
+        firingIsQueued = false;
+      }
+
+      else if (fireCountdown <= timeToQueueFiring)
+      {
+        firingIsQueued = true;
       }
     }
 

@@ -606,9 +606,11 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7051859430511138134, guid: e12447defeff40d47a09319a02099a26,
     type: 3}
   firingForce: 20
-  intervalBetweenShots: 1.5
+  intervalBetweenFiring: 1.5
+  timeToQueueFiring: 0.25
   gunCannon: {fileID: 9153037211866373910}
   fireZone: {fileID: 8633598789061193743}
+  ammoFillImage: {fileID: 0}
   turretRotationSpeed: 120
 --- !u!1 &8633598789061193728
 GameObject:
@@ -738,7 +740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseHeight: 1.7
   baseDistance: 3.5
-  verticalRotationLimitFromBaseValue: 25
+  verticalRotationLimitFromBaseValue: 30
   horizontalSensitivity: 0.01
   verticalSensitivity: 0.01
   rayDistance: 200
