@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CwispyStudios.TankMania.Tank
 {
@@ -10,17 +11,23 @@ namespace CwispyStudios.TankMania.Tank
     [Header("Firing")]
     [SerializeField] private Projectile projectilePrefab = null;
     [SerializeField, Range(1f, 25f)] private float firingForce = 15f;
-    [SerializeField, Range(0.5f, 3f)] private float intervalBetweenShots = 1.5f;
+    [SerializeField, Range(0.5f, 3f)] private float intervalBetweenFiring = 1.5f;
 
-    [Header("Gun Component")]
+    [Header("Gun Components")]
     [SerializeField] private GameObject gunCannon = null;
     [SerializeField] private Transform fireZone = null;
+
+    [Header("Reticle Component")]
+    [SerializeField] private Image ammoFillImage = null;
 
     [Header("Turret Rotation")]
     [SerializeField, Range(100f, 360f)] private float turretRotationSpeed = 180f;
 
     private ProjectilePooler projectilePooler;
     private CameraController playerCamera;
+
+    private float fireCountdown = 0f;
+
     private float targetTurretRotation;
 
     private void Awake()
@@ -32,10 +39,14 @@ namespace CwispyStudios.TankMania.Tank
 
       Cursor.lockState = CursorLockMode.Locked;
       Cursor.visible = false;
+
+      fireCountdown = 0f;
     }
 
     private void Update()
     {
+      UpdateCooldown();
+
       if (transform.rotation.x != targetTurretRotation)
       {
         RotateTurret();
@@ -57,6 +68,31 @@ namespace CwispyStudios.TankMania.Tank
       gunCannon.transform.Rotate(deltaRotation, 0f, 0f, Space.Self);
     }
 
+    private void UpdateCooldown()
+    {
+      if (fireCountdown > 0f)
+      {
+        fireCountdown -= Time.deltaTime;
+
+        ammoFillImage.fillAmount = 1f - (fireCountdown / intervalBetweenFiring);
+      }
+
+      else fireCountdown = 0f;
+    }
+
+    private void FireProjectile()
+    {
+      if (fireCountdown <= 0f)
+      {
+        Projectile projectile = projectilePooler.EnableProjectile(projectilePrefab, fireZone.position, gunCannon.transform.rotation);
+        projectile.PhysicsController.AddForce(gunCannon.transform.forward * firingForce, ForceMode.VelocityChange);
+
+        ammoFillImage.fillAmount = 0f;
+
+        fireCountdown += intervalBetweenFiring;
+      }
+    }
+
     public void ReceiveSignedRotationFromCameraMovement( float horizontalRotation )
     {
       targetTurretRotation = horizontalRotation;
@@ -67,8 +103,7 @@ namespace CwispyStudios.TankMania.Tank
 
     private void OnMainFire()
     {
-      Projectile projectile = projectilePooler.EnableProjectile(projectilePrefab, fireZone.position, gunCannon.transform.rotation);
-      projectile.PhysicsController.AddForce(gunCannon.transform.forward * firingForce, ForceMode.VelocityChange);
+      FireProjectile();
     }
   }
 }

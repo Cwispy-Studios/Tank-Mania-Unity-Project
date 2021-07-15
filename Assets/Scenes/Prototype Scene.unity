@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 20929397}
   - component: {fileID: 20929396}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Ammo Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -611,7 +611,7 @@ GameObject:
   - component: {fileID: 834821686}
   - component: {fileID: 834821685}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Ammo Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -946,6 +946,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Tank
       objectReference: {fileID: 0}
+    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: ammoFillImage
+      value: 
+      objectReference: {fileID: 20929396}
     - target: {fileID: 8633598789196614146, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
       propertyPath: verticalRotationLimitFromBaseValue
