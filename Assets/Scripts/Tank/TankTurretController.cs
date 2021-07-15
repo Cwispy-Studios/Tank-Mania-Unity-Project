@@ -22,7 +22,6 @@ namespace CwispyStudios.TankMania.Tank
     private ProjectilePooler projectilePooler;
     private CameraController playerCamera;
     private float targetTurretRotation;
-    private float targetGunRotation;
 
     private void Awake()
     {
@@ -42,10 +41,7 @@ namespace CwispyStudios.TankMania.Tank
         RotateTurret();
       }
 
-      if (gunCannon.transform.localEulerAngles.x != targetGunRotation)
-      {
-        RotateGun();
-      }
+      RotateGun();
     }
 
     private void RotateTurret()
@@ -55,15 +51,15 @@ namespace CwispyStudios.TankMania.Tank
 
     private void RotateGun()
     {
-      float deltaRotation = targetGunRotation - gunCannon.transform.localEulerAngles.x - playerCamera.BaseRotation;
+      float targetGunRotation = Quaternion.LookRotation(playerCamera.GetCrosshairPosition() - gunCannon.transform.position).eulerAngles.x;
+      float deltaRotation = targetGunRotation - gunCannon.transform.localEulerAngles.x;
 
       gunCannon.transform.Rotate(deltaRotation, 0f, 0f, Space.Self);
     }
 
-    public void ReceiveSignedRotation( float horizontalRotation, float verticalRotation )
+    public void ReceiveSignedRotationFromCameraMovement( float horizontalRotation )
     {
       targetTurretRotation = horizontalRotation;
-      targetGunRotation = verticalRotation;
     }
 
     ///////////////////////////
