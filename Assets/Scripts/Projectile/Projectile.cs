@@ -1,4 +1,5 @@
 using UnityEngine;
+using Visuals;
 
 namespace CwispyStudios.TankMania.Projectile
 {
@@ -31,6 +32,8 @@ namespace CwispyStudios.TankMania.Projectile
       PhysicsController.isKinematic = true;
 
       meshRenderer.enabled = false;
+      
+      BulletEvents.BulletHit(this);
     }
 
     private void Deactivate()

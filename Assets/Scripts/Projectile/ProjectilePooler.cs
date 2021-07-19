@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using Visuals;
 
 namespace CwispyStudios.TankMania.Projectile
 {
@@ -73,6 +74,8 @@ namespace CwispyStudios.TankMania.Projectile
       projectile.transform.position = spawnLocation;
       projectile.transform.rotation = rotation;
       projectile.gameObject.SetActive(true);
+
+      BulletEvents.BulletFired(projectile);
 
       return projectile;
     }
