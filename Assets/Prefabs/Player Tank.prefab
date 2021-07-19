@@ -607,7 +607,7 @@ MonoBehaviour:
     type: 3}
   firingForce: 20
   intervalBetweenFiring: 1.5
-  timeToQueueFiring: 0.25
+  timeToQueueFiring: 0.2
   gunCannon: {fileID: 9153037211866373910}
   fireZone: {fileID: 8633598789061193743}
   ammoFillImage: {fileID: 0}

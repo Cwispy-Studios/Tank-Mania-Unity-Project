@@ -260,3 +260,9 @@ MonoBehaviour:
   - {fileID: 3651753578369343386}
   - {fileID: 5750911907912147592}
   - {fileID: 5997098576493943191}
+  segmentsMass: 1
+  springConstant: 0.3
+  dampingConstant: 0.1
+  initialForce: 1
+  threshold: 0.1
+  timeStep: 0.05
