@@ -1,7 +1,8 @@
 using System;
+using System.ComponentModel;
 using UnityEngine;
 
-namespace Visuals
+namespace CwispyStudios.TankMania.Visuals
 {
   public class Tree : MonoBehaviour
   {
@@ -19,20 +20,19 @@ namespace Visuals
         this.joint = joint;
       }
 
-      public void UpdateSegment(float nextForce, float previousVelocity, float mass, float springConstant,
-        float dampingConstant, float threshold, float timeStep)
+      public void UpdateSegment(float newForce, float mass, float springConstant,
+        float dampingConstant, float timeStep)
       {
         //if (velocity < threshold && angle < threshold)
           //angle = 0;
         
-        velocity += (nextForce - force) / mass;
-        velocity -= previousVelocity;
+        velocity += (newForce - force) / mass;
         angle += velocity * timeStep;
         force = angle * springConstant + velocity * dampingConstant;
 
         //print(velocity);
 
-        joint.rotation = Quaternion.Euler(angle + joint.transform.parent.eulerAngles.x, 0, 0);
+        joint.localRotation = Quaternion.Euler(angle + joint.transform.parent.localEulerAngles.x, 0, 0);
       }
     }
 
@@ -40,11 +40,12 @@ namespace Visuals
     [SerializeField] private float segmentsMass = 1;
     [SerializeField] private float springConstant = 2;
     [SerializeField] private float dampingConstant = .8f;
+
+    [SerializeField] private float explosionConstant = 1000;
     //[SerializeField] private float centeringForce = 1;
 
     [SerializeField] private float initialForce = 1;
-
-    [SerializeField] private float threshold = 1;
+    
     [SerializeField] private float timeStep = 0.001f;
 
     private TreeSegment[] segments;
@@ -64,23 +65,34 @@ namespace Visuals
 
     public void UpdateTree()
     {
-      segments[segments.Length - 1].UpdateSegment(initialForce, segments[segments.Length - 2].velocity,
-        segmentsMass, springConstant, dampingConstant, threshold, timeStep);
+      segments[segments.Length - 1].UpdateSegment(initialForce, segmentsMass, springConstant, dampingConstant, timeStep);
 
-      for (int i = segments.Length - 1; i < 1; i--)
+      for (int i = segments.Length - 2; i > 0; i--)
       {
-        segments[i].UpdateSegment(segments[i+1].force + initialForce, segments[i - 1].velocity, segmentsMass,
-          springConstant, dampingConstant, threshold, timeStep);
+        segments[i].UpdateSegment(initialForce, segmentsMass,
+          springConstant, dampingConstant, timeStep);
       }
 
-      segments[0].UpdateSegment(segments[1].force + initialForce, 0, segmentsMass, springConstant, dampingConstant, threshold, timeStep);
+      segments[0].UpdateSegment(initialForce, segmentsMass, springConstant, dampingConstant, timeStep);
 
       initialForce = 0;
     }
 
-    private float GetExplosionForce()
+    public void AddForce(Vector3 position)
     {
-      return 1f;
+      Vector3 direction = position - transform.position;
+      transform.rotation = Quaternion.Euler(0, GetAngle(direction), 0);
+      initialForce = (1 / Mathf.Pow(direction.magnitude, 2)) * explosionConstant;
+    }
+
+    private float GetAngle(Vector3 direction)
+    {
+      float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+      if (direction.x < 0)
+        angle += 180;
+
+      return angle;
     }
   }
 }

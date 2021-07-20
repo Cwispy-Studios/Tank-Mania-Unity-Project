@@ -234,7 +234,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8804017667764935027}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -260,9 +260,9 @@ MonoBehaviour:
   - {fileID: 3651753578369343386}
   - {fileID: 5750911907912147592}
   - {fileID: 5997098576493943191}
-  segmentsMass: 1
-  springConstant: 0.3
+  segmentsMass: 8
+  springConstant: 0.2
   dampingConstant: 0.1
-  initialForce: 1
+  initialForce: 0
   threshold: 0.1
   timeStep: 0.05

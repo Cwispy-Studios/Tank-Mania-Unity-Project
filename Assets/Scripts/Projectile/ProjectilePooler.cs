@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-
+using CwispyStudios.TankMania.Visuals;
 using UnityEngine;
-using Visuals;
 
 namespace CwispyStudios.TankMania.Projectile
 {

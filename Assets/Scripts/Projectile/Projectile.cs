@@ -1,5 +1,5 @@
 using UnityEngine;
-using Visuals;
+using CwispyStudios.TankMania.Visuals;
 
 namespace CwispyStudios.TankMania.Projectile
 {

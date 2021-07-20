@@ -2,22 +2,22 @@ using System;
 using CwispyStudios.TankMania.Projectile;
 using UnityEngine;
 
-namespace Visuals
+namespace CwispyStudios.TankMania.Visuals
 {
     public class BulletEvents : MonoBehaviour
     {
-        public static event Action<Projectile> onBulletFired;
+        public static event Action<Projectile.Projectile> OnBulletFired;
 
-        public static void BulletFired(Projectile projectile)
+        public static void BulletFired(Projectile.Projectile projectile)
         {
-            onBulletFired?.Invoke(projectile);
+            OnBulletFired?.Invoke(projectile);
         }
         
-        public static event Action<Projectile> onBulletHit;
+        public static event Action<Projectile.Projectile> OnBulletHit;
 
-        public static void BulletHit(Projectile projectile)
+        public static void BulletHit(Projectile.Projectile projectile)
         {
-            onBulletHit?.Invoke(projectile);
+            OnBulletHit?.Invoke(projectile);
         }
     }
 }

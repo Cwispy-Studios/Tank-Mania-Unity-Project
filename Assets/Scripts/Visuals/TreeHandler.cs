@@ -2,30 +2,33 @@ using System;
 using System.Collections.Generic;
 using CwispyStudios.TankMania.Projectile;
 using UnityEngine;
+using Tree = UnityEngine.Tree;
 
-namespace Visuals
+namespace CwispyStudios.TankMania.Visuals
 {
   public class TreeHandler : MonoBehaviour
   {
-    private List<Projectile> bulletTransforms = new List<Projectile>();
+    private List<Projectile.Projectile> bulletTransforms = new List<Projectile.Projectile>();
     private Tree[] trees;
 
     private void Awake()
     {
-      BulletEvents.onBulletFired += AddBullet;
-      BulletEvents.onBulletHit += RemoveBullet;
+      BulletEvents.OnBulletFired += AddBullet;
+      BulletEvents.OnBulletHit += RemoveBullet;
 
       InitialiseTrees();
     }
 
-    private void AddBullet(Projectile bullet)
+    private void AddBullet(Projectile.Projectile bullet)
     {
       bulletTransforms.Add(bullet);
+      ApplyForceTrees(bullet);
     }
 
-    private void RemoveBullet(Projectile bullet)
+    private void RemoveBullet(Projectile.Projectile bullet)
     {
       bulletTransforms.Remove(bullet);
+      ApplyForceTrees(bullet);
     }
 
     private void InitialiseTrees()
@@ -38,6 +41,14 @@ namespace Visuals
       foreach (var tree in trees)
       {
         tree.UpdateTree();
+      }
+    }
+
+    private void ApplyForceTrees(Projectile.Projectile bullet)
+    {
+      foreach (var tree in trees)
+      {
+        tree.AddForce(bullet.transform.position);
       }
     }
   }
