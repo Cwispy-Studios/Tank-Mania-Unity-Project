@@ -87,10 +87,12 @@ namespace CwispyStudios.TankMania.Visuals
 
     private float GetAngle(Vector3 direction)
     {
-      float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
+      float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
 
       if (direction.x < 0)
-        angle += 180;
+        angle += 360;
+
+      angle += 180;
 
       return angle;
     }
