@@ -8,6 +8,9 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Editor" t="Include">
+          <e p="MapGeneratorEditor.cs" t="Include" />
+        </e>
         <e p="Graphics" t="Include">
           <e p="JMO Assets" t="Include">
             <e p="Cartoon FX" t="Include">
@@ -40,6 +43,9 @@
               </e>
             </e>
           </e>
+          <e p="Materials" t="Include">
+            <e p="Shockwave.shader" t="Include" />
+          </e>
         </e>
         <e p="Plugins" t="Include">
           <e p="GitHub" t="Include">
@@ -63,11 +69,20 @@
             <e p="TankMovementController.cs" t="Include" />
             <e p="TankTurretController.cs" t="Include" />
           </e>
+          <e p="Terrain" t="Include">
+            <e p="MapDisplay.cs" t="Include" />
+            <e p="MapGenerator.cs" t="Include" />
+            <e p="Noise.cs" t="Include" />
+            <e p="TerrainGeneration.cs" t="Include" />
+            <e p="TextureGenerator.cs" t="Include" />
+          </e>
           <e p="Utils" t="Include">
             <e p="MathHelper.cs" t="Include" />
           </e>
           <e p="Visuals" t="Include">
             <e p="BulletEvents.cs" t="Include" />
+            <e p="CameraShaker.cs" t="Include" />
+            <e p="ShockWaveHandler.cs" t="Include" />
             <e p="Tree.cs" t="Include" />
             <e p="TreeHandler.cs" t="Include" />
           </e>
