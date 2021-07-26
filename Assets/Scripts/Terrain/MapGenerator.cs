@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Terrain {
     public class MapGenerator : MonoBehaviour {
-        public enum DrawMode { NoiseMap, ColourMap}
+        public enum DrawMode { NoiseMap, ColourMap, Mesh}
         public DrawMode drawMode;
-        
+
         public int mapWidth;
         public int mapHeight;
         public float noiseScale;
@@ -19,6 +19,9 @@ namespace CwispyStudios.TankMania.Terrain {
 
         public int seed;
         public Vector2 offset;
+
+        public float meshHeightMultiplier;
+        public AnimationCurve meshHeighCurve;
         
         public bool autoUpdate;
 
@@ -49,6 +52,10 @@ namespace CwispyStudios.TankMania.Terrain {
                 display.DrawTexture(TextureGenerator.TextureFromHeightMap(noiseMap));
             } else if (drawMode == DrawMode.ColourMap) {
                 display.DrawTexture(TextureGenerator.TextureFromColourMap(colourMap, mapWidth, mapHeight));
+            }
+            else if (drawMode == DrawMode.Mesh) {
+                display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, meshHeightMultiplier, meshHeighCurve),
+                    TextureGenerator.TextureFromColourMap(colourMap, mapWidth, mapHeight));
             }
         }
         
