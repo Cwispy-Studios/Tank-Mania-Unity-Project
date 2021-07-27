@@ -608,6 +608,7 @@ MonoBehaviour:
   firingForce: 20
   intervalBetweenFiring: 1.5
   timeToQueueFiring: 0.2
+  firingVfx: {fileID: 2051231272, guid: cb4917dcdcb9ee848bf1a0474e66b7f3, type: 3}
   gunCannon: {fileID: 9153037211866373910}
   fireZone: {fileID: 8633598789061193743}
   ammoFillImage: {fileID: 0}
