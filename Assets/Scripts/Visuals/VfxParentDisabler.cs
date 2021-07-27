@@ -31,6 +31,7 @@ namespace CwispyStudios.TankMania.Visuals
     {
       numberOfVfxDisabled = 0;
 
+      // Reactivates all particle systems of this type since they get disabled when it completes
       foreach (CFX_AutoDestructShuriken vfx in autoDestructVfx) vfx.gameObject.SetActive(true);
     }
 
