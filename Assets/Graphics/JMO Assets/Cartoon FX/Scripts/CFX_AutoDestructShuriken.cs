@@ -12,8 +12,7 @@ using UnityEngine;
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
 {
-	private ParticleSystem particleSystem;
-	private GameObject parentProjectile;
+	private ParticleSystem ps;
 
 	// If true, deactivate the object instead of destroying it
 	public bool OnlyDeactivate;
@@ -22,7 +21,7 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 
   private void Awake()
   {
-		particleSystem = GetComponent<ParticleSystem>();
+		ps = GetComponent<ParticleSystem>();
 	}
 
   private void OnEnable()
@@ -36,7 +35,7 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 		{
 			yield return new WaitForSeconds(0.5f);
 
-			if (!particleSystem.IsAlive(true))
+			if (!ps.IsAlive(true))
 			{
 				if (OnlyDeactivate)
 				{

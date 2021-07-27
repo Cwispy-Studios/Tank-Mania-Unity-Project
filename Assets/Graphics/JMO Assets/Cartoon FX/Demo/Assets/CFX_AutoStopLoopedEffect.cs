@@ -1,7 +1,6 @@
+using System;
+
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 // Cartoon FX  - (c) 2015 Jean Moreno
 //
@@ -10,9 +9,19 @@ using System.Text.RegularExpressions;
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoStopLoopedEffect : MonoBehaviour
 {
-	public float effectDuration = 2.5f;
+	[SerializeField, Range(0f, 120f)] private float effectDuration = 2.5f;
+
+	private ParticleSystem ps;
+
 	private float d;
-	
+
+	public Action OnStop;
+
+	private void Awake()
+	{
+		ps = GetComponent<ParticleSystem>();
+	}
+
 	void OnEnable()
 	{
 		d = effectDuration;
@@ -25,9 +34,11 @@ public class CFX_AutoStopLoopedEffect : MonoBehaviour
 			d -= Time.deltaTime;
 			if(d <= 0)
 			{
-				this.GetComponent<ParticleSystem>().Stop(true);
-				
-				CFX_Demo_Translate translation = this.gameObject.GetComponent<CFX_Demo_Translate>();
+				ps.Stop(true);
+
+				OnStop?.Invoke();
+
+				CFX_Demo_Translate translation = GetComponent<CFX_Demo_Translate>();
 				if(translation != null)
 				{
 					translation.enabled = false;
