@@ -1,13 +1,16 @@
 using UnityEngine;
-using CwispyStudios.TankMania.Visuals;
 
 namespace CwispyStudios.TankMania.Projectile
 {
+  using Visuals;
+
   public class Projectile : MonoBehaviour
   {
     [SerializeField] private CFX_AutoDestructShuriken explosionVfx = null;
 
     private MeshRenderer meshRenderer;
+    private bool disableOnEnabled = true;
+
     [HideInInspector] public Rigidbody PhysicsController;
 
     private void Awake()
@@ -15,7 +18,15 @@ namespace CwispyStudios.TankMania.Projectile
       meshRenderer = GetComponent<MeshRenderer>();
       PhysicsController = GetComponent<Rigidbody>();
 
+      disableOnEnabled = true;
+
       explosionVfx.OnDeactivate += Deactivate;
+    }
+
+    private void OnEnable()
+    {
+      if (disableOnEnabled) disableOnEnabled = false;
+      else BulletEvents.BulletFired(this);
     }
 
     private void Update()
@@ -25,12 +36,15 @@ namespace CwispyStudios.TankMania.Projectile
 
     private void OnCollisionEnter( Collision collision )
     {
+      // Moves the explosion vfx to the point of contact and enables it
       explosionVfx.transform.position = collision.GetContact(0).point;
       explosionVfx.gameObject.SetActive(true);
 
+      // Deactivates physics of the projectile
       PhysicsController.collisionDetectionMode = CollisionDetectionMode.Discrete;
       PhysicsController.isKinematic = true;
 
+      // Turns the projectile invisible
       meshRenderer.enabled = false;
       
       BulletEvents.BulletHit(this);
@@ -38,12 +52,15 @@ namespace CwispyStudios.TankMania.Projectile
 
     private void Deactivate()
     {
+      // Reenables physics
       PhysicsController.isKinematic = false;
       PhysicsController.collisionDetectionMode = CollisionDetectionMode.Continuous;
       PhysicsController.velocity = Vector3.zero;
 
+      // Turns the projectile visible
       meshRenderer.enabled = true;
 
+      // Return to object pool
       gameObject.SetActive(false);
     }
   }
