@@ -9,8 +9,10 @@ namespace CwispyStudios.TankMania.Terrain
     {
         public const float maxViewDst = 450;
         public Transform viewer;
+        public Material mapMaterial;
 
         public static Vector2 viewerPosition;
+        private static MapGenerator mapGenerator;
         private int chunkSize;
         private int chunksVisibleInViewDst;
 
@@ -19,6 +21,7 @@ namespace CwispyStudios.TankMania.Terrain
 
         private void Start()
         {
+            mapGenerator = FindObjectOfType<MapGenerator>();
             chunkSize = MapGenerator.mapChunkSize - 1;
             chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / chunkSize);
         }
@@ -54,7 +57,7 @@ namespace CwispyStudios.TankMania.Terrain
                     }
                     else
                     {
-                        terrainChunkDictonary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, transform));
+                        terrainChunkDictonary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, transform, mapMaterial));
                     }
                 }
             }
@@ -66,17 +69,37 @@ namespace CwispyStudios.TankMania.Terrain
             private Vector2 position;
             private Bounds bounds;
 
-            public TerrainChunk(Vector2 coord, int size, Transform parent)
+            private MapData mapData;
+            
+            private MeshRenderer meshRenderer;
+            private MeshFilter meshFilter;
+
+            public TerrainChunk(Vector2 coord, int size, Transform parent, Material material)
             {
                 position = coord * size;
                 bounds = new Bounds(position, Vector2.one * size);
                 Vector3 positionV3 = new Vector3(position.x, 0, position.y);
+
+                meshObject = new GameObject("Terrain Chunk");
+                meshRenderer = meshObject.AddComponent<MeshRenderer>();
+                meshFilter = meshObject.AddComponent<MeshFilter>();
+                meshRenderer.material = material;
                 
-                meshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
                 meshObject.transform.position = positionV3;
-                meshObject.transform.localScale = Vector3.one * size / 10f;
                 meshObject.transform.parent = parent;
                 SetVisible(false);
+                
+                mapGenerator.RequestMapData(OnMapDataReceived);
+            }
+
+            void OnMapDataReceived(MapData mapData)
+            {
+                mapGenerator.RequestMeshData(mapData, OnMeshDataReceived);
+            }
+
+            void OnMeshDataReceived(MeshData meshData)
+            {
+                meshFilter.mesh = meshData.CreateMesh();
             }
 
             public void UpdateTerrainChunk()
