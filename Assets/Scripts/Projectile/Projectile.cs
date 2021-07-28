@@ -9,6 +9,7 @@ namespace CwispyStudios.TankMania.Projectile
     [SerializeField] private CFX_AutoDestructShuriken explosionVfx = null;
 
     private MeshRenderer meshRenderer;
+    private bool disableOnEnabled = true;
 
     [HideInInspector] public Rigidbody PhysicsController;
 
@@ -17,12 +18,15 @@ namespace CwispyStudios.TankMania.Projectile
       meshRenderer = GetComponent<MeshRenderer>();
       PhysicsController = GetComponent<Rigidbody>();
 
+      disableOnEnabled = true;
+
       explosionVfx.OnDeactivate += Deactivate;
     }
 
     private void OnEnable()
     {
-      BulletEvents.BulletFired(this);
+      if (disableOnEnabled) disableOnEnabled = false;
+      else BulletEvents.BulletFired(this);
     }
 
     private void Update()
