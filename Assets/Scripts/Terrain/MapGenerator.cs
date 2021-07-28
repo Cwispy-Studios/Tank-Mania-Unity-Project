@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CwispyStudios.TankMania.Terrain {
-    public class MapGenerator : MonoBehaviour {
+namespace CwispyStudios.TankMania.Terrain 
+{
+    public class MapGenerator : MonoBehaviour
+    {
         public enum DrawMode { NoiseMap, ColourMap, Mesh}
         public DrawMode drawMode;
 
-        private const int mapChunkSize = 241;
+        public const int mapChunkSize = 241;
         [Range(0,6)]
         public int levelOfDetail; 
         public float noiseScale;
@@ -34,13 +36,10 @@ namespace CwispyStudios.TankMania.Terrain {
 
             Color[] colourMap = new Color[mapChunkSize * mapChunkSize];
             for (int y = 0; y < mapChunkSize; y++) {
-                for (int x = 0; x < mapChunkSize; x++)
-                {
+                for (int x = 0; x < mapChunkSize; x++) {
                     float currentHeight = noiseMap[x, y];
-                    for (int i = 0; i < regions.Length; i++)
-                    {
-                        if (currentHeight <= regions[i].height)
-                        {
+                    for (int i = 0; i < regions.Length; i++) {
+                        if (currentHeight <= regions[i].height) {
                             colourMap[y * mapChunkSize + x] = regions[i].colour;
                             break;
                         }
@@ -61,7 +60,8 @@ namespace CwispyStudios.TankMania.Terrain {
         }
         
         [System.Serializable]
-        public struct TerrainType {
+        public struct TerrainType 
+        {
             public string name;
             public float height;
             public Color colour;

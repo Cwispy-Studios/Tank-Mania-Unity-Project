@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CwispyStudios.TankMania.Terrain  {
-    public static class TextureGenerator {
+namespace CwispyStudios.TankMania.Terrain 
+{
+    public static class TextureGenerator 
+    {
     
-        public static Texture2D TextureFromColourMap(Color[] colourMap, int width, int height) { 
+        public static Texture2D TextureFromColourMap(Color[] colourMap, int width, int height) 
+        { 
             Texture2D texture = new Texture2D(width, height);
             texture.filterMode = FilterMode.Point;
             texture.wrapMode = TextureWrapMode.Clamp;
@@ -14,7 +17,8 @@ namespace CwispyStudios.TankMania.Terrain  {
             return texture;
         }
 
-        public static Texture2D TextureFromHeightMap(float[,] heightMap) {
+        public static Texture2D TextureFromHeightMap(float[,] heightMap) 
+        {
             int width = heightMap.GetLength(0);
             int height = heightMap.GetLength(1);
 
