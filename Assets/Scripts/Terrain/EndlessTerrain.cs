@@ -7,8 +7,9 @@ namespace CwispyStudios.TankMania.Terrain
 {
     public class EndlessTerrain : MonoBehaviour
     {
+        private const float scale = 1f;
+        
         private const float viewerMoveThresholdForChunkUpdate = 25f;
-
         private const float sqrViewerMoveThresholdForChunkUpdate =
             viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
         
@@ -25,7 +26,7 @@ namespace CwispyStudios.TankMania.Terrain
         private int chunksVisibleInViewDst;
 
         private Dictionary<Vector2, TerrainChunk> terrainChunkDictonary = new Dictionary<Vector2, TerrainChunk>();
-        private List<TerrainChunk> terrainChunksVisibleLastUpdate = new List<TerrainChunk>();
+        private static List<TerrainChunk> terrainChunksVisibleLastUpdate = new List<TerrainChunk>();
 
         private void Start()
         {
@@ -40,7 +41,7 @@ namespace CwispyStudios.TankMania.Terrain
 
         private void Update()
         {
-            viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
+            viewerPosition = new Vector2(viewer.position.x, viewer.position.z) / scale;
 
             if ((viewerPositionOld - viewerPosition).sqrMagnitude > sqrViewerMoveThresholdForChunkUpdate)
             {
@@ -64,16 +65,10 @@ namespace CwispyStudios.TankMania.Terrain
                 for (int xOffset = -chunksVisibleInViewDst; xOffset < chunksVisibleInViewDst; xOffset++) {
                     Vector2 viewedChunkCoord = new Vector2(currentChunkCoordX + xOffset, currentChunkCoordY + yOffset);
 
-                    if (terrainChunkDictonary.ContainsKey(viewedChunkCoord))
-                    {
+                    if (terrainChunkDictonary.ContainsKey(viewedChunkCoord)) {
                         terrainChunkDictonary[viewedChunkCoord].UpdateTerrainChunk();
-                        if (terrainChunkDictonary[viewedChunkCoord].IsVisible())
-                        {
-                            terrainChunksVisibleLastUpdate.Add(terrainChunkDictonary[viewedChunkCoord]);
-                        }
                     }
-                    else
-                    {
+                    else {
                         terrainChunkDictonary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, detailLevels, transform, mapMaterial));
                     }
                 }
@@ -109,8 +104,9 @@ namespace CwispyStudios.TankMania.Terrain
                 meshFilter = meshObject.AddComponent<MeshFilter>();
                 meshRenderer.material = material;
                 
-                meshObject.transform.position = positionV3;
+                meshObject.transform.position = positionV3 * scale;
                 meshObject.transform.parent = parent;
+                meshObject.transform.localScale = Vector3.one *scale;
                 SetVisible(false);
 
                 lodMeshes = new LODMesh[detailLevels.Length];
@@ -134,8 +130,7 @@ namespace CwispyStudios.TankMania.Terrain
 
             public void UpdateTerrainChunk()
             {
-                if (mapDataReceived)
-                {
+                if (mapDataReceived) {
                     float viewerDstFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(viewerPosition));
                     bool visible = viewerDstFromNearestEdge <= maxViewDst;
 
@@ -146,25 +141,23 @@ namespace CwispyStudios.TankMania.Terrain
                             if (viewerDstFromNearestEdge > detailLevels[i].visibleDstThreshold) {
                                 lodIndex = i + 1;
                             }
-                            else
-                            {
+                            else {
                                 break;
                             }
                         }
 
-                        if (lodIndex != previousLODIndex)
-                        {
+                        if (lodIndex != previousLODIndex) {
                             LODMesh lodMesh = lodMeshes[lodIndex];
-                            if (lodMesh.hasMesh)
-                            {
+                            if (lodMesh.hasMesh) {
                                 previousLODIndex = lodIndex;
                                 meshFilter.mesh = lodMesh.mesh;
                             }
-                            else if (!lodMesh.hasRequestedMesh)
-                            {
+                            else if (!lodMesh.hasRequestedMesh) {
                                 lodMesh.RequestMesh(mapData);
                             }
                         }
+
+                        terrainChunksVisibleLastUpdate.Add(this);
                     }
                 
                     SetVisible(visible); 
