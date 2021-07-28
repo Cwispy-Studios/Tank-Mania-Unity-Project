@@ -3,8 +3,10 @@ using UnityEngine.UI;
 
 namespace CwispyStudios.TankMania.Tank
 {
-  using Projectile;
   using Camera;
+  using Poolers;
+  using Projectile;
+  using Visuals;
 
   public class TankTurretController : MonoBehaviour
   {
@@ -13,6 +15,7 @@ namespace CwispyStudios.TankMania.Tank
     [SerializeField, Range(1f, 25f)] private float firingForce = 15f;
     [SerializeField, Range(0.5f, 3f)] private float intervalBetweenFiring = 1.5f;
     [SerializeField, Range(0.1f, 0.5f)] private float timeToQueueFiring = 0.2f;
+    [SerializeField] private VfxParentDisabler firingVfx = null;
 
     [Header("Gun Components")]
     [SerializeField] private GameObject gunCannon = null;
@@ -25,6 +28,7 @@ namespace CwispyStudios.TankMania.Tank
     [SerializeField, Range(100f, 360f)] private float turretRotationSpeed = 180f;
 
     private ProjectilePooler projectilePooler;
+    private VfxPooler vfxPooler;
     private CameraController playerCamera;
 
     private float fireCountdown = 0f;
@@ -35,6 +39,7 @@ namespace CwispyStudios.TankMania.Tank
     private void Awake()
     {
       projectilePooler = FindObjectOfType<ProjectilePooler>();
+      vfxPooler = FindObjectOfType<VfxPooler>();
 
       playerCamera = UnityEngine.Camera.main.GetComponent<CameraController>();
       playerCamera.SetTrackingTarget(this);
@@ -88,8 +93,10 @@ namespace CwispyStudios.TankMania.Tank
     {
       if (fireCountdown <= 0f)
       {
-        Projectile projectile = projectilePooler.EnableProjectile(projectilePrefab, fireZone.position, gunCannon.transform.rotation);
+        Projectile projectile = projectilePooler.EnablePooledObject(projectilePrefab, fireZone.position, gunCannon.transform.rotation);
         projectile.PhysicsController.AddForce(gunCannon.transform.forward * firingForce, ForceMode.VelocityChange);
+
+        vfxPooler.EnablePooledObject(firingVfx, fireZone.position, gunCannon.transform.rotation);
 
         ammoFillImage.fillAmount = 0f;
 
