@@ -124,18 +124,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &20929396 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 812693486935483329, guid: 148d990b4da2b1a4b9c679095916046a,
-    type: 3}
-  m_PrefabInstance: {fileID: 812693486954313909}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &612067359
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +207,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -314,28 +302,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &871398081 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7480523010445580344, guid: d23cfcb9d00038f44831cb8873b5af50,
-    type: 3}
-  m_PrefabInstance: {fileID: 8633598789043070839}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &871398082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 871398081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91e395fc3a5ad044eb70d4c1e513563e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitTeam: 0
-  maxHealth: 100
-  healthRegeneration: 0
-  healthText: {fileID: 0}
 --- !u!1001 &881292979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -778,125 +744,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &812693486954313909
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134642, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 812693487177134646, guid: 148d990b4da2b1a4b9c679095916046a,
-        type: 3}
-      propertyPath: m_Name
-      value: Reticle Canvas
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 148d990b4da2b1a4b9c679095916046a, type: 3}
 --- !u!1 &1213832627035426023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1658,51 +1505,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player Tank
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
-        type: 3}
-      propertyPath: ammoFillImage
-      value: 
-      objectReference: {fileID: 20929396}
-    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
-        type: 3}
-      propertyPath: damage.DirectDamage
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
-        type: 3}
-      propertyPath: damage.SplashDamage.SplashRadius
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
-        type: 3}
-      propertyPath: damage.SplashDamage.HasSplashDamageRolloff
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
-        type: 3}
-      propertyPath: damage.SplashDamage.SplashDamagePercentage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
-        type: 3}
-      propertyPath: damage.SplashDamage.MaxRadiusPercentageRolloff
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
-        type: 3}
-      propertyPath: damage.SplashDamage.MinRadiusPercentageRolloff
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
-        type: 3}
-      propertyPath: damage.SplashDamage.MaxRadiusDamagePercentageRolloff
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
-        type: 3}
-      propertyPath: damage.SplashDamage.MinRadiusDamagePercentageRolloff
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9116554923332464521, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
