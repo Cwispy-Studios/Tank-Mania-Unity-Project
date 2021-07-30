@@ -99,11 +99,13 @@ namespace CwispyStudios.TankMania.Projectile
         // Loop through each hit
         for (int i = 0; i < numHits; ++i)
         {
+          // Retrieve from attached rigidbody and not from the collision component
           GameObject splashedObject = splashCollisionResults[i].attachedRigidbody.gameObject;
 
           // Check if object has already been searched
           if (!splashedObjects.Contains(splashedObject))
           {
+            // Do not check this object again
             splashedObjects.Add(splashedObject);
 
             // Check if object has a health component and belongs to opposing team
@@ -114,17 +116,37 @@ namespace CwispyStudios.TankMania.Projectile
             {
               // Object is eligible to be damaged from splash damage, calculate damage
               float baseSplashDamage = damageInformation.DirectDamage * splashDamageInformation.SplashDamagePercentage;
+              float splashDamageDealt = baseSplashDamage;
 
               // If there is rolloff from radius, do further calculations
               if (splashDamageInformation.HasSplashDamageRolloff)
               {
+                Vector3 closestPointOfContact = splashCollisionResults[i].attachedRigidbody.ClosestPointOnBounds(collisionPoint);
+                float sqrDistance = Vector3.SqrMagnitude(collisionPoint - closestPointOfContact);
 
+                // Maybe cache inside DamageInformation?
+                float minRadius = splashDamageInformation.SplashRadius * splashDamageInformation.MinRadiusPercentageRolloff;
+                float sqrMinRadius = minRadius * minRadius;
+
+                float maxRadius = splashDamageInformation.SplashRadius * splashDamageInformation.MaxRadiusPercentageRolloff;
+                float sqrMaxRadius = maxRadius * maxRadius;
+
+                if (sqrDistance <= sqrMinRadius) splashDamageDealt = baseSplashDamage;
+                else if (sqrDistance >= sqrMaxRadius) splashDamageDealt = baseSplashDamage * splashDamageInformation.MaxRadiusDamagePercentageRolloff;
+                else
+                {
+                  float t = (sqrDistance - sqrMinRadius) / (sqrMaxRadius - sqrMinRadius);
+
+                  splashDamageDealt *= Mathf.Lerp(
+                    splashDamageInformation.MinRadiusDamagePercentageRolloff,
+                    splashDamageInformation.MaxRadiusDamagePercentageRolloff,
+                    t);
+
+                  Debug.Log($"t: {t}, sqrDistance: {sqrDistance}, contact point: {closestPointOfContact}");
+                }
               }
 
-              else
-              {
-                splashedObjectHealth.TakeDamage(baseSplashDamage);
-              }
+              splashedObjectHealth.TakeDamage(splashDamageDealt);
             }
           }
 
