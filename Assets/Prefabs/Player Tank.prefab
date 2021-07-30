@@ -613,6 +613,17 @@ MonoBehaviour:
   fireZone: {fileID: 8633598789061193743}
   ammoFillImage: {fileID: 0}
   turretRotationSpeed: 120
+  damage:
+    DirectDamage: 0
+    SplashDamage:
+      HasSplashDamage: 1
+      SplashRadius: 0
+      SplashDamagePercentage: 0
+      HasSplashDamageRolloff: 0
+      MinRadiusPercentageRolloff: 0
+      MaxRadiusPercentageRolloff: 0
+      MinRadiusDamagePercentageRolloff: 0
+      MaxRadiusDamagePercentageRolloff: 0
 --- !u!1 &8633598789061193728
 GameObject:
   m_ObjectHideFlags: 0
