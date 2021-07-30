@@ -5,8 +5,10 @@ namespace CwispyStudios.TankMania.Combat
   public class Health : MonoBehaviour
   {
     [SerializeField] private Team unitTeam;
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float healthRegeneration;
+    [SerializeField, Range(0f, 10000f)] private float maxHealth;
+    [SerializeField, Range(0f, 100f)] private float healthRegeneration;
+
+    // DEBUG
     [SerializeField] private TMPro.TMP_Text healthText;
 
     private float currentHealth;
@@ -18,8 +20,17 @@ namespace CwispyStudios.TankMania.Combat
 
     private void Update()
     {
+      if (healthRegeneration > 0f && currentHealth < maxHealth) RegenerateHealth();
+
+      // DEBUG
       if (healthText)
-      healthText.text = currentHealth.ToString("F0");
+        healthText.text = currentHealth.ToString("F0");
+    }
+
+    private void RegenerateHealth()
+    {
+      currentHealth += healthRegeneration * Time.deltaTime;
+      currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
     }
 
     public bool CanTakeDamageFromTeam( Team team )
@@ -31,6 +42,11 @@ namespace CwispyStudios.TankMania.Combat
     {
       Debug.Log($"{gameObject} took {damage} damage.");
       currentHealth -= damage;
+
+      if (currentHealth < 0f)
+      {
+        // Remove
+      }
     }
   }
 }

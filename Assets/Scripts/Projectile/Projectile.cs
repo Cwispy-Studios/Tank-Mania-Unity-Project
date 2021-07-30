@@ -9,16 +9,26 @@ namespace CwispyStudios.TankMania.Projectile
 
   public class Projectile : MonoBehaviour
   {
+    // Particle system/vfx to play when projectile impacts
     [SerializeField] private CFX_AutoDestructShuriken explosionVfx = null;
 
+    // Used to turn the projectile invisible while leaving its vfx running
     private MeshRenderer meshRenderer;
+    // Prevents OnEnable from running when being instantiated
     private bool disableOnEnabled = true;
+    // Prevents multiple collisions and hits from being registered at once
+    private bool disableProjectileCollisions = false;
 
+    // Damage from the object firing the projectile
     private DamageInformation damageInformation;
 
+    // Cache rigidbody
     [HideInInspector] public Rigidbody PhysicsController;
 
+    // Below collections are cleared immediately after each calculation and can be reused over every projectile
+    // Used to hold the results of spherecast, reduces garbage collection
     private static Collider[] splashCollisionResults = new Collider[50];
+    // Used for caching objects in splash calculations to prevent checking the same object more than once
     private static HashSet<GameObject> splashedObjects = new HashSet<GameObject>();
 
     private void Awake()
@@ -33,12 +43,9 @@ namespace CwispyStudios.TankMania.Projectile
 
     private void OnEnable()
     {
-      if (disableOnEnabled) disableOnEnabled = false;
+      if (disableOnEnabled) { disableOnEnabled = false; return; }
 
-      else
-      {
-        BulletEvents.BulletFired(this);
-      }
+      BulletEvents.BulletFired(this);
     }
 
     private void Update()
@@ -48,6 +55,8 @@ namespace CwispyStudios.TankMania.Projectile
 
     private void OnCollisionEnter( Collision collision )
     {
+      if (disableProjectileCollisions) return;
+
       Vector3 collisionPoint = collision.GetContact(0).point;
 
       DamageUnit(collision.gameObject, collisionPoint);
@@ -65,6 +74,8 @@ namespace CwispyStudios.TankMania.Projectile
       meshRenderer.enabled = false;
       
       BulletEvents.BulletHit(this);
+
+      disableProjectileCollisions = true;
     }
 
     private void DamageUnit( GameObject collisionObject, Vector3 collisionPoint )
@@ -141,8 +152,6 @@ namespace CwispyStudios.TankMania.Projectile
                     splashDamageInformation.MinRadiusDamagePercentageRolloff,
                     splashDamageInformation.MaxRadiusDamagePercentageRolloff,
                     t);
-
-                  Debug.Log($"t: {t}, sqrDistance: {sqrDistance}, contact point: {closestPointOfContact}");
                 }
               }
 
@@ -173,6 +182,8 @@ namespace CwispyStudios.TankMania.Projectile
 
       // Return to object pool
       gameObject.SetActive(false);
+
+      disableProjectileCollisions = false;
     }
 
     public void SetDamage( DamageInformation damageInfo )
