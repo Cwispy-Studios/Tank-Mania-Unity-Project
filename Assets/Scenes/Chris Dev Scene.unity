@@ -615,7 +615,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 4.6}
+  m_AnchoredPosition: {x: 0, y: 2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2137104003
@@ -647,8 +647,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -665,8 +665,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6
-  m_fontSizeBase: 6
+  m_fontSize: 1
+  m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1676,7 +1676,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
+      propertyPath: damage.SplashDamage.HasSplashDamageRolloff
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
       propertyPath: damage.SplashDamage.SplashDamagePercentage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: damage.SplashDamage.MaxRadiusPercentageRolloff
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: damage.SplashDamage.MinRadiusPercentageRolloff
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: damage.SplashDamage.MaxRadiusDamagePercentageRolloff
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: damage.SplashDamage.MinRadiusDamagePercentageRolloff
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9116554923332464521, guid: d23cfcb9d00038f44831cb8873b5af50,
