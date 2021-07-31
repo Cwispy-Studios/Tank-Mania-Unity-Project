@@ -91,19 +91,19 @@ namespace CwispyStudios.TankMania.Projectile
       }
 
       // If there is splash damage, find all objects with health around the point of collision
-      if (damageInformation.SplashDamage.HasSplashDamage)
+      if (damageInformation.SplashDamageInformation.HasSplashDamage)
       {
         // If this object took a direct hit already, it should not take additional splash damage
         splashedObjects.Add(collisionObject);
 
-        SplashDamageInformation splashDamageInformation = damageInformation.SplashDamage;
+        SplashDamageInformation splashDamageInformation = damageInformation.SplashDamageInformation;
 
         // 8 is enemy, 3 is player
         int opponentLayerMask = damageInformation.DamageFrom == Team.Player ? 1 << 8 : 1 << 3;
 
         // Find the number of objects within the splash radius, this counts all composite colliders
         int numHits = Physics.OverlapSphereNonAlloc(
-          collisionPoint, damageInformation.SplashDamage.SplashRadius, splashCollisionResults, opponentLayerMask, QueryTriggerInteraction.Ignore);
+          collisionPoint, damageInformation.SplashDamageInformation.SplashRadius, splashCollisionResults, opponentLayerMask, QueryTriggerInteraction.Ignore);
         // Prevents out of range
         numHits = Mathf.Clamp(numHits, 0, splashCollisionResults.Length);
 
