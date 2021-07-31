@@ -1506,6 +1506,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Tank
       objectReference: {fileID: 0}
+    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: damage.SplashDamageInformation.HasSplashDamageRolloff
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9116554923332464521, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
       propertyPath: m_RootOrder
