@@ -1052,7 +1052,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitTeam: 1
   maxHealth: 100
-  healthRegeneration: 0
+  healthRegeneration: 2
   healthText: {fileID: 2137104003}
 --- !u!33 &5449327591314870100
 MeshFilter:

@@ -632,12 +632,12 @@ MonoBehaviour:
   ammoFillImage: {fileID: 8633598789058886659}
   turretRotationSpeed: 120
   damage:
-    DirectDamage: 10
+    directDamage: 10
     DamageFrom: 0
-    SplashDamage:
+    SplashDamageInformation:
       HasSplashDamage: 1
       SplashRadius: 2
-      SplashDamagePercentage: 1
+      SplashDamagePercentage: 0.5
       HasSplashDamageRolloff: 1
       MinRadiusPercentageRolloff: 0
       MaxRadiusPercentageRolloff: 1
