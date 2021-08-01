@@ -4,6 +4,7 @@ using UnityEngine.UI;
 namespace CwispyStudios.TankMania.Tank
 {
   using Camera;
+  using Combat;
   using Poolers;
   using Projectile;
   using Visuals;
@@ -27,6 +28,9 @@ namespace CwispyStudios.TankMania.Tank
     [Header("Turret Rotation")]
     [SerializeField, Range(100f, 360f)] private float turretRotationSpeed = 180f;
 
+    [Header("Damage Information")]
+    [SerializeField] private DamageInformation damage;
+
     private ProjectilePooler projectilePooler;
     private VfxPooler vfxPooler;
     private CameraController playerCamera;
@@ -47,6 +51,7 @@ namespace CwispyStudios.TankMania.Tank
       Cursor.lockState = CursorLockMode.Locked;
       Cursor.visible = false;
 
+      damage.DamageFrom = Team.Player;
       fireCountdown = 0f;
     }
 
@@ -95,6 +100,7 @@ namespace CwispyStudios.TankMania.Tank
       {
         Projectile projectile = projectilePooler.EnablePooledObject(projectilePrefab, fireZone.position, gunCannon.transform.rotation);
         projectile.PhysicsController.AddForce(gunCannon.transform.forward * firingForce, ForceMode.VelocityChange);
+        projectile.SetDamage(damage);
 
         vfxPooler.EnablePooledObject(firingVfx, fireZone.position, gunCannon.transform.rotation);
 
