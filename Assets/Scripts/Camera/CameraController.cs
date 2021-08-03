@@ -104,9 +104,13 @@ namespace CwispyStudios.TankMania.Camera
     public Vector3 GetCrosshairPosition()
     {
       Ray ray = playerCamera.ScreenPointToRay(centerScreenPoint);
+
+      int ignorePlayerLayerMask = ~(1 << 3);
       
-      if (Physics.Raycast(ray, out RaycastHit hit, rayDistance)) return hit.point;
-      else return ray.origin + ray.direction * rayDistance;
+      if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, ignorePlayerLayerMask, QueryTriggerInteraction.Ignore)) 
+        return hit.point;
+      else 
+        return ray.origin + ray.direction * rayDistance;
     }
 
     ///////////////////////////

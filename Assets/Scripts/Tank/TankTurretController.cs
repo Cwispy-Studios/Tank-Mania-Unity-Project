@@ -19,14 +19,15 @@ namespace CwispyStudios.TankMania.Tank
     [SerializeField] private VfxParentDisabler firingVfx = null;
 
     [Header("Gun Components")]
-    [SerializeField] private GameObject gunCannon = null;
+    [SerializeField] private Transform gunCannon = null;
     [SerializeField] private Transform fireZone = null;
 
     [Header("Reticle Component")]
     [SerializeField] private Image ammoFillImage = null;
 
-    [Header("Turret Rotation")]
-    [SerializeField, Range(100f, 360f)] private float turretRotationSpeed = 180f;
+    [Header("Turret and Gun Rotation")]
+    [SerializeField, Range(80f, 360f)] private float turretRotationSpeed = 180f;
+    [SerializeField, Range(40f, 300f)] private float gunRotationSpeed = 100f;
 
     [Header("Damage Information")]
     [SerializeField] private DamageInformation damage;
@@ -39,6 +40,7 @@ namespace CwispyStudios.TankMania.Tank
     private bool firingIsQueued = false;
 
     private float targetTurretRotation;
+    private float targetGunRotation;
 
     private void Awake()
     {
@@ -58,12 +60,9 @@ namespace CwispyStudios.TankMania.Tank
 
     private void Update()
     {
-      UpdateFiringCooldown();
+      UpdateFiringCooldownAndFireIfReady();
 
-      if (transform.rotation.x != targetTurretRotation)
-      {
-        RotateTurret();
-      }
+      if (transform.rotation.x != targetTurretRotation) RotateTurret();
 
       RotateGun();
     }
@@ -77,47 +76,45 @@ namespace CwispyStudios.TankMania.Tank
 
     private void RotateGun()
     {
-      float targetGunRotation = Quaternion.LookRotation(playerCamera.GetCrosshairPosition() - gunCannon.transform.position).eulerAngles.x;
-      float deltaRotation = targetGunRotation - gunCannon.transform.localEulerAngles.x;
+      Vector3 crossHairGunCannonDiff = playerCamera.GetCrosshairPosition() - gunCannon.position;
+      targetGunRotation = Quaternion.LookRotation(crossHairGunCannonDiff).eulerAngles.x;
 
-      gunCannon.transform.Rotate(deltaRotation, 0f, 0f, Space.Self);
+      if (gunCannon.localRotation.x != targetGunRotation)
+      {
+        Quaternion to = Quaternion.Euler(targetGunRotation, 0f, 0f);
+
+        gunCannon.localRotation = Quaternion.RotateTowards(gunCannon.localRotation, to, gunRotationSpeed * Time.deltaTime);
+      }
     }
 
-    private void UpdateFiringCooldown()
+    private void UpdateFiringCooldownAndFireIfReady()
     {
+      // Not yet ready to fire
       if (fireCountdown > 0f)
       {
         fireCountdown -= Time.deltaTime;
+        if (fireCountdown < 0f) fireCountdown = 0f;
 
         ammoFillImage.fillAmount = 1f - (fireCountdown / intervalBetweenFiring);
-
-        if (firingIsQueued && fireCountdown <= 0f) FireProjectile();
       }
 
-      else fireCountdown = 0f;
+      // Check if ready to fire and player has fired 
+      if (firingIsQueued && fireCountdown <= 0f) FireProjectile();
     }
 
     private void FireProjectile()
     {
-      if (fireCountdown <= 0f)
-      {
-        Projectile projectile = projectilePooler.EnablePooledObject(projectilePrefab, fireZone.position, gunCannon.transform.rotation);
-        projectile.PhysicsController.AddForce(gunCannon.transform.forward * firingForce, ForceMode.VelocityChange);
-        projectile.SetDamage(damage);
+      Projectile projectile = projectilePooler.EnablePooledObject(projectilePrefab, fireZone.position, gunCannon.rotation);
+      projectile.PhysicsController.AddForce(gunCannon.forward * firingForce, ForceMode.VelocityChange);
+      projectile.SetDamage(damage);
 
-        vfxPooler.EnablePooledObject(firingVfx, fireZone.position, gunCannon.transform.rotation);
+      vfxPooler.EnablePooledObject(firingVfx, fireZone.position, gunCannon.rotation);
 
-        ammoFillImage.fillAmount = 0f;
+      ammoFillImage.fillAmount = 0f;
 
-        fireCountdown += intervalBetweenFiring;
+      fireCountdown += intervalBetweenFiring;
 
-        firingIsQueued = false;
-      }
-
-      else if (fireCountdown <= timeToQueueFiring)
-      {
-        firingIsQueued = true;
-      }
+      firingIsQueued = false;
     }
 
     public void ReceiveSignedRotationFromCameraMovement( float horizontalRotation )
@@ -130,7 +127,8 @@ namespace CwispyStudios.TankMania.Tank
 
     private void OnMainFire()
     {
-      FireProjectile();
+      // Queue firing which will be executed in update
+      if (fireCountdown <= timeToQueueFiring) firingIsQueued = true;
     }
   }
 }
