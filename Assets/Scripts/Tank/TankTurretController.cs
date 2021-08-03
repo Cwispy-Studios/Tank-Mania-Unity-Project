@@ -52,6 +52,7 @@ namespace CwispyStudios.TankMania.Tank
       Cursor.visible = false;
 
       damage.DamageFrom = Team.Player;
+      //damage.Initialise();
       fireCountdown = 0f;
     }
 
@@ -69,7 +70,9 @@ namespace CwispyStudios.TankMania.Tank
 
     private void RotateTurret()
     {
-      transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0f, targetTurretRotation, 0f), turretRotationSpeed * Time.deltaTime);
+      Quaternion to = Quaternion.Euler(0f, targetTurretRotation, 0f);
+
+      transform.rotation = Quaternion.RotateTowards(transform.rotation, to, turretRotationSpeed * Time.deltaTime);
     }
 
     private void RotateGun()
