@@ -3,7 +3,7 @@ using System;
 namespace CwispyStudios.TankMania.Combat
 {
   [Serializable]
-  public class SplashDamageInformation
+  public class SplashDamage
   {
     // Cache to perform calculations on damage
     // CANNOT BE DONE, CAUSES SERIALIZATION DEPTH LIMIT TO EXCEED

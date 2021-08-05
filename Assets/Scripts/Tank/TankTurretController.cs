@@ -30,7 +30,7 @@ namespace CwispyStudios.TankMania.Tank
     [SerializeField, Range(40f, 300f)] private float gunRotationSpeed = 100f;
 
     [Header("Damage Information")]
-    [SerializeField] private DamageInformation damage;
+    [SerializeField] private Damage baseDamage;
 
     private ProjectilePooler projectilePooler;
     private VfxPooler vfxPooler;
@@ -53,7 +53,7 @@ namespace CwispyStudios.TankMania.Tank
       Cursor.lockState = CursorLockMode.Locked;
       Cursor.visible = false;
 
-      damage.DamageFrom = Team.Player;
+      baseDamage.DamageFrom = Team.Player;
       //damage.Initialise();
       fireCountdown = 0f;
     }
@@ -106,7 +106,7 @@ namespace CwispyStudios.TankMania.Tank
     {
       Projectile projectile = projectilePooler.EnablePooledObject(projectilePrefab, fireZone.position, gunCannon.rotation);
       projectile.PhysicsController.AddForce(gunCannon.forward * firingForce, ForceMode.VelocityChange);
-      projectile.SetDamage(damage);
+      projectile.SetDamage(baseDamage);
 
       vfxPooler.EnablePooledObject(firingVfx, fireZone.position, gunCannon.rotation);
 

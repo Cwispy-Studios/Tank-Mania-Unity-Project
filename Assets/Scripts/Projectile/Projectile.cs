@@ -20,7 +20,7 @@ namespace CwispyStudios.TankMania.Projectile
     private bool disableProjectileCollisions = false;
 
     // Damage from the object firing the projectile
-    private DamageInformation damageInformation;
+    private Damage damageInformation;
 
     // Cache accessible rigidbody
     [HideInInspector] public Rigidbody PhysicsController;
@@ -99,8 +99,8 @@ namespace CwispyStudios.TankMania.Projectile
 
     private void HandleSplashDamageIfEnabled( GameObject collisionObject, Vector3 collisionPoint )
     {
-      SplashDamageInformation splashInfo = damageInformation.SplashDamageInformation;
-      if (!splashInfo.HasSplashDamage) return;
+      SplashDamage splashDamage = damageInformation.SplashDamage;
+      if (!splashDamage.HasSplashDamage) return;
 
       Team projectileTeam = damageInformation.DamageFrom;
 
@@ -113,7 +113,7 @@ namespace CwispyStudios.TankMania.Projectile
       // Find the number of objects within the splash radius, this counts all composite colliders
       int numHits = Physics.OverlapSphereNonAlloc(
         collisionPoint,
-        splashInfo.SplashRadius,
+        splashDamage.SplashRadius,
         splashCollisionResults,
         opponentLayerMask,
         QueryTriggerInteraction.Ignore
@@ -142,34 +142,34 @@ namespace CwispyStudios.TankMania.Projectile
           if (splashedObjectHealth && splashedObjectHealth.CanTakeDamageFromTeam(projectileTeam))
           {
             // Object is eligible to be damaged from splash damage, calculate damage
-            float baseSplashDamage = damageInformation.DirectDamage * splashInfo.SplashDamagePercentage;
+            float baseSplashDamage = damageInformation.DirectDamage * splashDamage.SplashDamagePercentage;
             float splashDamageDealt = baseSplashDamage;
 
             // If there is rolloff from radius, do further calculations
-            if (splashInfo.HasSplashDamageRolloff)
+            if (splashDamage.HasSplashDamageRolloff)
             {
               Vector3 closestPointOfContact = splashedRigidbody.ClosestPointOnBounds(collisionPoint);
               float sqrDistance = Vector3.SqrMagnitude(collisionPoint - closestPointOfContact);
 
               // NOTE: Will need caching inside DamageInformation if it causes performance problems
-              float minRadius = splashInfo.SplashRadius * splashInfo.MinRadiusPercentageRolloff;
+              float minRadius = splashDamage.SplashRadius * splashDamage.MinRadiusPercentageRolloff;
               float sqrMinRadius = minRadius * minRadius;
 
-              float maxRadius = splashInfo.SplashRadius * splashInfo.MaxRadiusPercentageRolloff;
+              float maxRadius = splashDamage.SplashRadius * splashDamage.MaxRadiusPercentageRolloff;
               float sqrMaxRadius = maxRadius * maxRadius;
 
               if (sqrDistance <= sqrMinRadius) splashDamageDealt = baseSplashDamage;
 
               else if (sqrDistance >= sqrMaxRadius)
-                splashDamageDealt = baseSplashDamage * splashInfo.MaxRadiusDamagePercentageRolloff;
+                splashDamageDealt = baseSplashDamage * splashDamage.MaxRadiusDamagePercentageRolloff;
 
               else
               {
                 float t = (sqrDistance - sqrMinRadius) / (sqrMaxRadius - sqrMinRadius);
 
                 splashDamageDealt *= Mathf.Lerp(
-                  splashInfo.MinRadiusDamagePercentageRolloff,
-                  splashInfo.MaxRadiusDamagePercentageRolloff,
+                  splashDamage.MinRadiusDamagePercentageRolloff,
+                  splashDamage.MaxRadiusDamagePercentageRolloff,
                   t);
               }
             }
@@ -204,9 +204,9 @@ namespace CwispyStudios.TankMania.Projectile
       disableProjectileCollisions = false;
     }
 
-    public void SetDamage( DamageInformation damageInfo )
+    public void SetDamage( Damage damage )
     {
-      damageInformation = damageInfo;
+      damageInformation = damage;
     }
   }
 }
