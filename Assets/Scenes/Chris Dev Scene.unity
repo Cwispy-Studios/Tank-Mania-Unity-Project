@@ -302,6 +302,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!4 &805382252 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8633598789061193743, guid: d23cfcb9d00038f44831cb8873b5af50,
+    type: 3}
+  m_PrefabInstance: {fileID: 8633598789043070839}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &881292979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -371,6 +377,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de97166905607c84787d582256c553b3, type: 3}
+--- !u!114 &1033130164 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8633598789058886659, guid: d23cfcb9d00038f44831cb8873b5af50,
+    type: 3}
+  m_PrefabInstance: {fileID: 8633598789043070839}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1070830553
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,6 +565,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1530951060 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9153037211866373910, guid: d23cfcb9d00038f44831cb8873b5af50,
+    type: 3}
+  m_PrefabInstance: {fileID: 8633598789043070839}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1530951061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530951060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433eab5279560814a8ba660aa01218f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoFillImage: {fileID: 1033130164}
+  firingInformation: {fileID: 11400000, guid: 645e9b639595e28428713ffcb49dba2e, type: 2}
+  fireZone: {fileID: 805382252}
+  baseDamage: {fileID: 11400000, guid: 0b3a3959424099a45b41164acbfbfab8, type: 2}
 --- !u!1 &2137104001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,6 +1562,12 @@ PrefabInstance:
       propertyPath: damage.SplashDamageInformation.HasSplashDamageRolloff
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8633598788674284632, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 11400000, guid: a525e39d52a1397469481d35d57cd485,
+        type: 2}
     - target: {fileID: 9116554923332464521, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
       propertyPath: m_RootOrder

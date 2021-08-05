@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace CwispyStudios.TankMania.Camera
 {
-  using Tank;
+  using Player;
   using Utils;
 
   public class CameraController : MonoBehaviour
