@@ -1,32 +1,30 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace CwispyStudios.TankMania.Tank
+namespace CwispyStudios.TankMania.Player
 {
   [RequireComponent(typeof(Rigidbody))]
   public class TankMovementController : MonoBehaviour
   {
-    [Header("Acceleration")]
-    [SerializeField, Range(2f, 5f)] private float maxVelocity = 3f;
-    [SerializeField, Range(5f, 25f)] private float accelerationForce = 15f;
+    [SerializeField] private PlayerMovement playerMovement;
 
-    [Header("Steering")]
-    [SerializeField, Range(1f, 5f)] private float maxTorque = 1.5f;
-    [SerializeField, Range(0.5f, 5f)] private float steerForce = 1.5f;
-    [SerializeField, Range(1f, 5f)] private float steerNullifierForceModifier = 3.5f;
-
+    // Cache rigidbody component
     private Rigidbody physicsController;
 
+    // Cache calcuation
     private float maxVelocitySqr;
+    // W-S input
     private float accelerationInput = 0f;
+    // A-D input
     private float steerInput = 0f;
+    // Current torque force acting on the tank
     private float torqueForce = 0f;
 
     private void Awake()
     {
       physicsController = GetComponent<Rigidbody>();
 
-      maxVelocitySqr = maxVelocity * maxVelocity;
+      maxVelocitySqr = playerMovement.MaxVelocity * playerMovement.MaxVelocity;
     }
 
     ///////////////////
@@ -47,15 +45,16 @@ namespace CwispyStudios.TankMania.Tank
     {
       if (steerInput != 0f)
       {
-        torqueForce += steerInput * steerForce * Time.deltaTime;
-        torqueForce = Mathf.Clamp(torqueForce, -maxTorque, maxTorque);
+        torqueForce += steerInput * playerMovement.SteerForce * Time.deltaTime;
+        torqueForce = Mathf.Clamp(torqueForce, -playerMovement.MaxTorque, playerMovement.MaxTorque);
       }
 
       else
       {
         if (torqueForce != 0f)
         {
-          torqueForce = Mathf.MoveTowards(torqueForce, 0f, steerForce * steerNullifierForceModifier * Time.deltaTime);
+          float maxDelta = playerMovement.SteerForce * playerMovement.SteerNullifierForceModifier * Time.deltaTime;
+          torqueForce = Mathf.MoveTowards(torqueForce, 0f, maxDelta);
         }
       }
     }
@@ -79,7 +78,8 @@ namespace CwispyStudios.TankMania.Tank
 
         if (velocity.sqrMagnitude <= maxVelocitySqr)
         {
-          physicsController.AddForce(transform.forward * accelerationInput * accelerationForce, ForceMode.Acceleration);
+          Vector3 force = transform.forward * accelerationInput * playerMovement.AccelerationForce;
+          physicsController.AddForce(force, ForceMode.Acceleration);
         }
       }
     }

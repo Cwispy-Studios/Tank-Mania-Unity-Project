@@ -491,11 +491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d04edd8894a86448927bf659d9b47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVelocity: 4.5
-  accelerationForce: 15
-  maxTorque: 1.2
-  steerForce: 1
-  steerNullifierForceModifier: 3.5
+  playerMovement: {fileID: 11400000, guid: a525e39d52a1397469481d35d57cd485, type: 2}
 --- !u!114 &871398082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,28 +617,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99c9791a54448e14183ac356254af480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 7051859430511138134, guid: e12447defeff40d47a09319a02099a26,
-    type: 3}
-  firingForce: 20
-  intervalBetweenFiring: 1.5
-  timeToQueueFiring: 0.2
-  firingVfx: {fileID: 2051231272, guid: cb4917dcdcb9ee848bf1a0474e66b7f3, type: 3}
-  gunCannon: {fileID: 9153037211866373910}
-  fireZone: {fileID: 8633598789061193743}
-  ammoFillImage: {fileID: 8633598789058886659}
-  turretRotationSpeed: 120
-  damage:
-    directDamage: 10
-    DamageFrom: 0
-    SplashDamageInformation:
-      HasSplashDamage: 1
-      SplashRadius: 2
-      SplashDamagePercentage: 0.5
-      HasSplashDamageRolloff: 1
-      MinRadiusPercentageRolloff: 0
-      MaxRadiusPercentageRolloff: 1
-      MinRadiusDamagePercentageRolloff: 1
-      MaxRadiusDamagePercentageRolloff: 0
+  gunCannon: {fileID: 8062888275378704935}
+  turretRotation: {fileID: 11400000, guid: 025c2c61a5a7dcf409ed531ed46669b8, type: 2}
 --- !u!1 &8633598789061193728
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,7 +628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8633598789061193743}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: Fire Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -671,7 +647,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8062888275378704935}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8633598789196614150
 GameObject:
@@ -776,6 +752,9 @@ MonoBehaviour:
   horizontalSensitivity: 0.01
   verticalSensitivity: 0.01
   rayDistance: 200
+  lookingAtIgnoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &2528776950997337087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -808,87 +787,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1 &8633598789477763591
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8633598789477763590}
-  - component: {fileID: 8633598789477763587}
-  - component: {fileID: 8633598789477763588}
-  m_Layer: 3
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &8633598789477763590
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8633598789477763591}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 6.9}
-  m_LocalScale: {x: 0.13774, y: 0.14535, z: 11.923442}
-  m_Children: []
-  m_Father: {fileID: 8062888275378704935}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8633598789477763587
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8633598789477763591}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &8633598789477763588
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8633598789477763591}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &9153037211866373910
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +799,7 @@ GameObject:
   - component: {fileID: 7645727543554634043}
   - component: {fileID: 8397927466259402765}
   - component: {fileID: 9153037211866373909}
+  - component: {fileID: 1530951065}
   m_Layer: 3
   m_Name: TankFree_Canon
   m_TagString: Untagged
@@ -919,7 +818,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.283638, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1.5}
   m_Children:
-  - {fileID: 8633598789477763590}
   - {fileID: 8633598789061193743}
   m_Father: {fileID: 5470462584147821441}
   m_RootOrder: 0
@@ -987,6 +885,22 @@ CapsuleCollider:
   m_Height: 0.9
   m_Direction: 2
   m_Center: {x: -0.0000009797513, y: -0.000000059604645, z: 0.5}
+--- !u!114 &1530951065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9153037211866373910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433eab5279560814a8ba660aa01218f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoFillImage: {fileID: 8633598789058886659}
+  firingInformation: {fileID: 11400000, guid: 645e9b639595e28428713ffcb49dba2e, type: 2}
+  fireZone: {fileID: 8633598789061193743}
+  baseDamage: {fileID: 11400000, guid: 0b3a3959424099a45b41164acbfbfab8, type: 2}
 --- !u!1001 &8977908474139172802
 PrefabInstance:
   m_ObjectHideFlags: 0

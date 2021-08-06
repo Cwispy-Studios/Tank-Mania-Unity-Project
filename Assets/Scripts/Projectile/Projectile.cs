@@ -20,9 +20,9 @@ namespace CwispyStudios.TankMania.Projectile
     private bool disableProjectileCollisions = false;
 
     // Damage from the object firing the projectile
-    private DamageInformation damageInformation;
+    private Damage damageInformation;
 
-    // Cache rigidbody
+    // Cache accessible rigidbody
     [HideInInspector] public Rigidbody PhysicsController;
 
     // Below collections are cleared immediately after each calculation and can be reused over every projectile
@@ -57,9 +57,16 @@ namespace CwispyStudios.TankMania.Projectile
     {
       if (disableProjectileCollisions) return;
 
+      HandleProjectileCollison(collision);
+    }
+
+    private void HandleProjectileCollison( Collision collision )
+    {
+      GameObject collisionObject = collision.gameObject;
       Vector3 collisionPoint = collision.GetContact(0).point;
 
-      DamageUnit(collision.gameObject, collisionPoint);
+      DamageUnitIfValid(collisionObject);
+      HandleSplashDamageIfEnabled(collisionObject, collisionPoint);
 
       // Moves the explosion vfx to the point of contact and enables it
       explosionVfx.transform.position = collisionPoint;
@@ -70,15 +77,16 @@ namespace CwispyStudios.TankMania.Projectile
       PhysicsController.collisionDetectionMode = CollisionDetectionMode.Discrete;
       PhysicsController.isKinematic = true;
 
+      // Deactivates projectile from colliding again before physics is disabled
+      disableProjectileCollisions = true;
+
       // Turns the projectile invisible
       meshRenderer.enabled = false;
-      
-      BulletEvents.BulletHit(this);
 
-      disableProjectileCollisions = true;
+      BulletEvents.BulletHit(this);
     }
 
-    private void DamageUnit( GameObject collisionObject, Vector3 collisionPoint )
+    private void DamageUnitIfValid( GameObject collisionObject )
     {
       // Check if object has a health component so it can be damaged
       Health hitObjectHealth = collisionObject.GetComponent<Health>();
@@ -86,84 +94,94 @@ namespace CwispyStudios.TankMania.Projectile
 
       // Also check if unit is from a different team, no friendly fire
       if (hitObjectHealth && hitObjectHealth.CanTakeDamageFromTeam(projectileTeam))
-      {
         hitObjectHealth.TakeDamage(damageInformation.DirectDamage);
-      }
+    }
 
-      // If there is splash damage, find all objects with health around the point of collision
-      if (damageInformation.SplashDamageInformation.HasSplashDamage)
+    private void HandleSplashDamageIfEnabled( GameObject collisionObject, Vector3 collisionPoint )
+    {
+      SplashDamage splashDamage = damageInformation.SplashDamage;
+      if (!splashDamage.HasSplashDamage) return;
+
+      Team projectileTeam = damageInformation.DamageFrom;
+
+      // If this object took a direct hit already, it should not take additional splash damage
+      splashedObjects.Add(collisionObject);
+
+      // 8 is enemy, 3 is player
+      int opponentLayerMask = damageInformation.DamageFrom == Team.Player ? 1 << 8 : 1 << 3;
+
+      // Find the number of objects within the splash radius, this counts all composite colliders
+      int numHits = Physics.OverlapSphereNonAlloc(
+        collisionPoint,
+        splashDamage.SplashRadius,
+        splashCollisionResults,
+        opponentLayerMask,
+        QueryTriggerInteraction.Ignore
+        );
+      // Prevents out of range
+      numHits = Mathf.Clamp(numHits, 0, splashCollisionResults.Length);
+
+      // Loop through each hit
+      for (int i = 0; i < numHits; ++i)
       {
-        // If this object took a direct hit already, it should not take additional splash damage
-        splashedObjects.Add(collisionObject);
+        // Retrieve from attached rigidbody and not from the collision component
+        // to check only the main gameobject and not all its colliders
+        Rigidbody splashedRigidbody = splashCollisionResults[i].attachedRigidbody;
+        GameObject splashedObject = splashedRigidbody.gameObject;
 
-        SplashDamageInformation splashDamageInformation = damageInformation.SplashDamageInformation;
-
-        // 8 is enemy, 3 is player
-        int opponentLayerMask = damageInformation.DamageFrom == Team.Player ? 1 << 8 : 1 << 3;
-
-        // Find the number of objects within the splash radius, this counts all composite colliders
-        int numHits = Physics.OverlapSphereNonAlloc(
-          collisionPoint, damageInformation.SplashDamageInformation.SplashRadius, splashCollisionResults, opponentLayerMask, QueryTriggerInteraction.Ignore);
-        // Prevents out of range
-        numHits = Mathf.Clamp(numHits, 0, splashCollisionResults.Length);
-
-        // Loop through each hit
-        for (int i = 0; i < numHits; ++i)
+        // Check if object has already been searched
+        if (!splashedObjects.Contains(splashedObject))
         {
-          // Retrieve from attached rigidbody and not from the collision component
-          GameObject splashedObject = splashCollisionResults[i].attachedRigidbody.gameObject;
+          // Do not check this object again
+          splashedObjects.Add(splashedObject);
 
-          // Check if object has already been searched
-          if (!splashedObjects.Contains(splashedObject))
+          // Check if object has a health component and belongs to opposing team
+          Health splashedObjectHealth = splashedObject.GetComponent<Health>();
+
+          // Object has health, then check the team
+          if (splashedObjectHealth && splashedObjectHealth.CanTakeDamageFromTeam(projectileTeam))
           {
-            // Do not check this object again
-            splashedObjects.Add(splashedObject);
+            // Object is eligible to be damaged from splash damage, calculate damage
+            float baseSplashDamage = damageInformation.DirectDamage * splashDamage.SplashDamagePercentage;
+            float splashDamageDealt = baseSplashDamage;
 
-            // Check if object has a health component and belongs to opposing team
-            Health splashedObjectHealth = splashedObject.GetComponent<Health>();
-
-            // Object has health, then check the team
-            if (splashedObjectHealth && splashedObjectHealth.CanTakeDamageFromTeam(projectileTeam))
+            // If there is rolloff from radius, do further calculations
+            if (splashDamage.HasSplashDamageRolloff)
             {
-              // Object is eligible to be damaged from splash damage, calculate damage
-              float baseSplashDamage = damageInformation.DirectDamage * splashDamageInformation.SplashDamagePercentage;
-              float splashDamageDealt = baseSplashDamage;
+              Vector3 closestPointOfContact = splashedRigidbody.ClosestPointOnBounds(collisionPoint);
+              float sqrDistance = Vector3.SqrMagnitude(collisionPoint - closestPointOfContact);
 
-              // If there is rolloff from radius, do further calculations
-              if (splashDamageInformation.HasSplashDamageRolloff)
+              // NOTE: Will need caching inside DamageInformation if it causes performance problems
+              float minRadius = splashDamage.SplashRadius * splashDamage.MinRadiusPercentageRolloff;
+              float sqrMinRadius = minRadius * minRadius;
+
+              float maxRadius = splashDamage.SplashRadius * splashDamage.MaxRadiusPercentageRolloff;
+              float sqrMaxRadius = maxRadius * maxRadius;
+
+              if (sqrDistance <= sqrMinRadius) splashDamageDealt = baseSplashDamage;
+
+              else if (sqrDistance >= sqrMaxRadius)
+                splashDamageDealt = baseSplashDamage * splashDamage.MaxRadiusDamagePercentageRolloff;
+
+              else
               {
-                Vector3 closestPointOfContact = splashCollisionResults[i].attachedRigidbody.ClosestPointOnBounds(collisionPoint);
-                float sqrDistance = Vector3.SqrMagnitude(collisionPoint - closestPointOfContact);
+                float t = (sqrDistance - sqrMinRadius) / (sqrMaxRadius - sqrMinRadius);
 
-                // Maybe cache inside DamageInformation?
-                float minRadius = splashDamageInformation.SplashRadius * splashDamageInformation.MinRadiusPercentageRolloff;
-                float sqrMinRadius = minRadius * minRadius;
-
-                float maxRadius = splashDamageInformation.SplashRadius * splashDamageInformation.MaxRadiusPercentageRolloff;
-                float sqrMaxRadius = maxRadius * maxRadius;
-
-                if (sqrDistance <= sqrMinRadius) splashDamageDealt = baseSplashDamage;
-                else if (sqrDistance >= sqrMaxRadius) splashDamageDealt = baseSplashDamage * splashDamageInformation.MaxRadiusDamagePercentageRolloff;
-                else
-                {
-                  float t = (sqrDistance - sqrMinRadius) / (sqrMaxRadius - sqrMinRadius);
-
-                  splashDamageDealt *= Mathf.Lerp(
-                    splashDamageInformation.MinRadiusDamagePercentageRolloff,
-                    splashDamageInformation.MaxRadiusDamagePercentageRolloff,
-                    t);
-                }
+                splashDamageDealt *= Mathf.Lerp(
+                  splashDamage.MinRadiusDamagePercentageRolloff,
+                  splashDamage.MaxRadiusDamagePercentageRolloff,
+                  t);
               }
-
-              splashedObjectHealth.TakeDamage(splashDamageDealt);
             }
-          }
 
-          splashCollisionResults[i] = null;
+            splashedObjectHealth.TakeDamage(splashDamageDealt);
+          }
         }
 
-        splashedObjects.Clear();
+        splashCollisionResults[i] = null;
       }
+
+      splashedObjects.Clear();
     }
 
     private void Deactivate()
@@ -186,9 +204,9 @@ namespace CwispyStudios.TankMania.Projectile
       disableProjectileCollisions = false;
     }
 
-    public void SetDamage( DamageInformation damageInfo )
+    public void SetDamage( Damage damage )
     {
-      damageInformation = damageInfo;
+      damageInformation = damage;
     }
   }
 }

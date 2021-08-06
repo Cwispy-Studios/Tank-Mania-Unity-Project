@@ -9,7 +9,7 @@ namespace CwispyStudios.TankMania.Poolers
     [SerializeField] private List<T> objectPrefabsList = null;
     [SerializeField, Range(0, 100)] private int numberPooledPerPrefab = 50;
 
-    private Dictionary<string, List<T>> pooledObjectsDictionary;
+    private Dictionary<string, List<T>> pooledObjectsDictionary = new Dictionary<string, List<T>>();
 
     private void Awake()
     {
@@ -18,8 +18,6 @@ namespace CwispyStudios.TankMania.Poolers
 
     private void InitialiseObjectPooler()
     {
-      pooledObjectsDictionary = new Dictionary<string, List<T>>();
-
       foreach (T objectPrefab in objectPrefabsList)
       {
         if (objectPrefab != null)
