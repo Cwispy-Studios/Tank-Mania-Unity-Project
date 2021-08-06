@@ -7,11 +7,10 @@ namespace CwispyStudios.TankMania.Player
   public class TankTurretController : MonoBehaviour
   {
     [Header("Gun Components")]
-    [SerializeField] private Transform gunCannon = null;
+    [SerializeField] private Transform gunCannon;
 
     [Header("Turret and Gun Rotation")]
-    [SerializeField, Range(80f, 360f)] private float turretRotationSpeed = 180f;
-    [SerializeField, Range(40f, 300f)] private float gunRotationSpeed = 100f;
+    [SerializeField] private TurretRotation turretRotation;
 
     private CameraController playerCamera;
 
@@ -38,7 +37,7 @@ namespace CwispyStudios.TankMania.Player
       if (transform.rotation.x == targetTurretRotation) return;
 
       Quaternion to = Quaternion.Euler(0f, targetTurretRotation, 0f);
-      transform.rotation = Quaternion.RotateTowards(transform.rotation, to, turretRotationSpeed * Time.deltaTime);
+      transform.rotation = Quaternion.RotateTowards(transform.rotation, to, turretRotation.TurretRotationSpeed * Time.deltaTime);
     }
 
     private void RotateGun()
@@ -49,8 +48,7 @@ namespace CwispyStudios.TankMania.Player
       if (gunCannon.localRotation.x != targetGunRotation)
       {
         Quaternion to = Quaternion.Euler(targetGunRotation, 0f, 0f);
-
-        gunCannon.localRotation = Quaternion.RotateTowards(gunCannon.localRotation, to, gunRotationSpeed * Time.deltaTime);
+        gunCannon.localRotation = Quaternion.RotateTowards(gunCannon.localRotation, to, turretRotation.GunRotationSpeed * Time.deltaTime);
       }
     }
 

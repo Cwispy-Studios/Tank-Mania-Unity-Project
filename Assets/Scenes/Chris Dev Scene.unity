@@ -571,7 +571,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8633598789043070839}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1530951061
+--- !u!114 &1530951065
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1551,6 +1551,12 @@ PrefabInstance:
       propertyPath: baseDamage
       value: 
       objectReference: {fileID: 11400000, guid: 0b3a3959424099a45b41164acbfbfab8,
+        type: 2}
+    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: turretRotation
+      value: 
+      objectReference: {fileID: 11400000, guid: 025c2c61a5a7dcf409ed531ed46669b8,
         type: 2}
     - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
