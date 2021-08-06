@@ -15,11 +15,11 @@ MonoBehaviour:
   DamageFrom: 0
   DirectDamage: 10
   SplashDamage:
-    HasSplashDamage: 0
-    SplashRadius: 0
-    SplashDamagePercentage: 0
-    HasSplashDamageRolloff: 0
+    HasSplashDamage: 1
+    SplashRadius: 2
+    SplashDamagePercentage: 0.5
+    HasSplashDamageRolloff: 1
     MinRadiusPercentageRolloff: 0
-    MaxRadiusPercentageRolloff: 0
-    MinRadiusDamagePercentageRolloff: 0
+    MaxRadiusPercentageRolloff: 1
+    MinRadiusDamagePercentageRolloff: 1
     MaxRadiusDamagePercentageRolloff: 0
