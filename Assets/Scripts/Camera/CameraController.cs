@@ -23,6 +23,9 @@ namespace CwispyStudios.TankMania.Camera
     [Header("Camera Targeting")]
     [SerializeField, Range(50f, 1000f)] private float rayDistance = 200f;
 
+    [Header("Layer mask")]
+    [SerializeField] private LayerMask lookingAtIgnoreLayerMask;
+
     private TankTurretController trackedTarget;
 
     private float targetHorizontalRotationValue = 0f;
@@ -105,9 +108,7 @@ namespace CwispyStudios.TankMania.Camera
     {
       Ray ray = playerCamera.ScreenPointToRay(centerScreenPoint);
 
-      int ignorePlayerLayerMask = ~(1 << 3);
-      
-      if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, ignorePlayerLayerMask, QueryTriggerInteraction.Ignore)) 
+      if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, ~lookingAtIgnoreLayerMask, QueryTriggerInteraction.Ignore)) 
         return hit.point;
       else 
         return ray.origin + ray.direction * rayDistance;

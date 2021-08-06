@@ -1574,6 +1574,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: a525e39d52a1397469481d35d57cd485,
         type: 2}
+    - target: {fileID: 8633598789196614146, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: lookingAtIgnoreLayerMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9116554923332464521, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
       propertyPath: m_RootOrder
