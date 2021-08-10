@@ -1,8 +1,6 @@
-using System;
-
 namespace CwispyStudios.TankMania.Combat
 {
-  [Serializable]
+  [System.Serializable]
   public class SplashDamage
   {
     // Cache to perform calculations on damage
@@ -54,6 +52,16 @@ namespace CwispyStudios.TankMania.Combat
     //private void CalculateBaseSplashDamage()
     //{
     //  BaseSplashDamage = damageInformation.DirectDamage * SplashDamagePercentage;
+    //}
+
+    //public void Reset()
+    //{
+    //  SplashDamagePercentage = 1f;
+
+    //  MinRadiusPercentageRolloff = 0f;
+    //  MaxRadiusPercentageRolloff = 1f;
+    //  MinRadiusDamagePercentageRolloff = 1f;
+    //  MaxRadiusDamagePercentageRolloff = 0f;
     //}
   }
 }

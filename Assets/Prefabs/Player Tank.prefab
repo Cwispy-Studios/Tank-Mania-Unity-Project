@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 1003306040239485859}
   - component: {fileID: 8633598788674284615}
   - component: {fileID: 8633598788674284614}
-  - component: {fileID: 7480523010445580327}
+  - component: {fileID: 1659550491239997941}
   - component: {fileID: 8633598788674284632}
   - component: {fileID: 871398082}
   m_Layer: 3
@@ -448,7 +448,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &7480523010445580327
+--- !u!114 &1659550491239997941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: KBM
+  m_DefaultActionMap: Player Controls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &8633598788674284632

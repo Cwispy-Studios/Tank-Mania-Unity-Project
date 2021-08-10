@@ -6,6 +6,7 @@ namespace CwispyStudios.TankMania.Player
   using Combat;
   using Poolers;
   using Projectile;
+  using Upgrades;
 
   public class GunController : MonoBehaviour
   {
@@ -18,6 +19,9 @@ namespace CwispyStudios.TankMania.Player
 
     [Header("Damage Information")]
     [SerializeField] private Damage baseDamage;
+
+    [Header("Upgrade Information")]
+    [SerializeField] private UpgradedUpgrades upgradedUpgrades;
 
     private ProjectilePooler projectilePooler;
     private VfxPooler vfxPooler;
@@ -51,7 +55,7 @@ namespace CwispyStudios.TankMania.Player
         ammoFillImage.fillAmount = 1f - (fireCountdown / firingInformation.IntervalBetweenFiring);
       }
 
-      // Check if ready to fire and player has fired 
+      // Check if ready to fire and player has fired
       if (firingIsQueued && fireCountdown <= 0f) FireProjectile();
     }
 
@@ -68,6 +72,11 @@ namespace CwispyStudios.TankMania.Player
       fireCountdown += firingInformation.IntervalBetweenFiring;
 
       firingIsQueued = false;
+    }
+
+    private void ReceiveUpgrade( TurretUpgrade turretUpgrade )
+    {
+
     }
 
     ///////////////////////////
