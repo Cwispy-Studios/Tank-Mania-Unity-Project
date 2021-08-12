@@ -26,10 +26,5 @@ namespace CwispyStudios.TankMania.Upgrades
 
       onUpgradeEvent?.Invoke(upgrade);
     }
-
-    private void CombineUpgrades()
-    {
-
-    }
   }
 }

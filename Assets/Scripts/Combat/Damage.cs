@@ -2,13 +2,16 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Combat
 {
-  [CreateAssetMenu(menuName = "Damage/Damage")]
+  using Stats;
+
+  [CreateAssetMenu(menuName = "Stats/Damage")]
   public class Damage : ScriptableObject
   {
     [HideInInspector]
     public Team DamageFrom;
 
-    public float DirectDamage;
+    [Header("Damage Information"), Tooltip("How much damage is dealt on a direct hit.")]
+    public FloatStat DirectDamage = new FloatStat(10f);
 
     [HideInInspector]
     public SplashDamage SplashDamage;

@@ -52,7 +52,7 @@ namespace CwispyStudios.TankMania.Player
         fireCountdown -= Time.deltaTime;
         if (fireCountdown < 0f) fireCountdown = 0f;
 
-        ammoFillImage.fillAmount = 1f - (fireCountdown / firingInformation.IntervalBetweenFiring);
+        ammoFillImage.fillAmount = 1f - (fireCountdown / firingInformation.FireRate.Value);
       }
 
       // Check if ready to fire and player has fired
@@ -62,21 +62,16 @@ namespace CwispyStudios.TankMania.Player
     private void FireProjectile()
     {
       Projectile projectile = projectilePooler.EnablePooledObject(firingInformation.ProjectilePrefab, fireZone.position, transform.rotation);
-      projectile.PhysicsController.AddForce(transform.forward * firingInformation.FiringForce, ForceMode.VelocityChange);
+      projectile.PhysicsController.AddForce(transform.forward * firingInformation.FiringForce.Value, ForceMode.VelocityChange);
       projectile.SetDamage(baseDamage);
 
       vfxPooler.EnablePooledObject(firingInformation.FiringVfx, fireZone.position, transform.rotation);
 
       ammoFillImage.fillAmount = 0f;
 
-      fireCountdown += firingInformation.IntervalBetweenFiring;
+      fireCountdown += firingInformation.FireRate.Value;
 
       firingIsQueued = false;
-    }
-
-    private void ReceiveUpgrade( TurretUpgrade turretUpgrade )
-    {
-
     }
 
     ///////////////////////////
@@ -85,7 +80,7 @@ namespace CwispyStudios.TankMania.Player
     private void OnMainFire()
     {
       // Queue firing which will be executed in update
-      if (fireCountdown <= firingInformation.TimeToQueueFiring) firingIsQueued = true;
+      if (fireCountdown <= firingInformation.TimeToQueueFiring.Value) firingIsQueued = true;
     }
   }
 }

@@ -6,24 +6,24 @@ namespace CwispyStudios.TankMania.Combat
   [CustomEditor(typeof(Damage))]
   public class DamageEditor : Editor
   {
-    SerializedProperty splashDamage;
+    private SerializedProperty splashDamage;
 
-    SerializedProperty hasSplashDamage;
-    SerializedProperty splashRadius;
-    SerializedProperty splashDamagePercentage;
-    SerializedProperty hasSplashDamageRolloff;
-    SerializedProperty minRadiusPercentageRolloff;
-    SerializedProperty maxRadiusPercentageRolloff;
-    SerializedProperty minRadiusDamagePercentageRolloff;
-    SerializedProperty maxRadiusDamagePercentageRolloff;
+    private SerializedProperty hasSplashDamage;
+    private SerializedProperty splashRadius;
+    private SerializedProperty splashDamagePercentage;
+    private SerializedProperty hasSplashDamageRolloff;
+    private SerializedProperty minRadiusPercentageRolloff;
+    private SerializedProperty maxRadiusPercentageRolloff;
+    private SerializedProperty minRadiusDamagePercentageRolloff;
+    private SerializedProperty maxRadiusDamagePercentageRolloff;
 
     private void OnEnable()
     {
       splashDamage = serializedObject.FindProperty(nameof(SplashDamage));
 
       hasSplashDamage = splashDamage.FindPropertyRelative(nameof(SplashDamage.HasSplashDamage));
-      splashRadius = splashDamage.FindPropertyRelative(nameof(SplashDamage.SplashRadius));
-      splashDamagePercentage = splashDamage.FindPropertyRelative(nameof(SplashDamage.SplashDamagePercentage));
+      splashRadius = splashDamage.FindPropertyRelative(nameof(SplashDamage.Radius));
+      splashDamagePercentage = splashDamage.FindPropertyRelative(nameof(SplashDamage.DamagePercentage));
       hasSplashDamageRolloff = splashDamage.FindPropertyRelative(nameof(SplashDamage.HasSplashDamageRolloff));
       minRadiusPercentageRolloff = splashDamage.FindPropertyRelative(nameof(SplashDamage.MinRadiusPercentageRolloff));
       maxRadiusPercentageRolloff = splashDamage.FindPropertyRelative(nameof(SplashDamage.MaxRadiusPercentageRolloff));
@@ -45,53 +45,42 @@ namespace CwispyStudios.TankMania.Combat
 
       EditorGUI.indentLevel = 1;
 
-      splashRadius.floatValue = EditorGUILayout.Slider("Radius", splashRadius.floatValue, 0f, 50f);
-      splashDamagePercentage.floatValue = EditorGUILayout.Slider("Damage %", splashDamagePercentage.floatValue, 0f, 1f);
+      EditorGUILayout.PropertyField(splashRadius, new GUIContent("Radius"));
+      EditorGUILayout.PropertyField(splashDamagePercentage, new GUIContent("Damage %"));
 
       EditorGUILayout.Space();
 
       hasSplashDamageRolloff.boolValue = EditorGUILayout.BeginToggleGroup(
-          new GUIContent("Damage Rolloff", "Allows damage to attenuate based on how close the projectile landed to the object."),
-          hasSplashDamageRolloff.boolValue
-        );
-
-      EditorGUILayout.EndToggleGroup();
+        new GUIContent("Damage Rolloff", "Allows damage to attenuate based on how close the projectile landed to the object."),
+        hasSplashDamageRolloff.boolValue);
 
       EditorGUI.indentLevel = 2;
 
-      EditorStyles.label.fontStyle = FontStyle.Bold;
-      EditorGUILayout.LabelField("Radius Cutoff");
-      EditorStyles.label.fontStyle = FontStyle.Normal;
+      // Min max radius % properties
+      EditorGUILayout.PropertyField(minRadiusPercentageRolloff, new GUIContent("Min Radius %"));
+      EditorGUILayout.PropertyField(maxRadiusPercentageRolloff, new GUIContent("Max Radius %"));
 
-      minRadiusPercentageRolloff.floatValue = EditorGUILayout.Slider(
-          new GUIContent("Min Radius %", "Percentage distance from the original radius the rolloff starts."),
-          minRadiusPercentageRolloff.floatValue,
-          0f, maxRadiusPercentageRolloff.floatValue
-        );
+      // Check min max values if they are correct
+      float minValue = minRadiusPercentageRolloff.FindPropertyRelative("baseValue").floatValue;
+      float maxValue = maxRadiusPercentageRolloff.FindPropertyRelative("baseValue").floatValue;
 
-      maxRadiusPercentageRolloff.floatValue = EditorGUILayout.Slider(
-          new GUIContent("Max Radius %", "Percentage distance from the original radius the rolloff ends."),
-          maxRadiusPercentageRolloff.floatValue,
-          minRadiusPercentageRolloff.floatValue, 1f
-        );
+      if (minValue > maxValue)
+        EditorGUILayout.HelpBox("WARNING! The minimum radius is larger than the maximum radius!", MessageType.Warning, true);
 
-      EditorStyles.label.fontStyle = FontStyle.Bold;
-      EditorGUILayout.LabelField("Damage Percentages of Radius");
-      EditorStyles.label.fontStyle = FontStyle.Normal;
+      // Min max damage at radius % properties
+      EditorGUILayout.PropertyField(minRadiusDamagePercentageRolloff, new GUIContent("Min Damage %"));
+      EditorGUILayout.PropertyField(maxRadiusDamagePercentageRolloff, new GUIContent("Max Damage %"));
 
-      minRadiusDamagePercentageRolloff.floatValue = EditorGUILayout.Slider(
-          new GUIContent("Min Damage %", "Percentage damage dealt where the rolloff starts."),
-          minRadiusDamagePercentageRolloff.floatValue,
-          0f, 1f
-        );
+      // Check min max values and show note to player about potential unique behaviour
+      minValue = minRadiusDamagePercentageRolloff.FindPropertyRelative("baseValue").floatValue;
+      maxValue = maxRadiusDamagePercentageRolloff.FindPropertyRelative("baseValue").floatValue;
 
-      maxRadiusDamagePercentageRolloff.floatValue = EditorGUILayout.Slider(
-          new GUIContent("Max Damage %", "Percentage damage dealt where the rolloff ends."),
-          maxRadiusDamagePercentageRolloff.floatValue,
-          0f, 1f
-        );
+      if (minValue < maxValue)
+        EditorGUILayout.HelpBox("Damage is now higher the further the target is from the blast.", MessageType.Info, true);
 
       EditorGUI.indentLevel = 0;
+
+      EditorGUILayout.EndToggleGroup();
 
       EditorGUILayout.EndToggleGroup();
 

@@ -94,7 +94,7 @@ namespace CwispyStudios.TankMania.Projectile
 
       // Also check if unit is from a different team, no friendly fire
       if (hitObjectHealth && hitObjectHealth.CanTakeDamageFromTeam(projectileTeam))
-        hitObjectHealth.TakeDamage(damageInformation.DirectDamage);
+        hitObjectHealth.TakeDamage(damageInformation.DirectDamage.Value);
     }
 
     private void HandleSplashDamageIfEnabled( GameObject collisionObject, Vector3 collisionPoint )
@@ -113,7 +113,7 @@ namespace CwispyStudios.TankMania.Projectile
       // Find the number of objects within the splash radius, this counts all composite colliders
       int numHits = Physics.OverlapSphereNonAlloc(
         collisionPoint,
-        splashDamage.SplashRadius,
+        splashDamage.Radius.Value,
         splashCollisionResults,
         opponentLayerMask,
         QueryTriggerInteraction.Ignore
@@ -142,7 +142,8 @@ namespace CwispyStudios.TankMania.Projectile
           if (splashedObjectHealth && splashedObjectHealth.CanTakeDamageFromTeam(projectileTeam))
           {
             // Object is eligible to be damaged from splash damage, calculate damage
-            float baseSplashDamage = damageInformation.DirectDamage * splashDamage.SplashDamagePercentage;
+            float baseSplashDamage = 
+              damageInformation.DirectDamage.Value * splashDamage.DamagePercentage.Value;
             float splashDamageDealt = baseSplashDamage;
 
             // If there is rolloff from radius, do further calculations
@@ -152,24 +153,24 @@ namespace CwispyStudios.TankMania.Projectile
               float sqrDistance = Vector3.SqrMagnitude(collisionPoint - closestPointOfContact);
 
               // NOTE: Will need caching inside DamageInformation if it causes performance problems
-              float minRadius = splashDamage.SplashRadius * splashDamage.MinRadiusPercentageRolloff;
+              float minRadius = splashDamage.Radius.Value * splashDamage.MinRadiusPercentageRolloff.Value;
               float sqrMinRadius = minRadius * minRadius;
 
-              float maxRadius = splashDamage.SplashRadius * splashDamage.MaxRadiusPercentageRolloff;
+              float maxRadius = splashDamage.Radius.Value * splashDamage.MaxRadiusPercentageRolloff.Value;
               float sqrMaxRadius = maxRadius * maxRadius;
 
               if (sqrDistance <= sqrMinRadius) splashDamageDealt = baseSplashDamage;
 
               else if (sqrDistance >= sqrMaxRadius)
-                splashDamageDealt = baseSplashDamage * splashDamage.MaxRadiusDamagePercentageRolloff;
+                splashDamageDealt = baseSplashDamage * splashDamage.MaxRadiusDamagePercentageRolloff.Value;
 
               else
               {
                 float t = (sqrDistance - sqrMinRadius) / (sqrMaxRadius - sqrMinRadius);
 
                 splashDamageDealt *= Mathf.Lerp(
-                  splashDamage.MinRadiusDamagePercentageRolloff,
-                  splashDamage.MaxRadiusDamagePercentageRolloff,
+                  splashDamage.MinRadiusDamagePercentageRolloff.Value,
+                  splashDamage.MaxRadiusDamagePercentageRolloff.Value,
                   t);
               }
             }

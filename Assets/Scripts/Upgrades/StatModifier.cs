@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+
+using UnityEditor;
+using UnityEngine;
+
+namespace CwispyStudios.TankMania.Upgrades
+{
+  [CreateAssetMenu(menuName = "Upgrades/Stat Modifier")]
+  public class StatModifier : ScriptableObject
+  {
+    private int upgradedAmount = 0;
+    public int UpgradedAmount => upgradedAmount;
+
+    [SerializeField] private float additiveValue;
+    public float AddititiveValue => additiveValue;
+
+    [SerializeField] private float multiplicativeValue;
+    public float MultiplicativeValue => multiplicativeValue;
+
+    public Action OnStatUpgrade;
+
+    public void Upgrade()
+    {
+      ++upgradedAmount;
+
+      OnStatUpgrade?.Invoke();
+    }
+
+#if UNITY_EDITOR
+    [SerializeField] private List<string> statsModified = new List<string>();
+
+    public void AddStatModified( string stat )
+    {
+      if (!statsModified.Contains(stat))
+        statsModified.Add(stat);
+    }
+#endif
+  }
+}
