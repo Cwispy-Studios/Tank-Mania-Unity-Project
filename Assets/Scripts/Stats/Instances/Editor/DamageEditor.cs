@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace CwispyStudios.TankMania.Combat
+namespace CwispyStudios.TankMania.Stats
 {
   [CustomEditor(typeof(Damage))]
   public class DamageEditor : Editor

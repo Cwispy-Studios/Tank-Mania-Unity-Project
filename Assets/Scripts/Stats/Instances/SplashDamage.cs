@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace CwispyStudios.TankMania.Combat
+namespace CwispyStudios.TankMania.Stats
 {
-  using Stats;
-
   [System.Serializable]
   public class SplashDamage
   {

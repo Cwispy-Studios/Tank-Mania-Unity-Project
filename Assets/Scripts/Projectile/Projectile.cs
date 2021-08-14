@@ -5,6 +5,7 @@ using UnityEngine;
 namespace CwispyStudios.TankMania.Projectile
 {
   using Combat;
+  using Stats;
   using Visuals;
 
   public class Projectile : MonoBehaviour
@@ -141,39 +142,7 @@ namespace CwispyStudios.TankMania.Projectile
           // Object has health, then check the team
           if (splashedObjectHealth && splashedObjectHealth.CanTakeDamageFromTeam(projectileTeam))
           {
-            // Object is eligible to be damaged from splash damage, calculate damage
-            float baseSplashDamage = 
-              damageInformation.DirectDamage.Value * splashDamage.DamagePercentage.Value;
-            float splashDamageDealt = baseSplashDamage;
-
-            // If there is rolloff from radius, do further calculations
-            if (splashDamage.HasSplashDamageRolloff)
-            {
-              Vector3 closestPointOfContact = splashedRigidbody.ClosestPointOnBounds(collisionPoint);
-              float sqrDistance = Vector3.SqrMagnitude(collisionPoint - closestPointOfContact);
-
-              // NOTE: Will need caching inside DamageInformation if it causes performance problems
-              float minRadius = splashDamage.Radius.Value * splashDamage.MinRadiusPercentageRolloff.Value;
-              float sqrMinRadius = minRadius * minRadius;
-
-              float maxRadius = splashDamage.Radius.Value * splashDamage.MaxRadiusPercentageRolloff.Value;
-              float sqrMaxRadius = maxRadius * maxRadius;
-
-              if (sqrDistance <= sqrMinRadius) splashDamageDealt = baseSplashDamage;
-
-              else if (sqrDistance >= sqrMaxRadius)
-                splashDamageDealt = baseSplashDamage * splashDamage.MaxRadiusDamagePercentageRolloff.Value;
-
-              else
-              {
-                float t = (sqrDistance - sqrMinRadius) / (sqrMaxRadius - sqrMinRadius);
-
-                splashDamageDealt *= Mathf.Lerp(
-                  splashDamage.MinRadiusDamagePercentageRolloff.Value,
-                  splashDamage.MaxRadiusDamagePercentageRolloff.Value,
-                  t);
-              }
-            }
+            float splashDamageDealt = CalculateSplashDamage(splashedRigidbody, collisionPoint);          
 
             splashedObjectHealth.TakeDamage(splashDamageDealt);
           }
@@ -183,6 +152,47 @@ namespace CwispyStudios.TankMania.Projectile
       }
 
       splashedObjects.Clear();
+    }
+
+    private float CalculateSplashDamage( Rigidbody splashedRigidbody, Vector3 collisionPoint )
+    {
+      SplashDamage splashDamage = damageInformation.SplashDamage;
+
+      // Object is eligible to be damaged from splash damage, calculate damage
+      float baseSplashDamage =
+        damageInformation.DirectDamage.Value * splashDamage.DamagePercentage.Value;
+      float splashDamageDealt = baseSplashDamage;
+
+      // If there is rolloff from radius, do further calculations
+      if (splashDamage.HasSplashDamageRolloff)
+      {
+        Vector3 closestPointOfContact = splashedRigidbody.ClosestPointOnBounds(collisionPoint);
+        float sqrDistance = Vector3.SqrMagnitude(collisionPoint - closestPointOfContact);
+
+        // NOTE: Will need caching inside DamageInformation if it causes performance problems
+        float minRadius = splashDamage.Radius.Value * splashDamage.MinRadiusPercentageRolloff.Value;
+        float sqrMinRadius = minRadius * minRadius;
+
+        float maxRadius = splashDamage.Radius.Value * splashDamage.MaxRadiusPercentageRolloff.Value;
+        float sqrMaxRadius = maxRadius * maxRadius;
+
+        if (sqrDistance <= sqrMinRadius) splashDamageDealt = baseSplashDamage;
+
+        else if (sqrDistance >= sqrMaxRadius)
+          splashDamageDealt = baseSplashDamage * splashDamage.MaxRadiusDamagePercentageRolloff.Value;
+
+        else
+        {
+          float t = (sqrDistance - sqrMinRadius) / (sqrMaxRadius - sqrMinRadius);
+
+          splashDamageDealt *= Mathf.Lerp(
+            splashDamage.MinRadiusDamagePercentageRolloff.Value,
+            splashDamage.MaxRadiusDamagePercentageRolloff.Value,
+            t);
+        }
+      }
+
+      return splashDamageDealt;
     }
 
     private void Deactivate()
