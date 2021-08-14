@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 namespace CwispyStudios.TankMania.Player
 {
+  using Stats;
+
   [RequireComponent(typeof(Rigidbody))]
   public class TankMovementController : MonoBehaviour
   {

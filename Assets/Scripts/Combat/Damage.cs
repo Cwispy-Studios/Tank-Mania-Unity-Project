@@ -5,7 +5,7 @@ namespace CwispyStudios.TankMania.Combat
   using Stats;
 
   [CreateAssetMenu(menuName = "Stats/Damage")]
-  public class Damage : ScriptableObject
+  public class Damage : StatsGroup
   {
     [HideInInspector]
     public Team DamageFrom;
@@ -15,5 +15,19 @@ namespace CwispyStudios.TankMania.Combat
 
     [HideInInspector]
     public SplashDamage SplashDamage;
+
+    public override void SubscribeStats()
+    {
+      DirectDamage.SubscribeToStatModifiers();
+
+      SplashDamage.SubscribeStats();
+    }
+
+    public override void UnsubscribeStats()
+    {
+      DirectDamage.UnsubscribeFromStatModifiers();
+
+      SplashDamage.UnsubscribeStats();
+    }
   }
 }

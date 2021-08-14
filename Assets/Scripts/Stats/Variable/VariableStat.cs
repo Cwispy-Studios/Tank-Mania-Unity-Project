@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 
-using UnityEngine;
-
 namespace CwispyStudios.TankMania.Stats
 {
   using Upgrades;
@@ -14,6 +12,8 @@ namespace CwispyStudios.TankMania.Stats
     public void SubscribeToStatModifiers()
     {
       foreach (StatModifier statModifier in StatModifiers) statModifier.OnStatUpgrade += RecalculateStat;
+
+      RecalculateStat();
     }
 
     public void UnsubscribeFromStatModifiers()

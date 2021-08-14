@@ -69,7 +69,15 @@ namespace CwispyStudios.TankMania.Upgrades
 
     public void SelectUpgrade( Upgrade selectedUpgrade )
     {
-      upgradedUpgrades.Upgrade(selectedUpgrade);
+      selectedUpgrade.UpgradePlayer();
+
+      //upgradedUpgrades.Upgrade(selectedUpgrade);
+
+      // Upgrade enemies
+      foreach (UpgradeButton upgradeButton in upgradeButtons)
+      {
+        
+      }
 
       HideUpgradePanel();
     }

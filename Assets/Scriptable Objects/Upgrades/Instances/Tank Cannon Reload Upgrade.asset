@@ -15,5 +15,6 @@ MonoBehaviour:
   UpgradeName: Tank Cannon Reload
   UpgradeImage: {fileID: 21300000, guid: bc2716f2ce2d91144b02c048611aef70, type: 3}
   UpgradeDescription: Decreases the reload projectile speed by 10%.
-  StatModifiers:
+  PlayerStatModifiers:
   - {fileID: 11400000, guid: 58c69e85adb3b8c45b8a36b12b6052ef, type: 2}
+  EnemyStatModifiers: []

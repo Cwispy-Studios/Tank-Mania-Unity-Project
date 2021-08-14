@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-using UnityEditor;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Upgrades
@@ -9,7 +8,7 @@ namespace CwispyStudios.TankMania.Upgrades
   [CreateAssetMenu(menuName = "Upgrades/Stat Modifier")]
   public class StatModifier : ScriptableObject
   {
-    private int upgradedAmount = 0;
+    [NonSerialized] private int upgradedAmount = 0;
     public int UpgradedAmount => upgradedAmount;
 
     [SerializeField] private float additiveValue;

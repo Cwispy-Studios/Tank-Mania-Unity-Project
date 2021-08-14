@@ -75,5 +75,25 @@ namespace CwispyStudios.TankMania.Combat
     //  MinRadiusDamagePercentageRolloff = 1f;
     //  MaxRadiusDamagePercentageRolloff = 0f;
     //}
+
+    public void SubscribeStats()
+    {
+      Radius.SubscribeToStatModifiers();
+      DamagePercentage.SubscribeToStatModifiers();
+      MinRadiusPercentageRolloff.SubscribeToStatModifiers();
+      MaxRadiusPercentageRolloff.SubscribeToStatModifiers();
+      MinRadiusDamagePercentageRolloff.SubscribeToStatModifiers();
+      MaxRadiusDamagePercentageRolloff.SubscribeToStatModifiers();
+    }
+
+    public void UnsubscribeStats()
+    {
+      Radius.UnsubscribeFromStatModifiers();
+      DamagePercentage.UnsubscribeFromStatModifiers();
+      MinRadiusPercentageRolloff.UnsubscribeFromStatModifiers();
+      MaxRadiusPercentageRolloff.UnsubscribeFromStatModifiers();
+      MinRadiusDamagePercentageRolloff.UnsubscribeFromStatModifiers();
+      MaxRadiusDamagePercentageRolloff.UnsubscribeFromStatModifiers();
+    }
   }
 }

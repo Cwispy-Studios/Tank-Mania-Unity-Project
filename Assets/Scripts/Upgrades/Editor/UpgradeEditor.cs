@@ -9,7 +9,8 @@ namespace CwispyStudios.TankMania.Upgrades
     private SerializedProperty upgradeImage;
     private SerializedProperty upgradeName;
     private SerializedProperty upgradeDescription;
-    private SerializedProperty statModifiers;
+    private SerializedProperty playerStatModifiers;
+    private SerializedProperty enemyStatModifiers;
 
     //private static string[] PropertiesInBaseClass = new string[] { 
     //  nameof(Upgrade.UpgradeImage), nameof(Upgrade.UpgradeName), nameof(Upgrade.UpgradeDescription), "m_Script" };
@@ -19,7 +20,8 @@ namespace CwispyStudios.TankMania.Upgrades
       upgradeImage = serializedObject.FindProperty(nameof(Upgrade.UpgradeImage));
       upgradeName = serializedObject.FindProperty(nameof(Upgrade.UpgradeName));
       upgradeDescription = serializedObject.FindProperty(nameof(Upgrade.UpgradeDescription));
-      statModifiers = serializedObject.FindProperty(nameof(Upgrade.StatModifiers));
+      playerStatModifiers = serializedObject.FindProperty(nameof(Upgrade.PlayerStatModifiers));
+      enemyStatModifiers = serializedObject.FindProperty(nameof(Upgrade.EnemyStatModifiers));
     }
 
     public override void OnInspectorGUI()
@@ -40,14 +42,20 @@ namespace CwispyStudios.TankMania.Upgrades
 
       EditorGUILayout.Space();
 
-      EditorGUILayout.PropertyField(statModifiers, new GUIContent("Upgrade Components"));
+      EditorGUILayout.PropertyField(playerStatModifiers, new GUIContent("Player Upgrade Components"));
+
+      DrawModifierProperties(playerStatModifiers);
+
+      EditorGUILayout.Space();
+
+      EditorGUILayout.PropertyField(enemyStatModifiers, new GUIContent("Enemy Upgrade Components"));
+
+      DrawModifierProperties(enemyStatModifiers);
 
       serializedObject.ApplyModifiedProperties();
-
-      DrawModifierProperties();
     }
 
-    private void DrawModifierProperties()
+    private void DrawModifierProperties( SerializedProperty statModifiers )
     {
       EditorGUILayout.Space();
 

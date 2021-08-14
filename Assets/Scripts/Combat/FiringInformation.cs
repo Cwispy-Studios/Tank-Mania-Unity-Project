@@ -7,7 +7,7 @@ namespace CwispyStudios.TankMania.Combat
   using Visuals;
 
   [CreateAssetMenu(menuName = "Player/Firing Information")]
-  public class FiringInformation : ScriptableObject
+  public class FiringInformation : StatsGroup
   {
     [Header("Projectile")]
     public Projectile ProjectilePrefab;
@@ -24,5 +24,21 @@ namespace CwispyStudios.TankMania.Combat
     public FloatStat ReloadSpeed = new FloatStat(1.5f);
     [StatRange(0.1f, 0.5f), Tooltip("Time in seconds before firing will be queued if the input action is performed.")] 
     public FloatStat TimeToQueueFiring = new FloatStat(0.2f);
+
+    public override void SubscribeStats()
+    {
+      FiringForce.SubscribeToStatModifiers();
+      FireRate.SubscribeToStatModifiers();
+      ReloadSpeed.SubscribeToStatModifiers();
+      TimeToQueueFiring.SubscribeToStatModifiers();
+    }
+
+    public override void UnsubscribeStats()
+    {
+      FiringForce.UnsubscribeFromStatModifiers();
+      FireRate.UnsubscribeFromStatModifiers();
+      ReloadSpeed.UnsubscribeFromStatModifiers();
+      TimeToQueueFiring.UnsubscribeFromStatModifiers();
+    }
   }
 }
