@@ -21,9 +21,14 @@ namespace CwispyStudios.TankMania.Stats
       this.baseValue = baseValue;
     }
 
-    public override void RecalculateStat()
+    public override void SetDefaultUpgradedValue()
     {
       upgradedValue = baseValue;
+    }
+
+    public override void RecalculateStat()
+    {
+      SetDefaultUpgradedValue();
 
       float totalAdditiveValue = 0;
       float totalMultiplicativeValue = 0;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Combat
 {
-  public class Health : MonoBehaviour
+  public class Damageable : MonoBehaviour
   {
     [SerializeField] private Team unitTeam;
     [SerializeField, Range(0f, 10000f)] private float maxHealth;

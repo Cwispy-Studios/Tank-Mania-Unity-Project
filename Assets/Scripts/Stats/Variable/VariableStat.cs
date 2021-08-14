@@ -21,6 +21,8 @@ namespace CwispyStudios.TankMania.Stats
       foreach (StatModifier statModifier in StatModifiers) statModifier.OnStatUpgrade -= RecalculateStat;
     }
 
+    public abstract void SetDefaultUpgradedValue();
+
     public abstract void RecalculateStat();
   }
 }

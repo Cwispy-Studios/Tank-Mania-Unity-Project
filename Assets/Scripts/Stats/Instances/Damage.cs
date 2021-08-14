@@ -14,20 +14,6 @@ namespace CwispyStudios.TankMania.Stats
     public FloatStat DirectDamage = new FloatStat(10f);
 
     [HideInInspector]
-    public SplashDamage SplashDamage;
-
-    public override void SubscribeStats()
-    {
-      DirectDamage.SubscribeToStatModifiers();
-
-      SplashDamage.SubscribeStats();
-    }
-
-    public override void UnsubscribeStats()
-    {
-      DirectDamage.UnsubscribeFromStatModifiers();
-
-      SplashDamage.UnsubscribeStats();
-    }
+    public SplashDamage SplashDamage = new SplashDamage();
   }
 }

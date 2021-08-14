@@ -13,23 +13,5 @@ namespace CwispyStudios.TankMania.Stats
     [StatRange(1f, 5f)] public FloatStat MaxTorque = new FloatStat(1.2f);
     [StatRange(0.5f, 5f)] public FloatStat SteerForce = new FloatStat(1f);
     [StatRange(1f, 5f)] public FloatStat SteerNullifierForce = new FloatStat(3.5f);
-
-    public override void SubscribeStats()
-    {
-      MaxVelocity.SubscribeToStatModifiers();
-      AccelerationForce.SubscribeToStatModifiers();
-      MaxTorque.SubscribeToStatModifiers();
-      SteerForce.SubscribeToStatModifiers();
-      SteerNullifierForce.SubscribeToStatModifiers();
-    }
-
-    public override void UnsubscribeStats()
-    {
-      MaxVelocity.UnsubscribeFromStatModifiers();
-      AccelerationForce.UnsubscribeFromStatModifiers();
-      MaxTorque.UnsubscribeFromStatModifiers();
-      SteerForce.UnsubscribeFromStatModifiers();
-      SteerNullifierForce.UnsubscribeFromStatModifiers();
-    }
   }
 }

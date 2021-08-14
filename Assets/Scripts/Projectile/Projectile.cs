@@ -90,7 +90,7 @@ namespace CwispyStudios.TankMania.Projectile
     private void DamageUnitIfValid( GameObject collisionObject )
     {
       // Check if object has a health component so it can be damaged
-      Health hitObjectHealth = collisionObject.GetComponent<Health>();
+      Damageable hitObjectHealth = collisionObject.GetComponent<Damageable>();
       Team projectileTeam = damageInformation.DamageFrom;
 
       // Also check if unit is from a different team, no friendly fire
@@ -137,7 +137,7 @@ namespace CwispyStudios.TankMania.Projectile
           splashedObjects.Add(splashedObject);
 
           // Check if object has a health component and belongs to opposing team
-          Health splashedObjectHealth = splashedObject.GetComponent<Health>();
+          Damageable splashedObjectHealth = splashedObject.GetComponent<Damageable>();
 
           // Object has health, then check the team
           if (splashedObjectHealth && splashedObjectHealth.CanTakeDamageFromTeam(projectileTeam))
