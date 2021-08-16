@@ -17,4 +17,6 @@ MonoBehaviour:
   UpgradeDescription: Increases cannon damage by 10%.
   PlayerStatModifiers:
   - {fileID: 11400000, guid: cff6414df3edf8b439f2560d551a1dc9, type: 2}
-  EnemyStatModifiers: []
+  EnemyStatModifiers:
+  - {fileID: 11400000, guid: 687786a3384e1964792c2bcbe5754f00, type: 2}
+  - {fileID: 11400000, guid: 42d426cf144accd49bd912b3d3b3c587, type: 2}

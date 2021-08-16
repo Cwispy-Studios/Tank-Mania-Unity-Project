@@ -76,7 +76,9 @@ namespace CwispyStudios.TankMania.Upgrades
       // Upgrade enemies
       foreach (UpgradeButton upgradeButton in upgradeButtons)
       {
-        
+        Upgrade unselectedUpgrade = upgradeButton.UpgradeComponent;
+
+        if (unselectedUpgrade != selectedUpgrade) unselectedUpgrade.UpgradeEnemy();
       }
 
       HideUpgradePanel();

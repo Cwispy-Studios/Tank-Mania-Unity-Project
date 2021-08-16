@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Enemy Tank Health
   m_EditorClassIdentifier: 
   MaxHealth:
-    StatModifiers: []
+    StatModifiers:
+    - {fileID: 11400000, guid: 687786a3384e1964792c2bcbe5754f00, type: 2}
     baseValue: 100
   HealthRegeneration:
-    StatModifiers: []
+    StatModifiers:
+    - {fileID: 11400000, guid: 42d426cf144accd49bd912b3d3b3c587, type: 2}
     baseValue: 2

@@ -10,6 +10,7 @@ namespace CwispyStudios.TankMania.Upgrades
   {
     private Image imageComponent;
     private Upgrade upgradeComponent;
+    public Upgrade UpgradeComponent => upgradeComponent;
 
     public Action<Upgrade> OnHoverEvent;
     public Action OnNotHoverEvent;

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using UnityEditor;
 using UnityEngine;
 
@@ -12,16 +14,20 @@ namespace CwispyStudios.TankMania.Stats
 
     // Cache the style of the dropdown button
     private GUIStyle dropdownButtonStyle;
+
     // Cache the graphics of dropdown and foldout buttons
     private GUIContent foldoutContent;
     private GUIContent dropdownContent;
+
     // Cache the property of the modifiers list
     private SerializedProperty modifiersList;
+
     // Cache the margin size of a normal button
     private float buttonMargin;
     private string modifiersTooltip;
 
     private bool showModifiers = false;
+    private List<StatModifier> modifiersInList = new List<StatModifier>();
 
     public override float GetPropertyHeight( SerializedProperty property, GUIContent label )
     {
@@ -69,16 +75,7 @@ namespace CwispyStudios.TankMania.Stats
 
         EditorGUI.PropertyField(position, modifiersList, new GUIContent("Modifiers", modifiersTooltip), true);
 
-        if (EditorGUI.EndChangeCheck())
-        {
-          for (int i = 0; i < modifiersList.arraySize; ++i)
-          {
-            StatModifier statModifier = modifiersList.GetArrayElementAtIndex(i).objectReferenceValue as StatModifier;
-
-            if (statModifier)
-              statModifier.AddStatModified($"{property.serializedObject.targetObject.name}: {property.displayName}");
-          }
-        }
+        if (EditorGUI.EndChangeCheck()) InformStatModifiersOfSubscribers(property);
       }
 
       if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties();
@@ -113,6 +110,15 @@ namespace CwispyStudios.TankMania.Stats
         dropdownContent = EditorGUIUtility.IconContent("d_dropdown");
       }
 
+      modifiersInList.Clear();
+
+      for (int i = 0; i < modifiersList.arraySize; ++i)
+      {
+        StatModifier statModifier = modifiersList.GetArrayElementAtIndex(i).objectReferenceValue as StatModifier;
+
+        if (!modifiersInList.Contains(statModifier)) modifiersInList.Add(statModifier);
+      }
+
       AddModifiersToTooltip(label);
     }
 
@@ -139,6 +145,31 @@ namespace CwispyStudios.TankMania.Stats
       if (!string.IsNullOrEmpty(label.tooltip)) label.tooltip += "\n\n";
 
       label.tooltip += modifiersTooltip;
+    }
+
+    private void InformStatModifiersOfSubscribers( SerializedProperty property )
+    {
+      string modifiedInfo = $"{property.serializedObject.targetObject.name}: {property.displayName}";
+
+      List<StatModifier> oldList = new List<StatModifier>(modifiersInList);
+      modifiersInList.Clear();
+
+      // Loop through the new modifiersList
+      for (int i = 0; i < modifiersList.arraySize; ++i)
+      {
+        StatModifier statModifier = modifiersList.GetArrayElementAtIndex(i).objectReferenceValue as StatModifier;
+
+        // Inform any statModifier that it has been added to a new stat
+        if (statModifier)
+        {
+          statModifier.AddStatModified(modifiedInfo);
+          modifiersInList.Add(statModifier);
+        }
+      }
+
+      foreach (StatModifier oldStatModifier in oldList)
+        if (oldStatModifier != null && !modifiersInList.Contains(oldStatModifier)) 
+          oldStatModifier.RemoveStatModified(modifiedInfo);
     }
 
     public virtual void DrawValueField( Rect position, SerializedProperty baseValue, GUIContent label )

@@ -20,7 +20,8 @@ MonoBehaviour:
   SplashDamage:
     HasSplashDamage: 1
     Radius:
-      StatModifiers: []
+      StatModifiers:
+      - {fileID: 11400000, guid: b6955347593497e49bbaca9a179aac44, type: 2}
       baseValue: 2
     DamagePercentage:
       StatModifiers: []

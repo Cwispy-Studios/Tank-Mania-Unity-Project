@@ -24,13 +24,20 @@ namespace CwispyStudios.TankMania.Upgrades
 
       foreach (StatModifier statModifier in PlayerStatModifiers)
       {
+        if (statModifier == null) Debug.LogError("Stat modifier has no subscribers and will not effect any stats!", statModifier);
+
         statModifier.Upgrade();
       }
     }
 
     public void UpgradeEnemy()
     {
+      foreach (StatModifier statModifier in EnemyStatModifiers)
+      {
+        if (statModifier == null) Debug.LogError("Stat modifier has no subscribers and will not effect any stats!", statModifier);
 
+        statModifier.Upgrade();
+      }
     }
   }
 }

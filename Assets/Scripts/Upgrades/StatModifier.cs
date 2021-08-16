@@ -34,6 +34,12 @@ namespace CwispyStudios.TankMania.Upgrades
       if (!statsModified.Contains(stat))
         statsModified.Add(stat);
     }
+
+    public void RemoveStatModified( string stat )
+    {
+      if (statsModified.Contains(stat))
+        statsModified.Remove(stat);
+    }
 #endif
   }
 }
