@@ -2250,8 +2250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitTeam: 1
-  maxHealth: 100
-  healthRegeneration: 2
+  health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
   healthText: {fileID: 2137104003}
 --- !u!33 &5449327591314870100
 MeshFilter:
@@ -2715,6 +2714,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 871398082, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 11400000, guid: eb70d2b91920df04c89e825df6ff81e4,
+        type: 2}
     - target: {fileID: 1530951065, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
       propertyPath: baseDamage
       value: 

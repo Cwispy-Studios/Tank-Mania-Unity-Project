@@ -2,11 +2,12 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Combat
 {
+  using Stats;
+
   public class Damageable : MonoBehaviour
   {
     [SerializeField] private Team unitTeam;
-    [SerializeField, Range(0f, 10000f)] private float maxHealth;
-    [SerializeField, Range(0f, 100f)] private float healthRegeneration;
+    [SerializeField] private Health health;
 
     // DEBUG
     [SerializeField] private TMPro.TMP_Text healthText;
@@ -15,12 +16,13 @@ namespace CwispyStudios.TankMania.Combat
 
     private void Awake()
     {
-      currentHealth = maxHealth;
+      currentHealth = health.MaxHealth.Value;
     }
 
     private void Update()
     {
-      if (healthRegeneration > 0f && currentHealth < maxHealth) RegenerateHealth();
+      if (health.HealthRegeneration.Value > 0f && currentHealth < health.MaxHealth.Value)
+        RegenerateHealth();
 
       // DEBUG
       if (healthText)
@@ -29,8 +31,8 @@ namespace CwispyStudios.TankMania.Combat
 
     private void RegenerateHealth()
     {
-      currentHealth += healthRegeneration * Time.deltaTime;
-      currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+      currentHealth += health.HealthRegeneration.Value * Time.deltaTime;
+      currentHealth = Mathf.Clamp(currentHealth, 0f, health.MaxHealth.Value);
     }
 
     public bool CanTakeDamageFromTeam( Team team )

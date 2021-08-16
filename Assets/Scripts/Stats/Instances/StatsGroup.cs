@@ -10,11 +10,13 @@ namespace CwispyStudios.TankMania.Stats
     [SerializeField, HideInInspector] 
     private List<VariableStat> stats = new List<VariableStat>();
 
+#if !UNITY_EDITOR
     private void Awake()
     {
       // Called for build version
       FindStatObjects();
     }
+#endif
 
     private void OnValidate()
     {
@@ -60,7 +62,7 @@ namespace CwispyStudios.TankMania.Stats
     private void SetDefaultUpgradedStatValues()
     {
       foreach (VariableStat stat in stats)
-        stat.SetDefaultUpgradedValue();
+        stat?.SetDefaultUpgradedValue();
     }
 
     private void SubscribeStats()
