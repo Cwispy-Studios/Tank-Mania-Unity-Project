@@ -16,10 +16,24 @@ namespace CwispyStudios.TankMania.Stats
       RecalculateStat();
     }
 
+    //public void SubscribeToStatModifiers( List<StatModifier> modifiersList )
+    //{
+    //  StatModifiers.AddRange(modifiersList);
+
+    //  foreach (StatModifier statModifier in modifiersList) statModifier.OnStatUpgrade += RecalculateStat;
+
+    //  RecalculateStat();
+    //}
+
     public void UnsubscribeFromStatModifiers()
     {
       foreach (StatModifier statModifier in StatModifiers) statModifier.OnStatUpgrade -= RecalculateStat;
     }
+
+    //public void UnsubscribeFromStatModifiers( List<StatModifier> modifiersList )
+    //{
+    //  foreach (StatModifier statModifier in modifiersList) statModifier.OnStatUpgrade -= RecalculateStat;
+    //}
 
     public abstract void SetDefaultUpgradedValue();
 

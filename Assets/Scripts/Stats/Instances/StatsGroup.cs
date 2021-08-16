@@ -7,6 +7,7 @@ namespace CwispyStudios.TankMania.Stats
 {
   public abstract class StatsGroup : ScriptableObject
   {
+    [SerializeField, HideInInspector] 
     private List<VariableStat> stats = new List<VariableStat>();
 
     private void Awake()
@@ -19,7 +20,7 @@ namespace CwispyStudios.TankMania.Stats
     {
       // Need to be called here since the list seems to get cleared everytime in editor
       FindStatObjects();
-      
+
       // Does not need to be called in build since the values get serialized in editor already
       SetDefaultUpgradedStatValues();
     }
@@ -36,18 +37,23 @@ namespace CwispyStudios.TankMania.Stats
 
     private void FindStatObjects()
     {
-      // Gets the list of all fields in the object.
-      FieldInfo[] statFields = GetType().GetFields();
-
       stats.Clear();
+      GetStatVariables(this);
+    }
 
-      foreach (FieldInfo statField in statFields)
+    private void GetStatVariables( object statsGroup )
+    {
+      // Gets the list of all fields in the object.
+      FieldInfo[] fields = statsGroup.GetType().GetFields();
+
+      foreach (FieldInfo field in fields)
       {
         // Find the fields that are VariableStats
-        if (statField.FieldType == typeof(FloatStat) || statField.FieldType == typeof(IntStat))
-        {
-          stats.Add((VariableStat)statField.GetValue(this));
-        }
+        if (field.FieldType == typeof(FloatStat) || field.FieldType == typeof(IntStat))
+          stats.Add(field.GetValue(statsGroup) as VariableStat);
+
+        else if (field.FieldType.IsClass)
+          GetStatVariables(field.GetValue(statsGroup));
       }
     }
 

@@ -55,7 +55,7 @@ namespace CwispyStudios.TankMania.Stats
 
       // Draw the dropdown/foldout button to show/hide modifiers list
       GUIContent content = showModifiers ? dropdownContent : foldoutContent;
-      content.tooltip = "Show/hide modifiers";
+      content.tooltip = "Show/hide modifiers.\n\n" + modifiersTooltip;
       if (GUI.Button(position, content, dropdownButtonStyle)) showModifiers = !showModifiers;
 
       // Display the list of modifiers

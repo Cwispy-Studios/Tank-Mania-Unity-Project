@@ -19,13 +19,12 @@ MonoBehaviour:
     baseValue: 10
   SplashDamage:
     HasSplashDamage: 1
-    SplashRadius:
-      StatModifiers:
-      - {fileID: 11400000, guid: b6955347593497e49bbaca9a179aac44, type: 2}
-      baseValue: 2.5
-    SplashDamagePercentage:
+    Radius:
       StatModifiers: []
-      baseValue: 0.5
+      baseValue: 2
+    DamagePercentage:
+      StatModifiers: []
+      baseValue: 1
     HasSplashDamageRolloff: 1
     MinRadiusPercentageRolloff:
       StatModifiers: []
