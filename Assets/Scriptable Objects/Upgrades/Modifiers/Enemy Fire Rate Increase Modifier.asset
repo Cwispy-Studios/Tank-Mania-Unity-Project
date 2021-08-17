@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Enemy Fire Rate Increase Modifier
   m_EditorClassIdentifier: 
   additiveValue: 0
-  multiplicativeValue: 0.049999975
+  multiplicativeValue: 0.09999998
   statsModified: []

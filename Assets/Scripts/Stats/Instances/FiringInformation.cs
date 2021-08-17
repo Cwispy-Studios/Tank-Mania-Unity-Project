@@ -19,8 +19,8 @@ namespace CwispyStudios.TankMania.Stats
     public FloatStat FiringForce = new FloatStat(20f);
     [StatRange(0.5f, 3f), Tooltip("Interval in seconds between firing each ammunition without reloading.")] 
     public FloatStat FireRate = new FloatStat(1.5f);
-    [StatRange(0.5f, 3f), Tooltip("How fast the ammunition is reloaded in seconds.")]
-    public FloatStat ReloadSpeed = new FloatStat(1.5f);
+    [StatRange(2f, 4f), Tooltip("How fast the ammunition is reloaded in seconds.")]
+    public FloatStat ReloadSpeed = new FloatStat(3f);
     [StatRange(0.1f, 0.5f), Tooltip("Time in seconds before firing will be queued if the input action is performed.")] 
     public FloatStat TimeToQueueFiring = new FloatStat(0.2f);
   }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Tank Cannon Reload Decrease Modifier
   m_EditorClassIdentifier: 
   additiveValue: 0
-  multiplicativeValue: -0.100000024
+  multiplicativeValue: 0.09999998
   statsModified: []

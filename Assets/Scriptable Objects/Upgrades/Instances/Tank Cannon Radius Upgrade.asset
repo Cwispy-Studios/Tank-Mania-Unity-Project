@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf4556e128744744a255272f638564c, type: 3}
   m_Name: Tank Cannon Radius Upgrade
   m_EditorClassIdentifier: 
+  UpgradeRarity: {fileID: 11400000, guid: 96bed023bef0704489db576ab77873de, type: 2}
   UpgradeName: Tank Cannon Splash Radius
-  UpgradeImage: {fileID: 21300000, guid: 106bca34fb9f54c4a82b3b16a471bfbd, type: 3}
+  UpgradeImage: {fileID: 21300000, guid: bc2716f2ce2d91144b02c048611aef70, type: 3}
   UpgradeDescription: Increases the cannon splash radius by 20%.
   PlayerStatModifiers:
   - {fileID: 11400000, guid: b6955347593497e49bbaca9a179aac44, type: 2}

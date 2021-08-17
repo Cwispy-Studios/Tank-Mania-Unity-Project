@@ -10,7 +10,6 @@ namespace CwispyStudios.TankMania.Stats
     [SerializeField] private float baseValue;
 
     private float upgradedValue;
-
     public float Value => upgradedValue;
 
     /// <summary>

@@ -25,7 +25,7 @@ MonoBehaviour:
     baseValue: 1.5
   ReloadSpeed:
     StatModifiers: []
-    baseValue: 1.5
+    baseValue: 3
   TimeToQueueFiring:
     StatModifiers: []
     baseValue: 0.2

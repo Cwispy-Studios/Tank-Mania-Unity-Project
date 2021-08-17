@@ -59,6 +59,13 @@ namespace CwispyStudios.TankMania.Stats
       position.x += position.width + buttonMargin;
       position.width = SwapButtonWidth;
 
+      if (modifiersList.hasMultipleDifferentValues)
+      {
+        if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties();
+
+        return;
+      }
+
       // Draw the dropdown/foldout button to show/hide modifiers list
       GUIContent content = showModifiers ? dropdownContent : foldoutContent;
       content.tooltip = "Show/hide modifiers.\n\n" + modifiersTooltip;
@@ -110,6 +117,8 @@ namespace CwispyStudios.TankMania.Stats
         dropdownContent = EditorGUIUtility.IconContent("d_dropdown");
       }
 
+      if (property.hasMultipleDifferentValues) return;
+     
       modifiersInList.Clear();
 
       for (int i = 0; i < modifiersList.arraySize; ++i)

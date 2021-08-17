@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Tank Cannon Splash Radius Increase Modifier
   m_EditorClassIdentifier: 
   additiveValue: 0
-  multiplicativeValue: 0.19999997
+  multiplicativeValue: 0.09999998
   statsModified: []

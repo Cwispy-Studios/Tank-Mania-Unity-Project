@@ -3,9 +3,11 @@ using UnityEditor;
 
 namespace CwispyStudios.TankMania.Upgrades
 {
+  [CanEditMultipleObjects]
   [CustomEditor(typeof(Upgrade), true)]
   public class UpgradeEditor : Editor
   {
+    private SerializedProperty upgradeRarity;
     private SerializedProperty upgradeImage;
     private SerializedProperty upgradeName;
     private SerializedProperty upgradeDescription;
@@ -17,6 +19,7 @@ namespace CwispyStudios.TankMania.Upgrades
 
     private void OnEnable()
     {
+      upgradeRarity = serializedObject.FindProperty(nameof(Upgrade.UpgradeRarity));
       upgradeImage = serializedObject.FindProperty(nameof(Upgrade.UpgradeImage));
       upgradeName = serializedObject.FindProperty(nameof(Upgrade.UpgradeName));
       upgradeDescription = serializedObject.FindProperty(nameof(Upgrade.UpgradeDescription));
@@ -33,7 +36,15 @@ namespace CwispyStudios.TankMania.Upgrades
       EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Script"));
       EditorGUI.EndDisabledGroup();
 
-      EditorGUILayout.PropertyField(upgradeName);
+      EditorGUILayout.PropertyField(upgradeRarity);
+
+      if (serializedObject.isEditingMultipleObjects)
+      {
+        serializedObject.ApplyModifiedProperties();
+        return;
+      }
+
+        EditorGUILayout.PropertyField(upgradeName);
       upgradeImage.objectReferenceValue = EditorGUILayout.ObjectField("Image", upgradeImage.objectReferenceValue, typeof(Sprite), false);
       EditorGUILayout.PropertyField(upgradeDescription);
 

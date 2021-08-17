@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Tank Cannon Fire Rate Increase Modifier
   m_EditorClassIdentifier: 
   additiveValue: 0
-  multiplicativeValue: 0.14999998
+  multiplicativeValue: 0.09999998
   statsModified: []

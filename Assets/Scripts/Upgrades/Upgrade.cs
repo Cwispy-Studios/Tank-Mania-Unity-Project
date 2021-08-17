@@ -5,6 +5,9 @@ namespace CwispyStudios.TankMania.Upgrades
   [CreateAssetMenu(menuName = "Upgrades/Upgrade Instance", order = 0)]
   public class Upgrade : ScriptableObject
   {
+    [Header("Upgrade Rarity")]
+    public UpgradeRarity UpgradeRarity;
+
     [Header("Upgrade Descriptors")]
     public string UpgradeName;
     public Sprite UpgradeImage;

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Upgrades
 {
+  [CanEditMultipleObjects]
   [CustomEditor(typeof(StatModifier), true)]
   public class StatModifierEditor : Editor
   {
