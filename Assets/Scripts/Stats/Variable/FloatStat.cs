@@ -43,6 +43,8 @@ namespace CwispyStudios.TankMania.Stats
 
       upgradedValue += totalAdditiveValue;
       upgradedValue *= 1f + totalMultiplicativeValue;
+
+      OnStatUpgrade?.Invoke();
     }
   }
 }

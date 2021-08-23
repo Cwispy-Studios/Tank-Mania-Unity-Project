@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace CwispyStudios.TankMania.Stats
@@ -9,31 +10,21 @@ namespace CwispyStudios.TankMania.Stats
   {
     public List<StatModifier> StatModifiers = new List<StatModifier>();
 
+    public Action OnStatUpgrade;
+
     public void SubscribeToStatModifiers()
     {
+      if (StatModifiers == null) StatModifiers = new List<StatModifier>();
+
       foreach (StatModifier statModifier in StatModifiers) statModifier.OnStatUpgrade += RecalculateStat;
 
       RecalculateStat();
     }
 
-    //public void SubscribeToStatModifiers( List<StatModifier> modifiersList )
-    //{
-    //  StatModifiers.AddRange(modifiersList);
-
-    //  foreach (StatModifier statModifier in modifiersList) statModifier.OnStatUpgrade += RecalculateStat;
-
-    //  RecalculateStat();
-    //}
-
     public void UnsubscribeFromStatModifiers()
     {
       foreach (StatModifier statModifier in StatModifiers) statModifier.OnStatUpgrade -= RecalculateStat;
     }
-
-    //public void UnsubscribeFromStatModifiers( List<StatModifier> modifiersList )
-    //{
-    //  foreach (StatModifier statModifier in modifiersList) statModifier.OnStatUpgrade -= RecalculateStat;
-    //}
 
     public abstract void SetDefaultUpgradedValue();
 

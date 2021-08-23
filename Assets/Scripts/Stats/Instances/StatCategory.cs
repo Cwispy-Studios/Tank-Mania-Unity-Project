@@ -14,7 +14,9 @@ namespace CwispyStudios.TankMania.Stats
     // Editor only, stores the objects to grab the VariableStats from
     [SerializeField] private List<StatsGroup> statsGroupObjects = new List<StatsGroup>();
     // Editor only, stores the index of the stat to save
+#pragma warning disable 0414
     [SerializeField] private int variableStatIndex = 0;
+#pragma warning restore 0414
 #endif
 
     // The list of StatModifiers that will affect every stats in this category.

@@ -4,12 +4,12 @@ namespace CwispyStudios.TankMania.Stats
 {
   using Upgrades;
 
+  [System.Serializable]
   public class IntStat : VariableStat
   {
     [SerializeField] private int baseValue;
 
     private int upgradedValue;
-
     public int Value => upgradedValue;
 
     /// <summary>
@@ -43,6 +43,8 @@ namespace CwispyStudios.TankMania.Stats
 
       upgradedValue += Mathf.RoundToInt(totalAdditiveValue);
       upgradedValue = Mathf.RoundToInt(upgradedValue * (1f + totalMultiplicativeValue));
+
+      OnStatUpgrade?.Invoke();
     }
   }
 }

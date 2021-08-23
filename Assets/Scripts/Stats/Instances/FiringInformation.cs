@@ -23,5 +23,7 @@ namespace CwispyStudios.TankMania.Stats
     public FloatStat ReloadSpeed = new FloatStat(3f);
     [StatRange(0.1f, 0.5f), Tooltip("Time in seconds before firing will be queued if the input action is performed.")] 
     public FloatStat TimeToQueueFiring = new FloatStat(0.2f);
+    [StatRange(1, 10), Tooltip("Number of ammunition that can be held at once.")]
+    public IntStat AmmoCount = new IntStat(4);
   }
 }

@@ -2714,6 +2714,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1530951065, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
+      propertyPath: currentAmmo
+      value: 
+      objectReference: {fileID: 11400000, guid: bbb8c6d04424f0547a23ddd0dc6729a5,
+        type: 2}
+    - target: {fileID: 1530951065, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
+      propertyPath: fireCountdown
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ed270e16f28ea64eadb6c4f09afa477,
+        type: 2}
+    - target: {fileID: 1530951065, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
+      propertyPath: reloadCountdown
+      value: 
+      objectReference: {fileID: 11400000, guid: 2637cf4943f36294e8192003d143e118,
+        type: 2}
+    - target: {fileID: 6790024010982092199, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: ammoCount
+      value: 
+      objectReference: {fileID: 11400000, guid: bbb8c6d04424f0547a23ddd0dc6729a5,
+        type: 2}
+    - target: {fileID: 6790024010982092199, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: currentAmmo
+      value: 
+      objectReference: {fileID: 11400000, guid: bbb8c6d04424f0547a23ddd0dc6729a5,
+        type: 2}
+    - target: {fileID: 6790024010982092199, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: firingCountdown
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ed270e16f28ea64eadb6c4f09afa477,
+        type: 2}
+    - target: {fileID: 6790024010982092199, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: reloadCountdown
+      value: 
+      objectReference: {fileID: 11400000, guid: 2637cf4943f36294e8192003d143e118,
+        type: 2}
+    - target: {fileID: 6790024010982092199, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: useStackedAmmoImages
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7480523010445580344, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
       propertyPath: m_Name
@@ -2774,7 +2818,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3176192099546234414, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
 --- !u!33 &8748686693340284632
 MeshFilter:

@@ -29,3 +29,8 @@ MonoBehaviour:
   TimeToQueueFiring:
     StatModifiers: []
     baseValue: 0.2
+  AmmoCount:
+    StatModifiers:
+    - {fileID: 11400000, guid: 6f19d8ebc8a31b34f8be7190b409391c, type: 2}
+    - {fileID: 11400000, guid: 5973b26f549c00a40a79d21b815d7d8e, type: 2}
+    baseValue: 5
