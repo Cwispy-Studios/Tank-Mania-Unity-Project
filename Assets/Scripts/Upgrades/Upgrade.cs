@@ -19,7 +19,8 @@ namespace CwispyStudios.TankMania.Upgrades
     [Header("Enemy Modifiers")]
     public StatModifier[] EnemyStatModifiers;
 
-    private int upgradedAmount = 0;
+    [System.NonSerialized] private int upgradedAmount = 0;
+    public int UpgradedAmount => upgradedAmount;
 
     public void UpgradePlayer()
     {

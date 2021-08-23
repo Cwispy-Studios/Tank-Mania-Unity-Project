@@ -14,6 +14,7 @@ namespace CwispyStudios.TankMania.Upgrades
 
     [Header("UI Elements")]
     [SerializeField] private UpgradeButton[] upgradeButtons;
+    [SerializeField] private TMP_Text upgradeRarityText;
     [SerializeField] private TMP_Text upgradeNameText;
     [SerializeField] private TMP_Text upgradeDescriptionText;
 
@@ -46,23 +47,47 @@ namespace CwispyStudios.TankMania.Upgrades
     {
       List<Upgrade> allUpgradesOfType = new List<Upgrade>(availableUpgrades.Upgrades);
 
+      int sumOfWeights = 0;
+
+      // Find the sum of weights
+      foreach (Upgrade upgrade in allUpgradesOfType) sumOfWeights += upgrade.UpgradeRarity.RarityWeight;
+
       for (int i = 0; i < NumberOfPickeableUpgrades; ++i)
       {
-        int randomIndex = Random.Range(0, allUpgradesOfType.Count);
+        // Generate a random cumulative weight
+        int randomWeighted = Random.Range(0, sumOfWeights);
+        int cumulativeWeight = 0;
 
-        upgradeButtons[i].SetUpgradeOfButton(allUpgradesOfType[randomIndex]);
-        allUpgradesOfType.RemoveAt(randomIndex);
+        Upgrade chosenUpgrade = null;
+
+        foreach (Upgrade upgrade in allUpgradesOfType)
+        {
+          cumulativeWeight += upgrade.UpgradeRarity.RarityWeight;
+
+          if (randomWeighted < cumulativeWeight)
+          {
+            chosenUpgrade = upgrade;
+            sumOfWeights -= chosenUpgrade.UpgradeRarity.RarityWeight;
+            break;
+          }
+        }
+
+        upgradeButtons[i].SetUpgradeOfButton(chosenUpgrade);
+        allUpgradesOfType.Remove(chosenUpgrade);
       }
     }
 
     public void SetDescription( Upgrade upgrade )
     {
-      upgradeNameText.text = upgrade.UpgradeName;
+      upgradeRarityText.text = upgrade.UpgradeRarity.name;
+      upgradeRarityText.color = upgrade.UpgradeRarity.RarityColour;
+      upgradeNameText.text = $"{upgrade.UpgradeName} (+{upgrade.UpgradedAmount})";
       upgradeDescriptionText.text = upgrade.UpgradeDescription;
     }
 
     public void ResetDescription()
     {
+      upgradeRarityText.text = string.Empty;
       upgradeNameText.text = string.Empty;
       upgradeDescriptionText.text = string.Empty;
     }
