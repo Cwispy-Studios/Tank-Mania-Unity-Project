@@ -2135,6 +2135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c722b9d45a5bf24ebdd92dd81d8c15c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeManager: {fileID: 11400000, guid: 4ccd6889f17cb6b4ea435619c13de490, type: 2}
   availableUpgrades: {fileID: 11400000, guid: 7f482ec086abe5f418d01990c0f0123d, type: 2}
   upgradedUpgrades: {fileID: 11400000, guid: d0ba8a4d4ceb7a14cb05a25cb9d2b2d5, type: 2}
   upgradeButtons:

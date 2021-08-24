@@ -8,6 +8,9 @@ namespace CwispyStudios.TankMania.Upgrades
 {
   public class UpgradePanel : MonoBehaviour
   {
+    [Header("Manager")]
+    [SerializeField] private TimeManager timeManager;
+
     [Header("Available Upgrades")]
     [SerializeField] private AvailableUpgrades availableUpgrades;
     [SerializeField] private UpgradedUpgrades upgradedUpgrades;
@@ -34,11 +37,7 @@ namespace CwispyStudios.TankMania.Upgrades
     {
       gameObject.SetActive(true);
 
-      // Pause game
-      Time.timeScale = 0f;
-
-      Cursor.visible = true;
-      Cursor.lockState = CursorLockMode.Confined;
+      timeManager.PauseGame();
 
       RandomiseUpgrades();
     }
@@ -114,10 +113,7 @@ namespace CwispyStudios.TankMania.Upgrades
       gameObject.SetActive(false);
 
       // Resume game
-      Time.timeScale = 1f;
-
-      Cursor.visible = false;
-      Cursor.lockState = CursorLockMode.Locked;
+      timeManager.ResumeGame();
     }
 
   }
