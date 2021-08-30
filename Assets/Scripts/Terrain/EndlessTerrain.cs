@@ -10,8 +10,7 @@ namespace CwispyStudios.TankMania.Terrain
         private const float scale = 1f;
         
         private const float viewerMoveThresholdForChunkUpdate = 25f;
-        private const float sqrViewerMoveThresholdForChunkUpdate =
-            viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
+        private const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
         
         public LODInfo[] detailLevels;
         public static float maxViewDst;
