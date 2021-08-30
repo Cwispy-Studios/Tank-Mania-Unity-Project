@@ -69,6 +69,8 @@ namespace CwispyStudios.TankMania.Terrain
                     vertexIndex++;
                 }
             }
+            
+            meshData.BakeNormals();
 
             return meshData;
         }
@@ -79,6 +81,7 @@ namespace CwispyStudios.TankMania.Terrain
         private Vector3[] vertices;
         private int[] triangles;
         private Vector2[] uvs;
+        private Vector3[] bakedNormals;
 
         private Vector3[] borderVertices;
         private int[] borderTriangles;
@@ -183,13 +186,18 @@ namespace CwispyStudios.TankMania.Terrain
             return  Vector3.Cross(sideAB, sideAC).normalized;
         }
 
+        public void BakeNormals()
+        {
+            bakedNormals = CalculateNormals();
+        }
+
         public Mesh CreateMesh()
         {
             Mesh mesh = new Mesh();
             mesh.vertices = vertices;
             mesh.triangles = triangles;
             mesh.uv = uvs;
-            mesh.normals = CalculateNormals();
+            mesh.normals = bakedNormals;
             mesh.RecalculateNormals();
             return mesh;
         }
