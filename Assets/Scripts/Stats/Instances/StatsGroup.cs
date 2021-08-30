@@ -10,6 +10,10 @@ namespace CwispyStudios.TankMania.Stats
     [SerializeField, HideInInspector] 
     private List<VariableStat> stats = new List<VariableStat>();
 
+#if UNITY_EDITOR
+    private List<VariableStat> oldStats = new List<VariableStat>();
+#endif
+
 #if !UNITY_EDITOR
     private void Awake()
     {
@@ -58,6 +62,12 @@ namespace CwispyStudios.TankMania.Stats
           GetStatVariables(field.GetValue(statsGroup));
       }
     }
+
+    //private void Test()
+    //{
+    //  foreach (VariableStat stat in stats)
+    //    stat?.StatModifiers[0].;
+    //}
 
     private void SetDefaultUpgradedStatValues()
     {

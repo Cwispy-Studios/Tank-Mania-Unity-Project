@@ -14,9 +14,6 @@ namespace CwispyStudios.TankMania.Upgrades
     private SerializedProperty playerStatModifiers;
     private SerializedProperty enemyStatModifiers;
 
-    //private static string[] PropertiesInBaseClass = new string[] { 
-    //  nameof(Upgrade.UpgradeImage), nameof(Upgrade.UpgradeName), nameof(Upgrade.UpgradeDescription), "m_Script" };
-
     private void OnEnable()
     {
       upgradeRarity = serializedObject.FindProperty(nameof(Upgrade.UpgradeRarity));
@@ -44,7 +41,7 @@ namespace CwispyStudios.TankMania.Upgrades
         return;
       }
 
-        EditorGUILayout.PropertyField(upgradeName);
+      EditorGUILayout.PropertyField(upgradeName);
       upgradeImage.objectReferenceValue = EditorGUILayout.ObjectField("Image", upgradeImage.objectReferenceValue, typeof(Sprite), false);
       EditorGUILayout.PropertyField(upgradeDescription);
 

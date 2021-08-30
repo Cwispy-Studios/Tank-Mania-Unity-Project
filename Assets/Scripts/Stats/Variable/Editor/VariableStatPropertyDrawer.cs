@@ -44,9 +44,10 @@ namespace CwispyStudios.TankMania.Stats
     public override void OnGUI( Rect position, SerializedProperty property, GUIContent label )
     {
       label = EditorGUI.BeginProperty(position, label, property);
-      label.text += ":";
 
       InitialiseVariables(property, label);
+
+      label.text += $" ({modifiersList.arraySize}):";
 
       EditorGUI.BeginChangeCheck();
 
@@ -59,6 +60,7 @@ namespace CwispyStudios.TankMania.Stats
       position.x += position.width + buttonMargin;
       position.width = SwapButtonWidth;
 
+      // Disable multi-object editing for this property since it throws errors
       if (modifiersList.hasMultipleDifferentValues)
       {
         if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties();
