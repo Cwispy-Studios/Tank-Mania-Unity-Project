@@ -2,7 +2,7 @@
     "name": "Player",
     "maps": [
         {
-            "name": "KBM",
+            "name": "Player Controls",
             "id": "957a5095-3925-4e4b-b48b-eb61cb4a29f2",
             "actions": [
                 {

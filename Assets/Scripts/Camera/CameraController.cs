@@ -38,8 +38,6 @@ namespace CwispyStudios.TankMania.Camera
 
     private Vector3 centerScreenPoint;
 
-    //public float BaseRotation { get { return baseRotation; } }
-
     private void Awake()
     {
       playerCamera = UnityEngine.Camera.main;

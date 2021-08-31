@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 namespace CwispyStudios.TankMania.Player
 {
+  using Stats;
+
   [RequireComponent(typeof(Rigidbody))]
   public class TankMovementController : MonoBehaviour
   {
@@ -24,7 +26,7 @@ namespace CwispyStudios.TankMania.Player
     {
       physicsController = GetComponent<Rigidbody>();
 
-      maxVelocitySqr = playerMovement.MaxVelocity * playerMovement.MaxVelocity;
+      maxVelocitySqr = playerMovement.MaxVelocity.Value * playerMovement.MaxVelocity.Value;
     }
 
     ///////////////////
@@ -45,15 +47,15 @@ namespace CwispyStudios.TankMania.Player
     {
       if (steerInput != 0f)
       {
-        torqueForce += steerInput * playerMovement.SteerForce * Time.deltaTime;
-        torqueForce = Mathf.Clamp(torqueForce, -playerMovement.MaxTorque, playerMovement.MaxTorque);
+        torqueForce += steerInput * playerMovement.SteerForce.Value * Time.deltaTime;
+        torqueForce = Mathf.Clamp(torqueForce, -playerMovement.MaxTorque.Value, playerMovement.MaxTorque.Value);
       }
 
       else
       {
         if (torqueForce != 0f)
         {
-          float maxDelta = playerMovement.SteerForce * playerMovement.SteerNullifierForceModifier * Time.deltaTime;
+          float maxDelta = playerMovement.SteerForce.Value * playerMovement.SteerNullifierForce.Value * Time.deltaTime;
           torqueForce = Mathf.MoveTowards(torqueForce, 0f, maxDelta);
         }
       }
@@ -78,7 +80,7 @@ namespace CwispyStudios.TankMania.Player
 
         if (velocity.sqrMagnitude <= maxVelocitySqr)
         {
-          Vector3 force = transform.forward * accelerationInput * playerMovement.AccelerationForce;
+          Vector3 force = transform.forward * accelerationInput * playerMovement.AccelerationForce.Value;
           physicsController.AddForce(force, ForceMode.Acceleration);
         }
       }

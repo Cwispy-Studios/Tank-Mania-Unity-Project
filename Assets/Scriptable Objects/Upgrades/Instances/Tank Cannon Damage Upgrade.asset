@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf4556e128744744a255272f638564c, type: 3}
+  m_Name: Tank Cannon Damage Upgrade
+  m_EditorClassIdentifier: 
+  UpgradeRarity: {fileID: 11400000, guid: 96bed023bef0704489db576ab77873de, type: 2}
+  UpgradeName: Tank Cannon Damage
+  UpgradeImage: {fileID: 21300000, guid: af629c0ffae7fe741b2e6790345546ae, type: 3}
+  UpgradeDescription: Increases cannon damage by 10%.
+  PlayerStatModifiers:
+  - {fileID: 11400000, guid: cff6414df3edf8b439f2560d551a1dc9, type: 2}
+  EnemyStatModifiers:
+  - {fileID: 11400000, guid: 687786a3384e1964792c2bcbe5754f00, type: 2}
+  - {fileID: 11400000, guid: 42d426cf144accd49bd912b3d3b3c587, type: 2}

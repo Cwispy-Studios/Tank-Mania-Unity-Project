@@ -3,6 +3,7 @@ using UnityEngine;
 namespace CwispyStudios.TankMania.Player
 {
   using Camera;
+  using Stats;
 
   public class TankTurretController : MonoBehaviour
   {
@@ -37,7 +38,8 @@ namespace CwispyStudios.TankMania.Player
       if (transform.rotation.x == targetTurretRotation) return;
 
       Quaternion to = Quaternion.Euler(0f, targetTurretRotation, 0f);
-      transform.rotation = Quaternion.RotateTowards(transform.rotation, to, turretRotation.TurretRotationSpeed * Time.deltaTime);
+      transform.rotation = 
+        Quaternion.RotateTowards(transform.rotation, to, turretRotation.TurretRotationSpeed.Value * Time.deltaTime);
     }
 
     private void RotateGun()
@@ -48,7 +50,8 @@ namespace CwispyStudios.TankMania.Player
       if (gunCannon.localRotation.x != targetGunRotation)
       {
         Quaternion to = Quaternion.Euler(targetGunRotation, 0f, 0f);
-        gunCannon.localRotation = Quaternion.RotateTowards(gunCannon.localRotation, to, turretRotation.GunRotationSpeed * Time.deltaTime);
+        gunCannon.localRotation = 
+          Quaternion.RotateTowards(gunCannon.localRotation, to, turretRotation.GunRotationSpeed.Value * Time.deltaTime);
       }
     }
 
