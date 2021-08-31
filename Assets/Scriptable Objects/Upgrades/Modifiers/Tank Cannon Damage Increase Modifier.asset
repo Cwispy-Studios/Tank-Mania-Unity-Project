@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   additiveValue: 0
   multiplicativeValue: 0.09999998
-  statsModified:
-  - 'Cannon Damage: Direct Damage'
+  statsGroupsModified:
+  - {fileID: 11400000, guid: 5e11269a810fa334fae517722358b50d, type: 2}
+  statNamesModified:
+  - DirectDamage

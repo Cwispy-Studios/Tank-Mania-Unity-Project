@@ -80,11 +80,11 @@ namespace CwispyStudios.TankMania.Stats
         position.x = EditorGUIUtility.labelWidth + 18f;
         position.width = EditorGUIUtility.currentViewWidth - position.x - dropdownButtonStyle.margin.right;
 
-        EditorGUI.BeginChangeCheck();
+        //EditorGUI.BeginChangeCheck();
 
         EditorGUI.PropertyField(position, modifiersList, new GUIContent("Modifiers", modifiersTooltip), true);
 
-        if (EditorGUI.EndChangeCheck()) InformStatModifiersOfSubscribers(property);
+        //if (EditorGUI.EndChangeCheck()) InformStatModifiersOfSubscribers(property);
       }
 
       if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties();
@@ -156,31 +156,6 @@ namespace CwispyStudios.TankMania.Stats
       if (!string.IsNullOrEmpty(label.tooltip)) label.tooltip += "\n\n";
 
       label.tooltip += modifiersTooltip;
-    }
-
-    private void InformStatModifiersOfSubscribers( SerializedProperty property )
-    {
-      string modifiedInfo = $"{property.serializedObject.targetObject.name}: {property.displayName}";
-
-      List<StatModifier> oldList = new List<StatModifier>(modifiersInList);
-      modifiersInList.Clear();
-
-      // Loop through the new modifiersList
-      for (int i = 0; i < modifiersList.arraySize; ++i)
-      {
-        StatModifier statModifier = modifiersList.GetArrayElementAtIndex(i).objectReferenceValue as StatModifier;
-
-        // Inform any statModifier that it has been added to a new stat
-        if (statModifier)
-        {
-          statModifier.AddStatModified(modifiedInfo);
-          modifiersInList.Add(statModifier);
-        }
-      }
-
-      foreach (StatModifier oldStatModifier in oldList)
-        if (oldStatModifier != null && !modifiersInList.Contains(oldStatModifier)) 
-          oldStatModifier.RemoveStatModified(modifiedInfo);
     }
 
     public virtual void DrawValueField( Rect position, SerializedProperty baseValue, GUIContent label )

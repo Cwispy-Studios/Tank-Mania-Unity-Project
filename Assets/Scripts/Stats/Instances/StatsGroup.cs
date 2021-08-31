@@ -5,13 +5,15 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
+  using Upgrades;
+
   public abstract class StatsGroup : ScriptableObject
   {
     [SerializeField, HideInInspector] 
     private List<VariableStat> stats = new List<VariableStat>();
 
 #if UNITY_EDITOR
-    private List<VariableStat> oldStats = new List<VariableStat>();
+    private List<string> statsName = new List<string>();
 #endif
 
 #if !UNITY_EDITOR
@@ -29,10 +31,16 @@ namespace CwispyStudios.TankMania.Stats
 
       // Does not need to be called in build since the values get serialized in editor already
       SetDefaultUpgradedStatValues();
+
+      InformStatModifiers();
     }
 
     private void OnEnable() 
     {
+#if UNITY_EDITOR
+      InformStatModifiers();
+#endif
+
       SubscribeStats();
     }
 
@@ -44,6 +52,7 @@ namespace CwispyStudios.TankMania.Stats
     private void FindStatObjects()
     {
       stats.Clear();
+      statsName.Clear();
       GetStatVariables(this);
     }
 
@@ -56,18 +65,26 @@ namespace CwispyStudios.TankMania.Stats
       {
         // Find the fields that are VariableStats
         if (field.FieldType == typeof(FloatStat) || field.FieldType == typeof(IntStat))
+        {
           stats.Add(field.GetValue(statsGroup) as VariableStat);
+          statsName.Add(field.Name);
+        }
 
         else if (field.FieldType.IsClass)
           GetStatVariables(field.GetValue(statsGroup));
       }
     }
 
-    //private void Test()
-    //{
-    //  foreach (VariableStat stat in stats)
-    //    stat?.StatModifiers[0].;
-    //}
+    private void InformStatModifiers()
+    {
+      for (int i = 0; i < stats.Count; ++i)
+      {
+        foreach (StatModifier statModifier in stats[i].StatModifiers)
+        {
+          statModifier?.AddStat(this, statsName[i], stats[i]);
+        }
+      }
+    }
 
     private void SetDefaultUpgradedStatValues()
     {

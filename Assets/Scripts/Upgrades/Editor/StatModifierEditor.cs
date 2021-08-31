@@ -1,8 +1,12 @@
+using System.Collections.Generic;
+
 using UnityEditor;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Upgrades
 {
+  using Stats;
+
   [CanEditMultipleObjects]
   [CustomEditor(typeof(StatModifier), true)]
   public class StatModifierEditor : Editor
@@ -10,9 +14,9 @@ namespace CwispyStudios.TankMania.Upgrades
     private SerializedProperty additiveValue;
     private SerializedProperty multiplicativeValue;
 
-    private SerializedProperty statsModified;
+    private SerializedProperty statsGroupsModified;
+    private SerializedProperty statNamesModified;
 
-    private GUIStyle modifiersListHelpBoxStyle;
     private float baseValue = 10f;
     
     private void OnEnable()
@@ -20,7 +24,11 @@ namespace CwispyStudios.TankMania.Upgrades
       additiveValue = serializedObject.FindProperty(nameof(additiveValue));
       multiplicativeValue = serializedObject.FindProperty(nameof(multiplicativeValue));
 
-      statsModified = serializedObject.FindProperty(nameof(statsModified));
+      statsGroupsModified = serializedObject.FindProperty(nameof(statsGroupsModified));
+      statNamesModified = serializedObject.FindProperty(nameof(statNamesModified));
+
+      // Required when a stat modifier is removed from a stat
+      (serializedObject.targetObject as StatModifier).RefreshStatsList();
     }
 
     public override void OnInspectorGUI()
@@ -86,25 +94,84 @@ namespace CwispyStudios.TankMania.Upgrades
     {
       EditorGUILayout.Space();
 
+      // Draw a seperator line
       Rect lineRect = EditorGUILayout.GetControlRect(false, 1f);
       EditorGUI.DrawRect(lineRect, Color.gray);
 
       EditorGUILayout.Space();
 
-      modifiersListHelpBoxStyle = GUI.skin.GetStyle("HelpBox");
-      modifiersListHelpBoxStyle.richText = true;
+      // The modifiers list will be drawn in a help box style
+      GUIStyle modifiersListHelpBoxStyle = GUI.skin.GetStyle("HelpBox");
 
-      int modifiesNumber = statsModified.arraySize;
-      string listOfStats = $"<b>Modifies {modifiesNumber} Stats:</b>";
+      // Retrieve font information only
+      GUIStyle modifiersListTextStyle = GUI.skin.label;
+      modifiersListTextStyle.font = modifiersListTextStyle.font;
+      modifiersListTextStyle.fontSize = modifiersListHelpBoxStyle.fontSize;
+      modifiersListTextStyle.fontStyle = modifiersListHelpBoxStyle.fontStyle;
+      modifiersListTextStyle.richText = true;
 
-      if (statsModified.arraySize == 0) listOfStats += "\nNONE.";
-      else
+      // Categorise all the stat names inside their stats group
+      Dictionary<StatsGroup, List<string>> statsCategorised = new Dictionary<StatsGroup, List<string>>();
+
+      for (int i = 0; i < statsGroupsModified.arraySize; ++i)
       {
-        for (int i = 0; i < statsModified.arraySize; ++i)
-          listOfStats += $"\n{i + 1}. {statsModified.GetArrayElementAtIndex(i).stringValue}";
+        StatsGroup statsGroup = statsGroupsModified.GetArrayElementAtIndex(i).objectReferenceValue as StatsGroup;
+
+        if (!statsCategorised.ContainsKey(statsGroup))
+        {
+          statsCategorised.Add(statsGroup, new List<string>());
+        }
+
+        statsCategorised[statsGroup].Add(statNamesModified.GetArrayElementAtIndex(i).stringValue);
       }
 
-      EditorGUILayout.TextArea(listOfStats, modifiersListHelpBoxStyle);
+      // Create help box for all elements below this
+      EditorGUILayout.BeginVertical(modifiersListHelpBoxStyle);
+
+      int numberOfStatsGroups = statsCategorised.Keys.Count;
+      int numberOfStats = statNamesModified.arraySize;
+
+      string labelText = $"<b>Modifies <i>{numberOfStats} Stats</i> in <i>{numberOfStatsGroups} Stats Group(s)</i>:</b>";
+
+      EditorGUILayout.TextArea(labelText, modifiersListTextStyle);
+
+      if (statNamesModified.arraySize == 0) EditorGUILayout.LabelField("NONE.");
+      else
+      {
+        int statsGroupsIndex = 0;
+        int statsIndex = 0;
+
+        // Loop through every unique stat group....
+        foreach (StatsGroup statsGroup in statsCategorised.Keys)
+        {
+          // Track the index of the stat group
+          ++statsGroupsIndex;
+
+          // Create help box for each stat group's stats
+          EditorGUILayout.BeginVertical(modifiersListHelpBoxStyle);
+
+          // Draw the numerical label and an inactive object field of the stat group on the same line
+          EditorGUILayout.BeginHorizontal();
+          EditorGUILayout.LabelField($"{statsGroupsIndex}.", GUILayout.Width(20f));
+          GUI.enabled = false;
+          EditorGUILayout.ObjectField(string.Empty, statsGroup, typeof(StatsGroup), false);
+          GUI.enabled = true;
+          EditorGUILayout.EndHorizontal();
+
+          List<string> statNamesInGroup = statsCategorised[statsGroup];
+
+          foreach (string statName in statNamesInGroup)
+          {
+            ++statsIndex;
+
+            EditorGUILayout.TextArea($"Stat {statsIndex}. {statName}", modifiersListTextStyle);
+          }
+
+          EditorGUILayout.EndVertical();
+        }
+      }
+
+      EditorGUILayout.EndVertical();
     }
   }
 }

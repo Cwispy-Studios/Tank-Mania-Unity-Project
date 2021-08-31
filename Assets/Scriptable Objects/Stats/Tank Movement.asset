@@ -24,6 +24,6 @@ MonoBehaviour:
   SteerForce:
     StatModifiers: []
     baseValue: 1
-  SteerNullifierForceModifier:
+  SteerNullifierForce:
     StatModifiers: []
     baseValue: 3.5
