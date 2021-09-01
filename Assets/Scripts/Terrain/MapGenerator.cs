@@ -142,6 +142,8 @@ namespace CwispyStudios.TankMania.Terrain
                 }  
             }
             
+            textureData.UpdateMeshHeights(terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
+            
             return new MapData(noiseMap);
         }
 

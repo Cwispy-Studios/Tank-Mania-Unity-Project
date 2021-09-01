@@ -13,18 +13,20 @@ namespace CwispyStudios.TankMania.Terrain
 
         protected virtual void OnValidate()
         {
-            if (autoUpdate) {
-                NotifyOfUpdatedValues();
+            if (autoUpdate)
+            {
+                UnityEditor.EditorApplication.update += NotifyOfUpdatedValues;
             }
         }
 
         public void NotifyOfUpdatedValues()
         {
+            UnityEditor.EditorApplication.update -= NotifyOfUpdatedValues;
+            
             if (OnValuesUpdated != null) {
                 OnValuesUpdated();
             }
         }
-
     }
 }
 
