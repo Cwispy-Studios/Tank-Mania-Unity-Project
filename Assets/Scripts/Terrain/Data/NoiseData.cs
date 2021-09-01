@@ -19,6 +19,7 @@ namespace CwispyStudios.TankMania.Terrain
         public int seed;
         public Vector2 offset;
 
+        #if UNITY_EDITOR
         protected override void OnValidate()
         {
             if (lacunarity < 1) {
@@ -30,5 +31,6 @@ namespace CwispyStudios.TankMania.Terrain
             
             base.OnValidate();
         }
+        #endif
     }
 }

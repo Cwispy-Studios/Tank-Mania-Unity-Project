@@ -16,7 +16,7 @@ MonoBehaviour:
   uniformScale: 2
   useFlatShading: 0
   useFalloff: 0
-  meshHeightMultiplier: 48
+  meshHeightMultiplier: 26
   meshHeightCurve:
     serializedVersion: 2
     m_Curve:
@@ -30,13 +30,40 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1.1479492
-      value: 1.0525551
-      inSlope: 2
-      outSlope: 2
+      time: 0.4675423
+      value: 0.077477485
+      inSlope: 0.44940457
+      outSlope: 0.44940457
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.08361936
+      outWeight: 0.2922146
+    - serializedVersion: 3
+      time: 0.8402152
+      value: 0.26979935
+      inSlope: 1.1005893
+      outSlope: 1.1005893
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.6439118
+    - serializedVersion: 3
+      time: 1.0429865
+      value: 0.5601903
+      inSlope: 2.2570517
+      outSlope: 2.2570517
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3682767
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.1534814
+      value: 0.7984337
+      inSlope: 4.480718
+      outSlope: 4.480718
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16365562
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

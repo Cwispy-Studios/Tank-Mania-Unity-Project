@@ -11,6 +11,7 @@ namespace CwispyStudios.TankMania.Terrain
         public event System.Action OnValuesUpdated;
         public bool autoUpdate;
 
+    #if UNITY_EDITOR
         protected virtual void OnValidate()
         {
             if (autoUpdate)
@@ -27,6 +28,7 @@ namespace CwispyStudios.TankMania.Terrain
                 OnValuesUpdated();
             }
         }
+    #endif
     }
 }
 

@@ -144,14 +144,14 @@ Material:
     - Vector1_3: -0.01
     - Vector1_4: 0.2
     - Vector1_4C3F5EE4: 0
-    - Vector1_5857EFB5: 4.6
+    - Vector1_5857EFB5: 3.74
     - Vector1_622ee851c6a943288d423c2b8d8b09ef: 0
-    - Vector1_65D18AD4: 44.75
-    - Vector1_6F228B9F: 0.76
+    - Vector1_65D18AD4: 18.2
+    - Vector1_6F228B9F: 0.7
     - Vector1_6b2af9575b544f29b486d10a5a3b7311: 0.02
     - Vector1_6c7f9475ce104f47ad4c5cdf8a4a333f: 0
     - Vector1_9efbde52025a4b299bf622f581fe17ec: 0
-    - Vector1_A956083A: 78.4
+    - Vector1_A956083A: 26.7
     - Vector1_b3faf3fb786c4a4c9a7bae1d305313a6: 0
     - Vector1_e5bfd57832844e4a9900e2d14a5f8bef: 0
     - _AlphaClip: 0
@@ -180,7 +180,7 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - maxHeight: 74.88669
+    - maxHeight: 24.65988
     - minHeight: 0
     m_Colors:
     - Color_acd3c8f08fcd491291934191ed78b90b: {r: 0, g: 0, b: 0, a: 0}
