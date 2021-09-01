@@ -7,9 +7,7 @@ namespace CwispyStudios.TankMania.Terrain
 {
     public class EndlessTerrain : MonoBehaviour
     {
-        private const float scale = 2f; //Change this to increase world scale / chunk size
-        
-        private const float viewerMoveThresholdForChunkUpdate = 25f;
+       private const float viewerMoveThresholdForChunkUpdate = 25f;
         private const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
         
         public LODInfo[] detailLevels;
@@ -32,7 +30,7 @@ namespace CwispyStudios.TankMania.Terrain
             mapGenerator = FindObjectOfType<MapGenerator>();
 
             maxViewDst = detailLevels[detailLevels.Length - 1].visibleDstThreshold;
-            chunkSize = MapGenerator.mapChunkSize - 1;
+            chunkSize = mapGenerator.mapChunkSize - 1;
             chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / chunkSize);
             
             UpdateVisibleChunks();
@@ -40,7 +38,7 @@ namespace CwispyStudios.TankMania.Terrain
 
         private void Update()
         {
-            viewerPosition = new Vector2(viewer.position.x, viewer.position.z) / scale;
+            viewerPosition = new Vector2(viewer.position.x, viewer.position.z) / mapGenerator.terrainData.uniformScale;
 
             if ((viewerPositionOld - viewerPosition).sqrMagnitude > sqrViewerMoveThresholdForChunkUpdate)
             {
@@ -106,9 +104,9 @@ namespace CwispyStudios.TankMania.Terrain
                 meshCollider = meshObject.AddComponent<MeshCollider>();
                 meshRenderer.material = material;
                 
-                meshObject.transform.position = positionV3 * scale;
+                meshObject.transform.position = positionV3 *  mapGenerator.terrainData.uniformScale;
                 meshObject.transform.parent = parent;
-                meshObject.transform.localScale = Vector3.one *scale;
+                meshObject.transform.localScale = Vector3.one * mapGenerator.terrainData.uniformScale;
                 SetVisible(false);
 
                 lodMeshes = new LODMesh[detailLevels.Length];
@@ -127,9 +125,6 @@ namespace CwispyStudios.TankMania.Terrain
                 this.mapData = mapData;
                 mapDataReceived = true;
 
-                Texture2D texture = TextureGenerator.TextureFromColourMap(mapData.colourMap, MapGenerator.mapChunkSize, MapGenerator.mapChunkSize);
-                meshRenderer.material.mainTexture = texture;
-                
                 UpdateTerrainChunk();
             }
 
@@ -231,6 +226,4 @@ namespace CwispyStudios.TankMania.Terrain
         }
 
     }
-
-    
 }

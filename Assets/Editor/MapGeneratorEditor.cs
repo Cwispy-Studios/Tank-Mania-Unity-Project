@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(MapGenerator))]
-public class MapGeneratorEditor : Editor 
+public class MapGeneratorEditor : UnityEditor.Editor 
 {
     public override void OnInspectorGUI()
     {

@@ -8,53 +8,42 @@ namespace CwispyStudios.TankMania.Terrain
 {
     public class MapGenerator : MonoBehaviour
     {
-        public enum DrawMode { NoiseMap, ColourMap, Mesh, FalloffMap}
+        public enum DrawMode { NoiseMap, Mesh, FalloffMap}
         public DrawMode drawMode;
 
-        public Noise.NormalizeMode normalizeMode;
-        
-        public bool useFlatShading;
-        
+        public TerrainData terrainData;
+        public NoiseData noiseData;
+        public TextureData textureData;
+
+        public Material terrainMaterial;
+
         [Range(0,6)]
         public int editorPreviewLOD; 
-        public float noiseScale;
-
-        public int octaves;
-        [Range(0,1)]
-        public float persistance;
-        public float lacunarity;
-
-        public int seed;
-        public Vector2 offset;
-
-        public bool useFalloff;
-
-        public float meshHeightMultiplier;
-        public AnimationCurve meshHeighCurve;
         
         public bool autoUpdate;
-
-        public TerrainType[] regions;
-        private static MapGenerator instance;
 
         private float[,] falloffMap;
 
         private Queue<MapThreadInfo<MapData>> mapDataThreadInfoQueue = new Queue<MapThreadInfo<MapData>>();
         private Queue<MapThreadInfo<MeshData>> meshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshData>>();
 
-        private void Awake()
+        void OnValuesUpdated()
         {
-            falloffMap = FalloffGenerator.GenerateFalloffMap(mapChunkSize);
+            if (!Application.isPlaying)
+            {
+                DrawMapInEditor();
+            }
         }
 
-        public static int mapChunkSize
+        void OnTextureValuesUpdated()
+        {
+         textureData.ApplyToMaterial(terrainMaterial);   
+        }
+
+        public  int mapChunkSize
         {
             get {
-                if (instance == null)
-                {
-                    instance = FindObjectOfType<MapGenerator>();
-                }
-                if (instance.useFlatShading) {
+                if (terrainData.useFlatShading) {
                     return 95;
                 } else {
                     return 239;
@@ -68,11 +57,8 @@ namespace CwispyStudios.TankMania.Terrain
             MapDisplay display = FindObjectOfType<MapDisplay>();
             if (drawMode == DrawMode.NoiseMap) {
                 display.DrawTexture(TextureGenerator.TextureFromHeightMap(mapData.heightMap));
-            } else if (drawMode == DrawMode.ColourMap) {
-                display.DrawTexture(TextureGenerator.TextureFromColourMap(mapData.colourMap, mapChunkSize, mapChunkSize));
             } else if (drawMode == DrawMode.Mesh) {
-                display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.heightMap, meshHeightMultiplier, meshHeighCurve, editorPreviewLOD, useFlatShading),
-                    TextureGenerator.TextureFromColourMap(mapData.colourMap, mapChunkSize, mapChunkSize));
+                display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.heightMap, terrainData.meshHeightMultiplier, terrainData.meshHeightCurve, editorPreviewLOD, terrainData.useFlatShading));
             } else if (drawMode == DrawMode.FalloffMap) {
                 display.DrawTexture(TextureGenerator.TextureFromHeightMap(FalloffGenerator.GenerateFalloffMap(mapChunkSize)));
             }
@@ -109,8 +95,8 @@ namespace CwispyStudios.TankMania.Terrain
         
         void MeshDataThread(MapData mapData, int lod, Action<MeshData> callback)
         {
-            MeshData meshData = MeshGenerator.GenerateTerrainMesh(mapData.heightMap, meshHeightMultiplier,
-                meshHeighCurve, lod, useFlatShading);
+            MeshData meshData = MeshGenerator.GenerateTerrainMesh(mapData.heightMap, terrainData.meshHeightMultiplier,
+                terrainData.meshHeightCurve, lod, terrainData.useFlatShading);
             lock (meshDataThreadInfoQueue)
             {
                 meshDataThreadInfoQueue.Enqueue(new MapThreadInfo<MeshData>(callback, meshData));
@@ -136,39 +122,46 @@ namespace CwispyStudios.TankMania.Terrain
 
         private MapData GenerateMapData(Vector2 center) 
         { 
-            float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize + 2, mapChunkSize + 2, seed, noiseScale, octaves, persistance, lacunarity, center + offset, normalizeMode);
+            float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize + 2, mapChunkSize + 2, noiseData.seed, noiseData.noiseScale, noiseData.octaves, noiseData.persistance, noiseData.lacunarity, center + noiseData.offset, noiseData.normalizeMode);
 
-            Color[] colourMap = new Color[mapChunkSize * mapChunkSize];
-            for (int y = 0; y < mapChunkSize; y++) {
-                for (int x = 0; x < mapChunkSize; x++) {
-                    if (useFalloff) {
-                        noiseMap[x,y] = Mathf.Clamp01(noiseMap[x,y] - falloffMap[x,y]);
-                    }
-                    
-                    float currentHeight = noiseMap[x, y];
-                    for (int i = 0; i < regions.Length; i++) {
-                        if (currentHeight >= regions[i].height) {
-                            colourMap[y * mapChunkSize + x] = regions[i].colour;
-                        } 
-                        else {
-                            break;
+            if (terrainData.useFalloff)
+            {
+                if (falloffMap  == null)
+                {
+                    falloffMap = FalloffGenerator.GenerateFalloffMap(mapChunkSize + 2);
+                }
+                
+                for (int y = 0; y < mapChunkSize+2; y++) {
+                    for (int x = 0; x < mapChunkSize+2; x++)
+                    {
+                        if (terrainData.useFalloff)
+                        {
+                            noiseMap[x, y] = Mathf.Clamp01(noiseMap[x, y] - falloffMap[x, y]);
                         }
                     }
-                }
+                }  
             }
-
-            return new MapData(noiseMap, colourMap);
+            
+            return new MapData(noiseMap);
         }
-        private void OnValidate()
-        {
-            if (lacunarity < 1) {
-                lacunarity = 1;
-            }
-            if (octaves < 0) {
-                octaves = 0;
-            }
 
-            falloffMap = FalloffGenerator.GenerateFalloffMap(mapChunkSize);
+        void OnValidate()
+        {
+            if (terrainData != null)
+            {
+                terrainData.OnValuesUpdated -= OnValuesUpdated;
+                terrainData.OnValuesUpdated += OnValuesUpdated;
+            }
+            if (noiseData != null)
+            {
+                noiseData.OnValuesUpdated -= OnValuesUpdated;
+                noiseData.OnValuesUpdated += OnValuesUpdated;
+            }
+            if (textureData != null)
+            {
+                textureData.OnValuesUpdated -= OnValuesUpdated;
+                textureData.OnValuesUpdated += OnValuesUpdated;
+            }
         }
 
         struct MapThreadInfo<T>
@@ -184,23 +177,13 @@ namespace CwispyStudios.TankMania.Terrain
         }
     }
     
-    [System.Serializable]
-    public struct TerrainType 
-    {
-        public string name;
-        public float height;
-        public Color colour;
-    }
-        
     public struct MapData
     {
         public readonly float[,] heightMap;
-        public readonly Color[] colourMap;
 
-        public MapData(float[,] heightMap, Color[] colourMap)
+        public MapData(float[,] heightMap)
         {
             this.heightMap = heightMap;
-            this.colourMap = colourMap;
         }
     }
 }
