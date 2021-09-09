@@ -9,25 +9,33 @@ namespace CwispyStudios.TankMania.Stats
   public abstract class VariableStat
   {
     // The list of stat modifiers that will affect this stat's upgraded value
-    public List<StatModifier> StatModifiers = new List<StatModifier>();
+    public List<UpgradeSubscription> UpgradeSubscriptions = new List<UpgradeSubscription>();
 
     // Event when a stat modifier that this stat is subscribed to is upgraded
     public Action OnStatUpgrade;
 
-    public void SubscribeToStatModifiers()
+    public void SubscribeToUpgradeInstances()
     {
       // List is null when this function is called
-      if (StatModifiers == null) StatModifiers = new List<StatModifier>();
+      if (UpgradeSubscriptions == null) UpgradeSubscriptions = new List<UpgradeSubscription>();
 
-      foreach (StatModifier statModifier in StatModifiers) statModifier.OnStatUpgrade += RecalculateStat;
+      foreach (UpgradeSubscription upgradeSubscription in UpgradeSubscriptions)
+      {
+        if (upgradeSubscription.IsValid)
+          upgradeSubscription.StatModifierInstance.OnUpgradeEvent += RecalculateStat;
+      }
 
       // Ensures the upgraded value is initialised and returns a valid value
       RecalculateStat();
     }
 
-    public void UnsubscribeFromStatModifiers()
+    public void UnsubscribeFromUpgradeInstances()
     {
-      foreach (StatModifier statModifier in StatModifiers) statModifier.OnStatUpgrade -= RecalculateStat;
+      foreach (UpgradeSubscription upgradeSubscription in UpgradeSubscriptions)
+      {
+        if (upgradeSubscription.IsValid)
+          upgradeSubscription.StatModifierInstance.OnUpgradeEvent -= RecalculateStat;
+      }
     }
 
     public abstract void SetDefaultUpgradedValue();

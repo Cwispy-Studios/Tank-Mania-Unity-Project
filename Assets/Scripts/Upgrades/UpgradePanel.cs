@@ -80,7 +80,7 @@ namespace CwispyStudios.TankMania.Upgrades
     {
       upgradeRarityText.text = upgrade.UpgradeRarity.name;
       upgradeRarityText.color = upgrade.UpgradeRarity.RarityColour;
-      upgradeNameText.text = $"{upgrade.UpgradeName} (+{upgrade.UpgradedAmount})";
+      upgradeNameText.text = $"{upgrade.UpgradeName} (+{upgrade.PlayerUpgradedAmount})";
       upgradeDescriptionText.text = upgrade.UpgradeDescription;
     }
 

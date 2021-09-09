@@ -33,9 +33,14 @@ namespace CwispyStudios.TankMania.Stats
       float totalAdditiveValue = 0;
       float totalMultiplicativeValue = 0;
 
-      foreach (StatModifier statModifier in StatModifiers)
+      foreach (UpgradeSubscription upgradeSubscription in UpgradeSubscriptions)
       {
-        int upgradedAmount = statModifier.UpgradedAmount;
+        if (!upgradeSubscription.IsValid) continue;
+
+        StatModifierInstance statModifierInstance = upgradeSubscription.StatModifierInstance;
+        StatModifier statModifier = statModifierInstance.StatModifier;
+
+        int upgradedAmount = statModifierInstance.UpgradedAmount;
 
         totalAdditiveValue += statModifier.AddititiveValue * upgradedAmount;
         totalMultiplicativeValue += statModifier.MultiplicativeValue * upgradedAmount;

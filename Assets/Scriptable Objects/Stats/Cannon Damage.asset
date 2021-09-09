@@ -14,28 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageFrom: 0
   DirectDamage:
-    StatModifiers:
-    - {fileID: 11400000, guid: cff6414df3edf8b439f2560d551a1dc9, type: 2}
+    UpgradeSubscriptions:
+    - StatModifierInstance:
+        instanceName: Damage Increases
+        statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
+      statModifierUpgrade: {fileID: 11400000, guid: 5d54b968260c07a408facad5f5989f98,
+        type: 2}
+      upgrade: {fileID: 11400000, guid: 5d54b968260c07a408facad5f5989f98, type: 2}
+      statModifierIndex: -1
+      selectingModifier: 0
     baseValue: 10
   SplashDamage:
     HasSplashDamage: 1
     Radius:
-      StatModifiers:
-      - {fileID: 11400000, guid: b6955347593497e49bbaca9a179aac44, type: 2}
+      UpgradeSubscriptions: []
       baseValue: 2
     DamagePercentage:
-      StatModifiers: []
+      UpgradeSubscriptions: []
       baseValue: 1
     HasSplashDamageRolloff: 1
     MinRadiusPercentageRolloff:
-      StatModifiers: []
+      UpgradeSubscriptions: []
       baseValue: 0
     MaxRadiusPercentageRolloff:
-      StatModifiers: []
+      UpgradeSubscriptions: []
       baseValue: 1
     MinRadiusDamagePercentageRolloff:
-      StatModifiers: []
+      UpgradeSubscriptions: []
       baseValue: 1
     MaxRadiusDamagePercentageRolloff:
-      StatModifiers: []
+      UpgradeSubscriptions: []
       baseValue: 0

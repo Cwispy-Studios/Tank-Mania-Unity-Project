@@ -26,19 +26,45 @@ namespace CwispyStudios.TankMania.Stats
 
     private void OnValidate()
     {
+      Debug.Log("Validate");
       // Need to be called here since the list seems to get cleared everytime in editor
       FindStatObjects();
 
+      GetStatModifiersFromIndex();
+
       // Does not need to be called in build since the values get serialized in editor already
       SetDefaultUpgradedStatValues();
+    }
 
-      InformStatModifiers();
+    private void GetStatModifiersFromIndex()
+    {
+      foreach (VariableStat stat in stats)
+      {
+        foreach (UpgradeSubscription upgradeSubscription in stat.UpgradeSubscriptions)
+        {
+          upgradeSubscription.AssignStatModifierFromInspectorSelection();
+          upgradeSubscription.ValidateUpgrade();
+        }
+      }
+    }
+
+    private void ValidateUpgradesOfStatModifiers()
+    {
+      foreach (VariableStat stat in stats)
+      {
+        foreach (UpgradeSubscription upgradeSubscription in stat.UpgradeSubscriptions)
+        {
+          upgradeSubscription.ValidateUpgrade();
+        }
+      }
     }
 
     private void OnEnable() 
     {
+      Debug.Log("Enable");
+
 #if UNITY_EDITOR
-      InformStatModifiers();
+      ValidateUpgradesOfStatModifiers();
 #endif
 
       SubscribeStats();
@@ -75,17 +101,6 @@ namespace CwispyStudios.TankMania.Stats
       }
     }
 
-    private void InformStatModifiers()
-    {
-      for (int i = 0; i < stats.Count; ++i)
-      {
-        foreach (StatModifier statModifier in stats[i].StatModifiers)
-        {
-          statModifier?.AddStat(this, statsName[i], stats[i]);
-        }
-      }
-    }
-
     private void SetDefaultUpgradedStatValues()
     {
       foreach (VariableStat stat in stats)
@@ -95,12 +110,12 @@ namespace CwispyStudios.TankMania.Stats
     private void SubscribeStats()
     {
       foreach (VariableStat stat in stats)
-        stat.SubscribeToStatModifiers();
+        stat.SubscribeToUpgradeInstances();
     }
     private void UnsubscribeStats()
     {
       foreach (VariableStat stat in stats)
-        stat.UnsubscribeFromStatModifiers();
+        stat.UnsubscribeFromUpgradeInstances();
     }
   }
 }

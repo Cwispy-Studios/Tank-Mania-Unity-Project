@@ -10,9 +10,6 @@ namespace CwispyStudios.TankMania.Upgrades
   [CreateAssetMenu(menuName = "Upgrades/Stat Modifier")]
   public class StatModifier : ScriptableObject
   {
-    [NonSerialized] private int upgradedAmount = 0;
-    public int UpgradedAmount => upgradedAmount;
-
     [SerializeField] private float additiveValue;
     public float AddititiveValue => additiveValue;
 
@@ -20,13 +17,6 @@ namespace CwispyStudios.TankMania.Upgrades
     public float MultiplicativeValue => multiplicativeValue;
 
     public Action OnStatUpgrade;
-
-    public void Upgrade()
-    {
-      ++upgradedAmount;
-
-      OnStatUpgrade?.Invoke();
-    }
 
 #if UNITY_EDITOR
     // This will display the property in the inspector
@@ -74,15 +64,15 @@ namespace CwispyStudios.TankMania.Upgrades
     private void CheckIfStillModifiesStats()
     {
       // Removes any stat that no longer contains this stat modifier
-      for (int i = statsModified.Count - 1; i >= 0; --i)
-      {
-        if (!statsModified[i].StatModifiers.Contains(this))
-        {
-          statsGroupsModified.RemoveAt(i);
-          statNamesModified.RemoveAt(i);
-          statsModified.RemoveAt(i);
-        }
-      }
+      //for (int i = statsModified.Count - 1; i >= 0; --i)
+      //{
+      //  if (!statsModified[i].UpgradeSubscriptions.Contains(this))
+      //  {
+      //    statsGroupsModified.RemoveAt(i);
+      //    statNamesModified.RemoveAt(i);
+      //    statsModified.RemoveAt(i);
+      //  }
+      //}
     }
 #endif
   }

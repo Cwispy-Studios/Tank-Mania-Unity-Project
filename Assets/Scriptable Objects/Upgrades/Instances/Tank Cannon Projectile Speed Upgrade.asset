@@ -17,5 +17,8 @@ MonoBehaviour:
   UpgradeImage: {fileID: 21300000, guid: bc2716f2ce2d91144b02c048611aef70, type: 3}
   UpgradeDescription: Increases the projectile speed by 15%.
   PlayerStatModifiers:
-  - {fileID: 11400000, guid: 7ff9b5fea9baf3f43a03f07c3f5dae2e, type: 2}
-  EnemyStatModifiers: []
+  - instanceName: Projectile Speed Increase
+    statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
+  EnemyStatModifiers:
+  - instanceName: HP Increase
+    statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}

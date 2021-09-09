@@ -103,7 +103,7 @@ namespace CwispyStudios.TankMania.Stats
 
       if (modifiersList == null)
       {
-        modifiersList = property.FindPropertyRelative(nameof(VariableStat.StatModifiers));
+        modifiersList = property.FindPropertyRelative(nameof(VariableStat.UpgradeSubscriptions));
       }
 
       if (buttonMargin < 1f)
@@ -123,14 +123,14 @@ namespace CwispyStudios.TankMania.Stats
      
       modifiersInList.Clear();
 
-      for (int i = 0; i < modifiersList.arraySize; ++i)
-      {
-        StatModifier statModifier = modifiersList.GetArrayElementAtIndex(i).objectReferenceValue as StatModifier;
+      //for (int i = 0; i < modifiersList.arraySize; ++i)
+      //{
+      //  StatModifier statModifier = modifiersList.GetArrayElementAtIndex(i).objectReferenceValue as StatModifier;
 
-        if (!modifiersInList.Contains(statModifier)) modifiersInList.Add(statModifier);
-      }
+      //  if (!modifiersInList.Contains(statModifier)) modifiersInList.Add(statModifier);
+      //}
 
-      AddModifiersToTooltip(label);
+      //AddModifiersToTooltip(label);
     }
 
     private void AddModifiersToTooltip( GUIContent label )

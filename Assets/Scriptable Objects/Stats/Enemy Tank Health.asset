@@ -13,10 +13,47 @@ MonoBehaviour:
   m_Name: Enemy Tank Health
   m_EditorClassIdentifier: 
   MaxHealth:
-    StatModifiers:
-    - {fileID: 11400000, guid: 687786a3384e1964792c2bcbe5754f00, type: 2}
+    UpgradeSubscriptions:
+    - StatModifierInstance:
+        instanceName: HP Increase
+        statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
+      statModifierUpgrade: {fileID: 11400000, guid: 6114107de394e8d43bda715c416d45e0,
+        type: 2}
+      upgrade: {fileID: 11400000, guid: 6114107de394e8d43bda715c416d45e0, type: 2}
+      statModifierIndex: -1
+      selectingModifier: 0
+    - StatModifierInstance:
+        instanceName: HP Increase
+        statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
+      statModifierUpgrade: {fileID: 11400000, guid: 5d54b968260c07a408facad5f5989f98,
+        type: 2}
+      upgrade: {fileID: 11400000, guid: 5d54b968260c07a408facad5f5989f98, type: 2}
+      statModifierIndex: -1
+      selectingModifier: 1
+    - StatModifierInstance:
+        instanceName: HP Increase
+        statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
+      statModifierUpgrade: {fileID: 11400000, guid: 25ab306f32b9b4149a563d54dce70b55,
+        type: 2}
+      upgrade: {fileID: 11400000, guid: 25ab306f32b9b4149a563d54dce70b55, type: 2}
+      statModifierIndex: -1
+      selectingModifier: 1
+    - StatModifierInstance:
+        instanceName: HP Increase
+        statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
+      statModifierUpgrade: {fileID: 11400000, guid: 3a6a4b4fec8b03f42891de108719c6fb,
+        type: 2}
+      upgrade: {fileID: 11400000, guid: 3a6a4b4fec8b03f42891de108719c6fb, type: 2}
+      statModifierIndex: -1
+      selectingModifier: 1
     baseValue: 100
   HealthRegeneration:
-    StatModifiers:
-    - {fileID: 11400000, guid: 42d426cf144accd49bd912b3d3b3c587, type: 2}
+    UpgradeSubscriptions:
+    - StatModifierInstance:
+        instanceName: 
+        statModifier: {fileID: 0}
+      statModifierUpgrade: {fileID: 0}
+      upgrade: {fileID: 0}
+      statModifierIndex: -1
+      selectingModifier: 1
     baseValue: 2

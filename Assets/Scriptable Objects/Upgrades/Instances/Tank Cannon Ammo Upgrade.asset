@@ -17,5 +17,8 @@ MonoBehaviour:
   UpgradeImage: {fileID: 21300000, guid: e20430cfb0301b649bd9a0f2f6773fe1, type: 3}
   UpgradeDescription: Increases cannon ammo count by 1.
   PlayerStatModifiers:
-  - {fileID: 11400000, guid: 6f19d8ebc8a31b34f8be7190b409391c, type: 2}
-  EnemyStatModifiers: []
+  - instanceName: Ammo Count
+    statModifier: {fileID: 11400000, guid: 39f1dbebad92f0146b88d590f21dbb6e, type: 2}
+  EnemyStatModifiers:
+  - instanceName: HP Increase
+    statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}

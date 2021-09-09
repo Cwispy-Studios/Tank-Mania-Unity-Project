@@ -50,6 +50,11 @@ namespace CwispyStudios.TankMania.Upgrades
 
       EditorGUILayout.Space();
 
+      if (playerStatModifiers.arraySize > 0 || enemyStatModifiers.arraySize > 0)
+        EditorGUILayout.HelpBox(
+          "NOTE! Remove all stat modifier instances before deleting the asset to remove all references to them from the stats subscriptions!",
+          MessageType.Warning);
+
       EditorGUILayout.PropertyField(playerStatModifiers, new GUIContent("Player Upgrade Components"));
 
       DrawModifierProperties(playerStatModifiers);
@@ -79,16 +84,23 @@ namespace CwispyStudios.TankMania.Upgrades
 
       for (int i = 0; i < statModifiers.arraySize; ++i)
       {
-        StatModifier statModifier = statModifiers.GetArrayElementAtIndex(i).objectReferenceValue as StatModifier;
+        SerializedProperty instanceProperty = statModifiers.GetArrayElementAtIndex(i);
+        SerializedProperty nameProperty = instanceProperty.FindPropertyRelative("instanceName");
+        SerializedProperty modiferProperty = instanceProperty.FindPropertyRelative("statModifier");
 
-        if (statModifier)
+        StatModifier statModifier = modiferProperty.objectReferenceValue as StatModifier;
+
+        if (statModifier != null)
         {
-          modifiersList += $"\n• <i>{statModifier.name.Replace(" Modifier", "")}</i>: ";
+          modifiersList += $"\n• <i>{nameProperty.stringValue.Replace(" Modifier", "")}</i>: ";
 
           if (statModifier.AddititiveValue != 0f) modifiersList += $"+{statModifier.AddititiveValue.ToString("F2")} ";
           if (statModifier.MultiplicativeValue != 0f) modifiersList += $"+{(statModifier.MultiplicativeValue * 100f).ToString("F0")}%";
         }
       }
+
+      // Does not work :<
+      //modifiersList.Replace("+-", "-");
 
       EditorGUILayout.TextArea(modifiersList, helpBoxStyle);
     }

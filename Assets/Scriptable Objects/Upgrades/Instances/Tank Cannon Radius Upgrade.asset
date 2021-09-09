@@ -17,5 +17,8 @@ MonoBehaviour:
   UpgradeImage: {fileID: 21300000, guid: a12b96eb888a1b44bb2fd316ebc0bf90, type: 3}
   UpgradeDescription: Increases the cannon splash radius by 20%.
   PlayerStatModifiers:
-  - {fileID: 11400000, guid: b6955347593497e49bbaca9a179aac44, type: 2}
-  EnemyStatModifiers: []
+  - instanceName: Radius Increase
+    statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
+  EnemyStatModifiers:
+  - instanceName: HP Increase
+    statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
