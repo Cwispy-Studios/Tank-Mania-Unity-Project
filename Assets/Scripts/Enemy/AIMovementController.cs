@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -32,6 +33,17 @@ namespace CwispyStudios.TankMania.Enemy
             navMeshAgent.angularSpeed = turningSpeed;
         }
 
+        public void EnablePhysics()
+        {
+            InterruptMovement();
+            navMeshAgent.enabled = false;
+        }
+
+        public void DisablePhysics()
+        {
+            navMeshAgent.enabled = true;
+        }
+
         public void SetMovementParams(float movementSpeed, float accelerationSpeed, float turningSpeed)
         {
             navMeshAgent.speed = movementSpeed;
@@ -47,11 +59,6 @@ namespace CwispyStudios.TankMania.Enemy
         public void InterruptMovement()
         {
             navMeshAgent.SetDestination(transform.position);
-        }
-
-        private void Update()
-        {
-            transform.LookAt(transform.position + navMeshAgent.desiredVelocity);
         }
     }
 }
