@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DefaultTerrain
   m_EditorClassIdentifier: 
   autoUpdate: 1
-  uniformScale: 2
+  uniformScale: 3
   useFlatShading: 0
-  useFalloff: 0
-  meshHeightMultiplier: 26
+  useFalloff: 1
+  meshHeightMultiplier: 50
   meshHeightCurve:
     serializedVersion: 2
     m_Curve:
@@ -30,40 +30,40 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.4675423
-      value: 0.077477485
-      inSlope: 0.44940457
-      outSlope: 0.44940457
+      time: 0.53275585
+      value: 0.052176945
+      inSlope: 0.30268958
+      outSlope: 0.30268958
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.08361936
+      inWeight: 0.16758326
       outWeight: 0.2922146
     - serializedVersion: 3
-      time: 0.8402152
+      time: 0.8429618
       value: 0.26979935
-      inSlope: 1.1005893
-      outSlope: 1.1005893
+      inSlope: 1.1362063
+      outSlope: 1.1362063
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.1637834
       outWeight: 0.6439118
     - serializedVersion: 3
-      time: 1.0429865
-      value: 0.5601903
-      inSlope: 2.2570517
-      outSlope: 2.2570517
+      time: 0.97844493
+      value: 0.48570657
+      inSlope: 2.344076
+      outSlope: 2.344076
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.3682767
+      inWeight: 0.29821947
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.1534814
-      value: 0.7984337
-      inSlope: 4.480718
-      outSlope: 4.480718
+      time: 1.1015404
+      value: 0.83661884
+      inSlope: 2.914207
+      outSlope: 2.914207
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.16365562
+      inWeight: 0.1818329
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
