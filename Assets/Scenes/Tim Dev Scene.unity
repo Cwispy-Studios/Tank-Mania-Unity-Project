@@ -2319,6 +2319,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8454413252481527665, guid: 0e192f5c266f8be4f8e826a467feb6d9,
+        type: 3}
+      propertyPath: usePhysics
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454413252481527665, guid: 0e192f5c266f8be4f8e826a467feb6d9,
+        type: 3}
+      propertyPath: accelerationSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8454413252481527677, guid: 0e192f5c266f8be4f8e826a467feb6d9,
         type: 3}
       propertyPath: m_Name
@@ -2329,6 +2339,11 @@ PrefabInstance:
       propertyPath: followedTransform
       value: 
       objectReference: {fileID: 1931201404}
+    - target: {fileID: 8454413252481527679, guid: 0e192f5c266f8be4f8e826a467feb6d9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 479731889, guid: 0e192f5c266f8be4f8e826a467feb6d9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0e192f5c266f8be4f8e826a467feb6d9, type: 3}
