@@ -143,7 +143,7 @@ Material:
     - Vector1_2: 0.11
     - Vector1_3: 0.1
     - Vector1_4: 0.05
-    - Vector1_4C3F5EE4: 0
+    - Vector1_4C3F5EE4: -8.76
     - Vector1_5857EFB5: 4.72
     - Vector1_622ee851c6a943288d423c2b8d8b09ef: 0
     - Vector1_65D18AD4: 25.3
@@ -181,7 +181,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - maxHeight: 80.928825
-    - minHeight: 0
+    - minHeight: -7.9237895
     m_Colors:
     - Color_acd3c8f08fcd491291934191ed78b90b: {r: 0, g: 0, b: 0, a: 0}
     - Color_d5fa3baf144a4055a4f4db8c963748c6: {r: 0, g: 0, b: 0, a: 0}
