@@ -71,8 +71,10 @@ namespace CwispyStudios.TankMania.Terrain
             for (int yOffset = -chunksVisibleInViewDst; yOffset < chunksVisibleInViewDst; yOffset++) {
                 for (int xOffset = -chunksVisibleInViewDst; xOffset < chunksVisibleInViewDst; xOffset++) {
                     Vector2 viewedChunkCoord = new Vector2(currentChunkCoordX + xOffset, currentChunkCoordY + yOffset);
-                    if (!alreadyUpdatedChunkCoords.Contains(viewedChunkCoord)) {
-                        if (terrainChunkDictonary.ContainsKey(viewedChunkCoord)) {
+                    if (!alreadyUpdatedChunkCoords.Contains(viewedChunkCoord)) 
+                    {
+                        if (terrainChunkDictonary.ContainsKey(viewedChunkCoord)) 
+                        {
                             terrainChunkDictonary[viewedChunkCoord].UpdateTerrainChunk();
                         } else {
                             terrainChunkDictonary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, detailLevels, colliderLODIndex, transform, mapMaterial));
@@ -129,7 +131,8 @@ namespace CwispyStudios.TankMania.Terrain
                 {
                     lodMeshes[i] = new LODMesh(detailLevels[i].lod);
                     lodMeshes[i].updateCallback += UpdateTerrainChunk;
-                    if (i == colliderLODIndex) {
+                    if (i == colliderLODIndex) 
+                    {
                         lodMeshes[i].updateCallback += UpdateCollisionMesh;
                     }
                 }
@@ -153,11 +156,13 @@ namespace CwispyStudios.TankMania.Terrain
                     bool wasVisible = IsVisible();
                     bool visible = viewerDstFromNearestEdge <= maxViewDst;
 
-                    if (visible) {
+                    if (visible) 
+                    {
                         int lodIndex = 0;
                     
                         for (int i = 0; i < detailLevels.Length-1; i++) {
-                            if (viewerDstFromNearestEdge > detailLevels[i].visibleDstThreshold) {
+                            if (viewerDstFromNearestEdge > detailLevels[i].visibleDstThreshold) 
+                            {
                                 lodIndex = i + 1;
                             }
                             else {
@@ -165,13 +170,16 @@ namespace CwispyStudios.TankMania.Terrain
                             }
                         }
 
-                        if (lodIndex != previousLODIndex) {
+                        if (lodIndex != previousLODIndex) 
+                        {
                             LODMesh lodMesh = lodMeshes[lodIndex];
-                            if (lodMesh.hasMesh) {
+                            if (lodMesh.hasMesh) 
+                            {
                                 previousLODIndex = lodIndex;
                                 meshFilter.mesh = lodMesh.mesh;
                             }
-                            else if (!lodMesh.hasRequestedMesh) {
+                            else if (!lodMesh.hasRequestedMesh) 
+                            {
                                 lodMesh.RequestMesh(mapData);
                             }
                         }
@@ -201,14 +209,18 @@ namespace CwispyStudios.TankMania.Terrain
                 {
                     float sqrDstFromViewerToEdge = bounds.SqrDistance(viewerPosition);
 
-                    if (sqrDstFromViewerToEdge < detailLevels[colliderLODIndex].sqrVisibleDstThreshold) {
-                        if (!lodMeshes[colliderLODIndex].hasRequestedMesh) {
+                    if (sqrDstFromViewerToEdge < detailLevels[colliderLODIndex].sqrVisibleDstThreshold) 
+                    {
+                        if (!lodMeshes[colliderLODIndex].hasRequestedMesh) 
+                        {
                             lodMeshes[colliderLODIndex].RequestMesh(mapData);                    
                         }
                     }
                 
-                    if (sqrDstFromViewerToEdge < colliderGenerationDistanceThreshold * colliderGenerationDistanceThreshold) {
-                        if (lodMeshes[colliderLODIndex].hasMesh) {
+                    if (sqrDstFromViewerToEdge < colliderGenerationDistanceThreshold * colliderGenerationDistanceThreshold) 
+                    {
+                        if (lodMeshes[colliderLODIndex].hasMesh) 
+                        {
                             meshCollider.sharedMesh = lodMeshes[colliderLODIndex].mesh;
                             hasSetCollider = true;
                         }
@@ -265,7 +277,8 @@ namespace CwispyStudios.TankMania.Terrain
 
             public float sqrVisibleDstThreshold
             {
-                get {
+                get 
+                {
                     return visibleDstThreshold * visibleDstThreshold;
                 }
             }

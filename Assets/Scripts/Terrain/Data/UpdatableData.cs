@@ -24,7 +24,8 @@ namespace CwispyStudios.TankMania.Terrain
         {
             UnityEditor.EditorApplication.update -= NotifyOfUpdatedValues;
             
-            if (OnValuesUpdated != null) {
+            if (OnValuesUpdated != null) 
+            {
                 OnValuesUpdated();
             }
         }

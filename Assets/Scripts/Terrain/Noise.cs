@@ -20,7 +20,8 @@ namespace CwispyStudios.TankMania.Terrain
             float amplitude = 1;
             float frequency = 1;
             
-            for (int i = 0; i < octaves; i++) {
+            for (int i = 0; i < octaves; i++) 
+            {
                 float offsetX = prng.Next(-100000, 100000) + offset.x;
                 float offsetY = prng.Next(-100000, 100000) - offset.y;
                 octaveOffsets[i] = new Vector2(offsetX, offsetY);
@@ -31,7 +32,8 @@ namespace CwispyStudios.TankMania.Terrain
             
             float[,] noiseMap = new float[mapWidth,mapHeight];
             
-            if(scale <= 0) {
+            if(scale <= 0) 
+            {
                 scale = 0.0001f;
             }
 
@@ -48,7 +50,8 @@ namespace CwispyStudios.TankMania.Terrain
                     frequency = 1;
                     float noiseHeight = 0;
                     
-                    for (int i = 0; i < octaves; i++) {
+                    for (int i = 0; i < octaves; i++) 
+                    {
                         float sampleX = (x-halfWidth + octaveOffsets[i].x) / scale * frequency;
                         float sampleY = (y-halfHeight + octaveOffsets[i].y) / scale * frequency;
 
@@ -59,10 +62,12 @@ namespace CwispyStudios.TankMania.Terrain
                         frequency *= lacunarity;
                     }
 
-                    if (noiseHeight > maxLocalNoiseHeight) {
+                    if (noiseHeight > maxLocalNoiseHeight) 
+                    {
                         maxLocalNoiseHeight = noiseHeight;
                     }
-                    else if (noiseHeight < minLocalNoiseHeight) {
+                    else if (noiseHeight < minLocalNoiseHeight) 
+                    {
                         minLocalNoiseHeight = noiseHeight;
                     }
 
@@ -71,11 +76,13 @@ namespace CwispyStudios.TankMania.Terrain
             }
 
             for (int y = 0; y < mapHeight; y++) {
-                for (int x = 0; x < mapWidth; x++)
-                {
-                    if (normalizeMode == NormalizeMode.Local) {
+                for (int x = 0; x < mapWidth; x++) {
+                    if (normalizeMode == NormalizeMode.Local) 
+                    {
                         noiseMap[x, y] = Mathf.InverseLerp(minLocalNoiseHeight, maxLocalNoiseHeight, noiseMap[x, y]);
-                    } else {
+                    } 
+                    else 
+                    {
                         float normalizedHeight = (noiseMap[x,y] + 1) / (maxPossibleHeight);
                         noiseMap[x, y] = Mathf.Clamp(normalizedHeight,0 , int.MaxValue);
                     }

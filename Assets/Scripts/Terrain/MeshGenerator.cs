@@ -114,7 +114,8 @@ namespace CwispyStudios.TankMania.Terrain
             {
                 borderVertices[-vertexIndex - 1] = vertexPosition;
             }
-            else {
+            else 
+            {
                 vertices[vertexIndex] = vertexPosition;
                 uvs[vertexIndex] = uv;
             }
@@ -156,7 +157,8 @@ namespace CwispyStudios.TankMania.Terrain
             }
             
             int borderTriangleCount = borderTriangles.Length / 3;
-            for (int i = 0; i < borderTriangleCount; i++) {
+            for (int i = 0; i < borderTriangleCount; i++) 
+            {
                 int normalTriangleIndex = i * 3;
                 int vertexIndexA = borderTriangles[normalTriangleIndex];
                 int vertexIndexB = borderTriangles[normalTriangleIndex + 1];

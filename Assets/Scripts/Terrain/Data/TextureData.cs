@@ -38,9 +38,11 @@ namespace CwispyStudios.TankMania.Terrain
             material.SetFloat ("maxHeight", maxHeight);
         }
 
-        Texture2DArray GenerateTextureArray(Texture2D[] textures) {
+        Texture2DArray GenerateTextureArray(Texture2D[] textures) 
+        {
             Texture2DArray textureArray = new Texture2DArray (textureSize, textureSize, textures.Length, textureFormat, true);
-            for (int i = 0; i < textures.Length; i++) {
+            for (int i = 0; i < textures.Length; i++) 
+            {
                 textureArray.SetPixels (textures [i].GetPixels (), i);
             }
             textureArray.Apply ();
@@ -48,7 +50,8 @@ namespace CwispyStudios.TankMania.Terrain
         }
 
         [System.Serializable]
-        public class Layer {
+        public class Layer 
+        {
             public Texture2D texture;
             public Color tint;
             [Range(0,1)]
@@ -59,8 +62,7 @@ namespace CwispyStudios.TankMania.Terrain
             public float blendStrength;
             public float textureScale;
         }
-		
-	 
+
     }
 }
 
