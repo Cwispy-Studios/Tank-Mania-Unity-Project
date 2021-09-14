@@ -6,13 +6,12 @@ using UnityEngine.PlayerLoop;
 
 namespace CwispyStudios.TankMania.Enemy
 {
-  [RequireComponent(typeof(NavMeshAgent))]
   [RequireComponent(typeof(Rigidbody))]
   public class AIMovementController : MonoBehaviour
   {
-    [Header("Agent movement parameters")] [SerializeField]
-    private bool
-      usePhysics; // Acts as override for now, makes it so that we switch to the custom nav mesh implementation
+    [Header("Agent movement parameters")] 
+
+    [SerializeField] private bool rotateWithPath;
 
     [SerializeField] [Range(0.1f, 10.0f)] private float movementSpeed;
 
@@ -20,8 +19,6 @@ namespace CwispyStudios.TankMania.Enemy
 
     [SerializeField] [Range(0.1f, 5.0f)] private float turningSpeed;
 
-    // Nav mesh agent instance used for movement controls.
-    private NavMeshAgent navMeshAgent;
     private NavMeshPath currentPath;
     private int currentPathIndex;
     private bool movingOnPath;
@@ -30,51 +27,9 @@ namespace CwispyStudios.TankMania.Enemy
 
     private void Awake()
     {
-      if (usePhysics)
-      {
-        currentPath = new NavMeshPath();
+      currentPath = new NavMeshPath();
         physicsController = GetComponent<Rigidbody>();
-      }
-      else
-      {
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = movementSpeed;
-        navMeshAgent.acceleration = accelerationSpeed;
-        navMeshAgent.angularSpeed = turningSpeed;
-      }
     }
-
-    // NON PHYSICS IMPLEMENTATION----------------------------------------------------------------------------------
-
-    public void EnablePhysics()
-    {
-      InterruptMovement();
-      navMeshAgent.enabled = false;
-    }
-
-    public void DisablePhysics()
-    {
-      navMeshAgent.enabled = true;
-    }
-
-    public void SetMovementParams(float movementSpeed, float accelerationSpeed, float turningSpeed)
-    {
-      navMeshAgent.speed = movementSpeed;
-      navMeshAgent.acceleration = accelerationSpeed;
-      navMeshAgent.angularSpeed = turningSpeed;
-    }
-
-    public void MoveToPosition(Vector3 newPosition)
-    {
-      navMeshAgent.SetDestination(newPosition);
-    }
-
-    public void InterruptMovement()
-    {
-      navMeshAgent.SetDestination(transform.position);
-    }
-
-    //-------------------------------------------------------------------------------------------------------------
 
     // TODO make this dependent on the size of the collider
     private float minCornerDistance = .1f;
@@ -84,7 +39,7 @@ namespace CwispyStudios.TankMania.Enemy
       bool hasPath = NavMesh.CalculatePath(physicsController.position, newPosition, NavMesh.AllAreas, currentPath);
 
       if (!hasPath) return;
-      
+
       Debug.Log("Calculated new path");
 
       currentPathIndex = 0;
@@ -101,7 +56,7 @@ namespace CwispyStudios.TankMania.Enemy
     private void FixedUpdate()
     {
       if (!movingOnPath) return;
-      
+
       UpdatePhysics();
       UpdatePath();
     }
@@ -126,17 +81,26 @@ namespace CwispyStudios.TankMania.Enemy
       }
     }
 
-    // TODO this is pretty much the same as accelerate @Cwispy
-    // Except it doesn't work
+    // TODO this is pretty much the same as Accelerate in TankMovementController @Cwispy
     private void UpdatePhysics()
     {
       Vector3 velocity = physicsController.velocity;
       velocity.y = 0f;
 
+      Vector3 direction = DirectionToNextCorner();
+
       if (velocity.sqrMagnitude <= movementSpeed)
       {
-        Vector3 force = DirectionToNextCorner() * accelerationSpeed;
+        Vector3 force = direction * accelerationSpeed;
         physicsController.AddForce(force * 10, ForceMode.Acceleration);
+      }
+
+      if (rotateWithPath && direction != Vector3.zero)
+      {
+        Quaternion newRotation =
+        Quaternion.RotateTowards(physicsController.rotation,
+          quaternion.LookRotation(direction, Vector3.up), turningSpeed);
+        physicsController.MoveRotation(newRotation);
       }
     }
 

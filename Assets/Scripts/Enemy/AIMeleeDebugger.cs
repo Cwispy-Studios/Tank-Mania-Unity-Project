@@ -8,7 +8,7 @@ namespace CwispyStudios.TankMania.Enemy
     [SerializeField] private float minDistance;
 
     private AIMovementController mct;
-    private MeleeEnemy meleeEnemy;
+    private MeleeController meleeController;
 
     private bool following = true;
 
@@ -34,8 +34,8 @@ namespace CwispyStudios.TankMania.Enemy
     void Start()
     {
       mct = GetComponent<AIMovementController>();
-      meleeEnemy = GetComponent<MeleeEnemy>();
-      InvokeRepeating(nameof(FollowTransform), 0, .1f);
+      meleeController = GetComponent<MeleeController>();
+      InvokeRepeating(nameof(FollowTransform), 0, .2f);
       
       mct.StartPath(followedTransform.position);
     }
@@ -49,7 +49,7 @@ namespace CwispyStudios.TankMania.Enemy
       else
       {
         Following = false;
-        meleeEnemy.MeleeAttack(0, 10);
+        meleeController.MeleeAttack(0, 10);
       }
     }
   }

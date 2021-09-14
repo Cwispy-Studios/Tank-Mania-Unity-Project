@@ -2251,6 +2251,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814071192}
   m_CullTransparentMesh: 1
+--- !u!4 &1910181442 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 479731888, guid: 0e192f5c266f8be4f8e826a467feb6d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4487744096949220361}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1931201404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9116554923332464521, guid: d23cfcb9d00038f44831cb8873b5af50,
@@ -2264,6 +2270,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7045846540979785746, guid: 0e192f5c266f8be4f8e826a467feb6d9,
+        type: 3}
+      propertyPath: attackInformations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045846540979785746, guid: 0e192f5c266f8be4f8e826a467feb6d9,
+        type: 3}
+      propertyPath: attackInformations.Array.data[0].hitBox
+      value: 
+      objectReference: {fileID: 1910181442}
+    - target: {fileID: 7045846540979785746, guid: 0e192f5c266f8be4f8e826a467feb6d9,
+        type: 3}
+      propertyPath: attackInformations.Array.data[0].damageStats
+      value: 
+      objectReference: {fileID: 11400000, guid: bb884591549b2774a9c1cc98812e307f,
+        type: 2}
     - target: {fileID: 7782420690764519628, guid: 0e192f5c266f8be4f8e826a467feb6d9,
         type: 3}
       propertyPath: m_RootOrder
@@ -2321,13 +2343,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8454413252481527665, guid: 0e192f5c266f8be4f8e826a467feb6d9,
         type: 3}
-      propertyPath: usePhysics
+      propertyPath: rotateWithPath
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454413252481527665, guid: 0e192f5c266f8be4f8e826a467feb6d9,
-        type: 3}
-      propertyPath: accelerationSpeed
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8454413252481527677, guid: 0e192f5c266f8be4f8e826a467feb6d9,
         type: 3}
@@ -2339,13 +2356,7 @@ PrefabInstance:
       propertyPath: followedTransform
       value: 
       objectReference: {fileID: 1931201404}
-    - target: {fileID: 8454413252481527679, guid: 0e192f5c266f8be4f8e826a467feb6d9,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 479731889, guid: 0e192f5c266f8be4f8e826a467feb6d9, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e192f5c266f8be4f8e826a467feb6d9, type: 3}
 --- !u!1001 &6515029139309203391
 PrefabInstance:

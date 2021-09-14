@@ -4,10 +4,12 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Enemy
 {
-  public class MeleeEnemy : Enemy
+  public class MeleeController : MonoBehaviour
   {
     // Hit boxes should be added as children of this game object
-    [SerializeField] private Transform[] hitBoxes;
+    [Header("Melee attack information")] 
+    [SerializeField] 
+    private AttackInformation[] attackInformations;
 
     private Collider[] overlapBoxBuffer = new Collider[4];
     private LayerMask playerLayerMask;
@@ -17,10 +19,11 @@ namespace CwispyStudios.TankMania.Enemy
       playerLayerMask = LayerMask.GetMask("Player");
     }
 
-    public void MeleeAttack(int hitBoxIndex, int damageAmount)
+    public void MeleeAttack(int attackIndex)
     {
-      int size = Physics.OverlapBoxNonAlloc(hitBoxes[hitBoxIndex].position, hitBoxes[hitBoxIndex].lossyScale,
-        overlapBoxBuffer, hitBoxes[hitBoxIndex].rotation, playerLayerMask);
+      int size = Physics.OverlapBoxNonAlloc(attackInformations[attackIndex].hitBox.position,
+        attackInformations[attackIndex].hitBox.lossyScale,
+        overlapBoxBuffer, attackInformations[attackIndex].hitBox.rotation, playerLayerMask);
 
       if (size == 0) return;
 
@@ -30,18 +33,18 @@ namespace CwispyStudios.TankMania.Enemy
 
         // Seems like this check is unnecessary since we already filter the enemies when using the player's layer mask @Cwispy
         if (otherDamageable.CanTakeDamageFromTeam(Team.Enemy))
-          otherDamageable.TakeDamage(damageAmount);
+          otherDamageable.TakeDamage(attackInformations[attackIndex].damageStats.DirectDamage.Value);
       }
     }
 
     private void OnDrawGizmos()
     {
       Gizmos.color = Color.red;
-      foreach (var box in hitBoxes)
+      foreach (var info in attackInformations)
       {
-        if (box == null) continue;
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(box.position,
-          box.rotation, box.lossyScale);
+        if (info.hitBox == null) continue;
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(info.hitBox.position,
+          info.hitBox.rotation, info.hitBox.lossyScale);
         Gizmos.matrix = rotationMatrix;
         Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
       }

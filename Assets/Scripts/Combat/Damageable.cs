@@ -42,7 +42,7 @@ namespace CwispyStudios.TankMania.Combat
 
     public void TakeDamage( float damage )
     {
-//      Debug.Log($"{gameObject} took {damage} damage.");
+      Debug.Log($"{gameObject} took {damage} damage.");
       currentHealth -= damage;
 
       if (currentHealth < 0f)
