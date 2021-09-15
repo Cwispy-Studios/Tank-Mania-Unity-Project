@@ -8,7 +8,7 @@ namespace CwispyStudios.TankMania.Upgrades
   {
     public override float GetPropertyHeight( SerializedProperty property, GUIContent label )
     {
-      return base.GetPropertyHeight(property, label) * 2f + EditorGUIUtility.standardVerticalSpacing;
+      return base.GetPropertyHeight(property, label) * 2f + EditorGUIUtility.standardVerticalSpacing * 2f;
     }
 
     public override void OnGUI( Rect position, SerializedProperty property, GUIContent label )
@@ -19,10 +19,11 @@ namespace CwispyStudios.TankMania.Upgrades
       SerializedProperty statModifier = property.FindPropertyRelative(nameof(statModifier));
 
       position.height = EditorGUIUtility.singleLineHeight;
+      position.y += EditorGUIUtility.standardVerticalSpacing;
 
       EditorGUI.BeginChangeCheck();
 
-      EditorGUI.PropertyField(position, instanceName);
+      EditorGUI.PropertyField(position, instanceName, new GUIContent());
 
       position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 

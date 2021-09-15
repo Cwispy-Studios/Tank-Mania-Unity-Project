@@ -23,9 +23,5 @@ namespace CwispyStudios.TankMania.Upgrades
       ++upgradedAmount;
       OnUpgradeEvent?.Invoke();
     }
-
-#if UNITY_EDITOR
-    public Action OnInstanceRemoved;
-#endif
   }
 }

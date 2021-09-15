@@ -16,10 +16,10 @@ namespace CwispyStudios.TankMania.Upgrades
     public Sprite UpgradeImage;
     [TextArea(2, 5)] public string UpgradeDescription;
 
-    [Header("Player Modifiers"), SerializeField]
+    [Header("Player Modifiers")]
     public List<StatModifierInstance> PlayerStatModifiers = new List<StatModifierInstance>();
 
-    [Header("Enemy Modifiers"), SerializeField]
+    [Header("Enemy Modifiers")]
     public List<StatModifierInstance> EnemyStatModifiers = new List<StatModifierInstance>();
 
     [NonSerialized] private int playerUpgradedAmount = 0;
@@ -27,37 +27,6 @@ namespace CwispyStudios.TankMania.Upgrades
 
     [NonSerialized] private int enemyUpgradedAmount = 0;
     public int EnemyUpgradedAmount => enemyUpgradedAmount;
-
-#if UNITY_EDITOR
-    private List<StatModifierInstance> oldStatModifiers = new List<StatModifierInstance>();
-
-    private void OnValidate()
-    {
-      UpdateOldStatModifiersList();
-    }
-
-    private void UpdateOldStatModifiersList()
-    {
-      // Loop through the old list...
-      for (int i = oldStatModifiers.Count - 1; i >= 0; --i)
-      {
-        StatModifierInstance statModifier = oldStatModifiers[i];
-
-        // ...and check if any stat modifier instance has been deleted and should no longer exist
-        if (!PlayerStatModifiers.Contains(statModifier) && !EnemyStatModifiers.Contains(statModifier))
-        {
-          statModifier.OnInstanceRemoved?.Invoke();
-          oldStatModifiers.RemoveAt(i);
-        }
-      }
-
-      // Update the old list 
-      oldStatModifiers.Clear();
-      oldStatModifiers.AddRange(PlayerStatModifiers);
-      oldStatModifiers.AddRange(EnemyStatModifiers);
-    }
-
-#endif
 
     public void UpgradePlayer()
     {

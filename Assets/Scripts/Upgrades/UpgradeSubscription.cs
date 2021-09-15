@@ -35,13 +35,9 @@ namespace CwispyStudios.TankMania.Upgrades
           return;
         }
 
-        if (StatModifierInstance != null) StatModifierInstance.OnInstanceRemoved -= RemoveStatModifier;
-
         StatModifierInstance = upgrade.GetInstanceFromIndex(statModifierIndex);
         statModifierUpgrade = upgrade;
         statModifierIndex = -1;
-
-        if (StatModifierInstance != null) StatModifierInstance.OnInstanceRemoved += RemoveStatModifier;
       }
     }
 
