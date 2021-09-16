@@ -5,7 +5,6 @@ namespace CwispyStudios.TankMania.Player
 {
   using Combat;
   using Poolers;
-  using Projectile;
   using Stats;
   using Upgrades;
 

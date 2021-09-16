@@ -1,9 +1,11 @@
-using System;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Visuals
 {
+  using Combat;
+
   public class ShockWaveHandler : MonoBehaviour
   {
     [SerializeField] private Shader shockWaveShader;
@@ -34,17 +36,17 @@ namespace CwispyStudios.TankMania.Visuals
       heightId = Shader.PropertyToID("_Height");
     }
 
-    private void BulletFiredShockWave(Projectile.Projectile projectile)
+    private void BulletFiredShockWave(Projectile projectile)
     {
       StartShockWave(projectile, shootHeight);
     }
 
-    private void BulletHitShockWave(Projectile.Projectile projectile)
+    private void BulletHitShockWave(Projectile projectile)
     {
       StartShockWave(projectile, hitHeight);
     }
 
-    private void StartShockWave(Projectile.Projectile projectile, float height)
+    private void StartShockWave(Projectile projectile, float height)
     {
       Vector3 position = projectile.transform.position;
 
