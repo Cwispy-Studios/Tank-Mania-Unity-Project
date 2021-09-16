@@ -37,7 +37,7 @@ namespace CwispyStudios.TankMania.Terrain
             textureData.UpdateMeshHeights(terrainMaterial, terrainData.minHeight, terrainData.maxHeight);
         }
 
-        void OnValuesUpdated()
+        private void OnValuesUpdated()
         {
             if (!Application.isPlaying)
             {
@@ -45,7 +45,7 @@ namespace CwispyStudios.TankMania.Terrain
             }
         }
 
-        void OnTextureValuesUpdated()
+        private void OnTextureValuesUpdated()
         {
          textureData.ApplyToMaterial(terrainMaterial);   
         }
@@ -85,7 +85,7 @@ namespace CwispyStudios.TankMania.Terrain
             new Thread(threadStart).Start();
         }
 
-        void MapDataThread(Vector2 center, Action<MapData> callback)
+        private void MapDataThread(Vector2 center, Action<MapData> callback)
         {
             MapData mapData = GenerateMapData(center);
             lock (mapDataThreadInfoQueue)
@@ -104,7 +104,7 @@ namespace CwispyStudios.TankMania.Terrain
             new Thread(threadStart).Start();
         }
         
-        void MeshDataThread(MapData mapData, int lod, Action<MeshData> callback)
+        private void MeshDataThread(MapData mapData, int lod, Action<MeshData> callback)
         {
             MeshData meshData = MeshGenerator.GenerateTerrainMesh(mapData.heightMap, terrainData.meshHeightMultiplier,
                 terrainData.meshHeightCurve, lod, terrainData.useFlatShading);
@@ -160,7 +160,7 @@ namespace CwispyStudios.TankMania.Terrain
             return new MapData(noiseMap);
         }
 
-        void OnValidate()
+        private void OnValidate()
         {
             if (terrainData != null)
             {
@@ -179,7 +179,7 @@ namespace CwispyStudios.TankMania.Terrain
             }
         }
 
-        struct MapThreadInfo<T>
+        private struct MapThreadInfo<T>
         {
             public readonly Action<T> callback;
             public readonly T parameter;

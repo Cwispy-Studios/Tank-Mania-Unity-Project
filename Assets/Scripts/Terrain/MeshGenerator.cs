@@ -74,7 +74,7 @@ namespace CwispyStudios.TankMania.Terrain
                 }
             }
             
-            meshData.Finalize();
+            meshData.FinalizeGeneration();
 
             return meshData;
         }
@@ -138,7 +138,7 @@ namespace CwispyStudios.TankMania.Terrain
             
         }
 
-        Vector3[] CalculateNormals()
+        private Vector3[] CalculateNormals()
         {
             Vector3[] vertexNormals = new Vector3[vertices.Length];
             int triangleCount = triangles.Length / 3;
@@ -185,7 +185,7 @@ namespace CwispyStudios.TankMania.Terrain
             return vertexNormals;
         }
 
-        Vector3 SurfaceNormalFromIndices(int indexA, int indexB, int indexC)
+        private Vector3 SurfaceNormalFromIndices(int indexA, int indexB, int indexC)
         {
             Vector3 pointA = (indexA <0)? borderVertices [-indexA-1] : vertices[indexA];
             Vector3 pointB = (indexB <0)? borderVertices [-indexB-1] : vertices[indexB];
@@ -196,7 +196,7 @@ namespace CwispyStudios.TankMania.Terrain
             return  Vector3.Cross(sideAB, sideAC).normalized;
         }
 
-        public void Finalize()
+        public void FinalizeGeneration()
         {
             if (useFlatShading) {
                 FlatShading();
@@ -210,7 +210,7 @@ namespace CwispyStudios.TankMania.Terrain
             bakedNormals = CalculateNormals();
         }
 
-        void FlatShading()  // Optional shading method (2 triangles have 6 vertices instead of 4)
+        private void FlatShading()  // Optional shading method (2 triangles have 6 vertices instead of 4)
         {
             Vector3[] flatShadedVertices = new Vector3[triangles.Length];
             Vector2[] flatShadedUvs = new Vector2[triangles.Length];

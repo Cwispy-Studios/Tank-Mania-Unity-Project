@@ -36,7 +36,7 @@ namespace CwispyStudios.TankMania.Terrain
             material.SetFloat ("maxHeight", maxHeight);
         }
 
-        Texture2DArray GenerateTextureArray(Texture2D[] textures) 
+        private Texture2DArray GenerateTextureArray(Texture2D[] textures) 
         {
             Texture2DArray textureArray = new Texture2DArray (textureSize, textureSize, textures.Length, textureFormat, true);
             for (int i = 0; i < textures.Length; i++) 

@@ -54,7 +54,7 @@ namespace CwispyStudios.TankMania.Terrain
             }
         }
 
-        void UpdateVisibleChunks()
+        private void UpdateVisibleChunks()
         {
             HashSet<Vector2> alreadyUpdatedChunkCoords = new HashSet<Vector2>();
             for (int i = visibleTerrainChunks.Count-1; i >= 0 ; i--)
@@ -138,7 +138,7 @@ namespace CwispyStudios.TankMania.Terrain
                 mapGenerator.RequestMapData(position, OnMapDataReceived);
             }
 
-            void OnMapDataReceived(MapData mapData)
+            private void OnMapDataReceived(MapData mapData)
             {
                 this.mapData = mapData;
                 mapDataReceived = true;
@@ -237,7 +237,7 @@ namespace CwispyStudios.TankMania.Terrain
             }
         }
 
-        class LODMesh
+        private class LODMesh
         {
             public Mesh mesh;
             public bool hasRequestedMesh;
@@ -250,7 +250,7 @@ namespace CwispyStudios.TankMania.Terrain
                 this.lod = lod;
             }
 
-            void OnMeshDataReceived(MeshData meshData)
+            private void OnMeshDataReceived(MeshData meshData)
             {
                 mesh = meshData.CreateMesh();
                 hasMesh = true;
