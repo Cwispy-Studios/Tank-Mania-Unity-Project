@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  using Projectile;
+  using Combat;
   using Visuals;
 
   [CreateAssetMenu(menuName = "Player/Firing Information")]
