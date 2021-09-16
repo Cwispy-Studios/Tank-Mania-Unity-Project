@@ -1,26 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using CwispyStudios.TankMania.Terrain;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(MapGenerator))]
-public class MapGeneratorEditor : UnityEditor.Editor 
+namespace CwispyStudios.TankMania.Terrain
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(MapGenerator))]
+    public class MapGeneratorEditor : UnityEditor.Editor 
     {
-        MapGenerator mapGen = (MapGenerator)target;
+        public override void OnInspectorGUI()
+        {
+            MapGenerator mapGen = (MapGenerator)target;
 
-        if (DrawDefaultInspector()) {
-            if (mapGen.autoUpdate) {
+            if (DrawDefaultInspector()) {
+                if (mapGen.autoUpdate) {
+                    mapGen.DrawMapInEditor();
+                }
+            }
+
+            if (GUILayout.Button("Generate")) {
                 mapGen.DrawMapInEditor();
             }
-        }
-
-        
-
-        if (GUILayout.Button("Generate")) {
-            mapGen.DrawMapInEditor();
         }
     }
 }

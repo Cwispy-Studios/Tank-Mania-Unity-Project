@@ -1,19 +1,21 @@
-using CwispyStudios.TankMania.Terrain;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(UpdatableData), true)]
-public class UpdatablaDataEditor : UnityEditor.Editor
+namespace CwispyStudios.TankMania.Terrain
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(UpdatableData), true)]
+    public class UpdatablaDataEditor : UnityEditor.Editor
     {
-        base.OnInspectorGUI();
-
-        UpdatableData data = (UpdatableData)target;
-        if (GUILayout.Button("Update")) 
+        public override void OnInspectorGUI()
         {
-            data.NotifyOfUpdatedValues();
-            EditorUtility.SetDirty(target); 
+            base.OnInspectorGUI();
+
+            UpdatableData data = (UpdatableData)target;
+            if (GUILayout.Button("Update")) 
+            {
+                data.NotifyOfUpdatedValues();
+                EditorUtility.SetDirty(target); 
+            }
         }
     }
 }
