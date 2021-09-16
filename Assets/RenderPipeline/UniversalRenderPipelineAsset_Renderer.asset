@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RendererFeatures:
   - {fileID: 2837312915788030253}
-  m_RendererFeatureMap: 2d612c6e10296027
+  - {fileID: 2841839952196796962}
+  m_RendererFeatureMap: 2d612c6e102960272202343b613e7027
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
@@ -35,7 +36,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_DefaultStencilState:
-    overrideStencilState: 0
+    overrideStencilState: 1
     stencilReference: 0
     stencilCompareFunction: 8
     passOperation: 2
@@ -66,3 +67,29 @@ MonoBehaviour:
     DirectLightingStrength: 0.25
     Radius: 0.035
     SampleCount: 6
+--- !u!114 &2841839952196796962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a401b6b1bb7fb24ea1bff49cd1e0f13, type: 3}
+  m_Name: Caustics
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    strength: 0.137
+    rgbSplit: 0.3
+    shadowMask: 1
+    texture: {fileID: 2800000, guid: f2c40b951cee11943a1f6d5ec1b42f2c, type: 3}
+    scale: 5
+    speed: 0.125
+    waterLevel: 1
+    depth: {x: 0, y: 10}
+    fade: 1
+    renderPassEvent: 400
+    debug: 0
+  causticsShader: {fileID: 4800000, guid: e8cdbdcc4287bd344a1d042d8f601b9a, type: 3}
