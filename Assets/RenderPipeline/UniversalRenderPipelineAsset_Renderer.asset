@@ -87,7 +87,7 @@ MonoBehaviour:
     texture: {fileID: 2800000, guid: f2c40b951cee11943a1f6d5ec1b42f2c, type: 3}
     scale: 5
     speed: 0.125
-    waterLevel: 1
+    waterLevel: 0
     depth: {x: 0, y: 10}
     fade: 1
     renderPassEvent: 400
