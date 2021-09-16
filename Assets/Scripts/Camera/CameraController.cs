@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace CwispyStudios.TankMania.Camera
 {
-  using Tank;
+  using Player;
   using Utils;
 
   public class CameraController : MonoBehaviour
@@ -23,6 +23,9 @@ namespace CwispyStudios.TankMania.Camera
     [Header("Camera Targeting")]
     [SerializeField, Range(50f, 1000f)] private float rayDistance = 200f;
 
+    [Header("Layer mask")]
+    [SerializeField] private LayerMask lookingAtIgnoreLayerMask;
+
     private TankTurretController trackedTarget;
 
     private float targetHorizontalRotationValue = 0f;
@@ -34,8 +37,6 @@ namespace CwispyStudios.TankMania.Camera
     private UnityEngine.Camera playerCamera;
 
     private Vector3 centerScreenPoint;
-
-    //public float BaseRotation { get { return baseRotation; } }
 
     private void Awake()
     {
@@ -104,9 +105,11 @@ namespace CwispyStudios.TankMania.Camera
     public Vector3 GetCrosshairPosition()
     {
       Ray ray = playerCamera.ScreenPointToRay(centerScreenPoint);
-      
-      if (Physics.Raycast(ray, out RaycastHit hit, rayDistance)) return hit.point;
-      else return ray.origin + ray.direction * rayDistance;
+
+      if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, ~lookingAtIgnoreLayerMask, QueryTriggerInteraction.Ignore)) 
+        return hit.point;
+      else 
+        return ray.origin + ray.direction * rayDistance;
     }
 
     ///////////////////////////
