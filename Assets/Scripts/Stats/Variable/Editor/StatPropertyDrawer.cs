@@ -57,7 +57,7 @@ namespace CwispyStudios.TankMania.Stats
 
       position.height = EditorGUIUtility.singleLineHeight;
       Rect buttonRect = EditorGUI.IndentedRect(position);
-      buttonRect.width = 10f;
+      buttonRect.width = 7f;
 
       SerializedProperty useInt = property.FindPropertyRelative("useInt");
 
@@ -180,15 +180,19 @@ namespace CwispyStudios.TankMania.Stats
       GUI.enabled = false;
 
       string text = useInt.boolValue ? "i" : "f";
+
+      Color color = GUI.backgroundColor;
+      GUI.backgroundColor = useInt.boolValue ? new Color(1f, 0.839f, 0.31f) : Color.cyan;
+
       GUI.Button(position, text);
+
+      GUI.backgroundColor = color;
 
       GUI.enabled = true;
     }
 
     public virtual void DrawValueField( Rect position, SerializedProperty baseValue, SerializedProperty useInt, GUIContent label )
     {
-      //position = EditorGUI.PrefixLabel(position, label);
-
       if (useInt.boolValue)
         baseValue.floatValue = EditorGUI.IntField(position, label, (int)baseValue.floatValue);
 
