@@ -36,13 +36,13 @@ namespace CwispyStudios.TankMania.Player
       projectilePooler = FindObjectOfType<ProjectilePooler>();
       vfxPooler = FindObjectOfType<VfxPooler>();
 
-      currentAmmo.Value = firingInformation.AmmoCount.Value;
+      currentAmmo.Value = (int)firingInformation.AmmoCount.Value;
       fireCountdown.Value = 0f;
       reloadCountdown.Value = firingInformation.ReloadSpeed.Value;
 
       baseDamage.DamageFrom = Team.Player;
 
-      previousAmmoCount = firingInformation.AmmoCount.Value;
+      previousAmmoCount = (int)firingInformation.AmmoCount.Value;
 
       firingInformation.AmmoCount.OnStatUpgrade += OnAmmoChange;
     }
@@ -116,17 +116,17 @@ namespace CwispyStudios.TankMania.Player
       // Ammo added
       if (firingInformation.AmmoCount.Value > previousAmmoCount)
       {
-        int diff = firingInformation.AmmoCount.Value - previousAmmoCount;
+        int diff = (int)firingInformation.AmmoCount.Value - previousAmmoCount;
         currentAmmo.Value += diff;
       }
 
       // Ammo removed
       else
       {
-        currentAmmo.Value = Mathf.Clamp(currentAmmo.Value, 0, firingInformation.AmmoCount.Value);
+        currentAmmo.Value = Mathf.Clamp(currentAmmo.Value, 0, (int)firingInformation.AmmoCount.Value);
       }
 
-      previousAmmoCount = firingInformation.AmmoCount.Value;
+      previousAmmoCount = (int)firingInformation.AmmoCount.Value;
     }
 
     ///////////////////////////

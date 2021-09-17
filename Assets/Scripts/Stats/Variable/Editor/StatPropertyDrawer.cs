@@ -7,13 +7,17 @@ namespace CwispyStudios.TankMania.Stats
 {
   using Upgrades;
 
-  [CustomPropertyDrawer(typeof(VariableStat), true)]
-  public class VariableStatPropertyDrawer : PropertyDrawer
+  [CustomPropertyDrawer(typeof(Stat), true)]
+  public class StatPropertyDrawer : PropertyDrawer
   {
     private const float SwapButtonWidth = 15f;
 
+    private readonly string[] popupOptions = { "Float", "Int" };
+
     // Cache the style of the dropdown button
     private GUIStyle dropdownButtonStyle;
+    // Cache the style of the popup button
+    private GUIStyle popupStyle;
 
     // Cache the graphics of dropdown and foldout buttons
     private GUIContent foldoutContent;
@@ -51,11 +55,22 @@ namespace CwispyStudios.TankMania.Stats
 
       EditorGUI.BeginChangeCheck();
 
-      // Give space for the swap button after the property field
-      position.width -= SwapButtonWidth + buttonMargin;
       position.height = EditorGUIUtility.singleLineHeight;
+      Rect buttonRect = EditorGUI.IndentedRect(position);
+      buttonRect.width = 10f;
 
-      DrawValueField(position, property.FindPropertyRelative("baseValue"), label);
+      SerializedProperty useInt = property.FindPropertyRelative("useInt");
+
+      DrawStatTypeButton(buttonRect, useInt);
+
+      position.x += buttonRect.width;
+
+      // Give space for the swap button after the property field
+      position.width -= SwapButtonWidth + buttonMargin + buttonRect.width;
+
+      SerializedProperty baseValue = property.FindPropertyRelative("baseValue");
+
+      DrawValueField(position, baseValue, useInt, label);
 
       position.x += position.width + buttonMargin;
       position.width = SwapButtonWidth;
@@ -80,11 +95,7 @@ namespace CwispyStudios.TankMania.Stats
         position.x = EditorGUIUtility.labelWidth + 18f;
         position.width = EditorGUIUtility.currentViewWidth - position.x - dropdownButtonStyle.margin.right;
 
-        //EditorGUI.BeginChangeCheck();
-
         EditorGUI.PropertyField(position, modifiersList, new GUIContent("Modifiers", modifiersTooltip), true);
-
-        //if (EditorGUI.EndChangeCheck()) InformStatModifiersOfSubscribers(property);
       }
 
       if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties();
@@ -100,10 +111,16 @@ namespace CwispyStudios.TankMania.Stats
         dropdownButtonStyle = GUI.skin.button;
         dropdownButtonStyle.padding = new RectOffset();
       }
+      
+      if (popupStyle == null)
+      {
+        popupStyle = GUI.skin.GetStyle("PaneOptions");
+        popupStyle.imagePosition = ImagePosition.ImageOnly;
+      }
 
       if (modifiersList == null)
       {
-        modifiersList = property.FindPropertyRelative(nameof(VariableStat.StatModifiers));
+        modifiersList = property.FindPropertyRelative(nameof(Stat.StatModifiers));
       }
 
       if (buttonMargin < 1f)
@@ -158,9 +175,25 @@ namespace CwispyStudios.TankMania.Stats
       label.tooltip += modifiersTooltip;
     }
 
-    public virtual void DrawValueField( Rect position, SerializedProperty baseValue, GUIContent label )
+    private void DrawStatTypeButton( Rect position, SerializedProperty useInt )
     {
-      EditorGUI.PropertyField(position, baseValue, label);
+      GUI.enabled = false;
+
+      string text = useInt.boolValue ? "i" : "f";
+      GUI.Button(position, text);
+
+      GUI.enabled = true;
+    }
+
+    public virtual void DrawValueField( Rect position, SerializedProperty baseValue, SerializedProperty useInt, GUIContent label )
+    {
+      //position = EditorGUI.PrefixLabel(position, label);
+
+      if (useInt.boolValue)
+        baseValue.floatValue = EditorGUI.IntField(position, label, (int)baseValue.floatValue);
+
+      else
+        baseValue.floatValue = EditorGUI.FloatField(position, label, baseValue.floatValue);
     }
   }
 }
