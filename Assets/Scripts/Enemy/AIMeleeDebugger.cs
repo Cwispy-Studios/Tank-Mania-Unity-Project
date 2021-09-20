@@ -49,7 +49,7 @@ namespace CwispyStudios.TankMania.Enemy
       else
       {
         Following = false;
-        meleeController.MeleeAttack(0, 10);
+        meleeController.MeleeAttack(0);
       }
     }
   }
