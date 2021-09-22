@@ -24,12 +24,12 @@ namespace CwispyStudios.TankMania.Upgrades
     // This will display the exact name of the stat being modified in the inspector
     [SerializeField] private List<string> statNamesModified = new List<string>();
     // This is to store the actual stat being modified to check within this script, not to be used by inspector
-    [SerializeField] private List<VariableStat> statsModified = new List<VariableStat>();
+    [SerializeField] private List<Stat> statsModified = new List<Stat>();
 
     /// <summary>
     /// DO NOT USE THIS FUNCTION IF YOU DON'T KNOW WHAT IT DOES, ONLY FOR EDITOR USE
     /// </summary>
-    public void AddStat( StatsGroup statsGroup, string statName, VariableStat stat )
+    public void AddStat( StatsGroup statsGroup, string statName, Stat stat )
     {
       VerifyStatLists();
 

@@ -12,21 +12,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af38206fbef97144a85684330c52851b, type: 3}
   m_Name: Cannon Firing Information
   m_EditorClassIdentifier: 
+  stats:
+  - StatModifiers:
+    - {fileID: 11400000, guid: 7ff9b5fea9baf3f43a03f07c3f5dae2e, type: 2}
+    useInt: 0
+    baseValue: 15
+    explicitType: 1
+  - StatModifiers:
+    - {fileID: 11400000, guid: 11fe65c1d8f9cf44bb5e8461a0d6dd23, type: 2}
+    useInt: 0
+    baseValue: 1.5
+    explicitType: 1
+  - StatModifiers: []
+    useInt: 0
+    baseValue: 3
+    explicitType: 1
+  - StatModifiers: []
+    useInt: 0
+    baseValue: 0.2
+    explicitType: 1
+  - StatModifiers:
+    - {fileID: 11400000, guid: 6f19d8ebc8a31b34f8be7190b409391c, type: 2}
+    - {fileID: 11400000, guid: 5973b26f549c00a40a79d21b815d7d8e, type: 2}
+    useInt: 1
+    baseValue: 5
+    explicitType: 1
   ProjectilePrefab: {fileID: 7051859430511138134, guid: e12447defeff40d47a09319a02099a26,
     type: 3}
   FiringVfx: {fileID: 2051231272, guid: cb4917dcdcb9ee848bf1a0474e66b7f3, type: 3}
   FiringForce:
     UpgradeSubscriptions: []
+    useInt: 0
     baseValue: 15
+    explicitType: 1
   FireRate:
     UpgradeSubscriptions: []
+    useInt: 0
     baseValue: 1.5
+    explicitType: 1
   ReloadSpeed:
     UpgradeSubscriptions: []
+    useInt: 0
     baseValue: 3
+    explicitType: 1
   TimeToQueueFiring:
     UpgradeSubscriptions: []
+    useInt: 0
     baseValue: 0.2
+    explicitType: 1
   AmmoCount:
     UpgradeSubscriptions:
     - StatModifierInstance:
@@ -37,4 +70,6 @@ MonoBehaviour:
       upgrade: {fileID: 11400000, guid: 6114107de394e8d43bda715c416d45e0, type: 2}
       statModifierIndex: -1
       selectingModifier: 0
+    useInt: 1
     baseValue: 5
+    explicitType: 1

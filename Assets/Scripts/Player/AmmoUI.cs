@@ -54,7 +54,7 @@ namespace CwispyStudios.TankMania.Player
         }
       }
 
-      previousCurrentAmmo = firingInformation.AmmoCount.Value - 1;
+      previousCurrentAmmo = (int)firingInformation.AmmoCount.Value - 1;
     }
 
     private void AddAmmoGroups( int amount )
@@ -83,7 +83,7 @@ namespace CwispyStudios.TankMania.Player
       else
       {
         int totalInAmmoGroups = ammoImageGroups.Count * ammoImageGroupPrefab.AmmoImagesPerColumn;
-        int remainder = totalInAmmoGroups - firingInformation.AmmoCount.Value;
+        int remainder = totalInAmmoGroups - (int)firingInformation.AmmoCount.Value;
 
         lastAmmoImageGroup.SetAmountActive(remainder);
       }
@@ -119,12 +119,12 @@ namespace CwispyStudios.TankMania.Player
 
     private void OnAmmoCountChange()
     {
-      int newAmmoCount = firingInformation.AmmoCount.Value;
+      int newAmmoCount = (int)firingInformation.AmmoCount.Value;
 
       if (useStackedAmmoImages)
       {
         int numberOfNewAmmoGroups = Mathf.CeilToInt(
-          (float)firingInformation.AmmoCount.Value / (float)ammoImageGroupPrefab.AmmoImagesPerColumn);
+          (float)firingInformation.AmmoCount.Value / ammoImageGroupPrefab.AmmoImagesPerColumn);
 
         // Some ammo groups should be removed
         if (numberOfNewAmmoGroups < ammoImageGroups.Count)
@@ -183,7 +183,7 @@ namespace CwispyStudios.TankMania.Player
       }
 
       // If ammo is removed, this will go out of bounds
-      previousCurrentAmmo = Mathf.Clamp(previousCurrentAmmo, 0, firingInformation.AmmoCount.Value - 1);
+      previousCurrentAmmo = Mathf.Clamp(previousCurrentAmmo, 0, (int)firingInformation.AmmoCount.Value - 1);
     }
   }
 }

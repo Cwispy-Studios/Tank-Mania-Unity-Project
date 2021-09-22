@@ -10,7 +10,7 @@ namespace CwispyStudios.TankMania.Stats
   public abstract class StatsGroup : ScriptableObject
   {
     [SerializeField, HideInInspector] 
-    private List<VariableStat> stats = new List<VariableStat>();
+    private List<Stat> stats = new List<Stat>();
 
 #if UNITY_EDITOR
     private List<string> statsName = new List<string>();
@@ -26,45 +26,19 @@ namespace CwispyStudios.TankMania.Stats
 
     private void OnValidate()
     {
-      Debug.Log("Validate");
       // Need to be called here since the list seems to get cleared everytime in editor
       FindStatObjects();
 
-      GetStatModifiersFromIndex();
-
       // Does not need to be called in build since the values get serialized in editor already
       SetDefaultUpgradedStatValues();
-    }
 
-    private void GetStatModifiersFromIndex()
-    {
-      foreach (VariableStat stat in stats)
-      {
-        foreach (UpgradeSubscription upgradeSubscription in stat.UpgradeSubscriptions)
-        {
-          upgradeSubscription.AssignStatModifierFromInspectorSelection();
-          upgradeSubscription.ValidateUpgrade();
-        }
-      }
-    }
-
-    private void ValidateUpgradesOfStatModifiers()
-    {
-      foreach (VariableStat stat in stats)
-      {
-        foreach (UpgradeSubscription upgradeSubscription in stat.UpgradeSubscriptions)
-        {
-          upgradeSubscription.ValidateUpgrade();
-        }
-      }
+      InformStatModifiers();
     }
 
     private void OnEnable() 
     {
-      Debug.Log("Enable");
-
 #if UNITY_EDITOR
-      ValidateUpgradesOfStatModifiers();
+      InformStatModifiers();
 #endif
 
       SubscribeStats();
@@ -89,33 +63,44 @@ namespace CwispyStudios.TankMania.Stats
 
       foreach (FieldInfo field in fields)
       {
-        // Find the fields that are VariableStats
-        if (field.FieldType == typeof(FloatStat) || field.FieldType == typeof(IntStat))
+        // Find the fields that are Stats
+        if (field.FieldType == typeof(Stat))
         {
-          stats.Add(field.GetValue(statsGroup) as VariableStat);
+          stats.Add(field.GetValue(statsGroup) as Stat);
           statsName.Add(field.Name);
         }
 
-        else if (field.FieldType.IsClass)
+        else if (field.DeclaringType == typeof(StatsGroup))
           GetStatVariables(field.GetValue(statsGroup));
+      }
+    }
+
+    private void InformStatModifiers()
+    {
+      for (int i = 0; i < stats.Count; ++i)
+      {
+        foreach (StatModifier statModifier in stats[i].StatModifiers)
+        {
+          statModifier?.AddStat(this, statsName[i], stats[i]);
+        }
       }
     }
 
     private void SetDefaultUpgradedStatValues()
     {
-      foreach (VariableStat stat in stats)
+      foreach (Stat stat in stats)
         stat?.SetDefaultUpgradedValue();
     }
 
     private void SubscribeStats()
     {
-      foreach (VariableStat stat in stats)
-        stat.SubscribeToUpgradeInstances();
+      foreach (Stat stat in stats)
+        stat.SubscribeToStatModifiers();
     }
     private void UnsubscribeStats()
     {
-      foreach (VariableStat stat in stats)
-        stat.UnsubscribeFromUpgradeInstances();
+      foreach (Stat stat in stats)
+        stat.UnsubscribeFromStatModifiers();
     }
   }
 }
