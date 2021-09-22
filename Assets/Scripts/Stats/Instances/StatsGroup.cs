@@ -10,7 +10,7 @@ namespace CwispyStudios.TankMania.Stats
   public abstract class StatsGroup : ScriptableObject
   {
     [SerializeField, HideInInspector] 
-    private List<VariableStat> stats = new List<VariableStat>();
+    private List<Stat> stats = new List<Stat>();
 
 #if UNITY_EDITOR
     private List<string> statsName = new List<string>();
@@ -63,14 +63,14 @@ namespace CwispyStudios.TankMania.Stats
 
       foreach (FieldInfo field in fields)
       {
-        // Find the fields that are VariableStats
-        if (field.FieldType == typeof(FloatStat) || field.FieldType == typeof(IntStat))
+        // Find the fields that are Stats
+        if (field.FieldType == typeof(Stat))
         {
-          stats.Add(field.GetValue(statsGroup) as VariableStat);
+          stats.Add(field.GetValue(statsGroup) as Stat);
           statsName.Add(field.Name);
         }
 
-        else if (field.FieldType.IsClass)
+        else if (field.DeclaringType == typeof(StatsGroup))
           GetStatVariables(field.GetValue(statsGroup));
       }
     }
@@ -88,18 +88,18 @@ namespace CwispyStudios.TankMania.Stats
 
     private void SetDefaultUpgradedStatValues()
     {
-      foreach (VariableStat stat in stats)
+      foreach (Stat stat in stats)
         stat?.SetDefaultUpgradedValue();
     }
 
     private void SubscribeStats()
     {
-      foreach (VariableStat stat in stats)
+      foreach (Stat stat in stats)
         stat.SubscribeToStatModifiers();
     }
     private void UnsubscribeStats()
     {
-      foreach (VariableStat stat in stats)
+      foreach (Stat stat in stats)
         stat.UnsubscribeFromStatModifiers();
     }
   }

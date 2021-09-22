@@ -11,7 +11,7 @@ namespace CwispyStudios.TankMania.Stats
     public Team DamageFrom;
 
     [Header("Damage Information"), Tooltip("How much damage is dealt on a direct hit.")]
-    public FloatStat DirectDamage = new FloatStat(10f);
+    public Stat DirectDamage = new Stat(10f);
 
     [HideInInspector]
     public SplashDamage SplashDamage = new SplashDamage();

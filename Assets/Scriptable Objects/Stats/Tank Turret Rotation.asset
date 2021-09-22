@@ -12,5 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1130739363fb141b1c16cec96f150a, type: 3}
   m_Name: Tank Turret Rotation
   m_EditorClassIdentifier: 
-  TurretRotationSpeed: 120
-  GunRotationSpeed: 60
+  stats:
+  - StatModifiers: []
+    useInt: 0
+    baseValue: 120
+    explicitType: 1
+  - StatModifiers: []
+    useInt: 0
+    baseValue: 60
+    explicitType: 1
+  TurretRotationSpeed:
+    StatModifiers: []
+    useInt: 0
+    baseValue: 120
+    explicitType: 1
+  GunRotationSpeed:
+    StatModifiers: []
+    useInt: 0
+    baseValue: 60
+    explicitType: 1
