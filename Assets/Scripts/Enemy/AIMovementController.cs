@@ -106,9 +106,9 @@ namespace CwispyStudios.TankMania.Enemy
 
     private Vector3 DirectionToNextCorner()
     {
-      Vector3 direction = (currentPath.corners[currentPathIndex] - transform.position).normalized;
+      Vector3 direction = (currentPath.corners[currentPathIndex] - transform.position);
       direction.y = 0;
-      return direction;
+      return direction.normalized;
     }
   }
 }
