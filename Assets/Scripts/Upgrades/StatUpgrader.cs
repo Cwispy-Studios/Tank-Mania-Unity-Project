@@ -7,15 +7,13 @@ namespace CwispyStudios.TankMania.Upgrades
   using Stats;
 
   [Serializable]
-  public class StatModifierInstance
+  public class StatUpgrader
   {
-    [SerializeField] private string instanceName;
-    public string InstanceName => instanceName;
+    [SerializeField] private Stat statUpgraded;
+    public Stat StatUpgraded => statUpgraded;
 
     [SerializeField] private StatModifier statModifier;
     public StatModifier StatModifier => statModifier;
-
-    [SerializeField] private StatSubscription[] statSubscriptions;
 
     private int upgradedAmount = 0;
     public int UpgradedAmount => upgradedAmount;

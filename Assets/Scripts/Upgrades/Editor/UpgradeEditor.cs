@@ -11,8 +11,8 @@ namespace CwispyStudios.TankMania.Upgrades
     private SerializedProperty upgradeImage;
     private SerializedProperty upgradeName;
     private SerializedProperty upgradeDescription;
-    private SerializedProperty playerStatModifiers;
-    private SerializedProperty enemyStatModifiers;
+    private SerializedProperty playerStatUpgraders;
+    private SerializedProperty enemyStatUpgraders;
 
     private void OnEnable()
     {
@@ -20,8 +20,8 @@ namespace CwispyStudios.TankMania.Upgrades
       upgradeImage = serializedObject.FindProperty(nameof(Upgrade.UpgradeImage));
       upgradeName = serializedObject.FindProperty(nameof(Upgrade.UpgradeName));
       upgradeDescription = serializedObject.FindProperty(nameof(Upgrade.UpgradeDescription));
-      playerStatModifiers = serializedObject.FindProperty(nameof(Upgrade.PlayerStatModifiers));
-      enemyStatModifiers = serializedObject.FindProperty(nameof(Upgrade.EnemyStatModifiers));
+      playerStatUpgraders = serializedObject.FindProperty(nameof(Upgrade.PlayerStatUpgraders));
+      enemyStatUpgraders = serializedObject.FindProperty(nameof(Upgrade.EnemyStatUpgraders));
     }
 
     public override void OnInspectorGUI()
@@ -33,6 +33,7 @@ namespace CwispyStudios.TankMania.Upgrades
       EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Script"));
       EditorGUI.EndDisabledGroup();
 
+      // Upgrade Rarity
       EditorGUILayout.PropertyField(upgradeRarity);
 
       if (serializedObject.isEditingMultipleObjects)
@@ -41,6 +42,7 @@ namespace CwispyStudios.TankMania.Upgrades
         return;
       }
 
+      // Upgrade Name, Image, Description
       EditorGUILayout.PropertyField(upgradeName);
       upgradeImage.objectReferenceValue = EditorGUILayout.ObjectField("Image", upgradeImage.objectReferenceValue, typeof(Sprite), false);
       EditorGUILayout.PropertyField(upgradeDescription);
@@ -50,25 +52,20 @@ namespace CwispyStudios.TankMania.Upgrades
 
       EditorGUILayout.Space();
 
-      if (playerStatModifiers.arraySize > 0 || enemyStatModifiers.arraySize > 0)
-        EditorGUILayout.HelpBox(
-          "NOTE! Remove all stat modifier instances before deleting the asset to remove all references to them from the stats subscriptions!",
-          MessageType.Warning);
+      EditorGUILayout.PropertyField(playerStatUpgraders, new GUIContent("Player Upgrade Components"));
 
-      EditorGUILayout.PropertyField(playerStatModifiers, new GUIContent("Player Upgrade Components"));
-
-      DrawModifierProperties(playerStatModifiers);
+      DrawModifierProperties(playerStatUpgraders);
 
       EditorGUILayout.Space();
 
-      EditorGUILayout.PropertyField(enemyStatModifiers, new GUIContent("Enemy Upgrade Components"));
+      EditorGUILayout.PropertyField(enemyStatUpgraders, new GUIContent("Enemy Upgrade Components"));
 
-      DrawModifierProperties(enemyStatModifiers);
+      DrawModifierProperties(enemyStatUpgraders);
 
       serializedObject.ApplyModifiedProperties();
     }
 
-    private void DrawModifierProperties( SerializedProperty statModifiers )
+    private void DrawModifierProperties( SerializedProperty statUpgraders )
     {
       EditorGUILayout.Space();
 
@@ -82,25 +79,23 @@ namespace CwispyStudios.TankMania.Upgrades
 
       string modifiersList = $"<b>Modifiers List:</b>";
 
-      for (int i = 0; i < statModifiers.arraySize; ++i)
+      for (int i = 0; i < statUpgraders.arraySize; ++i)
       {
-        SerializedProperty instanceProperty = statModifiers.GetArrayElementAtIndex(i);
-        SerializedProperty nameProperty = instanceProperty.FindPropertyRelative("instanceName");
-        SerializedProperty modiferProperty = instanceProperty.FindPropertyRelative("statModifier");
+        SerializedProperty statUpgraderProperty = statUpgraders.GetArrayElementAtIndex(i);
 
-        StatModifier statModifier = modiferProperty.objectReferenceValue as StatModifier;
+        SerializedProperty statUpgradedProperty = statUpgraderProperty.FindPropertyRelative("statUpgraded");
+        SerializedProperty statModiferProperty = statUpgraderProperty.FindPropertyRelative("statModifier");
 
-        if (statModifier != null)
+        StatModifier statModifier = statModiferProperty.objectReferenceValue as StatModifier;
+
+        if (statModifier != null && statUpgradedProperty.objectReferenceValue != null)
         {
-          modifiersList += $"\n• <i>{nameProperty.stringValue.Replace(" Modifier", "")}</i>: ";
+          modifiersList += $"\n• <i>{statUpgradedProperty.objectReferenceValue.name}</i>: "; 
 
           if (statModifier.AddititiveValue != 0f) modifiersList += $"+{statModifier.AddititiveValue.ToString("F2")} ";
           if (statModifier.MultiplicativeValue != 0f) modifiersList += $"+{(statModifier.MultiplicativeValue * 100f).ToString("F0")}%";
         }
       }
-
-      // Does not work :<
-      //modifiersList.Replace("+-", "-");
 
       EditorGUILayout.TextArea(modifiersList, helpBoxStyle);
     }

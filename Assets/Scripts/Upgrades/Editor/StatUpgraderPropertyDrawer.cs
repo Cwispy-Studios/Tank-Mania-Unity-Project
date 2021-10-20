@@ -3,8 +3,10 @@ using UnityEditor;
 
 namespace CwispyStudios.TankMania.Upgrades
 {
-  [CustomPropertyDrawer(typeof(StatModifierInstance))]
-  public class StatModifierInstancePropertyDrawer : PropertyDrawer
+  using Stats;
+
+  [CustomPropertyDrawer(typeof(StatUpgrader))]
+  public class StatUpgraderPropertyDrawer : PropertyDrawer
   {
     public override float GetPropertyHeight( SerializedProperty property, GUIContent label )
     {
@@ -15,7 +17,7 @@ namespace CwispyStudios.TankMania.Upgrades
     {
       label = EditorGUI.BeginProperty(position, label, property);
 
-      SerializedProperty instanceName = property.FindPropertyRelative(nameof(instanceName));
+      SerializedProperty statUpgraded = property.FindPropertyRelative(nameof(statUpgraded));
       SerializedProperty statModifier = property.FindPropertyRelative(nameof(statModifier));
 
       position.height = EditorGUIUtility.singleLineHeight;
@@ -23,7 +25,8 @@ namespace CwispyStudios.TankMania.Upgrades
 
       EditorGUI.BeginChangeCheck();
 
-      EditorGUI.PropertyField(position, instanceName, new GUIContent());
+      statUpgraded.objectReferenceValue = 
+        EditorGUI.ObjectField(position, "Upgrades Stat:", statUpgraded.objectReferenceValue, typeof(Stat), false);
 
       position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 

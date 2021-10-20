@@ -17,10 +17,10 @@ namespace CwispyStudios.TankMania.Upgrades
     [TextArea(2, 5)] public string UpgradeDescription;
 
     [Header("Player Modifiers")]
-    public List<StatModifierInstance> PlayerStatModifiers = new List<StatModifierInstance>();
+    public List<StatUpgrader> PlayerStatUpgraders = new List<StatUpgrader>();
 
     [Header("Enemy Modifiers")]
-    public List<StatModifierInstance> EnemyStatModifiers = new List<StatModifierInstance>();
+    public List<StatUpgrader> EnemyStatUpgraders = new List<StatUpgrader>();
 
     [NonSerialized] private int playerUpgradedAmount = 0;
     public int PlayerUpgradedAmount => playerUpgradedAmount;
@@ -32,11 +32,12 @@ namespace CwispyStudios.TankMania.Upgrades
     {
       ++playerUpgradedAmount;
 
-      foreach (StatModifierInstance statModifierInstance in PlayerStatModifiers)
+      foreach (StatUpgrader statUpgrader in PlayerStatUpgraders)
       {
-        if (statModifierInstance == null) Debug.LogError("Stat modifier has no subscribers and will not effect any stats!");
+        if (statUpgrader.StatUpgraded == null || statUpgrader.StatModifier == null) 
+          Debug.LogError("Stat upgrader has is either not upgrading any stats or has no modifier!");
 
-        statModifierInstance.UpgradeStatModifierInstance();
+        statUpgrader.UpgradeStatModifierInstance();
       }
     }
 
@@ -44,7 +45,7 @@ namespace CwispyStudios.TankMania.Upgrades
     {
       ++enemyUpgradedAmount;
 
-      foreach (StatModifierInstance statModifierInstance in EnemyStatModifiers)
+      foreach (StatUpgrader statModifierInstance in EnemyStatUpgraders)
       {
         if (statModifierInstance == null) Debug.LogError("Stat modifier has no subscribers and will not effect any stats!");
 
@@ -52,13 +53,13 @@ namespace CwispyStudios.TankMania.Upgrades
       }
     }
 
-    public StatModifierInstance GetInstanceFromIndex( int index )
+    public StatUpgrader GetInstanceFromIndex( int index )
     {
-      if (index < PlayerStatModifiers.Count)
-        return PlayerStatModifiers[index];
+      if (index < PlayerStatUpgraders.Count)
+        return PlayerStatUpgraders[index];
 
-      else if (index < PlayerStatModifiers.Count + EnemyStatModifiers.Count)
-        return EnemyStatModifiers[index - PlayerStatModifiers.Count];
+      else if (index < PlayerStatUpgraders.Count + EnemyStatUpgraders.Count)
+        return EnemyStatUpgraders[index - PlayerStatUpgraders.Count];
 
       else return null;
     }

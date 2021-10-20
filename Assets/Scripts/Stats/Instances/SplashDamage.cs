@@ -5,10 +5,6 @@ namespace CwispyStudios.TankMania.Stats
   [System.Serializable]
   public class SplashDamage
   {
-    // Cache to perform calculations on damage
-    // CANNOT BE DONE, CAUSES SERIALIZATION DEPTH LIMIT TO EXCEED
-    //private DamageInformation damageInformation;
-    
     // Whether damage is splash damage, which affects if below variables are ever used
     //private bool hasSplashDamage;
     public bool HasSplashDamage;
