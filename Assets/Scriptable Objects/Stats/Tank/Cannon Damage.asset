@@ -13,18 +13,34 @@ MonoBehaviour:
   m_Name: Cannon Damage
   m_EditorClassIdentifier: 
   stats:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 616b349b945b8c14d9e8112060d75f4e, type: 2}
+  - {fileID: 11400000, guid: 7f93923483a2f1c44ae928c940381ad9, type: 2}
+  - {fileID: 11400000, guid: fdaf247085025c94e9d2ccefa32dc6ee, type: 2}
+  - {fileID: 11400000, guid: 4de097240007bd14eb4a72ef92eaadea, type: 2}
+  - {fileID: 11400000, guid: be82a13d60f4cc84f96c02f81f3b4044, type: 2}
+  - {fileID: 11400000, guid: b5e09cbe129ba2147a37f4de22d3c94a, type: 2}
+  - {fileID: 11400000, guid: ef9118e9cd7e94745927002ae01995d6, type: 2}
   statsNames:
   - DirectDamage
+  - SplashRadius
+  - SplashDamagePercentage
+  - SplashMinRadiusPercentageRolloff
+  - SplashMaxRadiusPercentageRolloff
+  - SplashMinRadiusDamagePercentageRolloff
+  - SplashMaxRadiusDamagePercentageRolloff
   nameOfStatsFolder: Cannon Damage
   DamageFrom: 0
-  DirectDamage: {fileID: 0}
-  SplashDamage:
-    HasSplashDamage: 1
-    Radius: {fileID: 0}
-    DamagePercentage: {fileID: 0}
-    HasSplashDamageRolloff: 0
-    MinRadiusPercentageRolloff: {fileID: 0}
-    MaxRadiusPercentageRolloff: {fileID: 0}
-    MinRadiusDamagePercentageRolloff: {fileID: 0}
-    MaxRadiusDamagePercentageRolloff: {fileID: 0}
+  DirectDamage: {fileID: 11400000, guid: 616b349b945b8c14d9e8112060d75f4e, type: 2}
+  HasSplashDamage: 1
+  SplashRadius: {fileID: 11400000, guid: 7f93923483a2f1c44ae928c940381ad9, type: 2}
+  SplashDamagePercentage: {fileID: 11400000, guid: fdaf247085025c94e9d2ccefa32dc6ee,
+    type: 2}
+  HasSplashDamageRolloff: 1
+  SplashMinRadiusPercentageRolloff: {fileID: 11400000, guid: 4de097240007bd14eb4a72ef92eaadea,
+    type: 2}
+  SplashMaxRadiusPercentageRolloff: {fileID: 11400000, guid: be82a13d60f4cc84f96c02f81f3b4044,
+    type: 2}
+  SplashMinRadiusDamagePercentageRolloff: {fileID: 11400000, guid: b5e09cbe129ba2147a37f4de22d3c94a,
+    type: 2}
+  SplashMaxRadiusDamagePercentageRolloff: {fileID: 11400000, guid: ef9118e9cd7e94745927002ae01995d6,
+    type: 2}

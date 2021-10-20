@@ -46,9 +46,11 @@ namespace CwispyStudios.TankMania.Stats
       }
       EditorGUI.LabelField(prefixLabelRect, label);
 
+      bool guiStatus = GUI.enabled;
+
       GUI.enabled = false;
-      EditorGUI.PropertyField(position, property);
-      GUI.enabled = true;
+      EditorGUI.PropertyField(position, property, new GUIContent(" "));
+      GUI.enabled = guiStatus;
 
       // Do not need to show or initialise any values if stat is not assigned yet.
       if (!objectAssigned) return;
@@ -77,6 +79,8 @@ namespace CwispyStudios.TankMania.Stats
 
     private void DrawStatTypeButton( Rect position, SerializedProperty useInt )
     {
+      bool guiStatus = GUI.enabled;
+
       GUI.enabled = false;
 
       string text = useInt.boolValue ? "i" : "f";
@@ -87,7 +91,7 @@ namespace CwispyStudios.TankMania.Stats
       GUI.Button(position, text);
 
       GUI.backgroundColor = color;
-      GUI.enabled = true;
+      GUI.enabled = guiStatus;
     }
 
     public virtual void SetStatType( SerializedObject serializedObject )

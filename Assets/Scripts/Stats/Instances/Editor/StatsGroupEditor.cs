@@ -28,8 +28,6 @@ namespace CwispyStudios.TankMania.Stats
       serializedObject.Update();
 
       DrawAssetManagementOptions();
-
-      serializedObject.ApplyModifiedProperties();
     }
 
     public void DrawAssetManagementOptions()
@@ -85,6 +83,8 @@ namespace CwispyStudios.TankMania.Stats
       }
 
       GUI.color = defaultColour;
+
+      serializedObject.ApplyModifiedProperties();
     }
 
     private void RenameAssets()

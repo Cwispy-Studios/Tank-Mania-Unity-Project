@@ -16,7 +16,11 @@ MonoBehaviour:
   UpgradeName: Tank Cannon Damage
   UpgradeImage: {fileID: 21300000, guid: af629c0ffae7fe741b2e6790345546ae, type: 3}
   UpgradeDescription: Increases cannon damage by 10%.
-  PlayerStatUpgraders: []
+  PlayerStatUpgraders:
+  - statUpgraded: {fileID: 11400000, guid: 616b349b945b8c14d9e8112060d75f4e, type: 2}
+    statModifier:
+      additiveValue: 0
+      multiplicativeValue: 0.099999994
   EnemyStatUpgraders:
   - statUpgraded: {fileID: 11400000, guid: cd755f1a867e1b9489ebf8dbbd440b27, type: 2}
     statModifier:

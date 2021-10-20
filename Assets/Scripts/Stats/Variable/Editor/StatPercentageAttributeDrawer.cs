@@ -31,7 +31,7 @@ namespace CwispyStudios.TankMania.Stats
       SerializedProperty baseValue = serializedObject.FindProperty(BaseValuePropertyName);
 
       // Create the percentage slider button
-      baseValue.floatValue = EditorGUI.IntSlider(position, label, (int)(baseValue.floatValue * 100f), MinRange, MaxRange) * 0.01f;
+      baseValue.floatValue = EditorGUI.IntSlider(position, label, Mathf.RoundToInt(baseValue.floatValue * 100f), MinRange, MaxRange) * 0.01f;
 
       // Move the rect into the slider's field to print the % sign as a suffix
       position.x += position.width - SymbolWidth;
