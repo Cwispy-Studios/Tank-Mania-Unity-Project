@@ -86,14 +86,15 @@ namespace CwispyStudios.TankMania.Upgrades
         SerializedProperty statUpgradedProperty = statUpgraderProperty.FindPropertyRelative("statUpgraded");
         SerializedProperty statModiferProperty = statUpgraderProperty.FindPropertyRelative("statModifier");
 
-        StatModifier statModifier = statModiferProperty.objectReferenceValue as StatModifier;
+        SerializedProperty additiveValue = statModiferProperty.FindPropertyRelative(nameof(additiveValue));
+        SerializedProperty multiplicativeValue = statModiferProperty.FindPropertyRelative(nameof(multiplicativeValue));
 
-        if (statModifier != null && statUpgradedProperty.objectReferenceValue != null)
+        if (statUpgradedProperty.objectReferenceValue != null)
         {
           modifiersList += $"\n• <i>{statUpgradedProperty.objectReferenceValue.name}</i>: "; 
 
-          if (statModifier.AddititiveValue != 0f) modifiersList += $"+{statModifier.AddititiveValue.ToString("F2")} ";
-          if (statModifier.MultiplicativeValue != 0f) modifiersList += $"+{(statModifier.MultiplicativeValue * 100f).ToString("F0")}%";
+          if (additiveValue.floatValue != 0f) modifiersList += $"+{additiveValue.floatValue.ToString("F2")} ";
+          if (multiplicativeValue.floatValue != 0f) modifiersList += $"+{(multiplicativeValue.floatValue * 100f).ToString("F0")}%";
         }
       }
 

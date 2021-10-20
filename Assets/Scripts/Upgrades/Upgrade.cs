@@ -37,7 +37,7 @@ namespace CwispyStudios.TankMania.Upgrades
         if (statUpgrader.StatUpgraded == null || statUpgrader.StatModifier == null) 
           Debug.LogError("Stat upgrader has is either not upgrading any stats or has no modifier!");
 
-        statUpgrader.UpgradeStatModifierInstance();
+        statUpgrader.UpgradeStatUpgrader();
       }
     }
 
@@ -49,7 +49,7 @@ namespace CwispyStudios.TankMania.Upgrades
       {
         if (statModifierInstance == null) Debug.LogError("Stat modifier has no subscribers and will not effect any stats!");
 
-        statModifierInstance.UpgradeStatModifierInstance();
+        statModifierInstance.UpgradeStatUpgrader();
       }
     }
 

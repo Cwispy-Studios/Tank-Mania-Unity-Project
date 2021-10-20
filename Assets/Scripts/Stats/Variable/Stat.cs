@@ -19,8 +19,8 @@ namespace CwispyStudios.TankMania.Stats
     public float Value => useInt ? Mathf.RoundToInt(upgradedValue) : upgradedValue;
     public int IntValue => Mathf.RoundToInt(upgradedValue);
 
-    private float totalAdditiveValue = 0f;
-    private float totalMulitplicativeValue = 1f;
+    [NonSerialized] private float totalAdditiveValue = 0f;
+    [NonSerialized] private float totalMulitplicativeValue = 1f;
 
     private void OnValidate()
     {
@@ -33,25 +33,12 @@ namespace CwispyStudios.TankMania.Stats
       upgradedValue = baseValue;
     }
 
-    //public void RecalculateStat()
-    //{
-    //  SetDefaultUpgradedValue();
+    public void AdjustUpgradeValues( float additiveValue, float multiplicativeValue )
+    {
+      totalAdditiveValue += additiveValue;
+      totalMulitplicativeValue += multiplicativeValue;
 
-    //  float totalAdditiveValue = 0f;
-    //  float totalMultiplicativeValue = 1f;
-
-    //  foreach (StatModifier statModifier in StatModifiers)
-    //  {
-    //    //int upgradedAmount = statModifier.UpgradedAmount;
-
-    //    //totalAdditiveValue += statModifier.AddititiveValue * upgradedAmount;
-    //    //totalMultiplicativeValue += statModifier.MultiplicativeValue * upgradedAmount;
-    //  }
-
-    //  upgradedValue += totalAdditiveValue;
-    //  upgradedValue *= totalMultiplicativeValue;
-
-    //  OnStatUpgrade?.Invoke();
-    //}
+      upgradedValue = (baseValue + totalAdditiveValue) * totalMulitplicativeValue;
+    }
   }
 }

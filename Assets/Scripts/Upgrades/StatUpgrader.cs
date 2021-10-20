@@ -18,12 +18,10 @@ namespace CwispyStudios.TankMania.Upgrades
     private int upgradedAmount = 0;
     public int UpgradedAmount => upgradedAmount;
 
-    public event Action OnUpgradeEvent;
-
-    public void UpgradeStatModifierInstance()
+    public void UpgradeStatUpgrader()
     {
       ++upgradedAmount;
-      OnUpgradeEvent?.Invoke();
+      statUpgraded.AdjustUpgradeValues(statModifier.AddititiveValue, statModifier.MultiplicativeValue);
     }
   }
 }

@@ -26,7 +26,7 @@ namespace CwispyStudios.TankMania.Upgrades
       EditorGUI.BeginChangeCheck();
 
       statUpgraded.objectReferenceValue = 
-        EditorGUI.ObjectField(position, "Upgrades Stat:", statUpgraded.objectReferenceValue, typeof(Stat), false);
+        EditorGUI.ObjectField(position, "Upgrades:", statUpgraded.objectReferenceValue, typeof(Stat), false);
 
       position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
