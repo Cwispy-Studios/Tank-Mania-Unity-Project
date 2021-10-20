@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CwispyStudios.TankMania.Stats
 {
   [CustomEditor(typeof(Damage))]
-  public class DamageEditor : Editor
+  public class DamageEditor : StatsGroupEditor
   {
     private SerializedProperty splashDamage;
 
@@ -17,8 +17,10 @@ namespace CwispyStudios.TankMania.Stats
     private SerializedProperty minRadiusDamagePercentageRolloff;
     private SerializedProperty maxRadiusDamagePercentageRolloff;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+      base.OnEnable();
+
       splashDamage = serializedObject.FindProperty(nameof(SplashDamage));
 
       hasSplashDamage = splashDamage.FindPropertyRelative(nameof(SplashDamage.HasSplashDamage));
@@ -61,8 +63,10 @@ namespace CwispyStudios.TankMania.Stats
       EditorGUILayout.PropertyField(maxRadiusPercentageRolloff, new GUIContent("Max Radius %"));
 
       // Check min max values if they are correct
-      float minValue = minRadiusPercentageRolloff.FindPropertyRelative("baseValue").floatValue;
-      float maxValue = maxRadiusPercentageRolloff.FindPropertyRelative("baseValue").floatValue;
+      float minValue = minRadiusPercentageRolloff.objectReferenceValue == null ? 0f : 
+        minRadiusPercentageRolloff.FindPropertyRelative("baseValue").floatValue;
+      float maxValue = maxRadiusPercentageRolloff.objectReferenceValue == null ? 1f :
+        maxRadiusPercentageRolloff.FindPropertyRelative("baseValue").floatValue;
 
       if (minValue > maxValue)
         EditorGUILayout.HelpBox("WARNING! The minimum radius is larger than the maximum radius!", MessageType.Warning, true);
@@ -72,8 +76,10 @@ namespace CwispyStudios.TankMania.Stats
       EditorGUILayout.PropertyField(maxRadiusDamagePercentageRolloff, new GUIContent("Max Damage %"));
 
       // Check min max values and show note to player about potential unique behaviour
-      minValue = minRadiusDamagePercentageRolloff.FindPropertyRelative("baseValue").floatValue;
-      maxValue = maxRadiusDamagePercentageRolloff.FindPropertyRelative("baseValue").floatValue;
+      minValue = minRadiusDamagePercentageRolloff.objectReferenceValue == null ? 0f :
+        minRadiusDamagePercentageRolloff.FindPropertyRelative("baseValue").floatValue;
+      maxValue = maxRadiusDamagePercentageRolloff.objectReferenceValue == null ? 1f :
+        maxRadiusDamagePercentageRolloff.FindPropertyRelative("baseValue").floatValue;
 
       if (minValue < maxValue)
         EditorGUILayout.HelpBox("Damage is now higher the further the target is from the blast.", MessageType.Info, true);
@@ -85,6 +91,8 @@ namespace CwispyStudios.TankMania.Stats
       EditorGUILayout.EndToggleGroup();
 
       serializedObject.ApplyModifiedProperties();
+
+      DrawAssetManagementOptions();
     }
   }
 }

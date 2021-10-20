@@ -13,48 +13,21 @@ MonoBehaviour:
   m_Name: Tank Movement
   m_EditorClassIdentifier: 
   stats:
-  - StatModifiers: []
-    useInt: 0
-    baseValue: 4.5
-    explicitType: 1
-  - StatModifiers: []
-    useInt: 0
-    baseValue: 15
-    explicitType: 1
-  - StatModifiers: []
-    useInt: 0
-    baseValue: 1.2
-    explicitType: 1
-  - StatModifiers: []
-    useInt: 0
-    baseValue: 1
-    explicitType: 1
-  - StatModifiers: []
-    useInt: 0
-    baseValue: 3.5
-    explicitType: 1
-  MaxVelocity:
-    StatModifiers: []
-    useInt: 0
-    baseValue: 4.5
-    explicitType: 1
-  AccelerationForce:
-    StatModifiers: []
-    useInt: 0
-    baseValue: 15
-    explicitType: 1
-  MaxTorque:
-    StatModifiers: []
-    useInt: 0
-    baseValue: 1.2
-    explicitType: 1
-  SteerForce:
-    StatModifiers: []
-    useInt: 0
-    baseValue: 1
-    explicitType: 1
-  SteerNullifierForce:
-    StatModifiers: []
-    useInt: 0
-    baseValue: 3.5
-    explicitType: 1
+  - {fileID: 11400000, guid: e32f6c7e089534d4a9e82179cf69bd6b, type: 2}
+  - {fileID: 11400000, guid: 9af273be81a1df04f8fd64ee2b7cfc88, type: 2}
+  - {fileID: 11400000, guid: ab733ac4b21979943b8997f557cfe055, type: 2}
+  - {fileID: 11400000, guid: 9d27bec8184ed9047adf558df1eb1efd, type: 2}
+  - {fileID: 11400000, guid: 475fb9d41b9eb8d4fbc505b10d859f29, type: 2}
+  statsNames:
+  - MaxVelocity
+  - AccelerationForce
+  - MaxTorque
+  - SteerForce
+  - SteerNullifierForce
+  nameOfStatsFolder: Tank Movement
+  MaxVelocity: {fileID: 11400000, guid: e32f6c7e089534d4a9e82179cf69bd6b, type: 2}
+  AccelerationForce: {fileID: 11400000, guid: 9af273be81a1df04f8fd64ee2b7cfc88, type: 2}
+  MaxTorque: {fileID: 11400000, guid: ab733ac4b21979943b8997f557cfe055, type: 2}
+  SteerForce: {fileID: 11400000, guid: 9d27bec8184ed9047adf558df1eb1efd, type: 2}
+  SteerNullifierForce: {fileID: 11400000, guid: 475fb9d41b9eb8d4fbc505b10d859f29,
+    type: 2}

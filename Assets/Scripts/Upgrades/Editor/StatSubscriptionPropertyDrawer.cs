@@ -3,8 +3,8 @@ using UnityEditor;
 
 namespace CwispyStudios.TankMania.Upgrades
 {
-  [CustomPropertyDrawer(typeof(UpgradeSubscription))]
-  public class UpgradeSubscriptionPropertyDrawer : PropertyDrawer
+  [CustomPropertyDrawer(typeof(StatSubscription))]
+  public class StatSubscriptionPropertyDrawer : PropertyDrawer
   {
     private const float SwapButtonWidth = 20f;
     private const float ButtonOffset = 25f;
@@ -54,7 +54,7 @@ namespace CwispyStudios.TankMania.Upgrades
       InitialiseVariables();
 
       // These need to be local variables since an array of property drawers will reuse the same member variables
-      SerializedProperty statModifier = property.FindPropertyRelative(nameof(UpgradeSubscription.StatModifierInstance));
+      SerializedProperty statModifier = property.FindPropertyRelative(nameof(StatSubscription.StatModifierInstance));
       SerializedProperty statModifierUpgrade = property.FindPropertyRelative(nameof(statModifierUpgrade));
       SerializedProperty upgrade = property.FindPropertyRelative(nameof(upgrade));
       SerializedProperty statModifierIndex = property.FindPropertyRelative(nameof(statModifierIndex));

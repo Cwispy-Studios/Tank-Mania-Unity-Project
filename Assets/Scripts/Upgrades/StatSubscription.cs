@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Upgrades
 {
+  using Stats;
+
   [Serializable]
-  public class UpgradeSubscription
+  public class StatSubscription
   {
+    public StatsGroup StatsGroupInstance;
     public StatModifierInstance StatModifierInstance;
 
     public bool IsValid => StatModifierInstance != null;

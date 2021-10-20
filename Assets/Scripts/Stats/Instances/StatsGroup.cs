@@ -13,7 +13,10 @@ namespace CwispyStudios.TankMania.Stats
     private List<Stat> stats = new List<Stat>();
 
 #if UNITY_EDITOR
-    private List<string> statsName = new List<string>();
+    [SerializeField, HideInInspector]
+    private List<string> statsNames = new List<string>();
+
+    [SerializeField, HideInInspector] private string nameOfStatsFolder;
 #endif
 
 #if !UNITY_EDITOR
@@ -32,16 +35,18 @@ namespace CwispyStudios.TankMania.Stats
       // Does not need to be called in build since the values get serialized in editor already
       SetDefaultUpgradedStatValues();
 
-      InformStatModifiers();
+      //InformStatModifiers();
     }
 
     private void OnEnable() 
     {
 #if UNITY_EDITOR
-      InformStatModifiers();
+      // Need to be called here when object is created
+      FindStatObjects();
+      //InformStatModifiers();
 #endif
 
-      SubscribeStats();
+      //SubscribeStats();
     }
 
     private void OnDisable()
@@ -52,7 +57,7 @@ namespace CwispyStudios.TankMania.Stats
     private void FindStatObjects()
     {
       stats.Clear();
-      statsName.Clear();
+      statsNames.Clear();
       GetStatVariables(this);
     }
 
@@ -67,7 +72,7 @@ namespace CwispyStudios.TankMania.Stats
         if (field.FieldType == typeof(Stat))
         {
           stats.Add(field.GetValue(statsGroup) as Stat);
-          statsName.Add(field.Name);
+          statsNames.Add(field.Name);
         }
 
         else if (field.DeclaringType == typeof(StatsGroup))
@@ -79,9 +84,9 @@ namespace CwispyStudios.TankMania.Stats
     {
       for (int i = 0; i < stats.Count; ++i)
       {
-        foreach (StatModifier statModifier in stats[i].StatModifiers)
+        foreach (StatModifier statModifier in stats[i].StatModifiers) 
         {
-          statModifier?.AddStat(this, statsName[i], stats[i]);
+          statModifier?.AddStat(this, statsNames[i], stats[i]);
         }
       }
     }

@@ -28,21 +28,21 @@ namespace CwispyStudios.TankMania.Stats
     //}
 
     [Tooltip("Radius of the splash damage.")]
-    public Stat Radius = new Stat(2f);
+    public Stat Radius; // 2f
     [Tooltip("Damage modifier of the splash damage from the direct damage.")]
-    [StatPercentage] public Stat DamagePercentage = new Stat(1f);
+    [StatPercentage] public Stat DamagePercentage; // 1f
 
     public bool HasSplashDamageRolloff;
     [Header("Radius Cutoff")]
     [StatPercentage, Tooltip("Percentage distance from the original radius the rolloff starts.")] 
-    public Stat MinRadiusPercentageRolloff = new Stat(0f);
+    public Stat MinRadiusPercentageRolloff; // 0f
     [StatPercentage, Tooltip("Percentage distance from the original radius the rolloff ends.")] 
-    public Stat MaxRadiusPercentageRolloff = new Stat(1f);
+    public Stat MaxRadiusPercentageRolloff; // 1f
     [Header("Damage Percentages of Radius")]
     [StatPercentage, Tooltip("Percentage damage dealt where the rolloff starts.")] 
-    public Stat MinRadiusDamagePercentageRolloff = new Stat(1f);
+    public Stat MinRadiusDamagePercentageRolloff; // 1f
     [StatPercentage, Tooltip("Percentage damage dealt where the rolloff ends.")]
-    public Stat MaxRadiusDamagePercentageRolloff = new Stat(0f);
+    public Stat MaxRadiusDamagePercentageRolloff; // 0f
 
     // 
     //public float BaseSplashDamage;
@@ -73,25 +73,5 @@ namespace CwispyStudios.TankMania.Stats
     //  MinRadiusDamagePercentageRolloff = 1f;
     //  MaxRadiusDamagePercentageRolloff = 0f;
     //}
-   
-    public void SubscribeStats()
-    {
-      Radius.SubscribeToStatModifiers();
-      DamagePercentage.SubscribeToStatModifiers();
-      MinRadiusPercentageRolloff.SubscribeToStatModifiers();
-      MaxRadiusPercentageRolloff.SubscribeToStatModifiers();
-      MinRadiusDamagePercentageRolloff.SubscribeToStatModifiers();
-      MaxRadiusDamagePercentageRolloff.SubscribeToStatModifiers();
-    }
-
-    public void UnsubscribeStats()
-    {
-      Radius.UnsubscribeFromStatModifiers();
-      DamagePercentage.UnsubscribeFromStatModifiers();
-      MinRadiusPercentageRolloff.UnsubscribeFromStatModifiers();
-      MaxRadiusPercentageRolloff.UnsubscribeFromStatModifiers();
-      MinRadiusDamagePercentageRolloff.UnsubscribeFromStatModifiers();
-      MaxRadiusDamagePercentageRolloff.UnsubscribeFromStatModifiers();
-    }
   }
 }

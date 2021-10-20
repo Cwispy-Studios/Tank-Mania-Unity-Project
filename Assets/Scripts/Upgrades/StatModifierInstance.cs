@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Upgrades
 {
+  using Stats;
+
   [Serializable]
   public class StatModifierInstance
   {
@@ -12,6 +14,8 @@ namespace CwispyStudios.TankMania.Upgrades
 
     [SerializeField] private StatModifier statModifier;
     public StatModifier StatModifier => statModifier;
+
+    [SerializeField] private StatSubscription[] statSubscriptions;
 
     private int upgradedAmount = 0;
     public int UpgradedAmount => upgradedAmount;

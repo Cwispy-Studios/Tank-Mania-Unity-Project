@@ -13,63 +13,23 @@ MonoBehaviour:
   m_Name: Cannon Firing Information
   m_EditorClassIdentifier: 
   stats:
-  - StatModifiers:
-    - {fileID: 11400000, guid: 7ff9b5fea9baf3f43a03f07c3f5dae2e, type: 2}
-    useInt: 0
-    baseValue: 15
-    explicitType: 1
-  - StatModifiers:
-    - {fileID: 11400000, guid: 11fe65c1d8f9cf44bb5e8461a0d6dd23, type: 2}
-    useInt: 0
-    baseValue: 1.5
-    explicitType: 1
-  - StatModifiers: []
-    useInt: 0
-    baseValue: 3
-    explicitType: 1
-  - StatModifiers: []
-    useInt: 0
-    baseValue: 0.2
-    explicitType: 1
-  - StatModifiers:
-    - {fileID: 11400000, guid: 6f19d8ebc8a31b34f8be7190b409391c, type: 2}
-    - {fileID: 11400000, guid: 5973b26f549c00a40a79d21b815d7d8e, type: 2}
-    useInt: 1
-    baseValue: 5
-    explicitType: 1
+  - {fileID: 11400000, guid: e53b679d6d40aba4b9daabdb1c45505b, type: 2}
+  - {fileID: 11400000, guid: c83a98040bea5d74f8db9a5ad32caf87, type: 2}
+  - {fileID: 11400000, guid: 8127334b51d9f16468216f2bbe6e14d1, type: 2}
+  - {fileID: 11400000, guid: 3f56059ed7f7a774b968cbe58cdde351, type: 2}
+  - {fileID: 11400000, guid: 3e97e470a4ab68949941143d1d72c7e3, type: 2}
+  statsNames:
+  - FiringForce
+  - FireRate
+  - ReloadSpeed
+  - TimeToQueueFiring
+  - AmmoCount
+  nameOfStatsFolder: Cannon Firing Information
   ProjectilePrefab: {fileID: 7051859430511138134, guid: e12447defeff40d47a09319a02099a26,
     type: 3}
   FiringVfx: {fileID: 2051231272, guid: cb4917dcdcb9ee848bf1a0474e66b7f3, type: 3}
-  FiringForce:
-    UpgradeSubscriptions: []
-    useInt: 0
-    baseValue: 15
-    explicitType: 1
-  FireRate:
-    UpgradeSubscriptions: []
-    useInt: 0
-    baseValue: 1.5
-    explicitType: 1
-  ReloadSpeed:
-    UpgradeSubscriptions: []
-    useInt: 0
-    baseValue: 3
-    explicitType: 1
-  TimeToQueueFiring:
-    UpgradeSubscriptions: []
-    useInt: 0
-    baseValue: 0.2
-    explicitType: 1
-  AmmoCount:
-    UpgradeSubscriptions:
-    - StatModifierInstance:
-        instanceName: Ammo Count
-        statModifier: {fileID: 11400000, guid: 39f1dbebad92f0146b88d590f21dbb6e, type: 2}
-      statModifierUpgrade: {fileID: 11400000, guid: 6114107de394e8d43bda715c416d45e0,
-        type: 2}
-      upgrade: {fileID: 11400000, guid: 6114107de394e8d43bda715c416d45e0, type: 2}
-      statModifierIndex: -1
-      selectingModifier: 0
-    useInt: 1
-    baseValue: 5
-    explicitType: 1
+  FiringForce: {fileID: 11400000, guid: e53b679d6d40aba4b9daabdb1c45505b, type: 2}
+  FireRate: {fileID: 11400000, guid: c83a98040bea5d74f8db9a5ad32caf87, type: 2}
+  ReloadSpeed: {fileID: 11400000, guid: 8127334b51d9f16468216f2bbe6e14d1, type: 2}
+  TimeToQueueFiring: {fileID: 11400000, guid: 3f56059ed7f7a774b968cbe58cdde351, type: 2}
+  AmmoCount: {fileID: 11400000, guid: 3e97e470a4ab68949941143d1d72c7e3, type: 2}

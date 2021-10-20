@@ -13,7 +13,13 @@ namespace CwispyStudios.TankMania.Stats
 
     private GUIStyle suffixStyle;
 
-    public override void DrawValueField( Rect position, SerializedProperty baseValue, SerializedProperty useInt, GUIContent label )
+    public override void SetStatType( SerializedObject serializedObject )
+    {
+      // Percentages can't be int
+      serializedObject.FindProperty(UseIntPropertyName).boolValue = false;
+    }
+
+    public override void DrawValueField( Rect position, SerializedObject serializedObject, GUIContent label )
     {
       if (suffixStyle == null)
       {
@@ -22,8 +28,7 @@ namespace CwispyStudios.TankMania.Stats
         suffixStyle.hover = suffixStyle.normal;
       }
 
-      // Percentages can't be int
-      if (useInt.boolValue) useInt.boolValue = false;
+      SerializedProperty baseValue = serializedObject.FindProperty(BaseValuePropertyName);
 
       // Create the percentage slider button
       baseValue.floatValue = EditorGUI.IntSlider(position, label, (int)(baseValue.floatValue * 100f), MinRange, MaxRange) * 0.01f;

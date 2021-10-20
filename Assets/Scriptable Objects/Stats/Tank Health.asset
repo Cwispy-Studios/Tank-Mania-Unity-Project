@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 149633593d677d34bb4427d0b84147ed, type: 3}
   m_Name: Tank Health
   m_EditorClassIdentifier: 
-  MaxHealth:
-    StatModifiers: []
-    baseValue: 10
-  HealthRegeneration:
-    StatModifiers: []
-    baseValue: 0.5
+  stats:
+  - {fileID: 11400000, guid: cb93c51b2b16f7a42a91457eecc0430d, type: 2}
+  - {fileID: 11400000, guid: f9602e2c5bdb9504f9ce4499b695d561, type: 2}
+  statsNames:
+  - MaxHealth
+  - HealthRegeneration
+  nameOfStatsFolder: Tank Health
+  MaxHealth: {fileID: 11400000, guid: cb93c51b2b16f7a42a91457eecc0430d, type: 2}
+  HealthRegeneration: {fileID: 11400000, guid: f9602e2c5bdb9504f9ce4499b695d561, type: 2}

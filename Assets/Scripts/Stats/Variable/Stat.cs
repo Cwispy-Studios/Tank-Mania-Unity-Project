@@ -7,8 +7,7 @@ namespace CwispyStudios.TankMania.Stats
 {
   using Upgrades;
 
-  [Serializable]
-  public class Stat
+  public class Stat : ScriptableObject
   {
     // The list of stat modifiers that will affect this stat's upgraded value
     public List<StatModifier> StatModifiers = new List<StatModifier>();
@@ -21,6 +20,10 @@ namespace CwispyStudios.TankMania.Stats
 
     private float upgradedValue;
     public float Value => useInt ? Mathf.RoundToInt(upgradedValue) : upgradedValue;
+    public int IntValue => Mathf.RoundToInt(upgradedValue);
+
+    private float totalAdditiveValue = 0f;
+    private float totalMulitplicativeValue = 1f;
 
     public Stat( bool valueAsInteger )
     {
@@ -65,18 +68,18 @@ namespace CwispyStudios.TankMania.Stats
       SetDefaultUpgradedValue();
 
       float totalAdditiveValue = 0f;
-      float totalMultiplicativeValue = 0f;
+      float totalMultiplicativeValue = 1f;
 
       foreach (StatModifier statModifier in StatModifiers)
       {
-        int upgradedAmount = statModifier.UpgradedAmount;
+        //int upgradedAmount = statModifier.UpgradedAmount;
 
-        totalAdditiveValue += statModifier.AddititiveValue * upgradedAmount;
-        totalMultiplicativeValue += statModifier.MultiplicativeValue * upgradedAmount;
+        //totalAdditiveValue += statModifier.AddititiveValue * upgradedAmount;
+        //totalMultiplicativeValue += statModifier.MultiplicativeValue * upgradedAmount;
       }
 
       upgradedValue += totalAdditiveValue;
-      upgradedValue *= 1f + totalMultiplicativeValue;
+      upgradedValue *= totalMultiplicativeValue;
 
       OnStatUpgrade?.Invoke();
     }

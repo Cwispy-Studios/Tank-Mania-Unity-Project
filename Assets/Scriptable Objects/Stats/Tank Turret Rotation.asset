@@ -13,21 +13,12 @@ MonoBehaviour:
   m_Name: Tank Turret Rotation
   m_EditorClassIdentifier: 
   stats:
-  - StatModifiers: []
-    useInt: 0
-    baseValue: 120
-    explicitType: 1
-  - StatModifiers: []
-    useInt: 0
-    baseValue: 60
-    explicitType: 1
-  TurretRotationSpeed:
-    StatModifiers: []
-    useInt: 0
-    baseValue: 120
-    explicitType: 1
-  GunRotationSpeed:
-    StatModifiers: []
-    useInt: 0
-    baseValue: 60
-    explicitType: 1
+  - {fileID: 11400000, guid: 94b38d28bd21e114e8d7abe1802ad8bf, type: 2}
+  - {fileID: 11400000, guid: 5ebfa4c5bc74ff14a98f0301d41af5c5, type: 2}
+  statsNames:
+  - TurretRotationSpeed
+  - GunRotationSpeed
+  nameOfStatsFolder: Tank Turret Rotation
+  TurretRotationSpeed: {fileID: 11400000, guid: 94b38d28bd21e114e8d7abe1802ad8bf,
+    type: 2}
+  GunRotationSpeed: {fileID: 11400000, guid: 5ebfa4c5bc74ff14a98f0301d41af5c5, type: 2}

@@ -11,6 +11,10 @@ namespace CwispyStudios.TankMania.Stats
   public class StatPropertyDrawer : PropertyDrawer
   {
     private const float SwapButtonWidth = 15f;
+    private const float StatTypeButtonWidth = 7f;
+
+    public const string UseIntPropertyName = "useInt";
+    public const string BaseValuePropertyName = "baseValue";
 
     private readonly string[] popupOptions = { "Float", "Int" };
 
@@ -30,12 +34,20 @@ namespace CwispyStudios.TankMania.Stats
     private float buttonMargin;
     private string modifiersTooltip;
 
+    private bool objectAssigned;
     private bool showModifiers = false;
     private List<StatModifier> modifiersInList = new List<StatModifier>();
 
     public override float GetPropertyHeight( SerializedProperty property, GUIContent label )
     {
       float height = base.GetPropertyHeight(property, label);
+
+      objectAssigned = property.objectReferenceValue != null;
+
+      if (objectAssigned)
+      {
+        height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+      }
 
       if (showModifiers)
       {
@@ -49,28 +61,43 @@ namespace CwispyStudios.TankMania.Stats
     {
       label = EditorGUI.BeginProperty(position, label, property);
 
-      InitialiseVariables(property, label);
+      position.height = EditorGUIUtility.singleLineHeight;
 
-      label.text += $" ({modifiersList.arraySize}):";
+      // Make space for the stat type button, but only if object has already been assigned
+      Rect prefixLabelRect = position;
+      if (objectAssigned)
+      {
+        prefixLabelRect.x += StatTypeButtonWidth;
+        prefixLabelRect.width = EditorGUIUtility.labelWidth - StatTypeButtonWidth;
+      }
+      EditorGUI.LabelField(prefixLabelRect, label);
+
+      GUI.enabled = false;
+      EditorGUI.PropertyField(position, property);
+      GUI.enabled = true;
+
+      // Do not need to show or initialise any values if stat is not assigned yet.
+      if (!objectAssigned) return;
+
+      SerializedObject serializedObject = new SerializedObject(property.objectReferenceValue);
+      serializedObject.Update();
+      InitialiseVariables(serializedObject, label);
+      SetStatType(serializedObject);
+
+      //label.text += $" ({modifiersList.arraySize}):";
 
       EditorGUI.BeginChangeCheck();
 
-      position.height = EditorGUIUtility.singleLineHeight;
       Rect buttonRect = EditorGUI.IndentedRect(position);
       buttonRect.width = 7f;
 
-      SerializedProperty useInt = property.FindPropertyRelative("useInt");
+      SerializedProperty useInt = serializedObject.FindProperty("useInt");
 
       DrawStatTypeButton(buttonRect, useInt);
 
-      position.x += buttonRect.width;
+      position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
-      // Give space for the swap button after the property field
-      position.width -= SwapButtonWidth + buttonMargin + buttonRect.width;
-
-      SerializedProperty baseValue = property.FindPropertyRelative("baseValue");
-
-      DrawValueField(position, baseValue, useInt, label);
+      DrawValueField(position, serializedObject, label);
 
       position.x += position.width + buttonMargin;
       position.width = SwapButtonWidth;
@@ -78,32 +105,32 @@ namespace CwispyStudios.TankMania.Stats
       // Disable multi-object editing for this property since it throws errors
       if (modifiersList.hasMultipleDifferentValues)
       {
-        if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties();
+        if (EditorGUI.EndChangeCheck()) serializedObject.ApplyModifiedProperties();
 
         return;
       }
 
-      // Draw the dropdown/foldout button to show/hide modifiers list
-      GUIContent content = showModifiers ? dropdownContent : foldoutContent;
-      content.tooltip = "Show/hide modifiers.\n\n" + modifiersTooltip;
-      if (GUI.Button(position, content, dropdownButtonStyle)) showModifiers = !showModifiers;
+      //// Draw the dropdown/foldout button to show/hide modifiers list
+      //GUIContent content = showModifiers ? dropdownContent : foldoutContent;
+      //content.tooltip = "Show/hide modifiers.\n\n" + modifiersTooltip;
+      //if (GUI.Button(position, content, dropdownButtonStyle)) showModifiers = !showModifiers;
 
-      // Display the list of modifiers
-      if (showModifiers)
-      {
-        position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-        position.x = EditorGUIUtility.labelWidth + 18f;
-        position.width = EditorGUIUtility.currentViewWidth - position.x - dropdownButtonStyle.margin.right;
+      //// Display the list of modifiers
+      //if (showModifiers)
+      //{
+      //  position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+      //  position.x = EditorGUIUtility.labelWidth + 18f;
+      //  position.width = EditorGUIUtility.currentViewWidth - position.x - dropdownButtonStyle.margin.right;
 
-        EditorGUI.PropertyField(position, modifiersList, new GUIContent("Modifiers", modifiersTooltip), true);
-      }
+      //  EditorGUI.PropertyField(position, modifiersList, new GUIContent("Modifiers", modifiersTooltip), true);
+      //}
 
-      if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties();
+      if (EditorGUI.EndChangeCheck()) serializedObject.ApplyModifiedProperties();
 
       EditorGUI.EndProperty();
     }
 
-    private void InitialiseVariables( SerializedProperty property, GUIContent label )
+    private void InitialiseVariables( SerializedObject serializedObject, GUIContent label )
     {
       // Button for dropdown/foldout but without padding so image fills out the button space
       if (dropdownButtonStyle == null)
@@ -111,7 +138,7 @@ namespace CwispyStudios.TankMania.Stats
         dropdownButtonStyle = GUI.skin.button;
         dropdownButtonStyle.padding = new RectOffset();
       }
-      
+
       if (popupStyle == null)
       {
         popupStyle = GUI.skin.GetStyle("PaneOptions");
@@ -120,7 +147,7 @@ namespace CwispyStudios.TankMania.Stats
 
       if (modifiersList == null)
       {
-        modifiersList = property.FindPropertyRelative(nameof(Stat.StatModifiers));
+        modifiersList = serializedObject.FindProperty(nameof(Stat.StatModifiers));
       }
 
       if (buttonMargin < 1f)
@@ -136,18 +163,18 @@ namespace CwispyStudios.TankMania.Stats
         dropdownContent = EditorGUIUtility.IconContent("d_dropdown");
       }
 
-      if (property.hasMultipleDifferentValues) return;
-     
+      if (serializedObject.isEditingMultipleObjects) return;
+
       modifiersInList.Clear();
 
-      for (int i = 0; i < modifiersList.arraySize; ++i)
-      {
-        StatModifier statModifier = modifiersList.GetArrayElementAtIndex(i).objectReferenceValue as StatModifier;
+      //for (int i = 0; i < modifiersList.arraySize; ++i)
+      //{
+      //  StatModifier statModifier = modifiersList.GetArrayElementAtIndex(i).objectReferenceValue as StatModifier;
 
-        if (!modifiersInList.Contains(statModifier)) modifiersInList.Add(statModifier);
-      }
+      //  if (!modifiersInList.Contains(statModifier)) modifiersInList.Add(statModifier);
+      //}
 
-      AddModifiersToTooltip(label);
+      //AddModifiersToTooltip(label);
     }
 
     private void AddModifiersToTooltip( GUIContent label )
@@ -191,9 +218,19 @@ namespace CwispyStudios.TankMania.Stats
       GUI.enabled = true;
     }
 
-    public virtual void DrawValueField( Rect position, SerializedProperty baseValue, SerializedProperty useInt, GUIContent label )
+    public virtual void SetStatType( SerializedObject serializedObject )
     {
-      if (useInt.boolValue)
+      // Default use float
+      serializedObject.FindProperty(UseIntPropertyName).boolValue = false;
+    }
+
+    public virtual void DrawValueField( Rect position, SerializedObject serializedObject, GUIContent label )
+    {
+      SerializedProperty baseValue = serializedObject.FindProperty(BaseValuePropertyName);
+
+      bool useInt = serializedObject.FindProperty(UseIntPropertyName).boolValue;
+
+      if (useInt)
         baseValue.floatValue = EditorGUI.IntField(position, label, (int)baseValue.floatValue);
 
       else

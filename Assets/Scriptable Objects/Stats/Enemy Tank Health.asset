@@ -12,48 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 149633593d677d34bb4427d0b84147ed, type: 3}
   m_Name: Enemy Tank Health
   m_EditorClassIdentifier: 
-  MaxHealth:
-    UpgradeSubscriptions:
-    - StatModifierInstance:
-        instanceName: HP Increase
-        statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
-      statModifierUpgrade: {fileID: 11400000, guid: 6114107de394e8d43bda715c416d45e0,
-        type: 2}
-      upgrade: {fileID: 11400000, guid: 6114107de394e8d43bda715c416d45e0, type: 2}
-      statModifierIndex: -1
-      selectingModifier: 0
-    - StatModifierInstance:
-        instanceName: HP Increase
-        statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
-      statModifierUpgrade: {fileID: 11400000, guid: 5d54b968260c07a408facad5f5989f98,
-        type: 2}
-      upgrade: {fileID: 11400000, guid: 5d54b968260c07a408facad5f5989f98, type: 2}
-      statModifierIndex: -1
-      selectingModifier: 1
-    - StatModifierInstance:
-        instanceName: HP Increase
-        statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
-      statModifierUpgrade: {fileID: 11400000, guid: 25ab306f32b9b4149a563d54dce70b55,
-        type: 2}
-      upgrade: {fileID: 11400000, guid: 25ab306f32b9b4149a563d54dce70b55, type: 2}
-      statModifierIndex: -1
-      selectingModifier: 1
-    - StatModifierInstance:
-        instanceName: HP Increase
-        statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
-      statModifierUpgrade: {fileID: 11400000, guid: 3a6a4b4fec8b03f42891de108719c6fb,
-        type: 2}
-      upgrade: {fileID: 11400000, guid: 3a6a4b4fec8b03f42891de108719c6fb, type: 2}
-      statModifierIndex: -1
-      selectingModifier: 1
-    baseValue: 100
-  HealthRegeneration:
-    UpgradeSubscriptions:
-    - StatModifierInstance:
-        instanceName: 
-        statModifier: {fileID: 0}
-      statModifierUpgrade: {fileID: 0}
-      upgrade: {fileID: 0}
-      statModifierIndex: -1
-      selectingModifier: 1
-    baseValue: 2
+  stats:
+  - {fileID: 11400000, guid: cd755f1a867e1b9489ebf8dbbd440b27, type: 2}
+  - {fileID: 11400000, guid: 13e2d41981703af41bee81d53ad5320c, type: 2}
+  statsNames:
+  - MaxHealth
+  - HealthRegeneration
+  nameOfStatsFolder: Enemy Tank Health
+  MaxHealth: {fileID: 11400000, guid: cd755f1a867e1b9489ebf8dbbd440b27, type: 2}
+  HealthRegeneration: {fileID: 11400000, guid: 13e2d41981703af41bee81d53ad5320c, type: 2}

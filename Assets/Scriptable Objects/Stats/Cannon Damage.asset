@@ -13,55 +13,18 @@ MonoBehaviour:
   m_Name: Cannon Damage
   m_EditorClassIdentifier: 
   stats:
-  - StatModifiers:
-    - {fileID: 11400000, guid: cff6414df3edf8b439f2560d551a1dc9, type: 2}
-    useInt: 0
-    baseValue: 10
-    explicitType: 0
+  - {fileID: 0}
+  statsNames:
+  - DirectDamage
+  nameOfStatsFolder: Cannon Damage
   DamageFrom: 0
-  DirectDamage:
-    UpgradeSubscriptions:
-    - StatModifierInstance:
-        instanceName: Damage Increases
-        statModifier: {fileID: 11400000, guid: 274edaf7b499eab4ca5bb7289df4137c, type: 2}
-      statModifierUpgrade: {fileID: 11400000, guid: 5d54b968260c07a408facad5f5989f98,
-        type: 2}
-      upgrade: {fileID: 11400000, guid: 5d54b968260c07a408facad5f5989f98, type: 2}
-      statModifierIndex: -1
-      selectingModifier: 0
-    useInt: 0
-    baseValue: 10
-    explicitType: 0
+  DirectDamage: {fileID: 0}
   SplashDamage:
     HasSplashDamage: 1
-    Radius:
-      UpgradeSubscriptions: []
-      useInt: 0
-      baseValue: 2
-      explicitType: 0
-    DamagePercentage:
-      UpgradeSubscriptions: []
-      useInt: 0
-      baseValue: 1
-      explicitType: 1
-    HasSplashDamageRolloff: 1
-    MinRadiusPercentageRolloff:
-      UpgradeSubscriptions: []
-      useInt: 0
-      baseValue: 0
-      explicitType: 1
-    MaxRadiusPercentageRolloff:
-      UpgradeSubscriptions: []
-      useInt: 0
-      baseValue: 1
-      explicitType: 1
-    MinRadiusDamagePercentageRolloff:
-      UpgradeSubscriptions: []
-      useInt: 0
-      baseValue: 1
-      explicitType: 1
-    MaxRadiusDamagePercentageRolloff:
-      UpgradeSubscriptions: []
-      useInt: 0
-      baseValue: 0
-      explicitType: 1
+    Radius: {fileID: 0}
+    DamagePercentage: {fileID: 0}
+    HasSplashDamageRolloff: 0
+    MinRadiusPercentageRolloff: {fileID: 0}
+    MaxRadiusPercentageRolloff: {fileID: 0}
+    MinRadiusDamagePercentageRolloff: {fileID: 0}
+    MaxRadiusDamagePercentageRolloff: {fileID: 0}
