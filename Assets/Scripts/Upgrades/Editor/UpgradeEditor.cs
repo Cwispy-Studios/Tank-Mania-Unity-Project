@@ -14,6 +14,9 @@ namespace CwispyStudios.TankMania.Upgrades
     private SerializedProperty playerStatUpgraders;
     private SerializedProperty enemyStatUpgraders;
 
+    private float testValuePlayerModifiers = 10f;
+    private float testValueEnemyModifiers = 10f;
+
     private void OnEnable()
     {
       upgradeRarity = serializedObject.FindProperty(nameof(Upgrade.UpgradeRarity));
@@ -54,18 +57,18 @@ namespace CwispyStudios.TankMania.Upgrades
 
       EditorGUILayout.PropertyField(playerStatUpgraders, new GUIContent("Player Upgrade Components"));
 
-      DrawModifierProperties(playerStatUpgraders);
+      DrawModifierProperties(playerStatUpgraders, ref testValuePlayerModifiers);
 
       EditorGUILayout.Space();
 
       EditorGUILayout.PropertyField(enemyStatUpgraders, new GUIContent("Enemy Upgrade Components"));
 
-      DrawModifierProperties(enemyStatUpgraders);
+      DrawModifierProperties(enemyStatUpgraders, ref testValueEnemyModifiers);
 
       serializedObject.ApplyModifiedProperties();
     }
 
-    private void DrawModifierProperties( SerializedProperty statUpgraders )
+    private void DrawModifierProperties( SerializedProperty statUpgraders, ref float testValue )
     {
       EditorGUILayout.Space();
 
@@ -73,6 +76,8 @@ namespace CwispyStudios.TankMania.Upgrades
       EditorGUI.DrawRect(lineRect, Color.gray);
 
       EditorGUILayout.Space();
+
+      testValue = EditorGUILayout.FloatField("Test Value:", testValue);
 
       GUIStyle helpBoxStyle = GUI.skin.GetStyle("HelpBox");
       helpBoxStyle.richText = true;
@@ -95,6 +100,7 @@ namespace CwispyStudios.TankMania.Upgrades
 
           if (additiveValue.floatValue != 0f) modifiersList += $"+{additiveValue.floatValue.ToString("F2")} ";
           if (multiplicativeValue.floatValue != 0f) modifiersList += $"+{(multiplicativeValue.floatValue * 100f).ToString("F0")}%";
+          modifiersList += $"\n   TV: {testValue} | <b>UV: {(testValue + additiveValue.floatValue) * (1f + multiplicativeValue.floatValue)}</b>";
         }
       }
 
