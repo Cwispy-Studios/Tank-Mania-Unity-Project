@@ -89,19 +89,40 @@ namespace CwispyStudios.TankMania.Stats
 
     private void RenameAssets()
     {
+      // First, rename the folder.
       string objectPath = AssetDatabase.GetAssetPath(serializedObject.targetObject);
       string originalFolderPath = objectPath.Replace($"{serializedObject.targetObject.name}.asset", nameOfStatsFolder.stringValue);
       string newFolderPath = originalFolderPath.Replace(nameOfStatsFolder.stringValue, folderName);
 
       nameOfStatsFolder.stringValue = folderName;
 
-      // Check that paths are different
-      if (string.Equals(originalFolderPath, newFolderPath)) return;
+      // Check that paths are different and original folder still exists
+      if (!string.Equals(originalFolderPath, newFolderPath) && AssetDatabase.IsValidFolder(originalFolderPath))
+      {
+        AssetDatabase.MoveAsset(originalFolderPath, newFolderPath);
+      }
 
-      // Check if original folder exists
-      if (!AssetDatabase.IsValidFolder(originalFolderPath)) return;
+      // Check asset names if they still match variable names
+      for (int i = 0; i < stats.arraySize; ++i)
+      {
+        SerializedProperty statProperty = stats.GetArrayElementAtIndex(i);
 
-      AssetDatabase.MoveAsset(originalFolderPath, newFolderPath);
+        // There is a reference to a stat
+        if (statProperty.objectReferenceValue != null)
+        {
+          string currentStatName = statProperty.objectReferenceValue.name;
+          string desiredStatName = statsNames.GetArrayElementAtIndex(i).stringValue;
+
+          // Check if the asset name is still the same as the variable name
+          if (!string.Equals(currentStatName, desiredStatName))
+          {
+            string assetPath = AssetDatabase.GetAssetPath(statProperty.objectReferenceValue);
+            string desiredPath = assetPath.Replace(currentStatName, desiredStatName);
+
+            AssetDatabase.MoveAsset(assetPath, desiredPath);
+          }
+        }
+      }
     }
 
     private void CreateAssets()
