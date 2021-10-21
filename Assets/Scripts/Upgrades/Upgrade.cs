@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Upgrades
 {
+  using Stats;
+
   [CreateAssetMenu(menuName = "Upgrades/Upgrade Instance", order = 0)]
   public class Upgrade : ScriptableObject
   {
@@ -16,11 +18,13 @@ namespace CwispyStudios.TankMania.Upgrades
     public Sprite UpgradeImage;
     [TextArea(2, 5)] public string UpgradeDescription;
 
-    [Header("Player Modifiers")]
+    [Header("Player Upgraders")]
     public List<StatUpgrader> PlayerStatUpgraders = new List<StatUpgrader>();
+    public List<StatsCategoryUpgrader> PlayerStatsCategoryUpgraders = new List<StatsCategoryUpgrader>();
 
-    [Header("Enemy Modifiers")]
+    [Header("Enemy Upgraders")]
     public List<StatUpgrader> EnemyStatUpgraders = new List<StatUpgrader>();
+    public List<StatsCategoryUpgrader> EnemyStatsCategoryUpgraders = new List<StatsCategoryUpgrader>();
 
     [NonSerialized] private int playerUpgradedAmount = 0;
     public int PlayerUpgradedAmount => playerUpgradedAmount;
@@ -33,12 +37,10 @@ namespace CwispyStudios.TankMania.Upgrades
       ++playerUpgradedAmount;
 
       foreach (StatUpgrader statUpgrader in PlayerStatUpgraders)
-      {
-        if (statUpgrader.StatUpgraded == null || statUpgrader.StatModifier == null) 
-          Debug.LogError("Stat upgrader has is either not upgrading any stats or has no modifier!");
+        statUpgrader.UpgradeUpgrader();
 
-        statUpgrader.UpgradeStatUpgrader();
-      }
+      foreach (StatsCategoryUpgrader statsCategoryUpgrader in PlayerStatsCategoryUpgraders)
+        statsCategoryUpgrader.UpgradeUpgrader();
     }
 
     public void UpgradeEnemy()
@@ -46,22 +48,10 @@ namespace CwispyStudios.TankMania.Upgrades
       ++enemyUpgradedAmount;
 
       foreach (StatUpgrader statModifierInstance in EnemyStatUpgraders)
-      {
-        if (statModifierInstance == null) Debug.LogError("Stat modifier has no subscribers and will not effect any stats!");
+        statModifierInstance.UpgradeUpgrader();
 
-        statModifierInstance.UpgradeStatUpgrader();
+      foreach (StatsCategoryUpgrader statsCategoryUpgrader in EnemyStatsCategoryUpgraders)
+        statsCategoryUpgrader.UpgradeUpgrader();
       }
-    }
-
-    public StatUpgrader GetInstanceFromIndex( int index )
-    {
-      if (index < PlayerStatUpgraders.Count)
-        return PlayerStatUpgraders[index];
-
-      else if (index < PlayerStatUpgraders.Count + EnemyStatUpgraders.Count)
-        return EnemyStatUpgraders[index - PlayerStatUpgraders.Count];
-
-      else return null;
-    }
   }
 }

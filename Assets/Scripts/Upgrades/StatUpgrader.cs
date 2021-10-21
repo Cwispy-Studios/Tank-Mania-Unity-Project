@@ -7,21 +7,14 @@ namespace CwispyStudios.TankMania.Upgrades
   using Stats;
 
   [Serializable]
-  public class StatUpgrader
+  public class StatUpgrader : Upgrader
   {
     [SerializeField] private Stat statUpgraded;
     public Stat StatUpgraded => statUpgraded;
 
-    [SerializeField] private StatModifier statModifier;
-    public StatModifier StatModifier => statModifier;
-
-    private int upgradedAmount = 0;
-    public int UpgradedAmount => upgradedAmount;
-
-    public void UpgradeStatUpgrader()
+    public override void UpgradeUpgrader()
     {
-      ++upgradedAmount;
-      statUpgraded.AdjustUpgradeValues(statModifier.AddititiveValue, statModifier.MultiplicativeValue);
+      statUpgraded.AdjustUpgradeValues(StatModifier.AddititiveValue, StatModifier.MultiplicativeValue);
     }
   }
 }

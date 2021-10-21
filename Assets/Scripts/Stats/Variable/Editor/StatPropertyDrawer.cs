@@ -21,6 +21,8 @@ namespace CwispyStudios.TankMania.Stats
     {
       float height = base.GetPropertyHeight(property, label);
 
+      if (property.serializedObject.targetObject.GetType() == typeof(StatsCategory)) return height;
+
       objectAssigned = property.objectReferenceValue != null;
 
       if (objectAssigned)
@@ -32,6 +34,38 @@ namespace CwispyStudios.TankMania.Stats
     }
 
     public override void OnGUI( Rect position, SerializedProperty property, GUIContent label )
+    {
+      if (property.serializedObject.targetObject.GetType().IsSubclassOf(typeof(StatsGroup)))
+        DrawForStatsGroup(position, property, label);
+
+      else DrawForStatsCategory(position, property, label);
+    }
+
+    private void DrawForStatsCategory( Rect position, SerializedProperty property, GUIContent label )
+    {
+      label = EditorGUI.BeginProperty(position, label, property);
+
+      if (property.objectReferenceValue == null)
+        label.text = "Unassigned";
+
+      else
+      {
+        string assetPath = AssetDatabase.GetAssetPath(property.objectReferenceValue);
+        string folderPath = assetPath.Replace($"/{property.objectReferenceValue.name}.asset", "");
+
+        string folderName = string.Empty;
+
+        // Extract the folder name
+        for (int i = folderPath.Length - 1; i >= 0 && folderPath[i] != '/'; --i)
+          folderName = folderPath[i] + folderName;
+
+        label.text = folderName;
+      }
+
+      EditorGUI.PropertyField(position, property, label);
+    }
+
+    private void DrawForStatsGroup( Rect position, SerializedProperty property, GUIContent label )
     {
       // Initialise lock button graphics and style
       if (lockedButtonContent == null || unlockedButtonContent == null || lockButtonStyle == null)

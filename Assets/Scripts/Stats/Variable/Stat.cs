@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  using Upgrades;
-
   public class Stat : ScriptableObject
   {
     // Event when a stat modifier that this stat is subscribed to is upgraded
@@ -21,16 +19,20 @@ namespace CwispyStudios.TankMania.Stats
     [NonSerialized] private float totalAdditiveValue = 0f;
     [NonSerialized] private float totalMulitplicativeValue = 1f;
 
+#if UNITY_EDITOR
+
     private void OnValidate()
     {
       // Does not need to be called in build since the values get serialized in editor already
       SetDefaultUpgradedValue();
     }
 
-    public void SetDefaultUpgradedValue()
+    private void SetDefaultUpgradedValue()
     {
       upgradedValue = baseValue;
     }
+
+#endif
 
     public void AdjustUpgradeValues( float additiveValue, float multiplicativeValue )
     {

@@ -17,12 +17,17 @@ MonoBehaviour:
   UpgradeImage: {fileID: 21300000, guid: 32f44ccf015947342bd67de7eed7d3c5, type: 3}
   UpgradeDescription: Decreases the reload projectile speed by 10%.
   PlayerStatUpgraders:
-  - statUpgraded: {fileID: 11400000, guid: 8127334b51d9f16468216f2bbe6e14d1, type: 2}
-    statModifier:
+  - statModifier:
       additiveValue: 0
       multiplicativeValue: -0.099999994
-  EnemyStatUpgraders:
-  - statUpgraded: {fileID: 11400000, guid: cd755f1a867e1b9489ebf8dbbd440b27, type: 2}
-    statModifier:
+      useInt: 0
+    statUpgraded: {fileID: 11400000, guid: 8127334b51d9f16468216f2bbe6e14d1, type: 2}
+  PlayerStatsCategoryUpgraders: []
+  EnemyStatUpgraders: []
+  EnemyStatsCategoryUpgraders:
+  - statModifier:
       additiveValue: 0
       multiplicativeValue: 0.049999997
+      useInt: 0
+    statsCategoryUpgraded: {fileID: 11400000, guid: 23f7c2e3d839c024c8af6c6987d0ec1b,
+      type: 2}
