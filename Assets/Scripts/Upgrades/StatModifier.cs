@@ -10,7 +10,11 @@ namespace CwispyStudios.TankMania.Upgrades
     [SerializeField] private float additiveValue;
     public float AddititiveValue => additiveValue;
 
-    [SerializeField] private float multiplicativeValue = 1f;
+    [SerializeField] private float multiplicativeValue;
     public float MultiplicativeValue => multiplicativeValue;
+
+#if UNITY_EDITOR
+    [SerializeField] private bool useInt;
+#endif
   }
 }

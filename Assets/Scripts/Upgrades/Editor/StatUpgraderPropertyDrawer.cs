@@ -15,10 +15,18 @@ namespace CwispyStudios.TankMania.Upgrades
 
     public override void OnGUI( Rect position, SerializedProperty property, GUIContent label )
     {
-      label = EditorGUI.BeginProperty(position, label, property);
+      EditorGUI.BeginProperty(position, label, property);
 
       SerializedProperty statUpgraded = property.FindPropertyRelative(nameof(statUpgraded));
       SerializedProperty statModifier = property.FindPropertyRelative(nameof(statModifier));
+
+      // Set the stat modifier's additive value to use an int/float slider based on the stat's type
+      if (statUpgraded.objectReferenceValue)
+      {
+        SerializedObject statSerializedObject = new SerializedObject(statUpgraded.objectReferenceValue);
+
+        statModifier.FindPropertyRelative("useInt").boolValue = statSerializedObject.FindProperty("useInt").boolValue;
+      }
 
       position.height = EditorGUIUtility.singleLineHeight;
       position.y += EditorGUIUtility.standardVerticalSpacing;

@@ -1,20 +1,20 @@
-using System.Collections.Generic;
-
 using UnityEditor;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Upgrades
 {
   [CustomPropertyDrawer(typeof(StatModifier))]
-  public class StatModifierEditor : PropertyDrawer
+  public class StatModifierPropertyDrawer : PropertyDrawer
   {
     private SerializedProperty additiveValue;
     private SerializedProperty multiplicativeValue;
+    private SerializedProperty useInt;
 
     public override void OnGUI( Rect position, SerializedProperty property, GUIContent label )
     {
       additiveValue = property.FindPropertyRelative(nameof(additiveValue));
       multiplicativeValue = property.FindPropertyRelative(nameof(multiplicativeValue));
+      useInt = property.FindPropertyRelative(nameof(useInt));
 
       EditorGUI.BeginChangeCheck();
 
@@ -28,7 +28,11 @@ namespace CwispyStudios.TankMania.Upgrades
 
       position.width = additiveWidth;
 
-      additiveValue.floatValue = EditorGUI.FloatField(position, "+", additiveValue.floatValue);
+      if (useInt.boolValue)
+        additiveValue.floatValue = EditorGUI.IntField(position, "+", Mathf.RoundToInt(additiveValue.floatValue));
+
+      else
+        additiveValue.floatValue = EditorGUI.FloatField(position, "+", additiveValue.floatValue);
 
       position.x += additiveWidth;
       position.width = multiplicativeWidth;

@@ -1,20 +1,20 @@
-using System.Collections.Generic;
-
 using UnityEditor;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  using Upgrades;
-
   [CustomPropertyDrawer(typeof(Stat), true)]
   public class StatPropertyDrawer : PropertyDrawer
   {
-    private const float StatTypeButtonWidth = 7f;
-
     public const string UseIntPropertyName = "useInt";
     public const string BaseValuePropertyName = "baseValue";
 
+    private GUIContent lockedButtonContent;
+    private GUIContent unlockedButtonContent;
+
+    private GUIStyle lockButtonStyle;
+
+    private bool lockObjectField = true;
     private bool objectAssigned;
 
     public override float GetPropertyHeight( SerializedProperty property, GUIContent label )
@@ -33,22 +33,36 @@ namespace CwispyStudios.TankMania.Stats
 
     public override void OnGUI( Rect position, SerializedProperty property, GUIContent label )
     {
+      // Initialise lock button graphics and style
+      if (lockedButtonContent == null || unlockedButtonContent == null || lockButtonStyle == null)
+      {
+        lockedButtonContent = EditorGUIUtility.IconContent("LockIcon-On");
+        unlockedButtonContent = EditorGUIUtility.IconContent("LockIcon");
+
+        lockButtonStyle = GUI.skin.GetStyle("PaneOptions");
+        // Sets the graphic to take up the entire button space
+        lockButtonStyle.imagePosition = ImagePosition.ImageOnly;
+      }
+
       label = EditorGUI.BeginProperty(position, label, property);
 
       position.height = EditorGUIUtility.singleLineHeight;
 
-      // Make space for the stat type button, but only if object has already been assigned
-      Rect prefixLabelRect = position;
-      if (objectAssigned)
-      {
-        prefixLabelRect.x += StatTypeButtonWidth;
-        prefixLabelRect.width = EditorGUIUtility.labelWidth - StatTypeButtonWidth;
-      }
-      EditorGUI.LabelField(prefixLabelRect, label);
+      // Rect for the lock button
+      Rect lockButtonRect = position;
+      lockButtonRect.x -= 12f;
+      lockButtonRect.width = 12f;
+
+      GUIContent lockButtonContent = lockObjectField ? lockedButtonContent : unlockedButtonContent;
+
+      // Draw the lock button
+      if (GUI.Button(lockButtonRect, lockButtonContent, lockButtonStyle)) lockObjectField = !lockObjectField;
+
+      EditorGUI.LabelField(position, label);
 
       bool guiStatus = GUI.enabled;
 
-      GUI.enabled = false;
+      GUI.enabled = !lockObjectField;
       EditorGUI.PropertyField(position, property, new GUIContent(" "));
       GUI.enabled = guiStatus;
 
@@ -62,7 +76,8 @@ namespace CwispyStudios.TankMania.Stats
       EditorGUI.BeginChangeCheck();
 
       Rect buttonRect = EditorGUI.IndentedRect(position);
-      buttonRect.width = 7f;
+      buttonRect.width = 50f;
+      buttonRect.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
       SerializedProperty useInt = serializedObject.FindProperty("useInt");
 
@@ -83,7 +98,7 @@ namespace CwispyStudios.TankMania.Stats
 
       GUI.enabled = false;
 
-      string text = useInt.boolValue ? "i" : "f";
+      string text = useInt.boolValue ? "int" : "float";
 
       Color color = GUI.backgroundColor;
       GUI.backgroundColor = useInt.boolValue ? new Color(1f, 0.839f, 0.31f) : Color.cyan;

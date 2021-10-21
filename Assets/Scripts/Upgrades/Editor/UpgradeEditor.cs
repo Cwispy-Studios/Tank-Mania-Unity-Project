@@ -39,6 +39,7 @@ namespace CwispyStudios.TankMania.Upgrades
       // Upgrade Rarity
       EditorGUILayout.PropertyField(upgradeRarity);
 
+      // Unless customised, editing multiple objects just overwrites the values of the modifier arrays, so leave it as it is for now
       if (serializedObject.isEditingMultipleObjects)
       {
         serializedObject.ApplyModifiedProperties();
