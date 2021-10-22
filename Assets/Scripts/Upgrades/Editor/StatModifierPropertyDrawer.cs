@@ -19,10 +19,10 @@ namespace CwispyStudios.TankMania.Upgrades
       EditorGUI.BeginChangeCheck();
 
       // Width of the inspector
-      float viewWidth = EditorGUIUtility.currentViewWidth - 58f;
-      // Additive takes 1/4 width, multiplicative takes 3/4 width
-      float additiveWidth = viewWidth * 0.25f;
-      float multiplicativeWidth = viewWidth - additiveWidth;
+      position = EditorGUI.IndentedRect(position);
+
+      float additiveWidth = position.width * 0.25f;
+      float multiplicativeWidth = position.width - additiveWidth;
 
       EditorGUIUtility.labelWidth = 9f;
 

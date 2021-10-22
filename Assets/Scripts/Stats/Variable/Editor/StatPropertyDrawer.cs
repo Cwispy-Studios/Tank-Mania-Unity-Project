@@ -83,7 +83,7 @@ namespace CwispyStudios.TankMania.Stats
       position.height = EditorGUIUtility.singleLineHeight;
 
       // Rect for the lock button
-      Rect lockButtonRect = position;
+      Rect lockButtonRect = EditorGUI.IndentedRect(position);
       lockButtonRect.x -= 12f;
       lockButtonRect.width = 12f;
 
