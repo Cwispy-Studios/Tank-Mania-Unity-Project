@@ -169,7 +169,7 @@ namespace CwispyStudios.TankMania.Upgrades
 
         if (additiveValue.floatValue != 0f) modifiersList += $"+{additiveValue.floatValue.ToString("F2")} ";
         if (multiplicativeValue.floatValue != 0f) modifiersList += $"+{(multiplicativeValue.floatValue * 100f).ToString("F0")}%";
-        modifiersList += $"\n   TV: {testValue} | <b>UV: {(testValue + additiveValue.floatValue) * (1f + multiplicativeValue.floatValue)}</b>";
+        modifiersList += $"\n   {testValue} => <b>{(testValue + additiveValue.floatValue) * (1f + multiplicativeValue.floatValue)}</b>";
       }
     }
   }

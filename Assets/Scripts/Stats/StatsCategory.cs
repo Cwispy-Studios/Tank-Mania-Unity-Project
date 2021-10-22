@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  [CreateAssetMenu]
+  [CreateAssetMenu(menuName = "Stats/Stats Category", order = 100)]
   public class StatsCategory : ScriptableObject
   {
     [SerializeField] private List<Stat> statsInCategory;

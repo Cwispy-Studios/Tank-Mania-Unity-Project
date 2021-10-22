@@ -5,7 +5,7 @@ namespace CwispyStudios.TankMania.Stats
   using Combat;
   using Visuals;
 
-  [CreateAssetMenu(menuName = "Stats/Firing Information")]
+  [CreateAssetMenu(menuName = "Stats/Player/Firing Information")]
   public class FiringInformation : StatsGroup
   {
     [Header("Projectile")]
