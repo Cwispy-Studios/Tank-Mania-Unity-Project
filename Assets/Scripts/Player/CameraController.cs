@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace CwispyStudios.TankMania.Camera
+namespace CwispyStudios.TankMania.Player
 {
-  using Player;
-  using Utils;
-
   public class CameraController : MonoBehaviour
   {
     [Header("Base Tracking Values")]
@@ -14,7 +11,7 @@ namespace CwispyStudios.TankMania.Camera
     //[SerializeField] private float baseRotation = 8f;
 
     [Header("Vertical Rotation Limits")]
-    [SerializeField] private float verticalRotationLimitFromBaseValue = 25f;
+    [SerializeField] private GunRotationLimits rotationLimits;
 
     [Header("Sensitivity")]
     [SerializeField, Range(0.001f, 0.05f)] private float horizontalSensitivity = 0.01f;
@@ -26,25 +23,20 @@ namespace CwispyStudios.TankMania.Camera
     [Header("Layer mask")]
     [SerializeField] private LayerMask lookingAtIgnoreLayerMask;
 
+    [Header("Variables")]
+    [SerializeField] private FloatVariable targetHorizontalRotation;
+    [SerializeField] private FloatVariable targetVerticalRotation;
+
     private TankTurretController trackedTarget;
 
-    private float targetHorizontalRotationValue = 0f;
-    private float targetVerticalRotationValue = 0f;
-
-    private float minVerticalRotationLimit;
-    private float maxVerticalRotationLimit;
-
-    private UnityEngine.Camera playerCamera;
+    private Camera playerCamera;
 
     private Vector3 centerScreenPoint;
 
     private void Awake()
     {
-      playerCamera = UnityEngine.Camera.main;
+      playerCamera = Camera.main;
       centerScreenPoint = new Vector3(playerCamera.pixelWidth / 2f, playerCamera.pixelHeight / 2f, 0f);
-
-      minVerticalRotationLimit = MathHelper.ConvertToSignedAngle(verticalRotationLimitFromBaseValue);
-      maxVerticalRotationLimit = MathHelper.ConvertToSignedAngle(-verticalRotationLimitFromBaseValue);
     }
 
     private void LateUpdate()
@@ -55,21 +47,37 @@ namespace CwispyStudios.TankMania.Camera
 
     private void ProcessHorizontalInput( float horizontalInput )
     {
-      targetHorizontalRotationValue += horizontalInput * horizontalSensitivity;
-      targetHorizontalRotationValue = MathHelper.ConvertToSignedAngle(targetHorizontalRotationValue);
+      targetHorizontalRotation.Value += horizontalInput * horizontalSensitivity;
+      targetHorizontalRotation.Value = MathHelper.ConvertToSignedAngle(targetHorizontalRotation.Value);
+
+      if (rotationLimits.HasYLimits)
+      {
+        bool rotationWithinLimits = targetHorizontalRotation.Value >= rotationLimits.MinYRot && targetHorizontalRotation.Value <= rotationLimits.MaxYRot;
+
+        if (!rotationWithinLimits)
+          targetHorizontalRotation.Value = Mathf.Clamp(targetHorizontalRotation.Value, rotationLimits.MinYRot, rotationLimits.MaxYRot);
+      }
     }
 
     private void ProcessVerticalInput( float verticalInput )
     {
-      targetVerticalRotationValue += -verticalInput * verticalSensitivity;
-      targetVerticalRotationValue = MathHelper.ConvertToSignedAngle(targetVerticalRotationValue);
-      targetVerticalRotationValue = Mathf.Clamp(targetVerticalRotationValue, maxVerticalRotationLimit, minVerticalRotationLimit);
+      targetVerticalRotation.Value += -verticalInput * verticalSensitivity;
+      targetVerticalRotation.Value = MathHelper.ConvertToSignedAngle(targetVerticalRotation.Value);
+
+      if (rotationLimits.HasXLimits)
+      {
+        bool rotationWithinLimits = targetVerticalRotation.Value >= rotationLimits.MinXRot && targetVerticalRotation.Value <= rotationLimits.MaxXRot;
+
+        if (!rotationWithinLimits)
+          targetVerticalRotation.Value = Mathf.Clamp(targetVerticalRotation.Value, rotationLimits.MinXRot, rotationLimits.MaxXRot);
+      }
+
     }
 
     private void VerticalRotation()
     {
       float signedEulerAngle = MathHelper.ConvertToSignedAngle(transform.rotation.eulerAngles.x);
-      float deltaRotation = targetVerticalRotationValue - signedEulerAngle;
+      float deltaRotation = targetVerticalRotation.Value - signedEulerAngle;
 
       transform.RotateAround(trackedTarget.transform.position, transform.right, deltaRotation);
     }
@@ -77,7 +85,7 @@ namespace CwispyStudios.TankMania.Camera
     private void HorizontalRotation()
     {
       float signedEulerAngle = MathHelper.ConvertToSignedAngle(transform.rotation.eulerAngles.y);
-      float deltaRotation = targetHorizontalRotationValue - signedEulerAngle;
+      float deltaRotation = targetHorizontalRotation.Value - signedEulerAngle;
 
       transform.RotateAround(trackedTarget.transform.position, Vector3.up, deltaRotation);
     }
@@ -85,19 +93,20 @@ namespace CwispyStudios.TankMania.Camera
     private void InitialiseCameraForNewTrackingTarget()
     {
       Vector3 targetPositionFromTrackedTarget = new Vector3(0f, baseHeight, -baseDistance);
-      Quaternion targetRotation = Quaternion.Euler(0f, targetHorizontalRotationValue, 0f);
+      Quaternion targetRotation = Quaternion.Euler(0f, targetHorizontalRotation.Value, 0f);
       transform.position = trackedTarget.transform.position + targetRotation * targetPositionFromTrackedTarget;
 
       Vector3 targetRotationFromTrackedTarget = new Vector3(0f, 0f, 0f);
       transform.rotation = targetRotation * Quaternion.Euler(targetRotationFromTrackedTarget);
 
-      targetVerticalRotationValue = 0f;
+      targetVerticalRotation.Value = 0f;
     }
 
-    public void SetTrackingTarget( TankTurretController target )
+    public void SetTrackingTarget( TankTurretController target, GunRotationLimits gunRotationLimits )
     {
       trackedTarget = target;
-      targetHorizontalRotationValue = MathHelper.ConvertToSignedAngle(target.transform.rotation.eulerAngles.y);
+      targetHorizontalRotation.Value = MathHelper.ConvertToSignedAngle(target.transform.rotation.eulerAngles.y);
+      rotationLimits = gunRotationLimits;
 
       InitialiseCameraForNewTrackingTarget();
     }
@@ -121,8 +130,6 @@ namespace CwispyStudios.TankMania.Camera
 
       ProcessHorizontalInput(aimInput.x);
       ProcessVerticalInput(aimInput.y);
-
-      trackedTarget.ReceiveSignedRotationFromCameraMovement(targetHorizontalRotationValue);
     }
   }
 }

@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Player
 {
-  using Camera;
   using Stats;
 
   public class TankTurretController : MonoBehaviour
@@ -12,16 +11,19 @@ namespace CwispyStudios.TankMania.Player
 
     [Header("Turret and Gun Rotation")]
     [SerializeField] private TurretRotation turretRotation;
+    [SerializeField] private GunRotationLimits gunRotationLimits;
+
+    [Header("Camera Variables")]
+    [SerializeField] private FloatVariable cameraHorizontalRotation;
 
     private CameraController playerCamera;
 
-    private float targetTurretRotation;
     private float targetGunRotation;
 
     private void Awake()
     {
-      playerCamera = UnityEngine.Camera.main.GetComponent<CameraController>();
-      playerCamera.SetTrackingTarget(this);
+      playerCamera = Camera.main.GetComponent<CameraController>();
+      playerCamera.SetTrackingTarget(this, gunRotationLimits);
 
       Cursor.lockState = CursorLockMode.Locked;
       Cursor.visible = false;
@@ -35,9 +37,9 @@ namespace CwispyStudios.TankMania.Player
 
     private void RotateTurret()
     {
-      if (transform.rotation.x == targetTurretRotation) return;
+      if (transform.rotation.x == cameraHorizontalRotation.Value) return;
 
-      Quaternion to = Quaternion.Euler(0f, targetTurretRotation, 0f);
+      Quaternion to = Quaternion.Euler(0f, cameraHorizontalRotation.Value, 0f);
       transform.rotation = 
         Quaternion.RotateTowards(transform.rotation, to, turretRotation.TurretRotationSpeed.Value * Time.deltaTime);
     }
@@ -53,11 +55,6 @@ namespace CwispyStudios.TankMania.Player
         gunCannon.localRotation = 
           Quaternion.RotateTowards(gunCannon.localRotation, to, turretRotation.GunRotationSpeed.Value * Time.deltaTime);
       }
-    }
-
-    public void ReceiveSignedRotationFromCameraMovement( float horizontalRotation )
-    {
-      targetTurretRotation = horizontalRotation;
     }
   }
 }

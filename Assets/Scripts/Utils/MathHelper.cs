@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace CwispyStudios.TankMania.Utils
+namespace CwispyStudios.TankMania
 {
   public static class MathHelper
   {

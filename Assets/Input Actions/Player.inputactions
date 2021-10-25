@@ -22,14 +22,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Aim",
-                    "type": "Value",
-                    "id": "292474ea-8cfb-4d1a-bd1f-9bf850bb174e",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Main Fire",
                     "type": "Button",
                     "id": "3e5c856b-4bc5-426b-8753-816cc2430dde",
@@ -107,23 +99,39 @@
                 },
                 {
                     "name": "",
-                    "id": "4dd72735-10a6-487a-96fc-33682ac2804a",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "39a06143-893e-4a11-b720-0ae73397dbac",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Main Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Camera Controls",
+            "id": "dbe0cfc4-9c51-4c24-b3b0-e41297d2a310",
+            "actions": [
+                {
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "40ff162a-8ecd-42eb-aeef-ecf0ff294bc3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b9999f81-ebc5-4c0e-97f6-645554acd0f3",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
