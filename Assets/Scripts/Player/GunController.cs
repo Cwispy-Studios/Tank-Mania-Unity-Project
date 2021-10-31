@@ -16,9 +16,6 @@ namespace CwispyStudios.TankMania.Player
     [Header("Damage Information")]
     [SerializeField] private Damage baseDamage;
 
-    [Header("Upgrade Information")]
-    [SerializeField] private UpgradedUpgrades upgradedUpgrades;
-
     [Header("Attributes")]
     [SerializeField] private FloatVariable fireCountdown;
     [SerializeField] private FloatVariable reloadCountdown;

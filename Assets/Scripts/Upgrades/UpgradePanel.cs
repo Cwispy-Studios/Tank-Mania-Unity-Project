@@ -8,9 +8,6 @@ namespace CwispyStudios.TankMania.Upgrades
 {
   public class UpgradePanel : MonoBehaviour
   {
-    [Header("Manager")]
-    [SerializeField] private TimeManager timeManager;
-
     [Header("Available Upgrades")]
     [SerializeField] private AvailableUpgrades availableUpgrades;
     [SerializeField] private UpgradedUpgrades upgradedUpgrades;
@@ -29,17 +26,22 @@ namespace CwispyStudios.TankMania.Upgrades
       {
         upgradeButton.OnHoverEvent += SetDescription;
         upgradeButton.OnNotHoverEvent += ResetDescription;
-        upgradeButton.OnSelectEvent += SelectUpgrade;
+        upgradeButton.Initialise();
       }
     }
 
-    public void ShowUpgradesPanel()
+    private void OnEnable()
     {
-      gameObject.SetActive(true);
-
-      timeManager.PauseGame();
-
       RandomiseUpgrades();
+    }
+
+    private void OnDestroy()
+    {
+      foreach (UpgradeButton upgradeButton in upgradeButtons)
+      {
+        upgradeButton.OnHoverEvent -= SetDescription;
+        upgradeButton.OnNotHoverEvent -= ResetDescription;
+      }
     }
 
     private void RandomiseUpgrades()
@@ -104,17 +106,6 @@ namespace CwispyStudios.TankMania.Upgrades
 
         if (unselectedUpgrade != selectedUpgrade) unselectedUpgrade.UpgradeEnemy();
       }
-
-      HideUpgradePanel();
     }
-
-    private void HideUpgradePanel()
-    {
-      gameObject.SetActive(false);
-
-      // Resume game
-      timeManager.ResumeGame();
-    }
-
   }
 }

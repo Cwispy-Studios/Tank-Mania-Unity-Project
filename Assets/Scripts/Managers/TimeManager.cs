@@ -7,17 +7,12 @@ namespace CwispyStudios.TankMania
   {
     public PlayerInputManager PlayerInput;
 
-    private bool isPaused = false;
     private float timeScale;
 
     public void PauseGame()
     {
-      if (isPaused) return;
-
       timeScale = Time.timeScale;
       Time.timeScale = 0f;
-
-      isPaused = true;
 
       Cursor.visible = true;
       Cursor.lockState = CursorLockMode.Confined;
@@ -28,8 +23,6 @@ namespace CwispyStudios.TankMania
     public void ResumeGame()
     {
       Time.timeScale = timeScale;
-
-      isPaused = false;
 
       Cursor.visible = false;
       Cursor.lockState = CursorLockMode.Locked;

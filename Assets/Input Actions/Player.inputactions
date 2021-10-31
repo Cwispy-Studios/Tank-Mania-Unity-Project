@@ -28,6 +28,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "0240f9b9-7451-4d7d-8120-4a654343bc1a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -107,26 +115,10 @@
                     "action": "Main Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Camera Controls",
-            "id": "dbe0cfc4-9c51-4c24-b3b0-e41297d2a310",
-            "actions": [
-                {
-                    "name": "Aim",
-                    "type": "Value",
-                    "id": "40ff162a-8ecd-42eb-aeef-ecf0ff294bc3",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
+                },
                 {
                     "name": "",
-                    "id": "b9999f81-ebc5-4c0e-97f6-645554acd0f3",
+                    "id": "ba35253b-cdef-4b89-8e88-8cafad763d6b",
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",

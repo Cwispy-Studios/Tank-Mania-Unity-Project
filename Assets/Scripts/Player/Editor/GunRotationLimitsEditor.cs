@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Player
 {
-  [CustomEditor(typeof(GunRotationLimits))]
+  [CustomEditor(typeof(TurretRotationLimits))]
   public class GunRotationLimitsEditor : Editor
   {
     private SerializedProperty HasXLimits;
@@ -15,12 +15,12 @@ namespace CwispyStudios.TankMania.Player
 
     private void OnEnable()
     {
-      HasXLimits = serializedObject.FindProperty(nameof(GunRotationLimits.HasXLimits));
-      MinXRot = serializedObject.FindProperty(nameof(GunRotationLimits.MinXRot));
-      MaxXRot = serializedObject.FindProperty(nameof(GunRotationLimits.MaxXRot));
-      HasYLimits = serializedObject.FindProperty(nameof(GunRotationLimits.HasYLimits));
-      MinYRot = serializedObject.FindProperty(nameof(GunRotationLimits.MinYRot));
-      MaxYRot = serializedObject.FindProperty(nameof(GunRotationLimits.MaxYRot));
+      HasXLimits = serializedObject.FindProperty(nameof(TurretRotationLimits.HasXLimits));
+      MinXRot = serializedObject.FindProperty(nameof(TurretRotationLimits.MinXRot));
+      MaxXRot = serializedObject.FindProperty(nameof(TurretRotationLimits.MaxXRot));
+      HasYLimits = serializedObject.FindProperty(nameof(TurretRotationLimits.HasYLimits));
+      MinYRot = serializedObject.FindProperty(nameof(TurretRotationLimits.MinYRot));
+      MaxYRot = serializedObject.FindProperty(nameof(TurretRotationLimits.MaxYRot));
     }
 
     public override void OnInspectorGUI()

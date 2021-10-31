@@ -3,7 +3,7 @@ using UnityEngine;
 namespace CwispyStudios.TankMania.Player
 {
   [CreateAssetMenu(menuName = "Player/Gun Rotation Limits")]
-  public class GunRotationLimits : ScriptableObject
+  public class TurretRotationLimits : ScriptableObject
   {
     [Header("X-Axis")]
     public bool HasXLimits = true;

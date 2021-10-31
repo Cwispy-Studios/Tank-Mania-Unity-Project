@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439b301aeaf6af44ea14bfccffc9ba60, type: 3}
   m_Name: Cannon Rotation Limits
   m_EditorClassIdentifier: 
-  HasXLimits: 0
-  MaxXRot: -13
-  MinXRot: -138
+  HasXLimits: 1
+  MaxXRot: 35
+  MinXRot: -35
   HasYLimits: 0
   MinYRot: -35
   MaxYRot: 35

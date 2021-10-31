@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 386224075295176177}
   - component: {fileID: 7862701277530602927}
   - component: {fileID: 3037372886803239300}
-  - component: {fileID: 4772118507899314258}
   m_Layer: 3
   m_Name: Player Camera
   m_TagString: MainCamera
@@ -100,15 +99,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseHeight: 1.7
   baseDistance: 3.5
-  verticalRotationLimitFromBaseValue: 30
+  rotationLimits: {fileID: 0}
   horizontalSensitivity: 0.01
   verticalSensitivity: 0.01
   rayDistance: 200
   lookingAtIgnoreLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  targetHorizontalRotationValue: {fileID: 0}
-  targetVerticalRotationValue: {fileID: 0}
+  targetHorizontalRotation: {fileID: 0}
+  targetVerticalRotation: {fileID: 0}
 --- !u!114 &3037372886803239300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,37 +140,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &4772118507899314258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 552336382994259157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: b9fb5d2a20ac9734c9fd87ef58564d60,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Camera Controls
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &2251480444717063352
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,6 +802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunCannon: {fileID: 8062888275378704935}
   turretRotation: {fileID: 11400000, guid: 025c2c61a5a7dcf409ed531ed46669b8, type: 2}
+  gunRotationLimits: {fileID: 0}
   cameraHorizontalRotation: {fileID: 0}
 --- !u!1 &8633598789061193728
 GameObject:
@@ -978,7 +947,6 @@ MonoBehaviour:
   firingInformation: {fileID: 11400000, guid: 645e9b639595e28428713ffcb49dba2e, type: 2}
   fireZone: {fileID: 8633598789061193743}
   baseDamage: {fileID: 11400000, guid: 5e11269a810fa334fae517722358b50d, type: 2}
-  upgradedUpgrades: {fileID: 11400000, guid: d0ba8a4d4ceb7a14cb05a25cb9d2b2d5, type: 2}
   fireCountdown: {fileID: 11400000, guid: 8ed270e16f28ea64eadb6c4f09afa477, type: 2}
   reloadCountdown: {fileID: 11400000, guid: 2637cf4943f36294e8192003d143e118, type: 2}
   currentAmmo: {fileID: 11400000, guid: bbb8c6d04424f0547a23ddd0dc6729a5, type: 2}

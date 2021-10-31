@@ -8,10 +8,9 @@ namespace CwispyStudios.TankMania.Player
     [Header("Base Tracking Values")]
     [SerializeField] private float baseHeight = 1.7f;
     [SerializeField] private float baseDistance = 3.5f;
-    //[SerializeField] private float baseRotation = 8f;
 
     [Header("Vertical Rotation Limits")]
-    [SerializeField] private GunRotationLimits rotationLimits;
+    [SerializeField] private TurretRotationLimits rotationLimits;
 
     [Header("Sensitivity")]
     [SerializeField, Range(0.001f, 0.05f)] private float horizontalSensitivity = 0.01f;
@@ -21,13 +20,15 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField, Range(50f, 1000f)] private float rayDistance = 200f;
 
     [Header("Layer mask")]
+    // Layer mask to ignore when finding object the crosshair is looking at
     [SerializeField] private LayerMask lookingAtIgnoreLayerMask;
 
     [Header("Variables")]
     [SerializeField] private FloatVariable targetHorizontalRotation;
     [SerializeField] private FloatVariable targetVerticalRotation;
 
-    private TankTurretController trackedTarget;
+    [Header("Tracked Target")]
+    [SerializeField] private Turret trackedTarget;
 
     private Camera playerCamera;
 
@@ -37,6 +38,8 @@ namespace CwispyStudios.TankMania.Player
     {
       playerCamera = Camera.main;
       centerScreenPoint = new Vector3(playerCamera.pixelWidth / 2f, playerCamera.pixelHeight / 2f, 0f);
+
+      if (trackedTarget != null) SetTrackingTarget(trackedTarget);
     }
 
     private void LateUpdate()
@@ -71,7 +74,6 @@ namespace CwispyStudios.TankMania.Player
         if (!rotationWithinLimits)
           targetVerticalRotation.Value = Mathf.Clamp(targetVerticalRotation.Value, rotationLimits.MinXRot, rotationLimits.MaxXRot);
       }
-
     }
 
     private void VerticalRotation()
@@ -102,11 +104,11 @@ namespace CwispyStudios.TankMania.Player
       targetVerticalRotation.Value = 0f;
     }
 
-    public void SetTrackingTarget( TankTurretController target, GunRotationLimits gunRotationLimits )
+    public void SetTrackingTarget( Turret target )
     {
       trackedTarget = target;
       targetHorizontalRotation.Value = MathHelper.ConvertToSignedAngle(target.transform.rotation.eulerAngles.y);
-      rotationLimits = gunRotationLimits;
+      rotationLimits = target.TurretRotationLimits;
 
       InitialiseCameraForNewTrackingTarget();
     }

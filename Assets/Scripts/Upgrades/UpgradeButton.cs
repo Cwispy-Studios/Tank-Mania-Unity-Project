@@ -16,7 +16,7 @@ namespace CwispyStudios.TankMania.Upgrades
     public Action OnNotHoverEvent;
     public Action<Upgrade> OnSelectEvent;
 
-    private void Awake()
+    public void Initialise()
     {
       imageComponent = GetComponent<Image>();
     }
