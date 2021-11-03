@@ -2,6 +2,7 @@ using System;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 using TMPro;
 
@@ -12,9 +13,15 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private TMP_Text slotName;
     [SerializeField] private TMP_Text turretName;
 
+    private Button button;
     private TurretSlot slot;
 
     public event Action<TurretSlot> OnClick;
+
+    private void Awake()
+    {
+      button = GetComponent<Button>();
+    }
 
     public void SetContent( TurretSlot turretSlot, Turret turretInSlot )
     {
@@ -26,7 +33,7 @@ namespace CwispyStudios.TankMania.Player
 
     public void OnPointerClick( PointerEventData eventData )
     {
-      OnClick?.Invoke(slot);
+      if (button.interactable) OnClick?.Invoke(slot);
     }
   }
 }

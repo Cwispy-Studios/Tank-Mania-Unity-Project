@@ -14,60 +14,39 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private TurretRotation turretRotation;
     [SerializeField] private TurretRotationLimits turretRotationLimits;
 
-    [Header("Camera Variables")]
-    [SerializeField] private FloatVariable cameraHorizontalRotation;
-
-    private CameraController playerCamera;
-
-    private float targetGunRotation;
-    private bool isPlayerControlled = true;
-
     public TurretRotationLimits TurretRotationLimits => turretRotationLimits;
 
-    private void Awake()
+    public void RotateTurretToValue( float cameraHorizontalRotation )
     {
-      playerCamera = Camera.main.GetComponent<CameraController>();
+      if (turret.transform.rotation.x == cameraHorizontalRotation) return;
 
-      // Move somewhere else
-      Cursor.lockState = CursorLockMode.Locked;
-      Cursor.visible = false;
-    }
-
-    private void Update()
-    {
-      if (isPlayerControlled)
-      {
-        RotateTurret();
-        RotateGun();
-      }
-    }
-
-    private void RotateTurret()
-    {
-      if (turret.transform.rotation.x == cameraHorizontalRotation.Value) return;
-
-      Quaternion to = Quaternion.Euler(0f, cameraHorizontalRotation.Value, 0f);
+      Quaternion to = Quaternion.Euler(0f, cameraHorizontalRotation, 0f);
       turret.transform.rotation = 
         Quaternion.RotateTowards(turret.transform.rotation, to, turretRotation.TurretRotationSpeed.Value * Time.deltaTime);
     }
 
-    private void RotateGun()
+    public void RotateGunToValue( float cameraVerticalRotation )
     {
-      Vector3 crossHairGunCannonDiff = playerCamera.GetCrosshairPosition() - gun.position;
-      targetGunRotation = Quaternion.LookRotation(crossHairGunCannonDiff).eulerAngles.x;
-      
-      if (gun.localRotation.x != targetGunRotation)
+      //Vector3 crossHairGunCannonDiff = playerCamera.GetCrosshairPosition() - gun.position;
+      //targetGunRotation = Quaternion.LookRotation(crossHairGunCannonDiff).eulerAngles.x;
+
+      if (gun.localRotation.eulerAngles.x != cameraVerticalRotation)
       {
-        Quaternion to = Quaternion.Euler(targetGunRotation, 0f, 0f);
-        gun.localRotation = 
+        Quaternion to = Quaternion.Euler(cameraVerticalRotation, 0f, 0f);
+        gun.localRotation =
           Quaternion.RotateTowards(gun.localRotation, to, turretRotation.GunRotationSpeed.Value * Time.deltaTime);
       }
     }
 
-    public void SetTurretRotationLimits( TurretRotationLimits turretRotationLimits )
+    public void AssignToSlot( TurretSlot slot )
     {
-      this.turretRotationLimits = turretRotationLimits;
-      isPlayerControlled = false;
+      transform.parent = slot.transform.parent;
+      transform.position = slot.transform.position;
+      transform.rotation = slot.transform.rotation;
+
+      turretRotationLimits = slot.RotationLimits;
+
+      gameObject.SetActive(true);
     }
   }
 }

@@ -6,6 +6,10 @@ namespace CwispyStudios.TankMania.Player
 {
   public class TurretsSlotsHandler : MonoBehaviour
   {
+    [Header("Components")]
+    [SerializeField] private PlayerTurretController playerTurretController;
+
+    [Header("References")]
     // Slots where turrets can be placed on the tank
     [SerializeField] private TurretSlot[] turretSlots;
     public IEnumerable<TurretSlot> ListOfTurretSlots => turretSlots;
@@ -15,7 +19,7 @@ namespace CwispyStudios.TankMania.Player
 
     // Unlocked turrets and which slots they are assigned to
     private Dictionary<Turret, TurretSlot> unlockedTurretsToSlots = new Dictionary<Turret, TurretSlot>();
-
+    // List of all unlocked turrets
     public IEnumerable<Turret> UnlockedTurrets => unlockedTurretsToSlots.Keys;
 
     public void UnlockRandomTurret()
@@ -46,7 +50,6 @@ namespace CwispyStudios.TankMania.Player
 
     public void AssignTurretToSlot( Turret turret, TurretSlot slot )
     {
-      // Disable the turret if it has been previously assigned
       if (IsTurretAssigned(turret))
       {
         
@@ -54,14 +57,15 @@ namespace CwispyStudios.TankMania.Player
 
       unlockedTurretsToSlots[turret] = slot;
 
-      turret.gameObject.SetActive(true);
-      turret.transform.parent = slot.transform.parent;
-      turret.transform.position = slot.transform.position;
-      turret.transform.rotation = slot.transform.rotation;
-      turret.SetTurretRotationLimits(slot.RotationLimits);
+      turret.AssignToSlot(slot);
     }
 
-    //private void 
+    public void UnassignTurret( Turret turret )
+    {
+      unlockedTurretsToSlots[turret] = null;
+
+      turret.gameObject.SetActive(false);
+    }
 
     public bool IsTurretAssigned( Turret turret )
     {

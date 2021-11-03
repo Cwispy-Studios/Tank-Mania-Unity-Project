@@ -27,9 +27,8 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private FloatVariable targetHorizontalRotation;
     [SerializeField] private FloatVariable targetVerticalRotation;
 
-    [Header("Tracked Target")]
-    [SerializeField] private Turret trackedTarget;
-
+    // Target turret that camera is controlling
+    private Turret trackedTarget;
     private Camera playerCamera;
 
     private Vector3 centerScreenPoint;
@@ -38,8 +37,6 @@ namespace CwispyStudios.TankMania.Player
     {
       playerCamera = Camera.main;
       centerScreenPoint = new Vector3(playerCamera.pixelWidth / 2f, playerCamera.pixelHeight / 2f, 0f);
-
-      if (trackedTarget != null) SetTrackingTarget(trackedTarget);
     }
 
     private void LateUpdate()
@@ -113,15 +110,15 @@ namespace CwispyStudios.TankMania.Player
       InitialiseCameraForNewTrackingTarget();
     }
 
-    public Vector3 GetCrosshairPosition()
-    {
-      Ray ray = playerCamera.ScreenPointToRay(centerScreenPoint);
+    //public Vector3 GetCrosshairPosition()
+    //{
+    //  Ray ray = playerCamera.ScreenPointToRay(centerScreenPoint);
 
-      if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, ~lookingAtIgnoreLayerMask, QueryTriggerInteraction.Ignore)) 
-        return hit.point;
-      else 
-        return ray.origin + ray.direction * rayDistance;
-    }
+    //  if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, ~lookingAtIgnoreLayerMask, QueryTriggerInteraction.Ignore)) 
+    //    return hit.point;
+    //  else 
+    //    return ray.origin + ray.direction * rayDistance;
+    //}
 
     ///////////////////////////
     // Input Actions callbacks

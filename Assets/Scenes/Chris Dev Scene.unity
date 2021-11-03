@@ -1731,7 +1731,6 @@ GameObject:
   - component: {fileID: 927277510}
   - component: {fileID: 927277513}
   - component: {fileID: 927277512}
-  - component: {fileID: 927277511}
   m_Layer: 5
   m_Name: Turrets Menu
   m_TagString: Untagged
@@ -1757,26 +1756,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -500, y: 439.8923}
+  m_AnchoredPosition: {x: -500, y: 440}
   m_SizeDelta: {x: 350, y: 500}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &927277511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 927277509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0afd9d8026a27d14491f9d13afa9d475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turretsSlotsHandler: {fileID: 1153093374058250065}
-  content: {fileID: 1478896584}
-  turretButtonPrefab: {fileID: 5485160258719460212, guid: e4921216a43caff419d07c941aa36e36,
-    type: 3}
-  gunSlotsMenu: {fileID: 1067567034}
 --- !u!114 &927277512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2123,7 +2105,6 @@ GameObject:
   - component: {fileID: 1067567033}
   - component: {fileID: 1067567036}
   - component: {fileID: 1067567035}
-  - component: {fileID: 1067567034}
   m_Layer: 5
   m_Name: Gun Slots Menu
   m_TagString: Untagged
@@ -2150,26 +2131,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -859.9999, y: 439.8923}
+  m_AnchoredPosition: {x: -860, y: 440}
   m_SizeDelta: {x: 350, y: 800}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1067567034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1067567032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 805e211f2d7e17a41b5c604893a0c826, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turretsSlots: {fileID: 1153093374058250065}
-  content: {fileID: 503391970}
-  slotButtonPrefab: {fileID: -5109666269000396001, guid: 96795a15f915afd4896a187833bc88c3,
-    type: 3}
-  turretsMenu: {fileID: 927277511}
 --- !u!114 &1067567035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2650,7 +2614,7 @@ RectTransform:
   m_Father: {fileID: 1990050294}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.00000005086266, y: 0}
   m_AnchorMax: {x: 0.96, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -3259,6 +3223,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1577064321}
+  - component: {fileID: 1577064323}
   - component: {fileID: 1577064322}
   m_Layer: 5
   m_Name: Gun Turrets Menu
@@ -3302,6 +3267,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeManager: {fileID: 11400000, guid: 4ccd6889f17cb6b4ea435619c13de490, type: 2}
   pauseOnEnable: 1
+--- !u!114 &1577064323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577064320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3154462da77e4e4d8cf16635b0a16e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turretsSlotsHandler: {fileID: 1153093374058250065}
+  turretsMenu: {fileID: 927277510}
+  gunSlotsContent: {fileID: 503391970}
+  turretsContent: {fileID: 1478896584}
+  slotButtonPrefab: {fileID: -5109666269000396001, guid: 96795a15f915afd4896a187833bc88c3,
+    type: 3}
+  turretButtonPrefab: {fileID: 5485160258719460212, guid: e4921216a43caff419d07c941aa36e36,
+    type: 3}
 --- !u!1 &1609651969
 GameObject:
   m_ObjectHideFlags: 0
@@ -3729,8 +3714,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1278837357}
   m_HandleRect: {fileID: 1278837356}
   m_Direction: 0
-  m_Value: -0.000002543138
-  m_Size: 0.9600001
+  m_Value: 0.0000012715658
+  m_Size: 0.96
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4126,8 +4111,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -30, y: 30}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 5, y: -5}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1890339508
 MonoBehaviour:
@@ -4205,7 +4190,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1cd06d125d1ec464e923d0fda3410514, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dfcc201f2cac247418588a8f8601299a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4746,6 +4731,23 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8633598789043070839}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1153093374058250064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153093374058250063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e4c314925341e4c80a2ffa3d8b5232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraHorizontalRotation: {fileID: 11400000, guid: f9900f18c84bf0f4da073d6ffa9a7aa1,
+    type: 2}
+  cameraVerticalRotation: {fileID: 11400000, guid: 40285e3ed4510474eb027ee5cde1b97d,
+    type: 2}
+  startingTurret: {fileID: 2083859690}
 --- !u!114 &1153093374058250065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4758,6 +4760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7c7ba22ff3794438206207de5a4a85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTurretController: {fileID: 1153093374058250064}
   turretSlots:
   - {fileID: 1030629104}
   - {fileID: 261113771}

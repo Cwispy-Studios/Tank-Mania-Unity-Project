@@ -5,7 +5,6 @@ namespace CwispyStudios.TankMania.Player
   using Combat;
   using Poolers;
   using Stats;
-  using Upgrades;
 
   public class GunController : MonoBehaviour
   {
@@ -125,13 +124,10 @@ namespace CwispyStudios.TankMania.Player
       previousAmmoCount = (int)firingInformation.AmmoCount.Value;
     }
 
-    ///////////////////////////
-    // Input Actions callbacks
-
-    private void OnMainFire()
+    public void QueueFiring()
     {
       // Queue firing which will be executed in update
-      if (fireCountdown.Value <= firingInformation.TimeToQueueFiring.Value) 
+      if (fireCountdown.Value <= firingInformation.TimeToQueueFiring.Value)
         firingIsQueued = true;
     }
   }
