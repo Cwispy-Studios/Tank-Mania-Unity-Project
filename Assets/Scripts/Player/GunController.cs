@@ -132,7 +132,7 @@ namespace CwispyStudios.TankMania.Player
     ///////////////////////////
     // Input Actions callbacks
 
-    private void OnMainFire()
+    public void OnMainFire()
     {
       // Queue firing which will be executed in update
       if (fireCountdown.Value <= firingInformation.TimeToQueueFiring.Value) 
