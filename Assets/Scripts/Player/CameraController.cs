@@ -9,9 +9,6 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private float baseHeight = 1.7f;
     [SerializeField] private float baseDistance = 3.5f;
 
-    [Header("Vertical Rotation Limits")]
-    [SerializeField] private TurretRotationLimits rotationLimits;
-
     [Header("Sensitivity")]
     [SerializeField, Range(0.001f, 0.05f)] private float horizontalSensitivity = 0.01f;
     [SerializeField, Range(0.01f, 0.5f)] private float verticalSensitivity = 0.1f;
@@ -28,9 +25,10 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private FloatVariable targetVerticalRotation;
 
     // Target turret that camera is controlling
-    private Turret trackedTarget;
+    private TurretHub trackedTarget;
     private Camera playerCamera;
 
+    private TurretRotationLimits rotationLimits;
     private Vector3 centerScreenPoint;
 
     private void Awake()
@@ -48,7 +46,6 @@ namespace CwispyStudios.TankMania.Player
     private void ProcessHorizontalInput( float horizontalInput )
     {
       targetHorizontalRotation.Value += horizontalInput * horizontalSensitivity;
-      targetHorizontalRotation.Value = MathHelper.ConvertToSignedAngle(targetHorizontalRotation.Value);
 
       if (rotationLimits.HasYLimits)
       {
@@ -62,7 +59,6 @@ namespace CwispyStudios.TankMania.Player
     private void ProcessVerticalInput( float verticalInput )
     {
       targetVerticalRotation.Value += -verticalInput * verticalSensitivity;
-      targetVerticalRotation.Value = MathHelper.ConvertToSignedAngle(targetVerticalRotation.Value);
 
       if (rotationLimits.HasXLimits)
       {
@@ -75,16 +71,14 @@ namespace CwispyStudios.TankMania.Player
 
     private void VerticalRotation()
     {
-      float signedEulerAngle = MathHelper.ConvertToSignedAngle(transform.rotation.eulerAngles.x);
-      float deltaRotation = targetVerticalRotation.Value - signedEulerAngle;
+      float deltaRotation = targetVerticalRotation.Value - transform.rotation.eulerAngles.x;
 
       transform.RotateAround(trackedTarget.transform.position, transform.right, deltaRotation);
     }
 
     private void HorizontalRotation()
     {
-      float signedEulerAngle = MathHelper.ConvertToSignedAngle(transform.rotation.eulerAngles.y);
-      float deltaRotation = targetHorizontalRotation.Value - signedEulerAngle;
+      float deltaRotation = targetHorizontalRotation.Value - transform.rotation.eulerAngles.y;
 
       transform.RotateAround(trackedTarget.transform.position, Vector3.up, deltaRotation);
     }
@@ -101,24 +95,24 @@ namespace CwispyStudios.TankMania.Player
       targetVerticalRotation.Value = 0f;
     }
 
-    public void SetTrackingTarget( Turret target )
+    public void SetTrackingTarget( TurretHub target )
     {
       trackedTarget = target;
-      targetHorizontalRotation.Value = MathHelper.ConvertToSignedAngle(target.transform.rotation.eulerAngles.y);
+      targetHorizontalRotation.Value = target.transform.rotation.eulerAngles.y;
       rotationLimits = target.TurretRotationLimits;
 
       InitialiseCameraForNewTrackingTarget();
     }
 
-    //public Vector3 GetCrosshairPosition()
-    //{
-    //  Ray ray = playerCamera.ScreenPointToRay(centerScreenPoint);
+    public Vector3 GetCrosshairPosition()
+    {
+      Ray ray = playerCamera.ScreenPointToRay(centerScreenPoint);
 
-    //  if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, ~lookingAtIgnoreLayerMask, QueryTriggerInteraction.Ignore)) 
-    //    return hit.point;
-    //  else 
-    //    return ray.origin + ray.direction * rayDistance;
-    //}
+      if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, ~lookingAtIgnoreLayerMask, QueryTriggerInteraction.Ignore))
+        return hit.point;
+      else
+        return ray.origin + ray.direction * rayDistance;
+    }
 
     ///////////////////////////
     // Input Actions callbacks

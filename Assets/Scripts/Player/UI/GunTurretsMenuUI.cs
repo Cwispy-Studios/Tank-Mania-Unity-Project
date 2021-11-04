@@ -44,7 +44,7 @@ namespace CwispyStudios.TankMania.Player
       }
 
       // Create turrets list
-      foreach (Turret turret in turretsSlotsHandler.UnlockedTurrets)
+      foreach (TurretHub turret in turretsSlotsHandler.UnlockedTurrets)
       {
         bool turretIsAssigned = turretsSlotsHandler.IsTurretAssigned(turret);
 
@@ -76,14 +76,14 @@ namespace CwispyStudios.TankMania.Player
       CreateUI();
     }
 
-    private void AssignTurretToSlot( Turret turret )
+    private void AssignTurretToSlot( TurretHub turret )
     {
       turretsSlotsHandler.AssignTurretToSlot(turret, selectedSlot);
 
       RefreshUI();
     }
 
-    private void UnassignTurret( Turret turret )
+    private void UnassignTurret( TurretHub turret )
     {
       turretsSlotsHandler.UnassignTurret(turret);
 

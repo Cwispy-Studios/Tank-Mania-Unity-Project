@@ -20,6 +20,8 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private FloatVariable reloadCountdown;
     [SerializeField] private IntVariable currentAmmo;
 
+    public Transform FireZone => fireZone;
+
     private ProjectilePooler projectilePooler;
     private VfxPooler vfxPooler;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CwispyStudios.TankMania.Player
 {
   [CustomEditor(typeof(TurretRotationLimits))]
-  public class GunRotationLimitsEditor : Editor
+  public class TurretRotationLimitsEditor : Editor
   {
     private SerializedProperty HasXLimits;
     private SerializedProperty MinXRot;
@@ -27,7 +27,7 @@ namespace CwispyStudios.TankMania.Player
     {
       serializedObject.Update();
 
-      EditorGUILayout.HelpBox("Min value can be greater than max value, range of limits: >=min && <=max.", MessageType.Info);
+      EditorGUILayout.HelpBox("Max range is 360 degrees. Range must pass through 0.", MessageType.Info);
 
       EditorGUILayout.PropertyField(HasXLimits);
 
@@ -35,8 +35,10 @@ namespace CwispyStudios.TankMania.Player
       {
         EditorGUI.indentLevel += 1;
 
-        MinXRot.floatValue = MathHelper.ConvertToSignedAngle(EditorGUILayout.IntSlider("Min rotation", (int)MinXRot.floatValue, -180, (int)MaxXRot.floatValue));
-        MaxXRot.floatValue = MathHelper.ConvertToSignedAngle(EditorGUILayout.IntSlider("Max rotation", (int)MaxXRot.floatValue, (int)MinXRot.floatValue, 180));
+        MinXRot.floatValue = EditorGUILayout.IntSlider("Min rotation", (int)MinXRot.floatValue,
+          Mathf.Max(-360, (int)MaxXRot.floatValue - 360), Mathf.Min(0, (int)MaxXRot.floatValue));
+        MaxXRot.floatValue = EditorGUILayout.IntSlider("Max rotation", (int)MaxXRot.floatValue, 
+          Mathf.Max(0, (int)MinXRot.floatValue), Mathf.Min((int)MinXRot.floatValue + 360, 360));
 
         EditorGUI.indentLevel -= 1;
       }
@@ -46,8 +48,12 @@ namespace CwispyStudios.TankMania.Player
       if (HasYLimits.boolValue)
       {
         EditorGUI.indentLevel += 1;
-        MinYRot.floatValue = MathHelper.ConvertToSignedAngle(EditorGUILayout.IntSlider("Min rotation", (int)MinYRot.floatValue, -180, (int)MaxYRot.floatValue));
-        MaxYRot.floatValue = MathHelper.ConvertToSignedAngle(EditorGUILayout.IntSlider("Max rotation", (int)MaxYRot.floatValue, (int)MinYRot.floatValue, 180));
+
+        MinYRot.floatValue = EditorGUILayout.IntSlider("Min rotation", (int)MinYRot.floatValue,
+          Mathf.Max(-360, (int)MaxYRot.floatValue - 360), Mathf.Min(0, (int)MaxYRot.floatValue));
+        MaxYRot.floatValue = EditorGUILayout.IntSlider("Max rotation", (int)MaxYRot.floatValue,
+          Mathf.Max(0, (int)MinYRot.floatValue), Mathf.Min((int)MinYRot.floatValue + 360, 360));
+
         EditorGUI.indentLevel -= 1;
       }
 
