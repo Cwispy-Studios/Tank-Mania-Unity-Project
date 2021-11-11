@@ -100,70 +100,95 @@ namespace CwispyStudios.TankMania.Player
 
     private float GetTurretAngleDifferenceFromTarget( Rigidbody target )
     {
+      // Find the angle the turret must rotate to face the target
+      // To do this, we must "rotate" the target around the turret until it is in line of sight of the fire zone direction
+      // Since the fire zone position and rotation may not be the same as the turret, we must perform additional calculations
+      // Solution taken from:
+      // https://gamedev.stackexchange.com/questions/147714/rotate-object-such-that-a-child-object-is-facing-a-target-3d
+
+      // Find the closest point from the turret to the fire direction ray
+      // https://stackoverflow.com/questions/51905268/how-to-find-closest-point-on-line
+      Vector3 turretPosition = turretHub.Turret.position;
+      Vector3 firePosition = gun.FireZone.position;
+      Vector3 fireDirectionEnd = firePosition + gun.FireZone.forward;
+
+      // Projected vector of offset direction of fire zone from turret onto fire direction
+      Vector3 projectedVector = Vector3.Project(turretPosition - firePosition, fireDirectionEnd - firePosition);
+      // Closest point from the turret to the fire direction
+      Vector3 closestPoint = firePosition + projectedVector;
+
+      // Pythogras theorem to get distance to expected position
+      float SqrMagToTarget = Vector3.SqrMagnitude(turretPosition - target.position);
+      float SqrMagToClosestPoint = Vector3.SqrMagnitude(turretPosition - closestPoint);
+      float distToExpectedPosition = Mathf.Sqrt(SqrMagToTarget - SqrMagToClosestPoint);
+
+      // Expected position is from the closest point moved forward by the fire direction 
+      Vector3 expectedPosition = closestPoint + Vector3.Normalize(gun.FireZone.forward) * distToExpectedPosition;
+
       // Local position of the target to the turret
       Vector3 targetLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(target.position);
       // Local position of where the projectile leaves the gun to the turret
-      Vector3 fireZoneLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(gun.FireZone.position);
+      Vector3 expectedLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(expectedPosition);
 
-      // If fire zone position is the same as the turret's position, use the local forward instead.
-      if (fireZoneLocalPositionFromTurret.x == 0f && fireZoneLocalPositionFromTurret.z == 0f)
-        fireZoneLocalPositionFromTurret = Vector3.forward;
-
-      // Get angle difference between the fire zone and the target RELATIVE TO THE TURRET
-      // Remove y-axis from both positions since we don't want to test that axis
-      Vector3 from = fireZoneLocalPositionFromTurret;
+      // Remove y-axis
+      Vector3 from = targetLocalPositionFromTurret;
       from.y = 0f;
-      Vector3 to = targetLocalPositionFromTurret;
+      Vector3 to = expectedLocalPositionFromTurret;
       to.y = 0f;
 
-      return Vector3.SignedAngle(from, to, Vector3.up);
+      // Since we are not using y-axis, axis just points downward locally
+      float angleBetween = Vector3.SignedAngle(from, to, Vector3.down);
+
+      return angleBetween;
     }
 
     private float GetGunAngleDifferenceFromTarget( Rigidbody target, float turretRotation )
     {
+      // What happens here is
+      // 1. I need to horizontally rotate the gun direction to face the target based on the turret's rotation
+      // 2. I need to correct the offset of the gun's fire zone to it's pivot point for the target's local position. This offset is also rotated.
+      // This offset is required because the gun's direction will be calculated from the gun's pivot zone rather than it's fire zone.
+      // 3. I find the angle between the rotated gun direction and the target's local position to the gun after correcting for offset.
+      
       // Local position of the target to the gun
       Vector3 targetLocalPositionFromGun = gun.transform.InverseTransformPoint(target.position);
-      // Local position of where the projectile leaves the gun to the gun
-      Vector3 fireZoneLocalPositionFromGun = gun.transform.InverseTransformPoint(gun.FireZone.position);
 
+      // Find the rotation vector to rotate the gun direction and offset, this is rotated by the hub's base rotation taken from the slot's rotation.
       Vector3 rotationAngles = transform.rotation * new Vector3(0f, turretRotation, 0f);
 
+      // World position of the gun's fire zone
       Vector3 fireZonePoint = gun.FireZone.position;
+      // World position of the gun's fire direction from the gun's pivot point
       Vector3 fireDirectionFromGun = gun.transform.position + gun.FireZone.forward;
 
-      Vector3 rotatedOffset = MathHelper.RotatePointAroundPivot(fireZonePoint, gun.transform.position, rotationAngles);
+      // World position of the gun's fire zone point horizontally rotated to face the target
+      Vector3 rotatedFireZonePoint = MathHelper.RotatePointAroundPivot(fireZonePoint, gun.transform.position, rotationAngles);
+      // World position of the gun's fire direction from the gun's pivot point horizontally rotated to face the target
       Vector3 rotatedFireDirectionFromGun = MathHelper.RotatePointAroundPivot(fireDirectionFromGun, gun.transform.position, rotationAngles);
 
-      Vector3 expectedOffsetFromGun = gun.transform.InverseTransformPoint(rotatedOffset);
+      // Offset between the fire zone and the gun's pivot point
+      Vector3 expectedOffsetFromGun = gun.transform.InverseTransformPoint(rotatedFireZonePoint);
+      // Gun's fire direction locally from the gun's pivot point
       Vector3 expectedFireDirectionFromGun = gun.transform.InverseTransformPoint(rotatedFireDirectionFromGun);
 
-      Vector3 targetPositionOffsetFromGun = targetLocalPositionFromGun + expectedOffsetFromGun;
+      // The target's local position from the gun corrected for offset
+      Vector3 targetPositionOffsetFromGun = targetLocalPositionFromGun/* - expectedOffsetFromGun*/;
+      //targetPositionOffsetFromGun.y -= expectedOffsetFromGun.y;
 
-      float correctAngle = Vector3.Angle(expectedFireDirectionFromGun, targetPositionOffsetFromGun);
+      //expectedFireDirectionFromGun.x = targetPositionOffsetFromGun.x;
+      //expectedFireDirectionFromGun.z = targetPositionOffsetFromGun.z;
 
-      Debug.Log($"{expectedOffsetFromGun} {expectedFireDirectionFromGun} {targetPositionOffsetFromGun} {correctAngle}");
+      Vector3 axisPointFromGun = gun.transform.position + gun.FireZone.right;
+      Vector3 rotatedAxis = MathHelper.RotatePointAroundPivot(axisPointFromGun, gun.transform.position, rotationAngles);
 
-      //Vector3 dir = gun.FireZone.forward - gun.transform.position;
-      //dir = Quaternion.Euler(0f, turretRotation, 0f) * dir;
-      //Vector3 point = gun.transform.position + dir;
+      // Calculate the angle between
+      float angle = Vector3.SignedAngle(expectedFireDirectionFromGun, targetPositionOffsetFromGun, rotatedAxis);
 
-      //Vector3 expectedFireZonePositionFromGun = gun.transform.InverseTransformPoint(point);
+      Debug.Log($"{expectedFireDirectionFromGun.ToString("F2")} {targetPositionOffsetFromGun.ToString("F2")} {expectedOffsetFromGun.ToString("F2")} {angle}");
 
-      // Get angle difference between the fire zone's height to the target's height
-      // This assumes turret is already facing the target, so x and z-axes will be the same as the target's
-      Vector3 from = targetLocalPositionFromGun;
-      from.y = fireZoneLocalPositionFromGun.y;
-      Vector3 to = targetLocalPositionFromGun;
 
-      float angle = Vector3.Angle(from, to);
-
-      if (to.y > from.y) angle *= -1f;
-
-      //Debug.Log($"{angle} {from} {expectedFireZonePositionFromGun} {to}");
 
       return angle;
-
-      //return Vector3.SignedAngle(from, to, axis);
     }
 
     private void SelectTarget()
@@ -189,7 +214,7 @@ namespace CwispyStudios.TankMania.Player
       {
         float horizontalAngleDifference = GetTurretAngleDifferenceFromTarget(selectedTarget);
         turretHub.RotateTurretByValue(horizontalAngleDifference);
-        turretHub.RotateGunByValue(GetGunAngleDifferenceFromTarget(selectedTarget, horizontalAngleDifference));
+        //turretHub.RotateGunByValue(GetGunAngleDifferenceFromTarget(selectedTarget, horizontalAngleDifference));
       }
     }
   }

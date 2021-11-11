@@ -24,6 +24,13 @@ namespace CwispyStudios.TankMania
       return signedAngle;
     }
 
+    /// <summary>
+    /// https://answers.unity.com/questions/532297/rotate-a-vector-around-a-certain-point.html
+    /// </summary>
+    /// <param name="point"></param>
+    /// <param name="pivot"></param>
+    /// <param name="angles"></param>
+    /// <returns></returns>
     public static Vector3 RotatePointAroundPivot( Vector3 point, Vector3 pivot, Vector3 angles )
     {
       Vector3 dir = point - pivot;

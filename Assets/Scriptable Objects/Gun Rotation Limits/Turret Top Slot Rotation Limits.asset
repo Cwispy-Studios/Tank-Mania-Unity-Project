@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Turret Top Slot Rotation Limits
   m_EditorClassIdentifier: 
   HasXLimits: 1
-  MaxXRot: 45
-  MinXRot: -45
+  MaxXRot: 35
+  MinXRot: -35
   HasYLimits: 0
   MinYRot: -222
   MaxYRot: 138
