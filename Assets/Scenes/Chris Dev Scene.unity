@@ -3209,7 +3209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1496578009}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46.188, y: 3.09, z: 26.683935}
+  m_LocalPosition: {x: 44.19, y: 3.09, z: 27.22}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5902,6 +5902,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: f9900f18c84bf0f4da073d6ffa9a7aa1,
         type: 2}
+    - target: {fileID: 8062888275378704935, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
       propertyPath: gun
