@@ -5914,6 +5914,17 @@ PrefabInstance:
       objectReference: {fileID: 4339861350434333942}
     - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
+      propertyPath: rotationLimits
+      value: 
+      objectReference: {fileID: 11400000, guid: 6bc6557f40d7d314ead9c13a32fda94d,
+        type: 2}
+    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: useLocalAngles
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454741730612689704, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
       propertyPath: gunRotationLimits
       value: 
       objectReference: {fileID: 11400000, guid: 6bc6557f40d7d314ead9c13a32fda94d,

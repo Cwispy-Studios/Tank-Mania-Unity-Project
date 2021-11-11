@@ -99,7 +99,7 @@ namespace CwispyStudios.TankMania.Player
     {
       trackedTarget = target;
       targetHorizontalRotation.Value = target.transform.rotation.eulerAngles.y;
-      rotationLimits = target.TurretRotationLimits;
+      rotationLimits = target.RotationLimits;
 
       InitialiseCameraForNewTrackingTarget();
     }

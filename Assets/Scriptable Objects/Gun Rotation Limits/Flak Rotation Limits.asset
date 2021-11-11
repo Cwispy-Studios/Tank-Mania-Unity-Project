@@ -15,6 +15,6 @@ MonoBehaviour:
   HasXLimits: 1
   MaxXRot: 30
   MinXRot: -30
-  HasYLimits: 1
+  HasYLimits: 0
   MinYRot: -210
   MaxYRot: 3

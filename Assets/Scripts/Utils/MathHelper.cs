@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace CwispyStudios.TankMania
 {
   public static class MathHelper
@@ -20,6 +22,15 @@ namespace CwispyStudios.TankMania
       else if (signedAngle < -180f) signedAngle += 360f;
 
       return signedAngle;
+    }
+
+    public static Vector3 RotatePointAroundPivot( Vector3 point, Vector3 pivot, Vector3 angles )
+    {
+      Vector3 dir = point - pivot;
+      dir = Quaternion.Euler(angles) * dir;
+      point = pivot + dir;
+
+      return point;
     }
   }
 }

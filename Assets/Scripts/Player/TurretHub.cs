@@ -12,39 +12,77 @@ namespace CwispyStudios.TankMania.Player
 
     [Header("Turret and Gun Rotation")]
     [SerializeField] private TurretRotation turretRotation;
-    [SerializeField] private TurretRotationLimits turretRotationLimits;
+    [SerializeField] private TurretRotationLimits rotationLimits;
+
+    [Header("Rotation Type")]
+    [SerializeField] private bool useLocalAngles = true;
+
+    private Vector3 turretEulerAngles;
+    private Vector3 gunEulerAngles;
 
     public Transform Turret => turret;
     public Transform Gun => gun;
-    public TurretRotationLimits TurretRotationLimits => turretRotationLimits;
+    public TurretRotationLimits RotationLimits => rotationLimits;
+
+    public float TurretRotationValue => turretEulerAngles.y;
+    public float GunRotationValue => gunEulerAngles.x;
+
+    private void OnEnable()
+    {
+      turretEulerAngles = useLocalAngles ? turret.localEulerAngles : turret.eulerAngles;
+      gunEulerAngles = useLocalAngles ? gun.localEulerAngles : gun.eulerAngles;
+    }
 
     public void RotateTurretToValue( float cameraHorizontalRotation )
     {
-      if (turret.transform.rotation.x == cameraHorizontalRotation) return;
+      turretEulerAngles.x = useLocalAngles ? turret.localEulerAngles.x : turret.eulerAngles.x;
+      turretEulerAngles.z = useLocalAngles ? turret.localEulerAngles.z : turret.eulerAngles.z;
+      turretEulerAngles.y = Mathf.MoveTowards(turretEulerAngles.y, cameraHorizontalRotation, turretRotation.TurretRotationSpeed.Value * Time.deltaTime);
 
-      Quaternion to = Quaternion.Euler(0f, cameraHorizontalRotation, 0f);
-      turret.transform.rotation = 
-        Quaternion.RotateTowards(turret.transform.rotation, to, turretRotation.TurretRotationSpeed.Value * Time.deltaTime);
+      if (useLocalAngles) turret.localEulerAngles = turretEulerAngles;
+      else turret.eulerAngles = turretEulerAngles;
     }
 
     public void RotateTurretByValue( float value )
     {
-      turret.Rotate(0f, value, 0f, Space.Self);
+      float maxDeltaRotation = turretRotation.TurretRotationSpeed.Value * Time.deltaTime;
+      float deltaRotation = Mathf.Clamp(value, -maxDeltaRotation, maxDeltaRotation);
+
+      turretEulerAngles.x = useLocalAngles ? turret.localEulerAngles.x : turret.eulerAngles.x;
+      turretEulerAngles.z = useLocalAngles ? turret.localEulerAngles.z : turret.eulerAngles.z;
+      turretEulerAngles.y += deltaRotation;
+
+      if (rotationLimits.HasYLimits) 
+        turretEulerAngles.y = Mathf.Clamp(turretEulerAngles.y, rotationLimits.MinYRot, rotationLimits.MaxYRot);
+
+      if (useLocalAngles) turret.localEulerAngles = turretEulerAngles;
+      else turret.eulerAngles = turretEulerAngles;
     }
 
     public void RotateGunToValue( float cameraVerticalRotation )
     {
-      if (gun.localRotation.eulerAngles.x != cameraVerticalRotation)
-      {
-        Quaternion to = Quaternion.Euler(cameraVerticalRotation, 0f, 0f);
-        gun.localRotation =
-          Quaternion.RotateTowards(gun.localRotation, to, turretRotation.GunRotationSpeed.Value * Time.deltaTime);
-      }
+      gunEulerAngles.y = useLocalAngles ? gun.localEulerAngles.y : gun.eulerAngles.y;
+      gunEulerAngles.z = useLocalAngles ? gun.localEulerAngles.z : gun.eulerAngles.z;
+      gunEulerAngles.x = Mathf.MoveTowards(gunEulerAngles.x, cameraVerticalRotation, turretRotation.GunRotationSpeed.Value * Time.deltaTime);
+
+      if (useLocalAngles) gun.localEulerAngles = gunEulerAngles;
+      else gun.eulerAngles = gunEulerAngles;
     }
 
     public void RotateGunByValue( float value )
     {
-      gun.Rotate(value, 0f, 0f, Space.Self);
+      float maxDeltaRotation = turretRotation.GunRotationSpeed.Value * Time.deltaTime;
+      float deltaRotation = Mathf.Clamp(value, -maxDeltaRotation, maxDeltaRotation);
+
+      gunEulerAngles.y = useLocalAngles ? gun.localEulerAngles.y : gun.eulerAngles.y;
+      gunEulerAngles.z = useLocalAngles ? gun.localEulerAngles.z : gun.eulerAngles.z;
+      gunEulerAngles.x += deltaRotation;
+
+      if (rotationLimits.HasXLimits)
+        gunEulerAngles.x = Mathf.Clamp(gunEulerAngles.x, rotationLimits.MinXRot, rotationLimits.MaxXRot);
+
+      if (useLocalAngles) gun.localEulerAngles = gunEulerAngles;
+      else gun.eulerAngles = gunEulerAngles;
     }
 
     public void AssignToSlot( TurretSlot slot )
@@ -53,7 +91,7 @@ namespace CwispyStudios.TankMania.Player
       transform.position = slot.transform.position;
       transform.rotation = slot.transform.rotation;
 
-      turretRotationLimits = slot.RotationLimits;
+      rotationLimits = slot.RotationLimits;
 
       gameObject.SetActive(true);
     }

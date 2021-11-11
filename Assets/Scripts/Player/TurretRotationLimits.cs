@@ -7,12 +7,22 @@ namespace CwispyStudios.TankMania.Player
   {
     [Header("X-Axis")]
     public bool HasXLimits = true;
-    [Range(-180f, 180f)] public float MaxXRot;
-    [Range(-180f, 180f)] public float MinXRot;
+    public float MaxXRot;
+    public float MinXRot;
 
     [Header("Y-Axis")]
     public bool HasYLimits = true;
-    [Range(180f, 180f)] public float MinYRot;
-    [Range(180f, 180f)] public float MaxYRot;
+    public float MinYRot;
+    public float MaxYRot;
+
+    //public float ConvertAngleToWithinXRotationLimits( float angle )
+    //{
+
+    //}
+
+    //private float ConvertAngleToWithinRotationLimits( float angle )
+    //{
+
+    //}
   }
 }
