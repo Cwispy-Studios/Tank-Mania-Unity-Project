@@ -65,16 +65,9 @@ namespace CwispyStudios.TankMania.Player
 
     private bool CheckTargetIsWithinRotationLimits( Rigidbody target )
     {
-      return CheckTargetIsWithinRotationLimits(target, out float y, out float x);
-    }
-
-    private bool CheckTargetIsWithinRotationLimits( Rigidbody target, out float horizontalAngleDifference, out float verticleAngleDifference )
-    {
       bool targetIsInRotationLimit = true;
 
-      verticleAngleDifference = 0f;
-
-      horizontalAngleDifference = GetTurretAngleDifferenceFromTarget(target);
+      float horizontalAngleDifference = GetTurretAngleDifferenceFromTarget(target);
 
       // Check if turret can rotate horizontally (y-axis) to face the target
       if (turretHub.RotationLimits.HasYLimits)
