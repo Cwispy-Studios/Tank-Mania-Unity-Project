@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FiringForce
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 20
+  baseValue: 100

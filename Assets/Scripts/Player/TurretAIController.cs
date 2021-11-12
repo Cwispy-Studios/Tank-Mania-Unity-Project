@@ -216,7 +216,7 @@ namespace CwispyStudios.TankMania.Player
 
     private void FireAtTarget()
     {
-      //gun.QueueFiring();
+      gun.QueueFiring();
     }
   }
 }

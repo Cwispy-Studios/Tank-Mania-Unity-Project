@@ -25,8 +25,9 @@ MonoBehaviour:
   - TimeToQueueFiring
   - AmmoCount
   nameOfStatsFolder: Flak Firing Information
-  ProjectilePrefab: {fileID: 0}
-  FiringVfx: {fileID: 0}
+  ProjectilePrefab: {fileID: 7051859430511138134, guid: f3148d2d3465792408ba261f1db92fc6,
+    type: 3}
+  FiringVfx: {fileID: 2051231272, guid: cb4917dcdcb9ee848bf1a0474e66b7f3, type: 3}
   FiringForce: {fileID: 11400000, guid: 783e33b8cec3ef441ba63e46fd434c70, type: 2}
   FireRate: {fileID: 11400000, guid: d8c93a663e922b14b82f10dced6a3c70, type: 2}
   ReloadSpeed: {fileID: 11400000, guid: 4f46cbfc6d532784ca4cab3f07bd2cfe, type: 2}
