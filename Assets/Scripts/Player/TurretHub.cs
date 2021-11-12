@@ -43,7 +43,7 @@ namespace CwispyStudios.TankMania.Player
       else turret.eulerAngles = turretEulerAngles;
     }
 
-    public void RotateTurretByValue( float value )
+    public float RotateTurretByValue( float value )
     {
       float maxDeltaRotation = turretRotation.TurretRotationSpeed.Value * Time.deltaTime;
       float deltaRotation = Mathf.Clamp(value, -maxDeltaRotation, maxDeltaRotation);
@@ -57,6 +57,8 @@ namespace CwispyStudios.TankMania.Player
 
       if (useLocalAngles) turret.localEulerAngles = turretEulerAngles;
       else turret.eulerAngles = turretEulerAngles;
+
+      return deltaRotation;
     }
 
     public void RotateGunToValue( float cameraVerticalRotation )
@@ -69,7 +71,7 @@ namespace CwispyStudios.TankMania.Player
       else gun.eulerAngles = gunEulerAngles;
     }
 
-    public void RotateGunByValue( float value )
+    public float RotateGunByValue( float value )
     {
       float maxDeltaRotation = turretRotation.GunRotationSpeed.Value * Time.deltaTime;
       float deltaRotation = Mathf.Clamp(value, -maxDeltaRotation, maxDeltaRotation);
@@ -83,6 +85,8 @@ namespace CwispyStudios.TankMania.Player
 
       if (useLocalAngles) gun.localEulerAngles = gunEulerAngles;
       else gun.eulerAngles = gunEulerAngles;
+
+      return deltaRotation;
     }
 
     public void AssignToSlot( TurretSlot slot )
@@ -92,6 +96,9 @@ namespace CwispyStudios.TankMania.Player
       transform.rotation = slot.transform.rotation;
 
       rotationLimits = slot.RotationLimits;
+
+      turret.localRotation = Quaternion.identity;
+      gun.localRotation = Quaternion.identity;
 
       gameObject.SetActive(true);
     }

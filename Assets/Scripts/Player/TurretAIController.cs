@@ -65,9 +65,15 @@ namespace CwispyStudios.TankMania.Player
 
     private bool CheckTargetIsWithinRotationLimits( Rigidbody target )
     {
+      return CheckTargetIsWithinRotationLimits(target, out _, out _);
+    }
+
+    private bool CheckTargetIsWithinRotationLimits( Rigidbody target, out float horizontalAngleDifference, out float verticalAngleDifference )
+    {
       bool targetIsInRotationLimit = true;
 
-      float horizontalAngleDifference = GetTurretAngleDifferenceFromTarget(target);
+      horizontalAngleDifference = GetTurretAngleDifferenceFromTarget(target);
+      verticalAngleDifference = 0f;
 
       // Check if turret can rotate horizontally (y-axis) to face the target
       if (turretHub.RotationLimits.HasYLimits)
@@ -81,7 +87,7 @@ namespace CwispyStudios.TankMania.Player
       // Check if gun can rotate vertically (x-axis) to face the target
       if (targetIsInRotationLimit && turretHub.RotationLimits.HasXLimits)
       {
-        float verticalAngleDifference = GetGunAngleDifferenceFromTarget(target, horizontalAngleDifference);
+        verticalAngleDifference = GetGunAngleDifferenceFromTarget(target, horizontalAngleDifference);
 
         // Check if turret can rotate by this much
         float targetAngle = turretHub.GunRotationValue + verticalAngleDifference;
@@ -195,13 +201,22 @@ namespace CwispyStudios.TankMania.Player
 
     private void AimAtTarget()
     {
-      if (CheckTargetIsWithinRotationLimits(selectedTarget))
+      if (CheckTargetIsWithinRotationLimits(selectedTarget, out float horizontalRotation, out float verticalRotation))
       {
-        float horizontalRotation = GetTurretAngleDifferenceFromTarget(selectedTarget);
-        turretHub.RotateTurretByValue(horizontalRotation);
-        float verticalRotation = GetGunAngleDifferenceFromTarget(selectedTarget, horizontalRotation);
-        turretHub.RotateGunByValue(verticalRotation);
+        float horizontalRotationAmount = turretHub.RotateTurretByValue(horizontalRotation);
+        float verticalRotationAmount = turretHub.RotateGunByValue(verticalRotation);
+
+        // If horizontal and vertical rotation are lower than the rotation amount, turret can shoot at target
+        if (horizontalRotation <= horizontalRotationAmount && verticalRotation <= verticalRotationAmount)
+        {
+          FireAtTarget();
+        }
       }
+    }
+
+    private void FireAtTarget()
+    {
+      //gun.QueueFiring();
     }
   }
 }
