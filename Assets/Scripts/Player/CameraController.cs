@@ -54,11 +54,6 @@ namespace CwispyStudios.TankMania.Player
         if (!rotationWithinLimits)
           targetHorizontalRotation.Value = Mathf.Clamp(targetHorizontalRotation.Value, rotationLimits.MinYRot, rotationLimits.MaxYRot);
       }
-
-      else
-      {
-        targetHorizontalRotation.Value = MathHelper.ConvertToSignedAngle(targetHorizontalRotation.Value);
-      }
     }
 
     private void ProcessVerticalInput( float verticalInput )
@@ -71,11 +66,6 @@ namespace CwispyStudios.TankMania.Player
 
         if (!rotationWithinLimits)
           targetVerticalRotation.Value = Mathf.Clamp(targetVerticalRotation.Value, rotationLimits.MinXRot, rotationLimits.MaxXRot);
-      }
-
-      else
-      {
-        targetVerticalRotation.Value = MathHelper.ConvertToSignedAngle(targetVerticalRotation.Value);
       }
     }
 

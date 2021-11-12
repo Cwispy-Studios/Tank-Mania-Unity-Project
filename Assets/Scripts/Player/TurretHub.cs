@@ -37,7 +37,7 @@ namespace CwispyStudios.TankMania.Player
     {
       turretEulerAngles.x = useLocalAngles ? turret.localEulerAngles.x : turret.eulerAngles.x;
       turretEulerAngles.z = useLocalAngles ? turret.localEulerAngles.z : turret.eulerAngles.z;
-      turretEulerAngles.y = Mathf.MoveTowards(turretEulerAngles.y, cameraHorizontalRotation, turretRotation.TurretRotationSpeed.Value * Time.deltaTime);
+      turretEulerAngles.y = Mathf.MoveTowardsAngle(turretEulerAngles.y, cameraHorizontalRotation, turretRotation.TurretRotationSpeed.Value * Time.deltaTime);
 
       if (useLocalAngles) turret.localEulerAngles = turretEulerAngles;
       else turret.eulerAngles = turretEulerAngles;
@@ -65,7 +65,7 @@ namespace CwispyStudios.TankMania.Player
     {
       gunEulerAngles.y = useLocalAngles ? gun.localEulerAngles.y : gun.eulerAngles.y;
       gunEulerAngles.z = useLocalAngles ? gun.localEulerAngles.z : gun.eulerAngles.z;
-      gunEulerAngles.x = Mathf.MoveTowards(gunEulerAngles.x, cameraVerticalRotation, turretRotation.GunRotationSpeed.Value * Time.deltaTime);
+      gunEulerAngles.x = Mathf.MoveTowardsAngle(gunEulerAngles.x, cameraVerticalRotation, turretRotation.GunRotationSpeed.Value * Time.deltaTime);
 
       if (useLocalAngles) gun.localEulerAngles = gunEulerAngles;
       else gun.eulerAngles = gunEulerAngles;
