@@ -82,7 +82,7 @@ namespace CwispyStudios.TankMania.Combat
     {
       // Reenables physics
       PhysicsController.isKinematic = false;
-      PhysicsController.collisionDetectionMode = CollisionDetectionMode.Continuous;
+      PhysicsController.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
       PhysicsController.velocity = Vector3.zero;
       PhysicsController.detectCollisions = true;
 

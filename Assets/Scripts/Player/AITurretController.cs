@@ -6,7 +6,7 @@ namespace CwispyStudios.TankMania.Player
 {
   using Combat;
 
-  public class TurretAIController : MonoBehaviour
+  public class AITurretController : MonoBehaviour
   {
     private static float s_targetRefreshInterval = 0.5f;
 
@@ -207,16 +207,15 @@ namespace CwispyStudios.TankMania.Player
         float verticalRotationAmount = turretHub.RotateGunByValue(verticalRotation);
 
         // If horizontal and vertical rotation are lower than the rotation amount, turret can shoot at target
-        if (horizontalRotation <= horizontalRotationAmount && verticalRotation <= verticalRotationAmount)
+        bool turretIsFacingTarget = 
+          Mathf.Abs(horizontalRotation) <= Mathf.Abs(horizontalRotationAmount) && 
+          Mathf.Abs(verticalRotation) <= Mathf.Abs(verticalRotationAmount);
+
+        if (turretIsFacingTarget)
         {
-          FireAtTarget();
+          gun.YouMayFireIfReady();
         }
       }
-    }
-
-    private void FireAtTarget()
-    {
-      gun.QueueFiring();
     }
   }
 }

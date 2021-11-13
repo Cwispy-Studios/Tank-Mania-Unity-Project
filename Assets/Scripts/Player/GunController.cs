@@ -25,6 +25,8 @@ namespace CwispyStudios.TankMania.Player
     private ProjectilePooler projectilePooler;
     private VfxPooler vfxPooler;
 
+    private bool CanFire => fireCountdown.Value <= 0f && currentAmmo.Value > 0;
+
     private bool firingIsQueued = false;
     private int previousAmmoCount;
 
@@ -55,8 +57,7 @@ namespace CwispyStudios.TankMania.Player
       UpdateReloadCooldown();
 
       // Check if ready to fire and player has fired
-      if (firingIsQueued && fireCountdown.Value <= 0f && currentAmmo.Value > 0) 
-        FireProjectile();
+      if (CanFire && firingIsQueued) FireProjectile();
     }
 
     private void UpdateFiringCooldown()
@@ -124,6 +125,11 @@ namespace CwispyStudios.TankMania.Player
       }
 
       previousAmmoCount = (int)firingInformation.AmmoCount.Value;
+    }
+
+    public void YouMayFireIfReady()
+    {
+      if (CanFire) QueueFiring();
     }
 
     public void QueueFiring()
