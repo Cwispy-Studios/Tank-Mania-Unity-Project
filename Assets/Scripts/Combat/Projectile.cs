@@ -10,6 +10,11 @@ namespace CwispyStudios.TankMania.Combat
     // Particle system/vfx to play when projectile impacts
     [SerializeField] private CFX_AutoDestructShuriken explosionVfx = null;
 
+    [Header("Custom Gravity")]
+    [SerializeField] private bool usesCustomGravity = false;
+    [SerializeField, Range(0, -100f), Tooltip("Default gravity is -9.81")] 
+    private float customGravityValue;
+
     // Used to turn the projectile invisible while leaving its vfx running
     private MeshRenderer meshRenderer;
     // Prevents OnEnable from running when being instantiated
@@ -31,6 +36,8 @@ namespace CwispyStudios.TankMania.Combat
       disableOnEnabled = true;
 
       explosionVfx.OnDeactivate += Deactivate;
+
+      if (usesCustomGravity) PhysicsController.useGravity = false;
     }
 
     private void OnEnable()
@@ -38,6 +45,11 @@ namespace CwispyStudios.TankMania.Combat
       if (disableOnEnabled) { disableOnEnabled = false; return; }
 
       BulletEvents.BulletFired(this);
+    }
+
+    private void FixedUpdate()
+    {
+      if (usesCustomGravity) PhysicsController.AddForce(0f, customGravityValue, 0f, ForceMode.Acceleration);
     }
 
     private void Update()
