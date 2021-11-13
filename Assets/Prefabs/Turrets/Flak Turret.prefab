@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21e9961f68ebb75449953051eb0515f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aiTurretStats: {fileID: 11400000, guid: e90a7959dd77a1c4b9c53eba2091842d, type: 2}
 --- !u!1 &5185428224408360254
 GameObject:
   m_ObjectHideFlags: 0

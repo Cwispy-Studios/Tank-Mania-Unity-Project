@@ -5,13 +5,17 @@ using UnityEngine;
 namespace CwispyStudios.TankMania.Player
 {
   using Combat;
+  using Stats;
 
   public class AITurretController : MonoBehaviour
   {
+    [SerializeField] private AITurretStats aiTurretStats;
+
     private static float s_targetRefreshInterval = 0.5f;
 
     private List<Rigidbody> targetsInRotationLimit = new List<Rigidbody>();
 
+    private SphereCollider sphereCollider;
     private TargetFinder targetFinder;
     private TurretHub turretHub;
     private GunController gun;
@@ -19,15 +23,19 @@ namespace CwispyStudios.TankMania.Player
 
     private Rigidbody selectedTarget = null;
 
-    private bool isActive = true;
+    //private bool isActive = true;
     private float targetRefreshTimer = 0f;
 
     private void Awake()
     {
+      sphereCollider = GetComponent<SphereCollider>();
       targetFinder = GetComponent<TargetFinder>();
       turretHub = GetComponentInChildren<TurretHub>();
       gun = GetComponentInChildren<GunController>();
       fireZone = gun.FireZone;
+
+      aiTurretStats.DetectionRange.OnStatUpgrade += AdjustDetectionSphereRadius;
+      AdjustDetectionSphereRadius();
     }
 
     private void Update()
@@ -57,29 +65,37 @@ namespace CwispyStudios.TankMania.Player
       {
         Rigidbody target = targetsInRange[i];
 
-        bool targetIsInRotationLimit = CheckTargetIsWithinRotationLimits(target);
+        bool targetIsInRotationLimit = CheckTargetCanBeHit(target);
 
         if (targetIsInRotationLimit) targetsInRotationLimit.Add(target);
       }
     }
 
-    private bool CheckTargetIsWithinRotationLimits( Rigidbody target )
+    private bool CheckTargetCanBeHit( Rigidbody target )
     {
-      return CheckTargetIsWithinRotationLimits(target, out _, out _);
+      return CheckTargetCanBeHit(target, out _, out _);
     }
 
-    private bool CheckTargetIsWithinRotationLimits( Rigidbody target, out float horizontalAngleDifference, out float verticalAngleDifference )
+    private bool CheckTargetCanBeHit( Rigidbody target, out float horizontalAngleDistance, out float verticalAngleDistance )
     {
+      horizontalAngleDistance = 0f;
+      verticalAngleDistance = 0f;
+
+      float minDetectionRange = aiTurretStats.MinDetectionRange.Value;
+
+      // First check if target is too close to the turret
+      if (minDetectionRange > 0f && Vector3.SqrMagnitude(target.position - transform.position) <= minDetectionRange * minDetectionRange) 
+        return false;
+
       bool targetIsInRotationLimit = true;
 
-      horizontalAngleDifference = GetTurretAngleDifferenceFromTarget(target);
-      verticalAngleDifference = 0f;
+      horizontalAngleDistance = GetTurretAngleDifferenceFromTarget(target);
 
       // Check if turret can rotate horizontally (y-axis) to face the target
       if (turretHub.RotationLimits.HasYLimits)
       { 
         // Check if turret can rotate by this much
-        float targetAngle = turretHub.TurretRotationValue + horizontalAngleDifference;
+        float targetAngle = turretHub.TurretRotationValue + horizontalAngleDistance;
 
         targetIsInRotationLimit = targetAngle >= turretHub.RotationLimits.MinYRot && targetAngle <= turretHub.RotationLimits.MaxYRot;
       }
@@ -87,10 +103,10 @@ namespace CwispyStudios.TankMania.Player
       // Check if gun can rotate vertically (x-axis) to face the target
       if (targetIsInRotationLimit && turretHub.RotationLimits.HasXLimits)
       {
-        verticalAngleDifference = GetGunAngleDifferenceFromTarget(target, horizontalAngleDifference);
+        verticalAngleDistance = GetGunAngleDifferenceFromTarget(target, horizontalAngleDistance);
 
         // Check if turret can rotate by this much
-        float targetAngle = turretHub.GunRotationValue + verticalAngleDifference;
+        float targetAngle = turretHub.GunRotationValue + verticalAngleDistance;
         targetIsInRotationLimit = targetAngle >= turretHub.RotationLimits.MinXRot && targetAngle <= turretHub.RotationLimits.MaxXRot;
       }
 
@@ -138,9 +154,9 @@ namespace CwispyStudios.TankMania.Player
       to.y = 0f;
 
       // Since we are not using y-axis, axis just points downward locally
-      float angleBetween = Vector3.SignedAngle(from, to, Vector3.down);
+      float angularDistance = Vector3.SignedAngle(from, to, Vector3.down);
 
-      return angleBetween;
+      return angularDistance;
     }
 
     private float GetGunAngleDifferenceFromTarget( Rigidbody target, float turretRotation )
@@ -177,9 +193,9 @@ namespace CwispyStudios.TankMania.Player
       Vector3 expectedLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(expectedTargetPosition);
 
       // Since we are not using x-axis, axis just points leftwards locally
-      float angleBetween = Vector3.SignedAngle(targetLocalPositionFromTurret, expectedLocalPositionFromTurret, Vector3.left);
+      float angularDistance = Vector3.SignedAngle(targetLocalPositionFromTurret, expectedLocalPositionFromTurret, Vector3.left);
 
-      return angleBetween;
+      return angularDistance;
     }
 
     private void SelectTarget()
@@ -201,21 +217,32 @@ namespace CwispyStudios.TankMania.Player
 
     private void AimAtTarget()
     {
-      if (CheckTargetIsWithinRotationLimits(selectedTarget, out float horizontalRotation, out float verticalRotation))
+      if (CheckTargetCanBeHit(selectedTarget, out float horizontalAngularDistance, out float verticalAngularDistance))
       {
-        float horizontalRotationAmount = turretHub.RotateTurretByValue(horizontalRotation);
-        float verticalRotationAmount = turretHub.RotateGunByValue(verticalRotation);
+        float horizontalRotationAmount = turretHub.RotateTurretByValue(horizontalAngularDistance);
+        float verticalRotationAmount = turretHub.RotateGunByValue(verticalAngularDistance);
 
-        // If horizontal and vertical rotation are lower than the rotation amount, turret can shoot at target
-        bool turretIsFacingTarget = 
-          Mathf.Abs(horizontalRotation) <= Mathf.Abs(horizontalRotationAmount) && 
-          Mathf.Abs(verticalRotation) <= Mathf.Abs(verticalRotationAmount);
+        // Since turret has already moved by the amount above, we want to find how much more it has left to rotate before it faces its target
+        float remainingHorizontalAngularDistance = 
+          Mathf.Abs(horizontalAngularDistance) - Mathf.Abs(horizontalRotationAmount);
+
+        float remainingVerticalAngularDistance =
+          Mathf.Abs(verticalAngularDistance) - Mathf.Abs(verticalRotationAmount);
+
+        // If remaining horizontal and vertical angular distances are lower than the imprecision amount, turret can shoot at target
+        bool turretIsFacingTarget = remainingHorizontalAngularDistance <= aiTurretStats.Imprecision.Value &&
+          remainingVerticalAngularDistance <= aiTurretStats.Imprecision.Value;
 
         if (turretIsFacingTarget)
         {
           gun.YouMayFireIfReady();
         }
       }
+    }
+
+    private void AdjustDetectionSphereRadius()
+    {
+      sphereCollider.radius = aiTurretStats.DetectionRange.Value;
     }
   }
 }
