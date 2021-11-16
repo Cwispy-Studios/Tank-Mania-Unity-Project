@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: TriggerRadius
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 3
+  baseValue: 4

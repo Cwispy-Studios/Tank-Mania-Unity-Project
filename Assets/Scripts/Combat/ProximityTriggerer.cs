@@ -5,14 +5,11 @@ namespace CwispyStudios.TankMania.Combat
 {
   using Stats;
 
-  public class ProximityTrigger : MonoBehaviour
+  public class ProximityTriggerer : Triggerer<ProximityTriggerStats>
   {
     [Header("Proximity Values")]
     [SerializeField] private LayerMask layersToCheck;
-    [SerializeField] private ProximityTriggerStats proximityTriggerStats;
     [SerializeField, Range(0f, 5f)] private float checkingInterval = 0.5f;
-
-    [SerializeField] public UnityEvent OnTriggerEvent;
 
     // Cache the results of overlapsphere
     private Collider[] results;
@@ -21,7 +18,7 @@ namespace CwispyStudios.TankMania.Combat
     private void Awake()
     {
       BuildArray();
-      proximityTriggerStats.NumberToTrigger.OnStatUpgrade += BuildArray;
+      TriggerStats.NumberToTrigger.OnStatUpgrade += BuildArray;
     }
 
     private void Update()
@@ -33,27 +30,19 @@ namespace CwispyStudios.TankMania.Combat
     private void CheckForObjects()
     {
       int numberColliders = Physics.OverlapSphereNonAlloc(
-        transform.position, proximityTriggerStats.TriggerRadius.Value, results, layersToCheck, QueryTriggerInteraction.Ignore);
+        transform.position, TriggerStats.TriggerRadius.Value, results, layersToCheck, QueryTriggerInteraction.Ignore);
 
-      if (numberColliders >= proximityTriggerStats.NumberToTrigger.IntValue)
+      if (numberColliders >= TriggerStats.NumberToTrigger.IntValue)
       {
-        float delay = proximityTriggerStats.TriggerDelay.Value;
-
-        if (delay > 0f) Invoke("Trigger", proximityTriggerStats.TriggerDelay.Value);
-        else Trigger();
+        CommenceTrigger();
       }
 
       checkingCountdown = checkingInterval;
     }
 
-    private void Trigger()
-    {
-      OnTriggerEvent?.Invoke();
-    }
-
     private void BuildArray()
     {
-      results = new Collider[proximityTriggerStats.NumberToTrigger.IntValue];
+      results = new Collider[TriggerStats.NumberToTrigger.IntValue];
     }
   }
 }

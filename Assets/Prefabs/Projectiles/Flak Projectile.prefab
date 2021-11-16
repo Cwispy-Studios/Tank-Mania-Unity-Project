@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7030726712476480238}
   - component: {fileID: 7051859430511138134}
   - component: {fileID: 4685843817965642556}
+  - component: {fileID: -3237600328331388279}
   m_Layer: 6
   m_Name: Flak Projectile
   m_TagString: Untagged
@@ -145,12 +146,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bd71ad8e8e7d8242b56987e6ae6d7e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TriggerStats: {fileID: 11400000, guid: 29a69336adaf3bb4a973acdc26125fd2, type: 2}
+  OnTriggerEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7051859430511138134}
+        m_TargetAssemblyTypeName: CwispyStudios.TankMania.Combat.Projectile, Assembly-CSharp
+        m_MethodName: ProjectileTrigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   layersToCheck:
     serializedVersion: 2
     m_Bits: 256
-  proximityTriggerStats: {fileID: 11400000, guid: 29a69336adaf3bb4a973acdc26125fd2,
-    type: 2}
   checkingInterval: 0.1
+--- !u!114 &-3237600328331388279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531798127843113828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d2cbcec749c3c44845bc66d6119bac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerStats: {fileID: 11400000, guid: a85328a4a0e7da94bbd514faaee7852a, type: 2}
   OnTriggerEvent:
     m_PersistentCalls:
       m_Calls:

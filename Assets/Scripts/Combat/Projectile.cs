@@ -107,7 +107,7 @@ namespace CwispyStudios.TankMania.Combat
     /// Does direct damage to a single target
     /// </summary>
     /// <param name="objectToDamage"></param>
-    public void ProjectileDamage( GameObject objectToDamage )
+    private void ProjectileDamage( GameObject objectToDamage )
     {
       damageInformation.DamageObject(objectToDamage);
     }
@@ -116,7 +116,7 @@ namespace CwispyStudios.TankMania.Combat
     /// Does direct damage to a list of targets
     /// </summary>
     /// <param name="collision"></param>
-    public void ProjectileDamage( IEnumerable<GameObject> objectsToDamage )
+    private void ProjectileDamage( IEnumerable<GameObject> objectsToDamage )
     {
       foreach (GameObject objectToDamage in objectsToDamage) ProjectileDamage(objectToDamage);
     }
@@ -125,7 +125,7 @@ namespace CwispyStudios.TankMania.Combat
     /// Does splash damage at a target point
     /// </summary>
     /// <param name="explosionPoint"></param>
-    public void ProjectileExplosion( GameObject collisionObject, Vector3 explosionPoint )
+    private void ProjectileExplosion( GameObject collisionObject, Vector3 explosionPoint )
     {
       damageInformation.SplashDamageOnPoint(collisionObject, explosionPoint);
     }
