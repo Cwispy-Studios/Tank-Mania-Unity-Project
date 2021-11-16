@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SplashMinRadiusPercentageRolloff
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 0
+  baseValue: 0.5

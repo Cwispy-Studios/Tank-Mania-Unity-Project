@@ -35,7 +35,7 @@ MonoBehaviour:
   SplashRadius: {fileID: 11400000, guid: f6dd31d39aaaee8448f12b213be7d591, type: 2}
   SplashDamagePercentage: {fileID: 11400000, guid: 90acc660ecdda734783073a2af71d628,
     type: 2}
-  HasSplashDamageRolloff: 0
+  HasSplashDamageRolloff: 1
   SplashMinRadiusPercentageRolloff: {fileID: 11400000, guid: be6104bcdcbbcfe4fb75373624715711,
     type: 2}
   SplashMaxRadiusPercentageRolloff: {fileID: 11400000, guid: 4359e4ce5aba60545a3073e0fc9bcab9,

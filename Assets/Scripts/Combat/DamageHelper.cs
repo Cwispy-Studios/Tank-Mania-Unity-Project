@@ -13,7 +13,7 @@ namespace CwispyStudios.TankMania.Combat
   {
     // Below collections are cleared immediately after each calculation and can be reused over every projectile
     // Used to hold the results of spherecast, reduces garbage collection
-    private static Collider[] splashCollisionResults = new Collider[50];
+    private static Collider[] splashCollisionResults = new Collider[100];
     // Used for caching objects in splash calculations to prevent checking the same object more than once
     private static HashSet<GameObject> splashedObjects = new HashSet<GameObject>();
 
@@ -62,7 +62,7 @@ namespace CwispyStudios.TankMania.Combat
     /// <param name="damage"></param>
     /// <param name="collisionObject"> Object that was directly hit by the Damage. Can be null. </param>
     /// <param name="collisionPoint"></param>
-    public static void HandleSplashDamageIfEnabled( this Damage damage, GameObject collisionObject, Vector3 collisionPoint )
+    public static void SplashDamageOnPoint( this Damage damage, GameObject collisionObject, Vector3 collisionPoint )
     {
       if (!damage.HasSplashDamage) return;
 
