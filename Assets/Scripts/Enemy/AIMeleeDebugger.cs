@@ -17,7 +17,7 @@ namespace CwispyStudios.TankMania.Enemy
       get => following;
       set
       {
-        if (following == value)
+        if (following == value && !following)
           return;
         following = value;
         if (!following)

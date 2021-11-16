@@ -9,15 +9,17 @@ namespace CwispyStudios.TankMania.Enemy
   [RequireComponent(typeof(Rigidbody))]
   public class AIMovementController : MonoBehaviour
   {
-    [Header("Agent movement parameters")] 
-
-    [SerializeField] private bool rotateWithPath;
+    [Header("Agent movement parameters")] [SerializeField]
+    private bool rotateWithPath;
 
     [SerializeField] [Range(0.1f, 10.0f)] private float movementSpeed;
 
     [SerializeField] [Range(0.1f, 5.0f)] private float accelerationSpeed;
 
     [SerializeField] [Range(0.1f, 5.0f)] private float turningSpeed;
+
+    [Header("Debug options")] [SerializeField]
+    private bool showPath;
 
     private NavMeshPath currentPath;
     private int currentPathIndex;
@@ -28,7 +30,7 @@ namespace CwispyStudios.TankMania.Enemy
     private void Awake()
     {
       currentPath = new NavMeshPath();
-        physicsController = GetComponent<Rigidbody>();
+      physicsController = GetComponent<Rigidbody>();
     }
 
     // TODO make this dependent on the size of the collider
@@ -40,6 +42,12 @@ namespace CwispyStudios.TankMania.Enemy
 
       if (!hasPath) return;
 
+      if (showPath)
+      {
+        for (int i = 0; i < currentPath.corners.Length - 1; i++)
+          Debug.DrawLine(currentPath.corners[i], currentPath.corners[i + 1], Color.green, 1, false);
+      }
+      
       Debug.Log("Calculated new path");
 
       currentPathIndex = 0;
@@ -98,8 +106,8 @@ namespace CwispyStudios.TankMania.Enemy
       if (rotateWithPath && direction != Vector3.zero)
       {
         Quaternion newRotation =
-        Quaternion.RotateTowards(physicsController.rotation,
-          quaternion.LookRotation(direction, Vector3.up), turningSpeed);
+          Quaternion.RotateTowards(physicsController.rotation,
+            quaternion.LookRotation(direction, Vector3.up), turningSpeed);
         physicsController.MoveRotation(newRotation);
       }
     }
