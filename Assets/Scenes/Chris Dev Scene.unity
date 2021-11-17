@@ -5383,6 +5383,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e395fc3a5ad044eb70d4c1e513563e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetType:
+    TargetTeam: 1
+    TargetUnitType: 0
   unitTeam: 1
   health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
   healthText: {fileID: 2137104003}

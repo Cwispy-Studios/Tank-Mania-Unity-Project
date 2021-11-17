@@ -6,6 +6,7 @@ namespace CwispyStudios.TankMania.Combat
 
   public class Damageable : MonoBehaviour
   {
+    [SerializeField] private TargetType targetType;
     [SerializeField] private Team unitTeam;
     [SerializeField] private Health health;
 
@@ -37,7 +38,7 @@ namespace CwispyStudios.TankMania.Combat
 
     public bool CanTakeDamageFromTeam( Team team )
     {
-      return unitTeam != team;
+      return targetType.TargetTeam != team;
     }
 
     public void TakeDamage( float damage )

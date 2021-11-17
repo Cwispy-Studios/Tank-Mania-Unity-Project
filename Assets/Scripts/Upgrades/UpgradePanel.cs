@@ -26,6 +26,7 @@ namespace CwispyStudios.TankMania.Upgrades
       {
         upgradeButton.OnHoverEvent += SetDescription;
         upgradeButton.OnNotHoverEvent += ResetDescription;
+        upgradeButton.OnSelectEvent += SelectUpgrade;
         upgradeButton.Initialise();
       }
     }
@@ -41,6 +42,7 @@ namespace CwispyStudios.TankMania.Upgrades
       {
         upgradeButton.OnHoverEvent -= SetDescription;
         upgradeButton.OnNotHoverEvent -= ResetDescription;
+        upgradeButton.OnSelectEvent -= SelectUpgrade;
       }
     }
 

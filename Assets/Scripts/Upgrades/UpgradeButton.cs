@@ -30,6 +30,7 @@ namespace CwispyStudios.TankMania.Upgrades
     {
       OnNotHoverEvent?.Invoke();
     }
+
     public void OnPointerClick( PointerEventData eventData )
     {
       OnSelectEvent?.Invoke(upgradeComponent);
