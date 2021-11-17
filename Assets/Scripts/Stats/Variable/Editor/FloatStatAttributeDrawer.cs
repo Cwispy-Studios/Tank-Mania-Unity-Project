@@ -6,10 +6,9 @@ namespace CwispyStudios.TankMania.Stats
   [CustomPropertyDrawer(typeof(FloatStatAttribute))]
   public class FloatStatAttributeDrawer : StatPropertyDrawer
   {
-    public override void DrawValueField( Rect position, SerializedProperty baseValue, SerializedProperty useInt, GUIContent label )
+    public override void SetStatType( SerializedObject serializedObject )
     {
-      useInt.boolValue = false;
-      base.DrawValueField(position, baseValue, useInt, label);
+      serializedObject.FindProperty(UseIntPropertyName).boolValue = false;
     }
   }
 }

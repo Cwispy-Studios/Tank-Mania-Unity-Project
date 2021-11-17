@@ -17,7 +17,7 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private FiringInformation firingInformation;
     [SerializeField] private FloatVariable reloadCountdown;
     [SerializeField] private IntVariable currentAmmo;
-    
+
     // List of ammo groups which each contain a reticleImage
     public List<AmmoImageGroup> ammoImageGroups = new List<AmmoImageGroup>();
     // List of individual reticle image
@@ -54,7 +54,7 @@ namespace CwispyStudios.TankMania.Player
         }
       }
 
-      previousCurrentAmmo = (int)firingInformation.AmmoCount.Value - 1;
+      previousCurrentAmmo = firingInformation.AmmoCount.IntValue - 1;
     }
 
     private void AddAmmoGroups( int amount )
@@ -83,7 +83,7 @@ namespace CwispyStudios.TankMania.Player
       else
       {
         int totalInAmmoGroups = ammoImageGroups.Count * ammoImageGroupPrefab.AmmoImagesPerColumn;
-        int remainder = totalInAmmoGroups - (int)firingInformation.AmmoCount.Value;
+        int remainder = totalInAmmoGroups - firingInformation.AmmoCount.IntValue;
 
         lastAmmoImageGroup.SetAmountActive(remainder);
       }
@@ -93,7 +93,7 @@ namespace CwispyStudios.TankMania.Player
     {
       UpdateAmmo();
     }
-   
+
     private void UpdateAmmo()
     {
       // Prevent overflow at max ammo
@@ -119,7 +119,7 @@ namespace CwispyStudios.TankMania.Player
 
     private void OnAmmoCountChange()
     {
-      int newAmmoCount = (int)firingInformation.AmmoCount.Value;
+      int newAmmoCount = firingInformation.AmmoCount.IntValue;
 
       if (useStackedAmmoImages)
       {
@@ -183,7 +183,7 @@ namespace CwispyStudios.TankMania.Player
       }
 
       // If ammo is removed, this will go out of bounds
-      previousCurrentAmmo = Mathf.Clamp(previousCurrentAmmo, 0, (int)firingInformation.AmmoCount.Value - 1);
+      previousCurrentAmmo = Mathf.Clamp(previousCurrentAmmo, 0, firingInformation.AmmoCount.IntValue - 1);
     }
   }
 }

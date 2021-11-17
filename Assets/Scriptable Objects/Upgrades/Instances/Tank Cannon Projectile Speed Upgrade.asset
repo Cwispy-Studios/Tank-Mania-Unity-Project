@@ -16,6 +16,18 @@ MonoBehaviour:
   UpgradeName: Tank Cannon Projectile Speed
   UpgradeImage: {fileID: 21300000, guid: bc2716f2ce2d91144b02c048611aef70, type: 3}
   UpgradeDescription: Increases the projectile speed by 15%.
-  PlayerStatModifiers:
-  - {fileID: 11400000, guid: 7ff9b5fea9baf3f43a03f07c3f5dae2e, type: 2}
-  EnemyStatModifiers: []
+  PlayerStatUpgraders:
+  - statModifier:
+      additiveValue: 0
+      multiplicativeValue: 0.14999999
+      useInt: 0
+    statUpgraded: {fileID: 11400000, guid: e53b679d6d40aba4b9daabdb1c45505b, type: 2}
+  PlayerStatsCategoryUpgraders: []
+  EnemyStatUpgraders: []
+  EnemyStatsCategoryUpgraders:
+  - statModifier:
+      additiveValue: 0
+      multiplicativeValue: 0.049999997
+      useInt: 0
+    statsCategoryUpgraded: {fileID: 11400000, guid: 23f7c2e3d839c024c8af6c6987d0ec1b,
+      type: 2}
