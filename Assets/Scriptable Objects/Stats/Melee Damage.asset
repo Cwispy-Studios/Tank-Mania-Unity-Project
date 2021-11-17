@@ -12,30 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ebd006d3edd6c468b2162c94f65781, type: 3}
   m_Name: Melee Damage
   m_EditorClassIdentifier: 
+  stats:
+  - {fileID: 11400000, guid: e1f32dbff1b4c85438c0e478f1f25e21, type: 2}
+  - {fileID: 11400000, guid: a7e52190a11fc6e47a22e9a0b83389e6, type: 2}
+  - {fileID: 11400000, guid: c021b2ba77a27a346a33638440dc09b2, type: 2}
+  - {fileID: 11400000, guid: 2fb53d62c2807804bb136f02fbcd170b, type: 2}
+  - {fileID: 11400000, guid: 7eb6503f643b5584b994d2b19ecba50e, type: 2}
+  - {fileID: 11400000, guid: a78299d572018384e802911a351d7673, type: 2}
+  - {fileID: 11400000, guid: 01f492d9e691e214a8dbae28f24d615d, type: 2}
+  statsNames:
+  - DirectDamage
+  - SplashRadius
+  - SplashDamagePercentage
+  - SplashMinRadiusPercentageRolloff
+  - SplashMaxRadiusPercentageRolloff
+  - SplashMinRadiusDamagePercentageRolloff
+  - SplashMaxRadiusDamagePercentageRolloff
+  nameOfStatsFolder: Melee Damage
   DamageFrom: 0
-  DirectDamage:
-    StatModifiers:
-    - {fileID: 11400000, guid: cff6414df3edf8b439f2560d551a1dc9, type: 2}
-    baseValue: 20
-  SplashDamage:
-    HasSplashDamage: 0
-    Radius:
-      StatModifiers:
-      - {fileID: 11400000, guid: b6955347593497e49bbaca9a179aac44, type: 2}
-      baseValue: 2
-    DamagePercentage:
-      StatModifiers: []
-      baseValue: 1
-    HasSplashDamageRolloff: 1
-    MinRadiusPercentageRolloff:
-      StatModifiers: []
-      baseValue: 0
-    MaxRadiusPercentageRolloff:
-      StatModifiers: []
-      baseValue: 1
-    MinRadiusDamagePercentageRolloff:
-      StatModifiers: []
-      baseValue: 1
-    MaxRadiusDamagePercentageRolloff:
-      StatModifiers: []
-      baseValue: 0
+  DirectDamage: {fileID: 11400000, guid: e1f32dbff1b4c85438c0e478f1f25e21, type: 2}
+  HasSplashDamage: 0
+  SplashRadius: {fileID: 11400000, guid: a7e52190a11fc6e47a22e9a0b83389e6, type: 2}
+  SplashDamagePercentage: {fileID: 11400000, guid: c021b2ba77a27a346a33638440dc09b2,
+    type: 2}
+  HasSplashDamageRolloff: 0
+  SplashMinRadiusPercentageRolloff: {fileID: 11400000, guid: 2fb53d62c2807804bb136f02fbcd170b,
+    type: 2}
+  SplashMaxRadiusPercentageRolloff: {fileID: 11400000, guid: 7eb6503f643b5584b994d2b19ecba50e,
+    type: 2}
+  SplashMinRadiusDamagePercentageRolloff: {fileID: 11400000, guid: a78299d572018384e802911a351d7673,
+    type: 2}
+  SplashMaxRadiusDamagePercentageRolloff: {fileID: 11400000, guid: 01f492d9e691e214a8dbae28f24d615d,
+    type: 2}
