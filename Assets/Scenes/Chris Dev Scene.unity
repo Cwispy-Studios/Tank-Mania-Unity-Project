@@ -3132,6 +3132,7 @@ GameObject:
   - component: {fileID: 1496578011}
   - component: {fileID: 1496578010}
   - component: {fileID: 1496578014}
+  - component: {fileID: 1496578015}
   m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
@@ -3231,6 +3232,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 1
+--- !u!114 &1496578015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496578009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91e395fc3a5ad044eb70d4c1e513563e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitProperties:
+    Team: 1
+    UnitType: 2
+  health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
+  healthText: {fileID: 0}
 --- !u!1 &1567129022
 GameObject:
   m_ObjectHideFlags: 0
@@ -5383,10 +5401,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e395fc3a5ad044eb70d4c1e513563e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetType:
-    TargetTeam: 1
-    TargetUnitType: 0
-  unitTeam: 1
+  unitProperties:
+    Team: 1
+    UnitType: 1
   health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
   healthText: {fileID: 2137104003}
 --- !u!33 &5449327591314870100
@@ -5873,6 +5890,32 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 871398082, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
+      propertyPath: unitProperties.UnitType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 871398082, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
+      propertyPath: targetProperties.UnitType
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 871398082, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
+      propertyPath: unitProperties.properties.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 871398082, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
+      propertyPath: unitProperties.properties.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: fe6edb1f4e4f8b9419a82ee0d795e9db,
+        type: 2}
+    - target: {fileID: 871398082, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
+      propertyPath: unitProperties.properties.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: fd9b53fdea74e424dbe6470c88aa4d2b,
+        type: 2}
+    - target: {fileID: 871398082, guid: d23cfcb9d00038f44831cb8873b5af50, type: 3}
+      propertyPath: unitProperties.properties.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1659550491239997941, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}
       propertyPath: m_Camera

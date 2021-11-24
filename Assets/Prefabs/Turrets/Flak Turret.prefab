@@ -159,6 +159,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432e21a90d2e44f4a9dbec88345b9ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPreference:
+    Team: 1
+    UnitType: 2
 --- !u!114 &1084657755
 MonoBehaviour:
   m_ObjectHideFlags: 0
