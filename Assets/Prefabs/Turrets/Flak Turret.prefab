@@ -161,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPreference:
     Team: 1
-    UnitType: 2
+    UnitType: -1
 --- !u!114 &1084657755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +175,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiTurretStats: {fileID: 11400000, guid: e90a7959dd77a1c4b9c53eba2091842d, type: 2}
+  targetingCriterias:
+  - Team: 1
+    UnitType: 2
+  - Team: 1
+    UnitType: 1
 --- !u!1 &5185428224408360254
 GameObject:
   m_ObjectHideFlags: 0

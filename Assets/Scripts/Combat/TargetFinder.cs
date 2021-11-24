@@ -22,7 +22,7 @@ namespace CwispyStudios.TankMania.Combat
       // Then check if the target has a Damageable component
       Damageable damageable = rb.GetComponent<Damageable>();
 
-      if (damageable != null && TargetMatchesPreference(damageable))
+      if (damageable != null && targetPreference.IsSoftMatchWith(damageable.UnitProperties))
       {
         targetsInRange.Add(rb);
       }
@@ -33,16 +33,6 @@ namespace CwispyStudios.TankMania.Combat
       Rigidbody rb = other.attachedRigidbody;
 
       if (targetsInRange.Contains(rb)) targetsInRange.Remove(rb);
-    }
-
-    private bool TargetMatchesPreference( Damageable damageable )
-    {
-      bool isPreferredTeam = targetPreference.Team == damageable.UnitProperties.Team;
-      // If no stated UnitType preference, this will always be true, else check if target meets any selected preference
-      bool isPreferredUnitType = targetPreference.UnitType == 0 ? true :
-        (targetPreference.UnitType & damageable.UnitProperties.UnitType) != 0;
-
-      return isPreferredTeam & isPreferredUnitType;
     }
   }
 }

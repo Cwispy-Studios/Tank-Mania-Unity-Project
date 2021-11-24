@@ -10,16 +10,17 @@ namespace CwispyStudios.TankMania.Player
   public class AITurretController : MonoBehaviour
   {
     [SerializeField] private AITurretStats aiTurretStats;
+    [Tooltip("Hard criterias that AI will prefer from 0 to n.")]
+    [SerializeField] private List<UnitProperties> targetingCriterias;
 
     private static float s_targetRefreshInterval = 0.5f;
 
-    private List<Rigidbody> targetsInRotationLimit = new List<Rigidbody>();
+    private List<List<Rigidbody>> validTargetsSortedByCriterias = new List<List<Rigidbody>>();
 
     private SphereCollider sphereCollider;
     private TargetFinder targetFinder;
     private TurretHub turretHub;
     private GunController gun;
-    private Transform fireZone;
 
     private Rigidbody selectedTarget = null;
 
@@ -32,10 +33,15 @@ namespace CwispyStudios.TankMania.Player
       targetFinder = GetComponent<TargetFinder>();
       turretHub = GetComponentInChildren<TurretHub>();
       gun = GetComponentInChildren<GunController>();
-      fireZone = gun.FireZone;
 
       aiTurretStats.DetectionRange.OnStatUpgrade += AdjustDetectionSphereRadius;
       AdjustDetectionSphereRadius();
+
+      // Add a list of valid targets for every targeting criteria, +1 for a list that accepts everything else
+      for (int i = 0; i <= targetingCriterias.Count; ++i)
+      {
+        validTargetsSortedByCriterias.Add(new List<Rigidbody>());
+      }
     }
 
     private void Update()
@@ -44,31 +50,68 @@ namespace CwispyStudios.TankMania.Player
 
       if (targetRefreshTimer >= s_targetRefreshInterval)
       {
-        RefreshTargets();
+        // First refresh and sort the targets that can be hit by the turret by criteria
+        int numberOfValidTargets = RefreshAndSortValidTargets();
 
-        if (targetsInRotationLimit.Count > 0) SelectTarget();
+        // If there were any valid targets found, select the highest priority one
+        if (numberOfValidTargets > 0) SelectHighestPriorityTarget();
 
         targetRefreshTimer = 0f;
       }
 
+      // If there is a selected target, turret should rotate to aim at it every frame
       if (selectedTarget != null) AimAtTarget();
     }
 
-    private void RefreshTargets()
+    private int RefreshAndSortValidTargets()
     {
       List<Rigidbody> targetsInRange = new List<Rigidbody>(targetFinder.TargetsInRange);
-      targetsInRotationLimit.Clear();
+      foreach (List<Rigidbody> targetsPerCriteria in validTargetsSortedByCriterias) targetsPerCriteria.Clear();
       selectedTarget = null;
+
+      int numberOfValidTargets = 0;
 
       // Loop through every target in range...
       for (int i = 0; i < targetsInRange.Count; ++i)
       {
         Rigidbody target = targetsInRange[i];
 
+        // Check that turret can rotate to face target
         bool targetIsInRotationLimit = CheckTargetCanBeHit(target);
 
-        if (targetIsInRotationLimit) targetsInRotationLimit.Add(target);
+        if (targetIsInRotationLimit)
+        {
+          // Loop through every targeting criteria...
+          for (int criteriaIndex = 0; criteriaIndex <= targetingCriterias.Count; ++criteriaIndex)
+          {
+            // and check if the target's unit properties matches the criteria.
+            // No need to check for null since this is already checked by the TargetFinder
+            Damageable damageable = target.GetComponent<Damageable>();
+
+            // By right, we only need to sort targets that matches the first criteria found
+            // but I am sorting them already cause we will likely need it in the future.
+
+            bool targetMatchesCriteria;
+
+            // Check if index is within range of list of criterias
+            if (criteriaIndex < targetingCriterias.Count)
+            {
+              targetMatchesCriteria = targetingCriterias[criteriaIndex].IsHardMatchWith(damageable.UnitProperties);
+            }
+
+            // If out of range, that means every other criteria has failed and this target belongs to the lowest priority, auto match.
+            else targetMatchesCriteria = true;
+
+            if (targetMatchesCriteria)
+            {
+              ++numberOfValidTargets;
+              validTargetsSortedByCriterias[criteriaIndex].Add(target);
+            }
+          }
+        }
       }
+
+      return numberOfValidTargets;
     }
 
     private bool CheckTargetCanBeHit( Rigidbody target )
@@ -198,21 +241,43 @@ namespace CwispyStudios.TankMania.Player
       return angularDistance;
     }
 
-    private void SelectTarget()
+    private void SelectHighestPriorityTarget()
     {
-      float smallestSqDist = Mathf.Infinity;
-
-      for (int i = 0; i < targetsInRotationLimit.Count; ++i)
+      // Loop through the list of valid targets by criteria
+      for (int i = 0; i < validTargetsSortedByCriterias.Count; ++i)
       {
-        Rigidbody target = targetsInRotationLimit[i];
-        float sqDist = Vector3.SqrMagnitude(target.position - gun.FireZone.position);
+        List<Rigidbody> targetsInCriteria = validTargetsSortedByCriterias[i];
 
-        if (sqDist < smallestSqDist)
+        // Are there any targets that match this criteria?
+        if (targetsInCriteria.Count > 0)
         {
-          smallestSqDist = sqDist;
-          selectedTarget = target;
+          // If only 1 object, by default that object will be selected
+          if (targetsInCriteria.Count == 1) selectedTarget = targetsInCriteria[0];
+
+          // If there are more than 1, get the object closest to the turret
+          else
+          {
+            float smallestSqDist = Mathf.Infinity;
+
+            for (int j = 0; j < targetsInCriteria.Count; ++j)
+            {
+              Rigidbody target = targetsInCriteria[j];
+              float sqDist = Vector3.SqrMagnitude(target.position - gun.FireZone.position);
+
+              if (sqDist < smallestSqDist)
+              {
+                smallestSqDist = sqDist;
+                selectedTarget = target;
+              }
+            }
+          }
+
+          // Return since we only need to select 1 object to aim at
+          return;
         }
-      }
+      }  
+
+
     }
 
     private void AimAtTarget()
