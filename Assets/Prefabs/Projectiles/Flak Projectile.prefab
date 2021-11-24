@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 8333938171496464973}
   - component: {fileID: 7030726712476480238}
   - component: {fileID: 7051859430511138134}
+  - component: {fileID: 7698484323720113316}
+  - component: {fileID: 3506631775432023416}
   - component: {fileID: 4685843817965642556}
   - component: {fileID: -3237600328331388279}
   m_Layer: 6
@@ -134,6 +136,34 @@ MonoBehaviour:
   usesCustomGravity: 1
   customGravityValue: -2
   PhysicsController: {fileID: 0}
+--- !u!135 &7698484323720113316
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531798127843113828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3506631775432023416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531798127843113828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 432e21a90d2e44f4a9dbec88345b9ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPreference:
+    Team: 1
+    UnitType: 2
 --- !u!114 &4685843817965642556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,10 +192,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  layersToCheck:
-    serializedVersion: 2
-    m_Bits: 256
   checkingInterval: 0.1
+  triggerPreference:
+    Team: 1
+    UnitType: 2
 --- !u!114 &-3237600328331388279
 MonoBehaviour:
   m_ObjectHideFlags: 0

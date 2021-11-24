@@ -12,6 +12,11 @@ namespace CwispyStudios.TankMania.Combat
     private List<Rigidbody> targetsInRange = new List<Rigidbody>();
     public IList<Rigidbody> TargetsInRange => targetsInRange.AsReadOnly();
 
+    private void OnDisable()
+    {
+      targetsInRange.Clear();
+    }
+
     private void OnTriggerEnter( Collider other )
     {
       Rigidbody rb = other.attachedRigidbody;

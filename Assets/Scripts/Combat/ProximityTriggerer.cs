@@ -4,44 +4,50 @@ namespace CwispyStudios.TankMania.Combat
 {
   using Stats;
 
+  [RequireComponent(typeof(TargetFinder))]
   public class ProximityTriggerer : Triggerer<ProximityTriggerStats>
   {
     [Header("Proximity Values")]
-    [SerializeField] private LayerMask layersToCheck;
     [SerializeField, Range(0f, 5f)] private float checkingInterval = 0.5f;
 
-    // Cache the results of overlapsphere
-    private Collider[] results;
+    private TargetFinder targetFinder;
+    private SphereCollider proximityCollider;
+
     private float checkingCountdown = 0f;
 
     private void Awake()
     {
-      BuildArray();
-      TriggerStats.NumberToTrigger.OnStatUpgrade += BuildArray;
+      targetFinder = GetComponent<TargetFinder>();
+      proximityCollider = GetComponent<SphereCollider>();
+
+      SetProximityColliderRadius();
+      TriggerStats.TriggerRadius.OnStatUpgrade += SetProximityColliderRadius;
     }
 
     private void Update()
     {
       checkingCountdown -= Time.deltaTime;
-      if (checkingCountdown <= 0f) CheckForObjects();
+      if (checkingCountdown <= 0f) CheckTriggerCondition();
     }
 
-    private void CheckForObjects()
+    /// <summary>
+    /// Checks if there are the required amount of objects in proximity and triggers if so.
+    /// </summary>
+    private void CheckTriggerCondition()
     {
-      int numberColliders = Physics.OverlapSphereNonAlloc(
-        transform.position, TriggerStats.TriggerRadius.Value, results, layersToCheck, QueryTriggerInteraction.Ignore);
+      int validTargetsInProximity = targetFinder.TargetsInRange.Count;
 
-      if (numberColliders >= TriggerStats.NumberToTrigger.IntValue)
-      {
-        CommenceTrigger();
-      }
+      if (validTargetsInProximity >= TriggerStats.NumberToTrigger.IntValue) CommenceTrigger();
 
       checkingCountdown = checkingInterval;
     }
 
-    private void BuildArray()
+    /// <summary>
+    /// Adjusts the sphere collider trigger based on the proximity radius.
+    /// </summary>
+    private void SetProximityColliderRadius()
     {
-      results = new Collider[TriggerStats.NumberToTrigger.IntValue];
+      proximityCollider.radius = TriggerStats.TriggerRadius.Value;
     }
   }
 }

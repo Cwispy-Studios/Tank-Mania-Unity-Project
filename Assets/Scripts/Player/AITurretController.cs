@@ -13,15 +13,24 @@ namespace CwispyStudios.TankMania.Player
     [Tooltip("Hard criterias that AI will prefer from 0 to n.")]
     [SerializeField] private List<UnitProperties> targetingCriterias;
 
+    // Refresh rate to check for targets is the same for every instance.
     private static float s_targetRefreshInterval = 0.5f;
 
+    /// <summary>
+    /// Stores multiple lists of targets that the turret can rotate to face. 
+    /// These lists are sorted based on the targeting criteria order. The highest priority is at the top.
+    /// </summary>
     private List<List<Rigidbody>> validTargetsSortedByCriterias = new List<List<Rigidbody>>();
 
+    // Cache components
     private SphereCollider sphereCollider;
     private TargetFinder targetFinder;
     private TurretHub turretHub;
     private GunController gun;
 
+    /// <summary>
+    /// The highest priority target found that the turret can rotate to.
+    /// </summary>
     private Rigidbody selectedTarget = null;
 
     //private bool isActive = true;
@@ -63,6 +72,13 @@ namespace CwispyStudios.TankMania.Player
       if (selectedTarget != null) AimAtTarget();
     }
 
+    /// <summary>
+    /// Retrieves the list of targets in range from the TargetFinder, checks which the turret can rotate to face,
+    /// and sorts the valid ones according to the targeting criterias set.
+    /// </summary>
+    /// <returns>
+    /// The number of valid targets found (targets which the turret can rotate to face).
+    /// </returns>
     private int RefreshAndSortValidTargets()
     {
       List<Rigidbody> targetsInRange = new List<Rigidbody>(targetFinder.TargetsInRange);
@@ -88,7 +104,7 @@ namespace CwispyStudios.TankMania.Player
             // No need to check for null since this is already checked by the TargetFinder
             Damageable damageable = target.GetComponent<Damageable>();
 
-            // By right, we only need to sort targets that matches the first criteria found
+            // As it is right now, we only need to sort targets that matches the first criteria found
             // but I am sorting them already cause we will likely need it in the future.
 
             bool targetMatchesCriteria;
@@ -114,11 +130,33 @@ namespace CwispyStudios.TankMania.Player
       return numberOfValidTargets;
     }
 
+    /// <summary>
+    /// Checks whether the turret can rotate to face the inputted target.
+    /// </summary>
+    /// <param name="target">
+    /// Target to check for.
+    /// </param>
+    /// <returns>
+    /// Whether the turret can rotate to face the inputted target.
+    /// </returns>
     private bool CheckTargetCanBeHit( Rigidbody target )
     {
       return CheckTargetCanBeHit(target, out _, out _);
     }
 
+    /// <summary>
+    /// Checks whether the turret can rotate to face the inputted target.
+    /// </summary>
+    /// <param name="target">
+    /// Target to check for.
+    /// </param>
+    /// <param name="horizontalAngleDistance">
+    /// The y-axis angular distance the turret has to rotate to face the target.
+    /// </param>
+    /// <param name="verticalAngleDistance">
+    /// The x-axis angular distance the turret has to rotate to face the target.
+    /// </param>
+    /// <returns> Whether the turret can rotate to face the inputted target. </returns>
     private bool CheckTargetCanBeHit( Rigidbody target, out float horizontalAngleDistance, out float verticalAngleDistance )
     {
       horizontalAngleDistance = 0f;
@@ -156,6 +194,15 @@ namespace CwispyStudios.TankMania.Player
       return targetIsInRotationLimit;
     }
 
+    /// <summary>
+    /// Checks whether the turret can rotate in the y-axis to face the inputted target.
+    /// </summary>
+    /// <param name="target">
+    /// The target to check for.
+    /// </param>
+    /// <returns>
+    /// The y-axis angular distance the turret has to rotate to face the target.
+    /// </returns>
     private float GetTurretAngleDifferenceFromTarget( Rigidbody target )
     {
       // Find the angle the turret must rotate to face the target
@@ -202,13 +249,26 @@ namespace CwispyStudios.TankMania.Player
       return angularDistance;
     }
 
-    private float GetGunAngleDifferenceFromTarget( Rigidbody target, float turretRotation )
+    /// <summary>
+    /// Checks whether the turret can rotate in the x-axis to face the inputted target.
+    /// </summary>
+    /// <param name="target">
+    /// The target to check for.
+    /// </param>
+    /// <param name="horizontalRotation">
+    /// The x-axis angular distance the turret has to rotate to face the target.
+    /// </param>
+    /// <returns>
+    /// The y-axis angular distance the turret has to rotate to face the target.
+    /// </returns>
+    private float GetGunAngleDifferenceFromTarget( Rigidbody target, float horizontalRotation )
     {
-      // If we get here, this assumes the turret can rotate horizontally to face the target
+      // If we get here, we know the turret can rotate horizontally to face the target
 
-      // Find the rotation vector to rotate the gun direction and offset, this is rotated by the hub's base rotation taken from the slot's rotation.
-      Vector3 rotationAngles = transform.rotation * new Vector3(0f, -turretRotation, 0f);
-      // Rotate the target about the pivot point
+      // Find the rotation vector to rotate the target so that it lines up with the gun on its local vertical plane.
+      // This is rotated by the hub's base rotation (transform.rotation) taken from the slot's rotation.
+      Vector3 rotationAngles = transform.rotation * new Vector3(0f, -horizontalRotation, 0f);
+      // Rotate the target about the pivot point so that it is on the same local vertical plane as the turret
       Vector3 horizontallyRotatedTargetPosition = MathHelper.RotatePointAroundPivot(target.position, turretHub.Turret.position, rotationAngles);
 
       // Find the closest point from the turret to the fire direction ray
@@ -241,6 +301,10 @@ namespace CwispyStudios.TankMania.Player
       return angularDistance;
     }
 
+    /// <summary>
+    /// Finds and assigns the target that matches the highest targeting criteria found.
+    /// If there are more than 1 target that matches, selects the closest one to the turret.
+    /// </summary>
     private void SelectHighestPriorityTarget()
     {
       // Loop through the list of valid targets by criteria
@@ -280,8 +344,12 @@ namespace CwispyStudios.TankMania.Player
 
     }
 
+    /// <summary>
+    /// Rotates the turret to face its selected target.
+    /// </summary>
     private void AimAtTarget()
     {
+      // First make sure that the target can still be reached
       if (CheckTargetCanBeHit(selectedTarget, out float horizontalAngularDistance, out float verticalAngularDistance))
       {
         float horizontalRotationAmount = turretHub.RotateTurretByValue(horizontalAngularDistance);
@@ -305,6 +373,9 @@ namespace CwispyStudios.TankMania.Player
       }
     }
 
+    /// <summary>
+    /// Adjusts the sphere collider trigger based on the detection range of the turret.
+    /// </summary>
     private void AdjustDetectionSphereRadius()
     {
       sphereCollider.radius = aiTurretStats.DetectionRange.Value;

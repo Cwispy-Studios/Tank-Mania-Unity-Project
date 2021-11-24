@@ -12,8 +12,12 @@ namespace CwispyStudios.TankMania.Combat
     /// Checks if this UnitProperties is a soft match with another UnitProperties.
     /// Soft match is defined as belonging to the same team, and a match of ANY UnitType value.
     /// </summary>
-    /// <param name="other"></param>
-    /// <returns></returns>
+    /// <param name="other">
+    /// UnitProperties of the other object to check against.
+    /// </param>
+    /// <returns>
+    /// If it is a soft match.
+    /// </returns>
     public bool IsSoftMatchWith( UnitProperties other )
     {
       // Team must always match
@@ -28,8 +32,12 @@ namespace CwispyStudios.TankMania.Combat
     /// Checks if this UnitProperties is a hard match with another UnitProperties.
     /// Hard match is defined as belonging to the same team, and a match of ALL UnitType values with the this UnitProperties.
     /// </summary>
-    /// <param name="other"></param>
-    /// <returns></returns>
+    /// <param name="other">
+    /// UnitProperties of the other object to check against.
+    /// </param>
+    /// <returns>
+    /// If it is a hard match.
+    /// </returns>
     public bool IsHardMatchWith( UnitProperties other )
     {
       // Team must always match

@@ -25,14 +25,24 @@ namespace CwispyStudios.TankMania
     }
 
     /// <summary>
-    /// https://answers.unity.com/questions/532297/rotate-a-vector-around-a-certain-point.html
+    /// Rotates a point about a pivot point by inputted angles in degrees.
     /// </summary>
-    /// <param name="point"></param>
-    /// <param name="pivot"></param>
-    /// <param name="angles"></param>
-    /// <returns></returns>
+    /// <param name="point">
+    /// The point to be rotated.
+    /// </param>
+    /// <param name="pivot">
+    /// Where the point is to be rotated around of.
+    /// </param>
+    /// <param name="angles">
+    /// The amouunt to be rotated.
+    /// </param>
+    /// <returns>
+    /// The point after being rotated.
+    /// </returns>
     public static Vector3 RotatePointAroundPivot( Vector3 point, Vector3 pivot, Vector3 angles )
     {
+      // https://answers.unity.com/questions/532297/rotate-a-vector-around-a-certain-point.html
+
       Vector3 dir = point - pivot;
       dir = Quaternion.Euler(angles) * dir;
       point = pivot + dir;
