@@ -15,11 +15,7 @@ namespace CwispyStudios.TankMania.Stats
     public VfxParentDisabler FiringVfx;
 
     [Header("Firing Stats")]
-<<<<<<< HEAD
     [StatRange(1f, 200f), // 20f
-=======
-    [StatRange(1f, 25f), // 20f
->>>>>>> develop
       Tooltip("Physics force applied to projectile and how fast it travels, affects the flatness of its trajectory.")]
     public Stat FiringForce;
     [StatRange(0.5f, 3f), // 1.5f
