@@ -68,6 +68,12 @@ namespace CwispyStudios.TankMania.Combat
       ProjectileCollision(collision);
     }
 
+    /// <summary>
+    /// Called when OnCollisionEnter is triggered, handles collision of the projectile
+    /// </summary>
+    /// <param name="collision">
+    /// The object the projectile collided with.
+    /// </param>
     private void ProjectileCollision( Collision collision )
     {
       if (disableProjectileCollisions) return;
@@ -91,6 +97,15 @@ namespace CwispyStudios.TankMania.Combat
       Deactivate();
     }
 
+    /// <summary>
+    /// Checks if the projectile collided with an object that is not of a preferred type.
+    /// </summary>
+    /// <param name="collision">
+    /// The object the projectile collided with.
+    /// </param>
+    /// <returns>
+    /// Whether the collision was a dud.
+    /// </returns>
     private bool CheckIfIsDudCollision( Collision collision )
     {
       // If there is no effective type, it will never be a dud collision
@@ -111,6 +126,9 @@ namespace CwispyStudios.TankMania.Combat
       }
     }
 
+    /// <summary>
+    /// Called from a Triggerer class. Guranteed non-dud collision.
+    /// </summary>
     public void ProjectileTrigger()
     {
       if (disableProjectileCollisions) return;
@@ -155,14 +173,27 @@ namespace CwispyStudios.TankMania.Combat
       damageInformation.SplashDamageOnPoint(collisionObject, explosionPoint);
     }
 
+    /// <summary>
+    /// Enables the impact VFX from the VFX Pooler.
+    /// </summary>
+    /// <param name="location">
+    /// Position where the VFX should occur.
+    /// </param>
+    /// <param name="isDudCollision">
+    /// Whether to use the normal impact VFX or dud impact VFX.
+    /// </param>
     private void EnableImpactVFX( Vector3 location, bool isDudCollision = false )
     {
       VfxParentDisabler vfxParentDisabler = isDudCollision ? dudImpactVfxPrefab : impactVfxPrefab;
       vfxPooler.EnablePooledObject(vfxParentDisabler, location, Quaternion.identity);
     }
 
+    /// <summary>
+    /// Disables the projectile so it is available in the pooler.
+    /// </summary>
     private void Deactivate()
     {
+      // Resets physics so it does not carry over when it is reenabled.
       PhysicsController.velocity = Vector3.zero;
       PhysicsController.angularVelocity = Vector3.zero;
 
@@ -175,6 +206,10 @@ namespace CwispyStudios.TankMania.Combat
       disableProjectileCollisions = true;
     }
 
+    /// <summary>
+    /// Passes damage information from the firer to the projectile.
+    /// </summary>
+    /// <param name="damage"></param>
     public void SetDamage( Damage damage )
     {
       damageInformation = damage;
