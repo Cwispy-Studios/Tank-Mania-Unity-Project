@@ -1,45 +1,33 @@
-using System.Collections.Generic;
-
 using UnityEditor;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  using Upgrades;
-
   [CustomPropertyDrawer(typeof(Stat), true)]
   public class StatPropertyDrawer : PropertyDrawer
   {
-    private const float SwapButtonWidth = 15f;
+    public const string UseIntPropertyName = "useInt";
+    public const string BaseValuePropertyName = "baseValue";
 
-    private readonly string[] popupOptions = { "Float", "Int" };
+    private GUIContent lockedButtonContent;
+    private GUIContent unlockedButtonContent;
 
-    // Cache the style of the dropdown button
-    private GUIStyle dropdownButtonStyle;
-    // Cache the style of the popup button
-    private GUIStyle popupStyle;
+    private GUIStyle lockButtonStyle;
 
-    // Cache the graphics of dropdown and foldout buttons
-    private GUIContent foldoutContent;
-    private GUIContent dropdownContent;
-
-    // Cache the property of the modifiers list
-    private SerializedProperty modifiersList;
-
-    // Cache the margin size of a normal button
-    private float buttonMargin;
-    private string modifiersTooltip;
-
-    private bool showModifiers = false;
-    private List<StatModifier> modifiersInList = new List<StatModifier>();
+    private bool lockObjectField = true;
+    private bool objectAssigned;
 
     public override float GetPropertyHeight( SerializedProperty property, GUIContent label )
     {
       float height = base.GetPropertyHeight(property, label);
 
-      if (showModifiers)
+      if (property.serializedObject.targetObject.GetType() == typeof(StatsCategory)) return height;
+
+      objectAssigned = property.objectReferenceValue != null;
+
+      if (objectAssigned)
       {
-        height += EditorGUI.GetPropertyHeight(modifiersList, true) + EditorGUIUtility.standardVerticalSpacing;
+        height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
       }
 
       return height;
@@ -47,139 +35,104 @@ namespace CwispyStudios.TankMania.Stats
 
     public override void OnGUI( Rect position, SerializedProperty property, GUIContent label )
     {
+      if (property.serializedObject.targetObject.GetType().IsSubclassOf(typeof(StatsGroup)))
+        DrawForStatsGroup(position, property, label);
+
+      else DrawForStatsCategory(position, property, label);
+    }
+
+    private void DrawForStatsCategory( Rect position, SerializedProperty property, GUIContent label )
+    {
       label = EditorGUI.BeginProperty(position, label, property);
 
-      InitialiseVariables(property, label);
+      if (property.objectReferenceValue == null)
+        label.text = "Unassigned";
 
-      label.text += $" ({modifiersList.arraySize}):";
+      else
+      {
+        string assetPath = AssetDatabase.GetAssetPath(property.objectReferenceValue);
+        string folderPath = assetPath.Replace($"/{property.objectReferenceValue.name}.asset", "");
+
+        string folderName = string.Empty;
+
+        // Extract the folder name
+        for (int i = folderPath.Length - 1; i >= 0 && folderPath[i] != '/'; --i)
+          folderName = folderPath[i] + folderName;
+
+        label.text = folderName;
+      }
+
+      EditorGUI.PropertyField(position, property, label);
+    }
+
+    private void DrawForStatsGroup( Rect position, SerializedProperty property, GUIContent label )
+    {
+      // Initialise lock button graphics and style
+      if (lockedButtonContent == null || unlockedButtonContent == null || lockButtonStyle == null)
+      {
+        lockedButtonContent = EditorGUIUtility.IconContent("LockIcon-On");
+        unlockedButtonContent = EditorGUIUtility.IconContent("LockIcon");
+
+        lockButtonStyle = GUI.skin.GetStyle("PaneOptions");
+        // Sets the graphic to take up the entire button space
+        lockButtonStyle.imagePosition = ImagePosition.ImageOnly;
+      }
+
+      label = EditorGUI.BeginProperty(position, label, property);
+
+      position.height = EditorGUIUtility.singleLineHeight;
+
+      // Rect for the lock button
+      Rect lockButtonRect = EditorGUI.IndentedRect(position);
+      lockButtonRect.x -= 12f;
+      lockButtonRect.width = 12f;
+
+      GUIContent lockButtonContent = lockObjectField ? lockedButtonContent : unlockedButtonContent;
+
+      // Draw the lock button
+      if (GUI.Button(lockButtonRect, lockButtonContent, lockButtonStyle)) lockObjectField = !lockObjectField;
+
+      EditorGUI.LabelField(position, label);
+
+      bool guiStatus = GUI.enabled;
+
+      GUI.enabled = !lockObjectField;
+      EditorGUI.PropertyField(position, property, new GUIContent(" "));
+      GUI.enabled = guiStatus;
+
+      // Do not need to show or initialise any values if stat is not assigned yet.
+      if (!objectAssigned) return;
+
+      SerializedObject serializedObject = new SerializedObject(property.objectReferenceValue);
+      serializedObject.Update();
+      SetStatType(serializedObject);
 
       EditorGUI.BeginChangeCheck();
 
-      position.height = EditorGUIUtility.singleLineHeight;
       Rect buttonRect = EditorGUI.IndentedRect(position);
-      buttonRect.width = 7f;
+      buttonRect.width = 50f;
+      buttonRect.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
-      SerializedProperty useInt = property.FindPropertyRelative("useInt");
+      SerializedProperty useInt = serializedObject.FindProperty("useInt");
 
       DrawStatTypeButton(buttonRect, useInt);
 
-      position.x += buttonRect.width;
+      position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
-      // Give space for the swap button after the property field
-      position.width -= SwapButtonWidth + buttonMargin + buttonRect.width;
+      DrawValueField(position, serializedObject, label);
 
-      SerializedProperty baseValue = property.FindPropertyRelative("baseValue");
-
-      DrawValueField(position, baseValue, useInt, label);
-
-      position.x += position.width + buttonMargin;
-      position.width = SwapButtonWidth;
-
-      // Disable multi-object editing for this property since it throws errors
-      if (modifiersList.hasMultipleDifferentValues)
-      {
-        if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties();
-
-        return;
-      }
-
-      // Draw the dropdown/foldout button to show/hide modifiers list
-      GUIContent content = showModifiers ? dropdownContent : foldoutContent;
-      content.tooltip = "Show/hide modifiers.\n\n" + modifiersTooltip;
-      if (GUI.Button(position, content, dropdownButtonStyle)) showModifiers = !showModifiers;
-
-      // Display the list of modifiers
-      if (showModifiers)
-      {
-        position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-        position.x = EditorGUIUtility.labelWidth + 18f;
-        position.width = EditorGUIUtility.currentViewWidth - position.x - dropdownButtonStyle.margin.right;
-
-        EditorGUI.PropertyField(position, modifiersList, new GUIContent("Modifiers", modifiersTooltip), true);
-      }
-
-      if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties();
+      if (EditorGUI.EndChangeCheck()) serializedObject.ApplyModifiedProperties();
 
       EditorGUI.EndProperty();
     }
 
-    private void InitialiseVariables( SerializedProperty property, GUIContent label )
-    {
-      // Button for dropdown/foldout but without padding so image fills out the button space
-      if (dropdownButtonStyle == null)
-      {
-        dropdownButtonStyle = GUI.skin.button;
-        dropdownButtonStyle.padding = new RectOffset();
-      }
-      
-      if (popupStyle == null)
-      {
-        popupStyle = GUI.skin.GetStyle("PaneOptions");
-        popupStyle.imagePosition = ImagePosition.ImageOnly;
-      }
-
-      if (modifiersList == null)
-      {
-        modifiersList = property.FindPropertyRelative(nameof(Stat.StatModifiers));
-      }
-
-      if (buttonMargin < 1f)
-      {
-        buttonMargin = GUI.skin.button.margin.left;
-      }
-
-      // https://gist.github.com/MattRix/c1f7840ae2419d8eb2ec0695448d4321
-      // https://assetstore.unity.com/packages/tools/utilities/unity-internal-icons-70496
-      if (foldoutContent == null || dropdownContent == null)
-      {
-        foldoutContent = EditorGUIUtility.IconContent("d_IN_foldout_act");
-        dropdownContent = EditorGUIUtility.IconContent("d_dropdown");
-      }
-
-      if (property.hasMultipleDifferentValues) return;
-     
-      modifiersInList.Clear();
-
-      for (int i = 0; i < modifiersList.arraySize; ++i)
-      {
-        StatModifier statModifier = modifiersList.GetArrayElementAtIndex(i).objectReferenceValue as StatModifier;
-
-        if (!modifiersInList.Contains(statModifier)) modifiersInList.Add(statModifier);
-      }
-
-      AddModifiersToTooltip(label);
-    }
-
-    private void AddModifiersToTooltip( GUIContent label )
-    {
-      // Add the list of modifiers to the tooltip of the stat
-      int modifiersSize = modifiersList.arraySize;
-
-      modifiersTooltip = $"Modifiers ({modifiersSize}):";
-
-      if (modifiersSize == 0) modifiersTooltip += "\nNone";
-
-      for (int i = 0; i < modifiersSize; ++i)
-      {
-        // Perform null check since object field can be null and unassigned
-        Object modifierObject = modifiersList.GetArrayElementAtIndex(i).objectReferenceValue;
-
-        if (modifierObject)
-          modifiersTooltip += $"\n{modifierObject.name}";
-
-        else modifiersTooltip += $"\nUNASSIGNED";
-      }
-
-      if (!string.IsNullOrEmpty(label.tooltip)) label.tooltip += "\n\n";
-
-      label.tooltip += modifiersTooltip;
-    }
-
     private void DrawStatTypeButton( Rect position, SerializedProperty useInt )
     {
+      bool guiStatus = GUI.enabled;
+
       GUI.enabled = false;
 
-      string text = useInt.boolValue ? "i" : "f";
+      string text = useInt.boolValue ? "int" : "float";
 
       Color color = GUI.backgroundColor;
       GUI.backgroundColor = useInt.boolValue ? new Color(1f, 0.839f, 0.31f) : Color.cyan;
@@ -187,13 +140,22 @@ namespace CwispyStudios.TankMania.Stats
       GUI.Button(position, text);
 
       GUI.backgroundColor = color;
-
-      GUI.enabled = true;
+      GUI.enabled = guiStatus;
     }
 
-    public virtual void DrawValueField( Rect position, SerializedProperty baseValue, SerializedProperty useInt, GUIContent label )
+    public virtual void SetStatType( SerializedObject serializedObject )
     {
-      if (useInt.boolValue)
+      // Default use float
+      serializedObject.FindProperty(UseIntPropertyName).boolValue = false;
+    }
+
+    public virtual void DrawValueField( Rect position, SerializedObject serializedObject, GUIContent label )
+    {
+      SerializedProperty baseValue = serializedObject.FindProperty(BaseValuePropertyName);
+
+      bool useInt = serializedObject.FindProperty(UseIntPropertyName).boolValue;
+
+      if (useInt)
         baseValue.floatValue = EditorGUI.IntField(position, label, (int)baseValue.floatValue);
 
       else

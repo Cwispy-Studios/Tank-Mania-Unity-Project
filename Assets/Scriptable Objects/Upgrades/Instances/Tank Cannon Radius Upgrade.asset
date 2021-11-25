@@ -16,6 +16,18 @@ MonoBehaviour:
   UpgradeName: Tank Cannon Splash Radius
   UpgradeImage: {fileID: 21300000, guid: a12b96eb888a1b44bb2fd316ebc0bf90, type: 3}
   UpgradeDescription: Increases the cannon splash radius by 20%.
-  PlayerStatModifiers:
-  - {fileID: 11400000, guid: b6955347593497e49bbaca9a179aac44, type: 2}
-  EnemyStatModifiers: []
+  PlayerStatUpgraders:
+  - statModifier:
+      additiveValue: 0
+      multiplicativeValue: 0.19999999
+      useInt: 0
+    statUpgraded: {fileID: 11400000, guid: 7f93923483a2f1c44ae928c940381ad9, type: 2}
+  PlayerStatsCategoryUpgraders: []
+  EnemyStatUpgraders: []
+  EnemyStatsCategoryUpgraders:
+  - statModifier:
+      additiveValue: 0
+      multiplicativeValue: 0.049999997
+      useInt: 0
+    statsCategoryUpgraded: {fileID: 11400000, guid: 23f7c2e3d839c024c8af6c6987d0ec1b,
+      type: 2}

@@ -1,18 +1,11 @@
 using System;
-using System.Collections.Generic;
 
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  using Upgrades;
-
-  [Serializable]
-  public class Stat
+  public class Stat : ScriptableObject
   {
-    // The list of stat modifiers that will affect this stat's upgraded value
-    public List<StatModifier> StatModifiers = new List<StatModifier>();
-
     // Event when a stat modifier that this stat is subscribed to is upgraded
     public Action OnStatUpgrade;
 
@@ -21,64 +14,32 @@ namespace CwispyStudios.TankMania.Stats
 
     private float upgradedValue;
     public float Value => useInt ? Mathf.RoundToInt(upgradedValue) : upgradedValue;
+    public int IntValue => Mathf.RoundToInt(upgradedValue);
 
-    public Stat( bool valueAsInteger )
+    [NonSerialized] private float totalAdditiveValue = 0f;
+    [NonSerialized] private float totalMulitplicativeValue = 1f;
+
+#if UNITY_EDITOR
+
+    private void OnValidate()
     {
-      useInt = valueAsInteger;
+      // Does not need to be called in build since the values get serialized in editor already
+      SetDefaultUpgradedValue();
     }
 
-    public Stat( int value )
-    {
-      useInt = true;
-      baseValue = value;
-    }
-
-    public Stat( float value )
-    {
-      useInt = false;
-      baseValue = value;
-    }
-
-    public void SubscribeToStatModifiers()
-    {
-      // List is null when this function is called
-      if (StatModifiers == null) StatModifiers = new List<StatModifier>();
-
-      foreach (StatModifier statModifier in StatModifiers) statModifier.OnStatUpgrade += RecalculateStat;
-
-      // Ensures the upgraded value is initialised and returns a valid value
-      RecalculateStat();
-    }
-
-    public void UnsubscribeFromStatModifiers()
-    {
-      foreach (StatModifier statModifier in StatModifiers) statModifier.OnStatUpgrade -= RecalculateStat;
-    }
-
-    public void SetDefaultUpgradedValue()
+    private void SetDefaultUpgradedValue()
     {
       upgradedValue = baseValue;
     }
 
-    public void RecalculateStat()
+#endif
+
+    public void AdjustUpgradeValues( float additiveValue, float multiplicativeValue )
     {
-      SetDefaultUpgradedValue();
+      totalAdditiveValue += additiveValue;
+      totalMulitplicativeValue += multiplicativeValue;
 
-      float totalAdditiveValue = 0f;
-      float totalMultiplicativeValue = 0f;
-
-      foreach (StatModifier statModifier in StatModifiers)
-      {
-        int upgradedAmount = statModifier.UpgradedAmount;
-
-        totalAdditiveValue += statModifier.AddititiveValue * upgradedAmount;
-        totalMultiplicativeValue += statModifier.MultiplicativeValue * upgradedAmount;
-      }
-
-      upgradedValue += totalAdditiveValue;
-      upgradedValue *= 1f + totalMultiplicativeValue;
-
-      OnStatUpgrade?.Invoke();
+      upgradedValue = (baseValue + totalAdditiveValue) * totalMulitplicativeValue;
     }
   }
 }

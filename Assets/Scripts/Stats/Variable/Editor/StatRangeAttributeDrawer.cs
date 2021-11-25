@@ -6,13 +6,21 @@ namespace CwispyStudios.TankMania.Stats
   [CustomPropertyDrawer(typeof(StatRangeAttribute))]
   public class StatRangeAttributeDrawer : StatPropertyDrawer
   {
-    public override void DrawValueField( Rect position, SerializedProperty baseValue, SerializedProperty useInt, GUIContent label )
+    public override void SetStatType( SerializedObject serializedObject )
     {
       StatRangeAttribute range = attribute as StatRangeAttribute;
 
-      useInt.boolValue = range.UseInt;
+      serializedObject.FindProperty(UseIntPropertyName).boolValue = range.IsInt;
+    }
 
-      if (useInt.boolValue)
+    public override void DrawValueField( Rect position, SerializedObject serializedObject, GUIContent label )
+    {
+      StatRangeAttribute range = attribute as StatRangeAttribute;
+      bool isInt = range.IsInt;
+
+      SerializedProperty baseValue = serializedObject.FindProperty(BaseValuePropertyName);
+
+      if (isInt)
         baseValue.floatValue = EditorGUI.IntSlider(position, label, (int)baseValue.floatValue, (int)range.MinValue, (int)range.MaxValue);
 
       else

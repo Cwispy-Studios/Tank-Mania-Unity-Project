@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania
 {
-  [CreateAssetMenu]
+  [CreateAssetMenu(menuName = "Variables/Int Variable")]
   public class IntVariable : ScriptableObject
   {
 #if UNITY_EDITOR

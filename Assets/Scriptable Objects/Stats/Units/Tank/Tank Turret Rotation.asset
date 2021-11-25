@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1130739363fb141b1c16cec96f150a, type: 3}
+  m_Name: Tank Turret Rotation
+  m_EditorClassIdentifier: 
+  stats:
+  - {fileID: 11400000, guid: 94b38d28bd21e114e8d7abe1802ad8bf, type: 2}
+  - {fileID: 11400000, guid: 5ebfa4c5bc74ff14a98f0301d41af5c5, type: 2}
+  statsNames:
+  - TurretRotationSpeed
+  - GunRotationSpeed
+  nameOfStatsFolder: Tank Turret Rotation
+  TurretRotationSpeed: {fileID: 11400000, guid: 94b38d28bd21e114e8d7abe1802ad8bf,
+    type: 2}
+  GunRotationSpeed: {fileID: 11400000, guid: 5ebfa4c5bc74ff14a98f0301d41af5c5, type: 2}
