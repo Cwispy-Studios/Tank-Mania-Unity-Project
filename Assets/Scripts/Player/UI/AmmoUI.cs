@@ -34,6 +34,11 @@ namespace CwispyStudios.TankMania.Player
       firingInformation.AmmoCount.OnStatUpgrade += OnAmmoCountChange;
     }
 
+    private void OnDestroy()
+    {
+      firingInformation.AmmoCount.OnStatUpgrade -= OnAmmoCountChange;
+    }
+
     private void InitialiseUI()
     {
       if (useStackedAmmoImages)

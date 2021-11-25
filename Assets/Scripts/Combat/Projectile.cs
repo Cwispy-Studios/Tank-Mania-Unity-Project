@@ -10,8 +10,12 @@ namespace CwispyStudios.TankMania.Combat
 
   public class Projectile : MonoBehaviour
   {
-    // Particle system/vfx to play when projectile impacts
+    [Tooltip("Units without a soft match with these properties do weakened damage and do not do splash damage.")]
+    [SerializeField] private UnitType effectiveAgainst;
+    [Tooltip("Particle system/vfx to play when projectile impacts normally")]
     [SerializeField] private VfxParentDisabler impactVfxPrefab = null;
+    [Tooltip("Particle system/vfx to play when projectile impacts something it is not effective against")]
+    [SerializeField] private VfxParentDisabler dudImpactVfxPrefab = null;
 
     [Header("Custom Gravity")]
     [SerializeField] private bool usesCustomGravity = false;
@@ -68,15 +72,16 @@ namespace CwispyStudios.TankMania.Combat
     {
       if (disableProjectileCollisions) return;
 
+      bool isDudCollision = CheckIfIsDudCollision(collision);
+
       Vector3 collisionPoint = collision.GetContact(0).point;
-      EnableImpactVFX(collisionPoint);
+      EnableImpactVFX(collisionPoint, isDudCollision);
 
       // Damage the object it collided with
       GameObject collisionObject = collision.gameObject;
-      ProjectileDamage(collisionObject);
+      ProjectileDamage(collisionObject, isDudCollision);
 
-      // If projectile has splash damage, also do splash damage
-      if (damageInformation.HasSplashDamage)
+      if (!isDudCollision && damageInformation.HasSplashDamage)
       {
         ProjectileExplosion(collisionObject, collisionPoint);
       }
@@ -84,6 +89,26 @@ namespace CwispyStudios.TankMania.Combat
       BulletEvents.BulletHit(this);
 
       Deactivate();
+    }
+
+    private bool CheckIfIsDudCollision( Collision collision )
+    {
+      // If there is no effective type, it will never be a dud collision
+      if (effectiveAgainst == 0 || effectiveAgainst == (UnitType)~0) return false;
+
+      else
+      {
+        Damageable damageable = collision.gameObject.GetComponent<Damageable>();
+
+        if (damageable != null)
+        {
+          // Dud collision if none of the unit's properties match against the effectiveAgainst
+          return (effectiveAgainst & damageable.UnitProperties.UnitType) == 0;
+        }
+
+        // If object cannot be damaged (hitting terrain), default to dud collision
+        else return true;
+      }
     }
 
     public void ProjectileTrigger()
@@ -107,9 +132,9 @@ namespace CwispyStudios.TankMania.Combat
     /// Does direct damage to a single target
     /// </summary>
     /// <param name="objectToDamage"></param>
-    private void ProjectileDamage( GameObject objectToDamage )
+    private void ProjectileDamage( GameObject objectToDamage, bool isDudCollision = false )
     {
-      damageInformation.DamageObject(objectToDamage);
+      damageInformation.DamageObject(objectToDamage, isDudCollision);
     }
 
     /// <summary>
@@ -130,9 +155,10 @@ namespace CwispyStudios.TankMania.Combat
       damageInformation.SplashDamageOnPoint(collisionObject, explosionPoint);
     }
 
-    private void EnableImpactVFX( Vector3 location )
+    private void EnableImpactVFX( Vector3 location, bool isDudCollision = false )
     {
-      vfxPooler.EnablePooledObject(impactVfxPrefab, location, Quaternion.identity);
+      VfxParentDisabler vfxParentDisabler = isDudCollision ? dudImpactVfxPrefab : impactVfxPrefab;
+      vfxPooler.EnablePooledObject(vfxParentDisabler, location, Quaternion.identity);
     }
 
     private void Deactivate()

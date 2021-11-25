@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GunRotationSpeed
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 135
+  baseValue: 80

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
   - {fileID: 11400000, guid: 616b349b945b8c14d9e8112060d75f4e, type: 2}
+  - {fileID: 11400000, guid: a6e28b64d9be40742bb6ac74d38b7819, type: 2}
   - {fileID: 11400000, guid: 7f93923483a2f1c44ae928c940381ad9, type: 2}
   - {fileID: 11400000, guid: fdaf247085025c94e9d2ccefa32dc6ee, type: 2}
   - {fileID: 11400000, guid: 4de097240007bd14eb4a72ef92eaadea, type: 2}
@@ -22,6 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ef9118e9cd7e94745927002ae01995d6, type: 2}
   statsNames:
   - DirectDamage
+  - DudCollisionDamagePercentage
   - SplashRadius
   - SplashDamagePercentage
   - SplashMinRadiusPercentageRolloff
@@ -31,6 +33,8 @@ MonoBehaviour:
   nameOfStatsFolder: Cannon Damage
   DamageFrom: 0
   DirectDamage: {fileID: 11400000, guid: 616b349b945b8c14d9e8112060d75f4e, type: 2}
+  DudCollisionDamagePercentage: {fileID: 11400000, guid: a6e28b64d9be40742bb6ac74d38b7819,
+    type: 2}
   HasSplashDamage: 1
   SplashRadius: {fileID: 11400000, guid: 7f93923483a2f1c44ae928c940381ad9, type: 2}
   SplashDamagePercentage: {fileID: 11400000, guid: fdaf247085025c94e9d2ccefa32dc6ee,

@@ -5417,7 +5417,7 @@ PrefabInstance:
     - target: {fileID: 6515029138149380091, guid: 5f9c0cc28903c324fb2d65a0a1e532e8,
         type: 3}
       propertyPath: objectPrefabsList.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6515029138149380091, guid: 5f9c0cc28903c324fb2d65a0a1e532e8,
         type: 3}
@@ -5425,10 +5425,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5924228815087809842, guid: c2e8a4041da5b044695329274c91a26e,
         type: 3}
+    - target: {fileID: 6515029138149380091, guid: 5f9c0cc28903c324fb2d65a0a1e532e8,
+        type: 3}
+      propertyPath: objectPrefabsList.Array.data[2]
+      value: 
+      objectReference: {fileID: 5924228815087809842, guid: afb2dafa1ac21774383b9d60520b4fb4,
+        type: 3}
     - target: {fileID: 6515029138149380092, guid: 5f9c0cc28903c324fb2d65a0a1e532e8,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6515029138691448621, guid: 5f9c0cc28903c324fb2d65a0a1e532e8,
+        type: 3}
+      propertyPath: numberPooledPerPrefab
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6515029138691448621, guid: 5f9c0cc28903c324fb2d65a0a1e532e8,
         type: 3}

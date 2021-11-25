@@ -42,7 +42,10 @@ namespace CwispyStudios.TankMania.Player
       targetFinder = GetComponent<TargetFinder>();
       turretHub = GetComponentInChildren<TurretHub>();
       gun = GetComponentInChildren<GunController>();
+    }
 
+    private void OnEnable()
+    {
       aiTurretStats.DetectionRange.OnStatUpgrade += AdjustDetectionSphereRadius;
       AdjustDetectionSphereRadius();
 
@@ -51,6 +54,11 @@ namespace CwispyStudios.TankMania.Player
       {
         validTargetsSortedByCriterias.Add(new List<Rigidbody>());
       }
+    }
+
+    private void OnDisable()
+    {
+      aiTurretStats.DetectionRange.OnStatUpgrade -= AdjustDetectionSphereRadius;
     }
 
     private void Update()

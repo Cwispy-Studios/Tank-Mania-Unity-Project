@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: TurretRotationSpeed
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 191
+  baseValue: 120

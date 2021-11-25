@@ -8,10 +8,15 @@ namespace CwispyStudios.TankMania.Combat
   {
     private float timer;
 
-    private void Awake()
+    private void OnEnable()
     {
       ResetTimer();
       TriggerStats.TimeToTrigger.OnStatUpgrade += ResetTimer;
+    }
+
+    private void OnDisable()
+    {
+      TriggerStats.TimeToTrigger.OnStatUpgrade -= ResetTimer;
     }
 
     private void Update()

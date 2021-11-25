@@ -49,11 +49,16 @@ namespace CwispyStudios.TankMania.Combat
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="collisionObject"> Target object to damage. </param>
-    public static void DamageObject( this Damage damage, GameObject collisionObject )
+    public static void DamageObject( this Damage damage, GameObject collisionObject, bool isDudCollision )
     {
       // Also check if unit is from a different team, no friendly fire
       if (CheckIfDamageable(damage, collisionObject, out Damageable hitObjectHealth))
-        hitObjectHealth.TakeDamage(damage.DirectDamage.Value);
+      {
+        float damageAmount = damage.DirectDamage.Value;
+        if (isDudCollision) damageAmount *= damage.DudCollisionDamagePercentage.Value;
+
+        hitObjectHealth.TakeDamage(damageAmount);
+      }
     }
 
     /// <summary>

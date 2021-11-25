@@ -131,7 +131,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146d1787306c0894a92320c9793fa7dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectiveAgainst: 2
   impactVfxPrefab: {fileID: 5924228815087809842, guid: c2e8a4041da5b044695329274c91a26e,
+    type: 3}
+  dudImpactVfxPrefab: {fileID: 5924228815087809842, guid: afb2dafa1ac21774383b9d60520b4fb4,
     type: 3}
   usesCustomGravity: 1
   customGravityValue: -2
@@ -193,9 +196,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   checkingInterval: 0.1
-  triggerPreference:
-    Team: 1
-    UnitType: 2
 --- !u!114 &-3237600328331388279
 MonoBehaviour:
   m_ObjectHideFlags: 0
