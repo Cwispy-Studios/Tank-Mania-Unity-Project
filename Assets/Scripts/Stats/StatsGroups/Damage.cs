@@ -13,9 +13,12 @@ namespace CwispyStudios.TankMania.Stats
     [Header("Damage Information"), Tooltip("How much damage is dealt on a direct hit.")]
     public Stat DirectDamage; // 10f
 
+<<<<<<< HEAD
     [StatPercentage, Tooltip("Percentage damage dealt of a dud collision")]
     public Stat DudCollisionDamagePercentage;
 
+=======
+>>>>>>> develop
     // Whether damage is splash damage, which affects if below variables are ever used
     [Tooltip("Is splash damage enabled?")]
     public bool HasSplashDamage;
