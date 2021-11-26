@@ -263,6 +263,6 @@ MonoBehaviour:
   segmentsMass: 8
   springConstant: 0.2
   dampingConstant: 0.1
+  explosionConstant: 1000
   initialForce: 0
-  threshold: 0.1
   timeStep: 0.05
