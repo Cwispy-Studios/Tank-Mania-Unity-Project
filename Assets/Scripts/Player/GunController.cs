@@ -1,12 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CwispyStudios.TankMania.Player
 {
   using Combat;
   using Poolers;
   using Stats;
-  using Upgrades;
 
   public class GunController : MonoBehaviour
   {
@@ -17,16 +15,17 @@ namespace CwispyStudios.TankMania.Player
     [Header("Damage Information")]
     [SerializeField] private Damage baseDamage;
 
-    [Header("Upgrade Information")]
-    [SerializeField] private UpgradedUpgrades upgradedUpgrades;
-
     [Header("Attributes")]
     [SerializeField] private FloatVariable fireCountdown;
     [SerializeField] private FloatVariable reloadCountdown;
     [SerializeField] private IntVariable currentAmmo;
 
+    public Transform FireZone => fireZone;
+
     private ProjectilePooler projectilePooler;
     private VfxPooler vfxPooler;
+
+    private bool CanFire => fireCountdown.Value <= 0f && currentAmmo.Value > 0;
 
     private bool firingIsQueued = false;
     private int previousAmmoCount;
@@ -58,8 +57,7 @@ namespace CwispyStudios.TankMania.Player
       UpdateReloadCooldown();
 
       // Check if ready to fire and player has fired
-      if (firingIsQueued && fireCountdown.Value <= 0f && currentAmmo.Value > 0) 
-        FireProjectile();
+      if (CanFire && firingIsQueued) FireProjectile();
     }
 
     private void UpdateFiringCooldown()
@@ -129,13 +127,15 @@ namespace CwispyStudios.TankMania.Player
       previousAmmoCount = (int)firingInformation.AmmoCount.Value;
     }
 
-    ///////////////////////////
-    // Input Actions callbacks
+    public void YouMayFireIfReady()
+    {
+      if (CanFire) QueueFiring();
+    }
 
-    public void OnMainFire()
+    public void QueueFiring()
     {
       // Queue firing which will be executed in update
-      if (fireCountdown.Value <= firingInformation.TimeToQueueFiring.Value) 
+      if (fireCountdown.Value <= firingInformation.TimeToQueueFiring.Value)
         firingIsQueued = true;
     }
   }

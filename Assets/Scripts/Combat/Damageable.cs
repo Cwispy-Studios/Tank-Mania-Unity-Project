@@ -4,10 +4,10 @@ namespace CwispyStudios.TankMania.Combat
 {
   using Stats;
 
-  public class Damageable : MonoBehaviour
+  public class Damageable : PooledObject
   {
-    [Header("Atrributes")]
-    [SerializeField] private Team unitTeam;
+    [SerializeField] private UnitProperties unitProperties;
+    public UnitProperties UnitProperties => unitProperties;
     [SerializeField] private Health health;
 
     [Header("Debug")]
@@ -39,7 +39,7 @@ namespace CwispyStudios.TankMania.Combat
 
     public bool CanTakeDamageFromTeam( Team team )
     {
-      return unitTeam != team;
+      return unitProperties.Team != team;
     }
 
     public void TakeDamage( float damage )
@@ -49,6 +49,7 @@ namespace CwispyStudios.TankMania.Combat
 
       if (currentHealth < 0f)
       {
+        gameObject.SetActive(false);
         // Remove
         gameObject.SetActive(false);
       }

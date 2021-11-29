@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 99c9791a54448e14183ac356254af480
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - gunCannon: {instanceID: 0}
+  - turretRotation: {instanceID: 0}
+  - cameraHorizontalRotation: {fileID: 11400000, guid: f9900f18c84bf0f4da073d6ffa9a7aa1,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

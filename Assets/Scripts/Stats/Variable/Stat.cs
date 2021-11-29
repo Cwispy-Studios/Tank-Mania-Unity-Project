@@ -7,7 +7,7 @@ namespace CwispyStudios.TankMania.Stats
   public class Stat : ScriptableObject
   {
     // Event when a stat modifier that this stat is subscribed to is upgraded
-    public Action OnStatUpgrade;
+    public event Action OnStatUpgrade;
 
     [SerializeField] private bool useInt = false;
     [SerializeField] private float baseValue;
@@ -19,7 +19,10 @@ namespace CwispyStudios.TankMania.Stats
     [NonSerialized] private float totalAdditiveValue = 0f;
     [NonSerialized] private float totalMulitplicativeValue = 1f;
 
-#if UNITY_EDITOR
+    private void Awake()
+    {
+      SetDefaultUpgradedValue();
+    }
 
     private void OnValidate()
     {
@@ -31,8 +34,6 @@ namespace CwispyStudios.TankMania.Stats
     {
       upgradedValue = baseValue;
     }
-
-#endif
 
     public void AdjustUpgradeValues( float additiveValue, float multiplicativeValue )
     {
