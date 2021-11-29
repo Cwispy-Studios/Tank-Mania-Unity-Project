@@ -4,7 +4,7 @@ namespace CwispyStudios.TankMania.Combat
 {
   using Stats;
 
-  public class Damageable : MonoBehaviour
+  public class Damageable : PooledObject
   {
     [SerializeField] private UnitProperties unitProperties;
     public UnitProperties UnitProperties => unitProperties;
@@ -48,6 +48,7 @@ namespace CwispyStudios.TankMania.Combat
 
       if (currentHealth < 0f)
       {
+        gameObject.SetActive(false);
         // Remove
       }
     }

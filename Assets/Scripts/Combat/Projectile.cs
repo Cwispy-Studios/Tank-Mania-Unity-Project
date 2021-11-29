@@ -184,6 +184,9 @@ namespace CwispyStudios.TankMania.Combat
     /// </param>
     private void EnableImpactVFX( Vector3 location, bool isDudCollision = false )
     {
+      // TODO: REMOVE WHEN NOT DEBUGGING
+      if (dudImpactVfxPrefab == null && impactVfxPrefab == null) return;
+
       VfxParentDisabler vfxParentDisabler = isDudCollision ? dudImpactVfxPrefab : impactVfxPrefab;
       vfxPooler.EnablePooledObject(vfxParentDisabler, location, Quaternion.identity);
     }

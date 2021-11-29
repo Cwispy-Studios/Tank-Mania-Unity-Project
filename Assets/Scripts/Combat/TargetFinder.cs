@@ -29,6 +29,7 @@ namespace CwispyStudios.TankMania.Combat
 
       if (damageable != null && targetPreference.IsSoftMatchWith(damageable.UnitProperties))
       {
+        damageable.OnObjectDisabled += RemoveDisabledObject;
         targetsInRange.Add(rb);
       }
     }
@@ -37,7 +38,22 @@ namespace CwispyStudios.TankMania.Combat
     {
       Rigidbody rb = other.attachedRigidbody;
 
-      if (targetsInRange.Contains(rb)) targetsInRange.Remove(rb);
+      if (targetsInRange.Contains(rb))
+      {
+        rb.GetComponent<Damageable>().OnObjectDisabled -= RemoveDisabledObject; ;
+        targetsInRange.Remove(rb);
+      }
+    }
+
+    private void RemoveDisabledObject( GameObject disabledObject )
+    {
+      Rigidbody rb = disabledObject.GetComponent<Rigidbody>();
+
+      if (targetsInRange.Contains(rb))
+      {
+        rb.GetComponent<Damageable>().OnObjectDisabled -= RemoveDisabledObject; ;
+        targetsInRange.Remove(rb);
+      }
     }
   }
 }
