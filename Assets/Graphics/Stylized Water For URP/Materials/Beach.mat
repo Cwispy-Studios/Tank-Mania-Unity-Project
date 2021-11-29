@@ -3,7 +3,7 @@
 --- !u!21 &2100000
 Material:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -159,8 +159,8 @@ Material:
     - _SurfaceFoamMovement: {r: 0.7, g: 0, b: 0.47, a: 0.01}
     - _SurfaceFoamSampling: {r: 0.62, g: 0, b: 0, a: 0}
     - _SurfaceFoamTilingAndOffset: {r: -1, g: -1, b: 0.57, a: 0.22}
-    - _WaterColorDeep: {r: 0, g: 0.25988248, b: 0.6509434, a: 1}
-    - _WaterColorHorizon: {r: 0, g: 0.22725016, b: 0.8, a: 1}
+    - _WaterColorDeep: {r: 0, g: 0.2598786, b: 0.6509434, a: 1}
+    - _WaterColorHorizon: {r: 0, g: 0.22724628, b: 0.8, a: 1}
     - _WaterColorShallow: {r: 0, g: 0.7725491, b: 0.62352943, a: 0.5019608}
     - _WaterColorUnderwater: {r: 0.51023495, g: 0.5854396, b: 0.735849, a: 0.714}
     - _WaveColor: {r: 0, g: 0, b: 0, a: 0}
