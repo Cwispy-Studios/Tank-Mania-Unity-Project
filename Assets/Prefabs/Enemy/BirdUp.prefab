@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 293700009727857138}
   - component: {fileID: 293700009727857139}
   - component: {fileID: 293700009727857136}
-  - component: {fileID: 293700009727857137}
   - component: {fileID: 293700009727857140}
   - component: {fileID: 4441263854141526703}
+  - component: {fileID: 293700009106499947}
   m_Layer: 0
   m_Name: BirdUp
   m_TagString: Untagged
@@ -109,30 +109,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293700009727857151}
   serializedVersion: 2
-  m_Mass: 20
-  m_Drag: 0
+  m_Mass: 1
+  m_Drag: 0.1
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &293700009727857137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 293700009727857151}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff6c0aaec3e7ab940b0bcb23d1aeea11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotateWithPath: 0
-  movementSpeed: 10
-  accelerationSpeed: 5
-  turningSpeed: 5
 --- !u!114 &293700009727857140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +145,23 @@ MonoBehaviour:
   unitTeam: 1
   health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
   healthText: {fileID: 5638592229459629410}
+--- !u!114 &293700009106499947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293700009727857151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b031f7593ef542209ba3c37b9e511e9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateWithDirection: 0
+  usesAcceleration: 0
+  movementSpeed: 10
+  accelerationSpeed: 5
+  turningSpeed: 5
 --- !u!1 &3662236316591728404
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,17 +6,17 @@ using Random = Unity.Mathematics.Random;
 
 namespace Enemy
 {
-  [RequireComponent(typeof(AIMovementController))]
+  [RequireComponent(typeof(AiMovementController))]
   public class DroneEnemy : MonoBehaviour
   {
-    public Rigidbody rb;
+    [HideInInspector] public Rigidbody rb;
 
-    private AIMovementController mc;
+    private AiMovementController mc;
     private GunController gc;
 
     private void Start()
     {
-      mc = GetComponent<AIMovementController>();
+      mc = GetComponent<AiMovementController>();
       gc = GetComponentInChildren<GunController>();
 
       // TODO TEMP
@@ -34,11 +34,14 @@ namespace Enemy
       }
     }
 
-    public void ApplyForce(Vector3 force, float maxSpeed)
+    public void ApplyForce(Vector3 force)
     {
-      if (rb.velocity.magnitude < maxSpeed)
-        rb.AddForce(force, ForceMode.Acceleration);
-      //mc.StartPath(rb.position + force);
+      mc.ApplyMovementForce(force);
+    }
+    
+    public void SetMaxSpeed(float maxSpeed)
+    {
+      mc.SetMovementSpeed(maxSpeed);
     }
   }
 }

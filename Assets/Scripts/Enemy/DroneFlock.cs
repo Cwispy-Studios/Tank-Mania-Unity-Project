@@ -9,71 +9,96 @@ namespace Enemy
     public List<DroneEnemy> flockingDrones = new List<DroneEnemy>();
     public Transform playerTransform;
 
-    [SerializeField] private float neighbourDistance;
+    [Header("Component parameters")] [SerializeField]
+    private float neighbourDistance;
+
     [SerializeField] private float desiredSeparation;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float maxForce;
 
-    [SerializeField] private float separationFactor = 1.5f;
+    [Header("Component weight")] [SerializeField]
+    private float separationFactor = 1.5f;
+
     [SerializeField] private float alignFactor = 1f;
     [SerializeField] private float cohesionFactor = 1f;
     [SerializeField] private float seekFactor = 4f;
-
+    private List<DroneEnemy> queuedDrones = new List<DroneEnemy>();
 
     private void Start()
     {
+      SetMaxSpeedAll();
+
       InvokeRepeating(nameof(UpdateFlock), 1, .2f);
+    }
+
+    private void AddDrone(DroneEnemy drone)
+    {
+      queuedDrones.Add(drone);
+    }
+
+    private void SetMaxSpeedAll()
+    {
+      foreach (var drone in flockingDrones)
+      {
+        drone.SetMaxSpeed(maxSpeed);
+      }
     }
 
     private void UpdateFlock()
     {
+      if (queuedDrones.Count > 0)
+      {
+        foreach (var drone in queuedDrones)
+        {
+          flockingDrones.Add(drone);
+          drone.SetMaxSpeed(maxSpeed);
+        }
+
+        queuedDrones.Clear();
+      }
+
       for (int i = 0; i < flockingDrones.Count; i++)
       {
-        Vector3 sep = Separate(i);   // Separation
-        Vector3 ali = Align(i);      // Alignment
-        Vector3 coh = Cohesion(i);   // Cohesion
+        Vector3 sep = Separate(i); // Separation	
+        Vector3 ali = Align(i); // Alignment	
+        Vector3 coh = Cohesion(i); // Cohesion	
         Vector3 seek = Seek(i, playerTransform.position);
-        // Arbitrarily weight these forces
+        // Arbitrarily weight these forces	
         sep *= separationFactor;
         ali *= alignFactor;
         coh *= cohesionFactor;
         seek *= seekFactor;
-        // Add the force vectors to acceleration
-        flockingDrones[i].ApplyForce(sep, maxSpeed);
-        flockingDrones[i].ApplyForce(ali, maxSpeed);
-        flockingDrones[i].ApplyForce(coh, maxSpeed);
-        flockingDrones[i].ApplyForce(seek, maxSpeed);
+        // Add the force vectors to acceleration	
+        flockingDrones[i].ApplyForce(sep);
+        flockingDrones[i].ApplyForce(ali);
+        flockingDrones[i].ApplyForce(coh);
+        flockingDrones[i].ApplyForce(seek);
       }
     }
 
-    private Vector3 LimitVector(ref Vector3 vector, float maxValue)
+    private void LimitVector(ref Vector3 vector, float maxValue)
     {
       if (vector.magnitude > maxValue)
       {
         vector.Normalize();
         vector *= maxValue;
       }
-
-      return vector;
     }
 
     private Vector3 Seek(int index, Vector3 target)
     {
-      Vector3 desired = target - flockingDrones[index].rb.position; // A vector pointing from the position to the target
-      // Scale to maximum speed
+      Vector3
+        desired = target - flockingDrones[index].rb.position; // A vector pointing from the position to the target	
+      // Scale to maximum speed	
       desired.Normalize();
       desired *= maxSpeed;
-
-      // Above two lines of code below could be condensed with new PVector setMag() method
-      // Not using this method until Processing.js catches up
-      // desired.setMag(maxspeed);
-
-      // Steering = Desired minus Velocity
+      // Above two lines of code below could be condensed with new PVector setMag() method	
+      // Not using this method until Processing.js catches up	
+      // desired.setMag(maxspeed);	
+      // Steering = Desired minus Velocity	
       Vector3 steer = desired - flockingDrones[index].rb.velocity;
-
-      // Limit to maximum steering force
+      // Limit to maximum steering force	
       LimitVector(ref steer, maxForce);
-
       return steer;
     }
 
@@ -81,45 +106,40 @@ namespace Enemy
     {
       Vector3 position = flockingDrones[index].rb.position;
       Vector3 steer = new Vector3(0, 0, 0);
-
       int inRangeCount = 0;
-
       for (int i = 0; i < flockingDrones.Count; i++)
       {
         if (i == index) continue;
-
-        // For every boid in the system, check if it's too close
+        // For every boid in the system, check if it's too close	
         float d = Vector3.Distance(position, flockingDrones[i].rb.position);
-        // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
+        // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)	
         if (d < desiredSeparation)
         {
-          // Calculate vector pointing away from neighbor
+          // Calculate vector pointing away from neighbor	
           Vector3 diff = position - flockingDrones[i].rb.position;
           diff.Normalize();
-          diff /= d; // Weight by distance
+          diff /= d; // Weight by distance	
           steer += diff;
-          inRangeCount++; // Keep track of how many
+          inRangeCount++; // Keep track of how many	
         }
       }
 
-      // Average -- divide by how many
+      // Average -- divide by how many	
       if (inRangeCount > 0)
       {
         steer /= ((float) inRangeCount);
       }
 
-      // As long as the vector is greater than 0
+      // As long as the vector is greater than 0	
       if (steer.magnitude > 0)
       {
-        // First two lines of code below could be condensed with new PVector setMag() method
-        // Not using this method until Processing.js catches up
-        // steer.setMag(maxspeed);
-
-        // Implement Reynolds: Steering = Desired - Velocity
+        // First two lines of code below could be condensed with new PVector setMag() method	
+        // Not using this method until Processing.js catches up	
+        // steer.setMag(maxspeed);	
+        // Implement Reynolds: Steering = Desired - Velocity	
         steer.Normalize();
         steer *= maxSpeed;
         steer -= flockingDrones[index].rb.velocity;
-
         if (steer.magnitude > maxForce)
         {
           steer.Normalize();
@@ -130,13 +150,12 @@ namespace Enemy
       return steer;
     }
 
-    // Alignment
-    // For every nearby boid in the system, calculate the average velocity
+    // Alignment	
+    // For every nearby boid in the system, calculate the average velocity	
     private Vector3 Align(int index)
     {
       Vector3 sum = new Vector3(0, 0, 0);
       int count = 0;
-
       for (int i = 0; i < flockingDrones.Count; i++)
       {
         float d = Vector3.Distance(flockingDrones[index].rb.position, flockingDrones[i].rb.position);
@@ -150,16 +169,13 @@ namespace Enemy
       if (count > 0)
       {
         sum /= ((float) count);
-        // First two lines of code below could be condensed with new PVector setMag() method
-        // Not using this method until Processing.js catches up
-        // sum.setMag(maxspeed);
-
-        // Implement Reynolds: Steering = Desired - Velocity
+        // First two lines of code below could be condensed with new PVector setMag() method	
+        // Not using this method until Processing.js catches up	
+        // sum.setMag(maxspeed);	
+        // Implement Reynolds: Steering = Desired - Velocity	
         sum.Normalize();
         sum *= maxSpeed;
         Vector3 steer = sum - flockingDrones[index].rb.velocity;
-
-
         LimitVector(ref steer, maxForce);
         return steer;
       }
@@ -167,19 +183,18 @@ namespace Enemy
       return new Vector3(0, 0, 0);
     }
 
-    // Cohesion
-    // For the average position (i.e. center) of all nearby boids, calculate steering vector towards that position
+    // Cohesion	
+    // For the average position (i.e. center) of all nearby boids, calculate steering vector towards that position	
     private Vector3 Cohesion(int index)
     {
-      Vector3 sum = new Vector3(0, 0, 0); // Start with empty vector to accumulate all positions
+      Vector3 sum = new Vector3(0, 0, 0); // Start with empty vector to accumulate all positions	
       int count = 0;
-
       for (int i = 0; i < flockingDrones.Count; i++)
       {
         float d = Vector3.Distance(flockingDrones[index].rb.position, flockingDrones[i].rb.position);
         if (d < neighbourDistance)
         {
-          sum += flockingDrones[index].rb.position; // Add position
+          sum += flockingDrones[index].rb.position; // Add position	
           count++;
         }
       }
@@ -187,7 +202,7 @@ namespace Enemy
       if (count > 0)
       {
         sum /= (float) count;
-        return Seek(index, sum); // Steer towards the position
+        return Seek(index, sum); // Steer towards the position	
       }
 
       return new Vector3(0, 0, 0);

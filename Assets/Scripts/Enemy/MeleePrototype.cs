@@ -2,17 +2,17 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Enemy
 {
-  public class AIMeleeDebugger : MonoBehaviour
+  public class MeleePrototype : MonoBehaviour
   {
     [SerializeField] private Transform followedTransform;
     [SerializeField] private float minDistance;
 
-    private AIMovementController mct;
+    private PhysicsNavMeshAgent movementController;
     private MeleeController meleeController;
 
     private bool following = true;
 
-    public bool Following
+    private bool Following
     {
       get => following;
       set
@@ -21,10 +21,10 @@ namespace CwispyStudios.TankMania.Enemy
           return;
         following = value;
         if (!following)
-          mct.StopPath();
+          movementController.StopPath();
         else
         {
-          mct.StartPath(followedTransform.position);
+          movementController.StartPath(followedTransform.position);
         }
 
         print("stop");
@@ -33,11 +33,11 @@ namespace CwispyStudios.TankMania.Enemy
 
     void Start()
     {
-      mct = GetComponent<AIMovementController>();
+      movementController = GetComponent<PhysicsNavMeshAgent>();
       meleeController = GetComponent<MeleeController>();
       InvokeRepeating(nameof(FollowTransform), 0, .2f);
       
-      mct.StartPath(followedTransform.position);
+      movementController.StartPath(followedTransform.position);
     }
 
     private void FollowTransform()
