@@ -27,8 +27,6 @@ namespace Enemy
     private void Start()
     {
       SetMaxSpeedAll();
-
-      InvokeRepeating(nameof(UpdateFlock), 1, .2f);
     }
 
     private void AddDrone(DroneEnemy drone)
@@ -42,6 +40,11 @@ namespace Enemy
       {
         drone.SetMaxSpeed(maxSpeed);
       }
+    }
+
+    private void Update()
+    {
+      UpdateFlock();
     }
 
     private void UpdateFlock()
@@ -87,8 +90,12 @@ namespace Enemy
 
     private Vector3 Seek(int index, Vector3 target)
     {
+      Vector3 dronePosition = flockingDrones[index].rb.position;
+      dronePosition.y = 0;
+      target.y = 0;
+      
       Vector3
-        desired = target - flockingDrones[index].rb.position; // A vector pointing from the position to the target	
+        desired = target - dronePosition; // A vector pointing from the position to the target	
       // Scale to maximum speed	
       desired.Normalize();
       desired *= maxSpeed;

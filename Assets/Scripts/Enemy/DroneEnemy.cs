@@ -9,12 +9,13 @@ namespace Enemy
   [RequireComponent(typeof(AiMovementController))]
   public class DroneEnemy : MonoBehaviour
   {
+    [SerializeField] private float desiredHeight;
     [HideInInspector] public Rigidbody rb;
 
     private AiMovementController mc;
     private GunController gc;
 
-    private void Start()
+    private void Awake()
     {
       mc = GetComponent<AiMovementController>();
       gc = GetComponentInChildren<GunController>();
@@ -37,6 +38,10 @@ namespace Enemy
     public void ApplyForce(Vector3 force)
     {
       mc.ApplyMovementForce(force);
+
+      if (!Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) return;
+
+      mc.ApplyMovementForce(Vector3.up * (desiredHeight - hit.distance));
     }
     
     public void SetMaxSpeed(float maxSpeed)

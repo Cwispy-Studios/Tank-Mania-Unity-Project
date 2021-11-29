@@ -19,6 +19,8 @@ namespace Enemy
 
     protected Rigidbody physicsController;
 
+    private float forceFactor = 100;
+
     protected virtual void Awake()
     {
       physicsController = GetComponent<Rigidbody>();
@@ -34,10 +36,10 @@ namespace Enemy
       Vector3 velocity = physicsController.velocity;
       velocity.y = 0f;
 
-      if (velocity.sqrMagnitude <= movementSpeed)
+      Vector3 force = usesAcceleration ? direction * accelerationSpeed : direction;
+      if ((velocity + Time.deltaTime * forceFactor * force).magnitude <= movementSpeed)
       {
-        Vector3 force = usesAcceleration? direction * accelerationSpeed : direction;
-        physicsController.AddForce(Time.deltaTime * 1000 * force, ForceMode.Acceleration);
+        physicsController.AddForce(Time.deltaTime * forceFactor * force, ForceMode.Acceleration);
         print("force");
       }
 
