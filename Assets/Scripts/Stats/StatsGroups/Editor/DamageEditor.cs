@@ -7,6 +7,7 @@ namespace CwispyStudios.TankMania.Stats
   public class DamageEditor : StatsGroupEditor
   {
     private SerializedProperty directDamage;
+    private SerializedProperty dudCollisionDamagePercentage;
     private SerializedProperty hasSplashDamage;
     private SerializedProperty splashRadius;
     private SerializedProperty splashDamagePercentage;
@@ -21,6 +22,7 @@ namespace CwispyStudios.TankMania.Stats
       base.OnEnable();
 
       directDamage = serializedObject.FindProperty(nameof(Damage.DirectDamage));
+      dudCollisionDamagePercentage = serializedObject.FindProperty(nameof(Damage.DudCollisionDamagePercentage));
 
       hasSplashDamage = serializedObject.FindProperty(nameof(Damage.HasSplashDamage));
       splashRadius = serializedObject.FindProperty(nameof(Damage.SplashRadius));
@@ -37,6 +39,7 @@ namespace CwispyStudios.TankMania.Stats
       serializedObject.Update();
 
       EditorGUILayout.PropertyField(directDamage);
+      EditorGUILayout.PropertyField(dudCollisionDamagePercentage, new GUIContent("Dud Damage %"));
 
       EditorGUILayout.Space();
 
