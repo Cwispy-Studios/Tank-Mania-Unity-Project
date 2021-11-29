@@ -905,6 +905,7 @@ MonoBehaviour:
   movementSpeed: 4
   accelerationSpeed: 5
   turningSpeed: 3
+  showPath: 1
 --- !u!114 &8454413252481527678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -918,7 +919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followedTransform: {fileID: 0}
-  minDistance: 5
+  minDistance: 4
 --- !u!114 &7045846540979785746
 MonoBehaviour:
   m_ObjectHideFlags: 0

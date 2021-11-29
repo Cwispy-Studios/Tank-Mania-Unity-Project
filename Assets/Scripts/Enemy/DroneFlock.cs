@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Enemy
 {
-  public class BirdoFlock : MonoBehaviour
+  public class DroneFlock : MonoBehaviour
   {
-    public List<BirdoEnemy> flockingBirdos = new List<BirdoEnemy>();
+    public List<DroneEnemy> flockingDrones = new List<DroneEnemy>();
     public Transform playerTransform;
 
     [SerializeField] private float neighbourDistance;
@@ -27,7 +27,7 @@ namespace Enemy
 
     private void UpdateFlock()
     {
-      for (int i = 0; i < flockingBirdos.Count; i++)
+      for (int i = 0; i < flockingDrones.Count; i++)
       {
         Vector3 sep = Separate(i);   // Separation
         Vector3 ali = Align(i);      // Alignment
@@ -39,10 +39,10 @@ namespace Enemy
         coh *= cohesionFactor;
         seek *= seekFactor;
         // Add the force vectors to acceleration
-        flockingBirdos[i].ApplyForce(sep, maxSpeed);
-        flockingBirdos[i].ApplyForce(ali, maxSpeed);
-        flockingBirdos[i].ApplyForce(coh, maxSpeed);
-        flockingBirdos[i].ApplyForce(seek, maxSpeed);
+        flockingDrones[i].ApplyForce(sep, maxSpeed);
+        flockingDrones[i].ApplyForce(ali, maxSpeed);
+        flockingDrones[i].ApplyForce(coh, maxSpeed);
+        flockingDrones[i].ApplyForce(seek, maxSpeed);
       }
     }
 
@@ -59,7 +59,7 @@ namespace Enemy
 
     private Vector3 Seek(int index, Vector3 target)
     {
-      Vector3 desired = target - flockingBirdos[index].rb.position; // A vector pointing from the position to the target
+      Vector3 desired = target - flockingDrones[index].rb.position; // A vector pointing from the position to the target
       // Scale to maximum speed
       desired.Normalize();
       desired *= maxSpeed;
@@ -69,7 +69,7 @@ namespace Enemy
       // desired.setMag(maxspeed);
 
       // Steering = Desired minus Velocity
-      Vector3 steer = desired - flockingBirdos[index].rb.velocity;
+      Vector3 steer = desired - flockingDrones[index].rb.velocity;
 
       // Limit to maximum steering force
       LimitVector(ref steer, maxForce);
@@ -79,22 +79,22 @@ namespace Enemy
 
     private Vector3 Separate(int index)
     {
-      Vector3 position = flockingBirdos[index].rb.position;
+      Vector3 position = flockingDrones[index].rb.position;
       Vector3 steer = new Vector3(0, 0, 0);
 
       int inRangeCount = 0;
 
-      for (int i = 0; i < flockingBirdos.Count; i++)
+      for (int i = 0; i < flockingDrones.Count; i++)
       {
         if (i == index) continue;
 
         // For every boid in the system, check if it's too close
-        float d = Vector3.Distance(position, flockingBirdos[i].rb.position);
+        float d = Vector3.Distance(position, flockingDrones[i].rb.position);
         // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
         if (d < desiredSeparation)
         {
           // Calculate vector pointing away from neighbor
-          Vector3 diff = position - flockingBirdos[i].rb.position;
+          Vector3 diff = position - flockingDrones[i].rb.position;
           diff.Normalize();
           diff /= d; // Weight by distance
           steer += diff;
@@ -118,7 +118,7 @@ namespace Enemy
         // Implement Reynolds: Steering = Desired - Velocity
         steer.Normalize();
         steer *= maxSpeed;
-        steer -= flockingBirdos[index].rb.velocity;
+        steer -= flockingDrones[index].rb.velocity;
 
         if (steer.magnitude > maxForce)
         {
@@ -137,12 +137,12 @@ namespace Enemy
       Vector3 sum = new Vector3(0, 0, 0);
       int count = 0;
 
-      for (int i = 0; i < flockingBirdos.Count; i++)
+      for (int i = 0; i < flockingDrones.Count; i++)
       {
-        float d = Vector3.Distance(flockingBirdos[index].rb.position, flockingBirdos[i].rb.position);
+        float d = Vector3.Distance(flockingDrones[index].rb.position, flockingDrones[i].rb.position);
         if (d < neighbourDistance)
         {
-          sum += (flockingBirdos[i].rb.velocity);
+          sum += (flockingDrones[i].rb.velocity);
           count++;
         }
       }
@@ -157,7 +157,7 @@ namespace Enemy
         // Implement Reynolds: Steering = Desired - Velocity
         sum.Normalize();
         sum *= maxSpeed;
-        Vector3 steer = sum - flockingBirdos[index].rb.velocity;
+        Vector3 steer = sum - flockingDrones[index].rb.velocity;
 
 
         LimitVector(ref steer, maxForce);
@@ -174,12 +174,12 @@ namespace Enemy
       Vector3 sum = new Vector3(0, 0, 0); // Start with empty vector to accumulate all positions
       int count = 0;
 
-      for (int i = 0; i < flockingBirdos.Count; i++)
+      for (int i = 0; i < flockingDrones.Count; i++)
       {
-        float d = Vector3.Distance(flockingBirdos[index].rb.position, flockingBirdos[i].rb.position);
+        float d = Vector3.Distance(flockingDrones[index].rb.position, flockingDrones[i].rb.position);
         if (d < neighbourDistance)
         {
-          sum += flockingBirdos[index].rb.position; // Add position
+          sum += flockingDrones[index].rb.position; // Add position
           count++;
         }
       }

@@ -7,7 +7,7 @@ using Random = Unity.Mathematics.Random;
 namespace Enemy
 {
   [RequireComponent(typeof(AIMovementController))]
-  public class BirdoEnemy : MonoBehaviour
+  public class DroneEnemy : MonoBehaviour
   {
     public Rigidbody rb;
 
