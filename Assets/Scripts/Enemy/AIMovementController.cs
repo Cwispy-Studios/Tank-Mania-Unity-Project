@@ -78,13 +78,13 @@ namespace CwispyStudios.TankMania.Enemy
 
       if (Vector3.Distance(position, waypoint) < minCornerDistance)
       {
-        Debug.Log("Changed waypoint");
+        //Debug.Log("Changed waypoint");
         currentPathIndex++;
       }
 
       if (currentPathIndex == currentPath.corners.Length)
       {
-        Debug.Log("Reached destination");
+        //Debug.Log("Reached destination");
         StopPath();
       }
     }

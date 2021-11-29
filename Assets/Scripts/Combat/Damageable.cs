@@ -6,9 +6,11 @@ namespace CwispyStudios.TankMania.Combat
 
   public class Damageable : MonoBehaviour
   {
+    [Header("Atrributes")]
     [SerializeField] private Team unitTeam;
     [SerializeField] private Health health;
 
+    [Header("Debug")]
     // DEBUG
     [SerializeField] private TMPro.TMP_Text healthText;
 
@@ -48,6 +50,7 @@ namespace CwispyStudios.TankMania.Combat
       if (currentHealth < 0f)
       {
         // Remove
+        gameObject.SetActive(false);
       }
     }
   }

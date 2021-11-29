@@ -2,6 +2,8 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Enemy
 {
+  using Player;
+
   public class AIMeleeDebugger : MonoBehaviour
   {
     [SerializeField] private Transform followedTransform;
@@ -26,9 +28,12 @@ namespace CwispyStudios.TankMania.Enemy
         {
           mct.StartPath(followedTransform.position);
         }
-
-        print("stop");
       }
+    }
+
+    private void Awake()
+    {
+      followedTransform = FindObjectOfType<TankMovementController>().transform;
     }
 
     void Start()

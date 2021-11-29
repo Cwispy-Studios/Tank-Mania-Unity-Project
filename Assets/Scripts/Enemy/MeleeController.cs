@@ -22,7 +22,7 @@ namespace CwispyStudios.TankMania.Enemy
     public void MeleeAttack(int attackIndex)
     {
       int size = Physics.OverlapBoxNonAlloc(attackInformations[attackIndex].hitBox.position,
-        attackInformations[attackIndex].hitBox.lossyScale,
+        attackInformations[attackIndex].hitBox.lossyScale / 2f,
         overlapBoxBuffer, attackInformations[attackIndex].hitBox.rotation, playerLayerMask);
 
       if (size == 0) return;
