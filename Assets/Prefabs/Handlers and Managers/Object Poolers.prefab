@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6515029138149380090
 Transform:
@@ -45,6 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefabsList:
   - {fileID: 2051231272, guid: cb4917dcdcb9ee848bf1a0474e66b7f3, type: 3}
+  - {fileID: 5924228815087809842, guid: c2e8a4041da5b044695329274c91a26e, type: 3}
+  - {fileID: 5924228815087809842, guid: afb2dafa1ac21774383b9d60520b4fb4, type: 3}
   numberPooledPerPrefab: 5
 --- !u!1 &6515029138691448623
 GameObject:
@@ -61,7 +63,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6515029138691448622
 Transform:
@@ -91,7 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefabsList:
   - {fileID: 7051859430511138134, guid: e12447defeff40d47a09319a02099a26, type: 3}
-  numberPooledPerPrefab: 20
+  - {fileID: 7051859430511138134, guid: f3148d2d3465792408ba261f1db92fc6, type: 3}
+  numberPooledPerPrefab: 10
 --- !u!1 &6515029139450240493
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +109,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6515029139450240492
 Transform:
