@@ -1,9 +1,5 @@
-using System;
-using Enemy;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.PlayerLoop;
 
 namespace CwispyStudios.TankMania.Enemy
 {
@@ -52,7 +48,7 @@ namespace CwispyStudios.TankMania.Enemy
     private void FixedUpdate()
     {
       if (!movingOnPath) return;
-
+      
       ApplyMovementForce(DirectionToNextCorner());
       UpdatePath();
     }

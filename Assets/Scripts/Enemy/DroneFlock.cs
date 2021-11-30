@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
+using CwispyStudios.TankMania.Stats;
 using UnityEngine;
 
-namespace Enemy
+namespace CwispyStudios.TankMania.Enemy
 {
   public class DroneFlock : MonoBehaviour
   {
@@ -13,8 +13,11 @@ namespace Enemy
     private float neighbourDistance;
 
     [SerializeField] private float desiredSeparation;
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float maxForce;
+    
+    //[SerializeField] private float maxSpeed;
+    //[SerializeField] private float maxForce;
+
+    [SerializeField] private AiMovementStats aiMovementStats;
 
     [Header("Component weight")] [SerializeField]
     private float separationFactor = 1.5f;
@@ -24,22 +27,9 @@ namespace Enemy
     [SerializeField] private float seekFactor = 4f;
     private List<DroneEnemy> queuedDrones = new List<DroneEnemy>();
 
-    private void Start()
-    {
-      SetMaxSpeedAll();
-    }
-
     private void AddDrone(DroneEnemy drone)
     {
       queuedDrones.Add(drone);
-    }
-
-    private void SetMaxSpeedAll()
-    {
-      foreach (var drone in flockingDrones)
-      {
-        drone.SetMaxSpeed(maxSpeed);
-      }
     }
 
     private void Update()
@@ -54,7 +44,6 @@ namespace Enemy
         foreach (var drone in queuedDrones)
         {
           flockingDrones.Add(drone);
-          drone.SetMaxSpeed(maxSpeed);
         }
 
         queuedDrones.Clear();
@@ -98,14 +87,14 @@ namespace Enemy
         desired = target - dronePosition; // A vector pointing from the position to the target	
       // Scale to maximum speed	
       desired.Normalize();
-      desired *= maxSpeed;
+      desired *= aiMovementStats.MaxVelocity.Value;
       // Above two lines of code below could be condensed with new PVector setMag() method	
       // Not using this method until Processing.js catches up	
       // desired.setMag(maxspeed);	
       // Steering = Desired minus Velocity	
       Vector3 steer = desired - flockingDrones[index].rb.velocity;
       // Limit to maximum steering force	
-      LimitVector(ref steer, maxForce);
+      LimitVector(ref steer, aiMovementStats.AccelerationForce.Value);
       return steer;
     }
 
@@ -145,12 +134,12 @@ namespace Enemy
         // steer.setMag(maxspeed);	
         // Implement Reynolds: Steering = Desired - Velocity	
         steer.Normalize();
-        steer *= maxSpeed;
+        steer *= aiMovementStats.MaxVelocity.Value;
         steer -= flockingDrones[index].rb.velocity;
-        if (steer.magnitude > maxForce)
+        if (steer.magnitude > aiMovementStats.AccelerationForce.Value)
         {
           steer.Normalize();
-          steer *= maxForce;
+          steer *= aiMovementStats.AccelerationForce.Value;
         }
       }
 
@@ -181,9 +170,9 @@ namespace Enemy
         // sum.setMag(maxspeed);	
         // Implement Reynolds: Steering = Desired - Velocity	
         sum.Normalize();
-        sum *= maxSpeed;
+        sum *= aiMovementStats.MaxVelocity.Value;
         Vector3 steer = sum - flockingDrones[index].rb.velocity;
-        LimitVector(ref steer, maxForce);
+        LimitVector(ref steer, aiMovementStats.AccelerationForce.Value);
         return steer;
       }
 

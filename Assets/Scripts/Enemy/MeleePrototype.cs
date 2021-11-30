@@ -2,15 +2,17 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Enemy
 {
+  // Prototype behavior for a grounded tank-like enemy which will follow the player around and try to deal melee damage
   public class MeleePrototype : MonoBehaviour
   {
-    [SerializeField] private Transform followedTransform;
     [SerializeField] private float minDistance;
 
+    private Transform followedTransform; // Transform to be followed by the attached tank
+    
     private PhysicsNavMeshAgent movementController;
     private MeleeController meleeController;
 
-    private bool following = true;
+    private bool following = true; // True if player is outside of the attacking range
 
     private bool Following
     {
@@ -26,8 +28,6 @@ namespace CwispyStudios.TankMania.Enemy
         {
           movementController.StartPath(followedTransform.position);
         }
-
-        print("stop");
       }
     }
 
@@ -35,7 +35,10 @@ namespace CwispyStudios.TankMania.Enemy
     {
       movementController = GetComponent<PhysicsNavMeshAgent>();
       meleeController = GetComponent<MeleeController>();
-      InvokeRepeating(nameof(FollowTransform), 0, .2f);
+
+      followedTransform = GameObject.FindGameObjectWithTag("Player").transform;
+      
+      Scheduler.Instance.GetTimer(.2f) += FollowTransform;
       
       movementController.StartPath(followedTransform.position);
     }

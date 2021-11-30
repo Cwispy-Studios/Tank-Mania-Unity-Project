@@ -1,10 +1,7 @@
-using System;
-using CwispyStudios.TankMania.Enemy;
 using CwispyStudios.TankMania.Player;
 using UnityEngine;
-using Random = Unity.Mathematics.Random;
 
-namespace Enemy
+namespace CwispyStudios.TankMania.Enemy
 {
   [RequireComponent(typeof(AiMovementController))]
   public class DroneEnemy : MonoBehaviour
@@ -42,11 +39,6 @@ namespace Enemy
       if (!Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) return;
 
       mc.ApplyMovementForce(Vector3.up * (desiredHeight - hit.distance));
-    }
-    
-    public void SetMaxSpeed(float maxSpeed)
-    {
-      mc.SetMovementSpeed(maxSpeed);
     }
   }
 }
