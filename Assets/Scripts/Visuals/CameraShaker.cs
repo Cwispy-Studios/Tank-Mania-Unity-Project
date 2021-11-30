@@ -1,11 +1,9 @@
 using System.Collections;
-
+using CwispyStudios.TankMania.Combat;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Visuals
 {
-  using Combat;
-
   public class CameraShaker : MonoBehaviour
   {
     [SerializeField] private float shakeDuration;
