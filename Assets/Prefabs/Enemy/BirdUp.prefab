@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0209df32c14964ab8dd85975d587b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  desiredHeight: 10
   rb: {fileID: 0}
 --- !u!114 &4441263854141526703
 MonoBehaviour:
@@ -157,11 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b031f7593ef542209ba3c37b9e511e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateWithDirection: 0
-  usesAcceleration: 0
-  movementSpeed: 10
-  accelerationSpeed: 5
-  turningSpeed: 5
+  aiMovementStats: {fileID: 11400000, guid: 4789388683d0740478d175d9f1696565, type: 2}
 --- !u!1 &3662236316591728404
 GameObject:
   m_ObjectHideFlags: 0

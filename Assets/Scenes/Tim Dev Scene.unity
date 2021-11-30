@@ -1476,6 +1476,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845773569}
   m_CullTransparentMesh: 1
+--- !u!1 &861183787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 861183788}
+  - component: {fileID: 861183789}
+  m_Layer: 0
+  m_Name: Scheduler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &861183788
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861183787}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &861183789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861183787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8a46661f282784e84eaa0fb00ff344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &881292979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2512,8 +2555,7 @@ MonoBehaviour:
   playerTransform: {fileID: 2130609235}
   neighbourDistance: 5
   desiredSeparation: 4
-  maxSpeed: 50
-  maxForce: 2
+  aiMovementStats: {fileID: 11400000, guid: 4789388683d0740478d175d9f1696565, type: 2}
   separationFactor: 1
   alignFactor: 1
   cohesionFactor: 1.5
@@ -2890,12 +2932,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814071192}
   m_CullTransparentMesh: 1
---- !u!4 &1931201404 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9116554923332464521, guid: d23cfcb9d00038f44831cb8873b5af50,
-    type: 3}
-  m_PrefabInstance: {fileID: 8633598789043070839}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2130609235 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2130609235, guid: d23cfcb9d00038f44831cb8873b5af50,
@@ -3001,11 +3037,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1695756175}
     m_Modifications:
-    - target: {fileID: 293700009727857140, guid: ce3427767de02d043b1a3dab82e01125,
-        type: 3}
-      propertyPath: desiredHeight
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 293700009727857150, guid: ce3427767de02d043b1a3dab82e01125,
         type: 3}
       propertyPath: m_RootOrder
@@ -3135,16 +3166,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Tank
       objectReference: {fileID: 0}
-    - target: {fileID: 8454413252481527677, guid: 0e192f5c266f8be4f8e826a467feb6d9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454413252481527678, guid: 0e192f5c266f8be4f8e826a467feb6d9,
-        type: 3}
-      propertyPath: followedTransform
-      value: 
-      objectReference: {fileID: 1931201404}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e192f5c266f8be4f8e826a467feb6d9, type: 3}
 --- !u!1001 &6515029139309203391
