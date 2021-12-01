@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a99b17640f910848a9ecac41650a4ee, type: 3}
+  m_Name: OpenLevel_TerrainData
+  m_EditorClassIdentifier: 
+  autoUpdate: 1
+  uniformScale: 3
+  useFlatShading: 0
+  useFalloff: 1
+  meshHeightMultiplier: 30.96
+  meshHeightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.003932953
+      value: -0.05441284
+      inSlope: 0.40418544
+      outSlope: 0.40418544
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.25058395
+    - serializedVersion: 3
+      time: 0.20355502
+      value: 0.0024837367
+      inSlope: 0.03999681
+      outSlope: 0.03999681
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.53275585
+      value: 0.052176945
+      inSlope: 0.30268958
+      outSlope: 0.30268958
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16758326
+      outWeight: 0.2922146
+    - serializedVersion: 3
+      time: 0.8429618
+      value: 0.26979935
+      inSlope: 1.1362063
+      outSlope: 1.1362063
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1637834
+      outWeight: 0.6439118
+    - serializedVersion: 3
+      time: 0.97844493
+      value: 0.48570657
+      inSlope: 2.344076
+      outSlope: 2.344076
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.29821947
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.1015404
+      value: 0.83661884
+      inSlope: 2.914207
+      outSlope: 2.914207
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1818329
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
