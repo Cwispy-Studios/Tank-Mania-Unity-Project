@@ -244,7 +244,6 @@ GameObject:
   - component: {fileID: 6666026925018818337}
   - component: {fileID: 5498097996016280060}
   - component: {fileID: 538795784980743816}
-  - component: {fileID: 5764189627898184303}
   - component: {fileID: 7102078180346485157}
   m_Layer: 3
   m_Name: TankFree_Canon
@@ -317,20 +316,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5764189627898184303
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5148583739876537799}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.1
-  m_Height: 0.9
-  m_Direction: 2
-  m_Center: {x: -0.0000009797513, y: -0.000000059604645, z: 0.5}
 --- !u!114 &7102078180346485157
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strokeTime: 4
-  strokeLength: 20
+  strokeLength: 30
 --- !u!1 &1691586188809081572
 GameObject:
   m_ObjectHideFlags: 0

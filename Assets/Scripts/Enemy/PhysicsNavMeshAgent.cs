@@ -6,7 +6,7 @@ namespace CwispyStudios.TankMania.Enemy
   [RequireComponent(typeof(Rigidbody))]
   public class PhysicsNavMeshAgent : AIMovementController
   {
-   [Header("Debug options")] [SerializeField]
+    [Header("Debug options")] [SerializeField]
     private bool showPath;
 
     private NavMeshPath currentPath;
@@ -20,7 +20,7 @@ namespace CwispyStudios.TankMania.Enemy
     }
 
     // TODO make this dependent on the size of the collider
-    private float minCornerDistance = .1f;
+    private const float MinCornerDistance = .1f;
 
     public void StartPath(Vector3 newPosition)
     {
@@ -32,19 +32,17 @@ namespace CwispyStudios.TankMania.Enemy
         return;
       }
 
-      if (currentPath.corners.Length == 1)
-        print("fuck off");
-
       if (showPath)
       {
         for (int i = 0; i < currentPath.corners.Length - 1; i++)
         {
           Debug.DrawLine(currentPath.corners[i], currentPath.corners[i + 1], Color.green, 1, false);
-          Debug.DrawRay(currentPath.corners[i], Vector3.up * 2, Color.blue);
+          Debug.DrawRay(currentPath.corners[i], Vector3.up * 2, Color.blue, 1);
+          Debug.DrawRay(currentPath.corners[i + 1], Vector3.up * 2, Color.blue, 1);
         }
       }
-      
-      Debug.Log("Calculated new path");
+
+      //Debug.Log("Calculated new path");
 
       currentPathIndex = 0;
       movingOnPath = true;
@@ -54,12 +52,13 @@ namespace CwispyStudios.TankMania.Enemy
     {
       movingOnPath = false;
     }
-    
-    private void FixedUpdate()
+
+    protected override void FixedUpdate()
     {
       if (!movingOnPath) return;
       
-      ApplyMovementForce(DirectionToNextCorner());
+      base.FixedUpdate();
+      ApplyMovementForce(DirectionToNextCorner(), ForceMode.VelocityChange);
       UpdatePath();
     }
 
@@ -70,15 +69,15 @@ namespace CwispyStudios.TankMania.Enemy
       Vector3 waypoint = currentPath.corners[currentPathIndex];
       waypoint.y = 0;
 
-      if (Vector3.Distance(position, waypoint) < minCornerDistance)
+      if (Vector3.Distance(position, waypoint) < MinCornerDistance)
       {
-        Debug.Log("Changed waypoint");
+        //Debug.Log("Changed waypoint");
         currentPathIndex++;
       }
 
       if (currentPathIndex == currentPath.corners.Length)
       {
-        Debug.Log("Reached destination");
+        //Debug.Log("Reached destination");
         StopPath();
       }
     }

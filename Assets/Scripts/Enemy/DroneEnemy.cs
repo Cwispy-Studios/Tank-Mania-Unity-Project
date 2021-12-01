@@ -1,4 +1,6 @@
+using System;
 using CwispyStudios.TankMania.Player;
+using CwispyStudios.TankMania.Stats;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Enemy
@@ -6,8 +8,10 @@ namespace CwispyStudios.TankMania.Enemy
   [RequireComponent(typeof(AIMovementController))]
   public class DroneEnemy : MonoBehaviour
   {
-    [SerializeField] private float desiredHeight;
-    [HideInInspector] public Rigidbody rb;
+    private const float DesiredHeight = 10f;
+    private const float HeightChangeFactor = .05f;
+    
+    [HideInInspector] public Rigidbody rb; // used by DroneFlock for calculations
 
     private AIMovementController mc;
     private GunController gc;
@@ -16,12 +20,9 @@ namespace CwispyStudios.TankMania.Enemy
     {
       mc = GetComponent<AIMovementController>();
       gc = GetComponentInChildren<GunController>();
-
-      // TODO TEMP
       rb = GetComponent<Rigidbody>();
-      rb.AddForce(Vector3.forward, ForceMode.Acceleration);
 
-      InvokeRepeating(nameof(Folley), 1, 3);
+      Scheduler.Instance.GetTimer(3) += Folley;
     }
 
     private void Folley()
@@ -34,11 +35,11 @@ namespace CwispyStudios.TankMania.Enemy
 
     public void ApplyForce(Vector3 force)
     {
-      mc.ApplyMovementForce(force);
+      mc.ApplyMovementForce(force, ForceMode.VelocityChange);
 
       if (!Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) return;
 
-      mc.ApplyMovementForce(Vector3.up * (desiredHeight - hit.distance));
+      mc.ApplyMovementForce(Vector3.up * ((DesiredHeight - hit.distance) * HeightChangeFactor), ForceMode.VelocityChange);
     }
   }
 }
