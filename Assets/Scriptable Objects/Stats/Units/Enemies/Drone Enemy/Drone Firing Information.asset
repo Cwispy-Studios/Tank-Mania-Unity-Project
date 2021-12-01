@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af38206fbef97144a85684330c52851b, type: 3}
-  m_Name: Bird Firing Information
+  m_Name: Drone Firing Information
   m_EditorClassIdentifier: 
   stats:
   - {fileID: 11400000, guid: 7e92cb4b4a8c6a846b411b9b91bd3007, type: 2}
@@ -24,7 +24,7 @@ MonoBehaviour:
   - ReloadSpeed
   - TimeToQueueFiring
   - AmmoCount
-  nameOfStatsFolder: Bird Firing Information
+  nameOfStatsFolder: Drone Firing Information
   ProjectilePrefab: {fileID: 7051859430511138134, guid: 96f387c4febf159469290a2fdd002b2b,
     type: 3}
   FiringVfx: {fileID: 2051231272, guid: cb4917dcdcb9ee848bf1a0474e66b7f3, type: 3}

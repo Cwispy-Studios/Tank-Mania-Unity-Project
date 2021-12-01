@@ -1,38 +1,25 @@
-using System;
+using CwispyStudios.TankMania.Stats;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.PlayerLoop;
 
 namespace CwispyStudios.TankMania.Enemy
 {
-  [RequireComponent(typeof(Rigidbody))]
+  // ReSharper disable once InconsistentNaming
   public class AIMovementController : MonoBehaviour
   {
     [Header("Agent movement parameters")] [SerializeField]
-    private bool rotateWithPath;
+    protected AiMovementStats aiMovementStats;
 
-    [SerializeField] [Range(0.1f, 10.0f)] private float movementSpeed;
+    protected Rigidbody physicsController;
 
-    [SerializeField] [Range(0.1f, 5.0f)] private float accelerationSpeed;
+    private float forceFactor = 100;
 
-    [SerializeField] [Range(0.1f, 5.0f)] private float turningSpeed;
-
-    [Header("Debug options")] [SerializeField]
-    private bool showPath;
-
-    private NavMeshPath currentPath;
-    private int currentPathIndex;
-    private bool movingOnPath;
-
-    private Rigidbody physicsController;
-
-    private void Awake()
+    protected virtual void Awake()
     {
-      currentPath = new NavMeshPath();
       physicsController = GetComponent<Rigidbody>();
     }
 
+<<<<<<< HEAD
     // TODO make this dependent on the size of the collider
     private float minCornerDistance = .1f;
 
@@ -91,33 +78,25 @@ namespace CwispyStudios.TankMania.Enemy
 
     // TODO this is pretty much the same as Accelerate in TankMovementController @Cwispy
     private void UpdatePhysics()
+=======
+    public void ApplyMovementForce(Vector3 direction)
+>>>>>>> AI-Implementation
     {
       Vector3 velocity = physicsController.velocity;
       velocity.y = 0f;
 
-      Vector3 direction = DirectionToNextCorner();
-
-      if (velocity.sqrMagnitude <= movementSpeed)
+      Vector3 force = aiMovementStats.UsesAcceleration ? direction * aiMovementStats.AccelerationForce.Value : direction;
+      if ((velocity + Time.deltaTime * forceFactor * force).magnitude <= aiMovementStats.MaxVelocity.Value)
       {
-        Vector3 force = direction * accelerationSpeed;
-        physicsController.AddForce(force * 10, ForceMode.Acceleration);
+        physicsController.AddForce(Time.deltaTime * forceFactor * force, ForceMode.Acceleration);
+        //print(Time.deltaTime * forceFactor * force);
       }
 
-      if (rotateWithPath && direction != Vector3.zero)
-      {
-        Quaternion newRotation =
-          Quaternion.RotateTowards(physicsController.rotation,
-            quaternion.LookRotation(direction, Vector3.up), turningSpeed);
-        physicsController.MoveRotation(newRotation);
-      }
-    }
-
-    private Vector3 DirectionToNextCorner()
-    {
-      if (currentPath.corners.Length == 0) return Vector3.zero;
-      Vector3 direction = (currentPath.corners[currentPathIndex] - transform.position);
-      direction.y = 0;
-      return direction.normalized;
+      if (!aiMovementStats.RotatesWithForce || direction == Vector3.zero) return;
+      Quaternion newRotation =
+        Quaternion.RotateTowards(physicsController.rotation,
+          quaternion.LookRotation(direction.normalized, Vector3.up), aiMovementStats.TurningSpeed.Value * 1000 * Time.deltaTime);
+      physicsController.MoveRotation(newRotation);
     }
   }
 }

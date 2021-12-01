@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Enemy
+namespace CwispyStudios.TankMania.Enemy
 {
-  public class BirdAttractor : MonoBehaviour
+  public class MovingTarget : MonoBehaviour
   {
     [SerializeField] private float strokeTime;
     [SerializeField] private float strokeLength;

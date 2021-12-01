@@ -1,20 +1,18 @@
-using System;
-using CwispyStudios.TankMania.Enemy;
 using CwispyStudios.TankMania.Player;
 using UnityEngine;
-using Random = Unity.Mathematics.Random;
 
-namespace Enemy
+namespace CwispyStudios.TankMania.Enemy
 {
   [RequireComponent(typeof(AIMovementController))]
-  public class BirdoEnemy : MonoBehaviour
+  public class DroneEnemy : MonoBehaviour
   {
-    public Rigidbody rb;
+    [SerializeField] private float desiredHeight;
+    [HideInInspector] public Rigidbody rb;
 
     private AIMovementController mc;
     private GunController gc;
 
-    private void Start()
+    private void Awake()
     {
       mc = GetComponent<AIMovementController>();
       gc = GetComponentInChildren<GunController>();
@@ -34,11 +32,13 @@ namespace Enemy
       }
     }
 
-    public void ApplyForce(Vector3 force, float maxSpeed)
+    public void ApplyForce(Vector3 force)
     {
-      if (rb.velocity.magnitude < maxSpeed)
-        rb.AddForce(force, ForceMode.Acceleration);
-      //mc.StartPath(rb.position + force);
+      mc.ApplyMovementForce(force);
+
+      if (!Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) return;
+
+      mc.ApplyMovementForce(Vector3.up * (desiredHeight - hit.distance));
     }
   }
 }
