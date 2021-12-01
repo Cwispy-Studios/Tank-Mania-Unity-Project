@@ -20,8 +20,8 @@ namespace CwispyStudios.TankMania.Stats
     public override float GetPropertyHeight( SerializedProperty property, GUIContent label )
     {
       float height = base.GetPropertyHeight(property, label);
-
-      if (property.serializedObject.targetObject.GetType() == typeof(StatsCategory)) return height;
+      
+      if (!property.serializedObject.targetObject.GetType().IsSubclassOf(typeof(StatsGroup))) return height;
 
       objectAssigned = property.objectReferenceValue != null;
 
@@ -35,16 +35,23 @@ namespace CwispyStudios.TankMania.Stats
 
     public override void OnGUI( Rect position, SerializedProperty property, GUIContent label )
     {
-      if (property.serializedObject.targetObject.GetType().IsSubclassOf(typeof(StatsGroup)))
+      label = EditorGUI.BeginProperty(position, label, property);
+
+      System.Type type = property.serializedObject.targetObject.GetType();
+
+      if (type.IsSubclassOf(typeof(StatsGroup)))
         DrawForStatsGroup(position, property, label);
 
-      else DrawForStatsCategory(position, property, label);
+      else if (type == typeof(StatsCategory))
+        DrawForStatsCategory(position, property, label);
+
+      else EditorGUI.PropertyField(position, property, label);
+
+      EditorGUI.EndProperty();
     }
 
     private void DrawForStatsCategory( Rect position, SerializedProperty property, GUIContent label )
     {
-      label = EditorGUI.BeginProperty(position, label, property);
-
       if (property.objectReferenceValue == null)
         label.text = "Unassigned";
 
@@ -77,8 +84,6 @@ namespace CwispyStudios.TankMania.Stats
         // Sets the graphic to take up the entire button space
         lockButtonStyle.imagePosition = ImagePosition.ImageOnly;
       }
-
-      label = EditorGUI.BeginProperty(position, label, property);
 
       position.height = EditorGUIUtility.singleLineHeight;
 
@@ -122,8 +127,6 @@ namespace CwispyStudios.TankMania.Stats
       DrawValueField(position, serializedObject, label);
 
       if (EditorGUI.EndChangeCheck()) serializedObject.ApplyModifiedProperties();
-
-      EditorGUI.EndProperty();
     }
 
     private void DrawStatTypeButton( Rect position, SerializedProperty useInt )

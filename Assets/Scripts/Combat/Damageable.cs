@@ -14,7 +14,7 @@ namespace CwispyStudios.TankMania.Combat
     // DEBUG
     [SerializeField] private TMPro.TMP_Text healthText;
 
-    private float currentHealth;
+    protected float currentHealth;
 
     private void Awake()
     {

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 293700009727857137}
   - component: {fileID: 293700009727857140}
   - component: {fileID: 4441263854141526703}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BirdUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,6 +133,7 @@ MonoBehaviour:
   movementSpeed: 10
   accelerationSpeed: 5
   turningSpeed: 5
+  showPath: 0
 --- !u!114 &293700009727857140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +159,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e395fc3a5ad044eb70d4c1e513563e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitTeam: 1
+  unitProperties:
+    Team: 1
+    UnitType: 10
   health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
   healthText: {fileID: 5638592229459629410}
 --- !u!1 &3662236316591728404
@@ -248,7 +251,7 @@ GameObject:
   - component: {fileID: 538795784980743816}
   - component: {fileID: 5764189627898184303}
   - component: {fileID: 7102078180346485157}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: TankFree_Canon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,7 +351,6 @@ MonoBehaviour:
   firingInformation: {fileID: 11400000, guid: 6e4bb9679158192448ab0e23dd0c0e3b, type: 2}
   fireZone: {fileID: 8430305750667873953}
   baseDamage: {fileID: 11400000, guid: 5e11269a810fa334fae517722358b50d, type: 2}
-  upgradedUpgrades: {fileID: 11400000, guid: d0ba8a4d4ceb7a14cb05a25cb9d2b2d5, type: 2}
   fireCountdown: {fileID: 11400000, guid: ec6996c0a17814a4cb55d7753facb7d2, type: 2}
   reloadCountdown: {fileID: 11400000, guid: 527011822a499114b96da93b5da01188, type: 2}
   currentAmmo: {fileID: 11400000, guid: 481efe3aae28d1f4ab4a4441f07e09ad, type: 2}
