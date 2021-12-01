@@ -23,11 +23,7 @@ namespace CwispyStudios.TankMania.Enemy
       if (attackIndex > attackInformations.Length)
         throw new NullReferenceException($"No hitbox with index with {attackIndex} on this melee controller");
       int size = Physics.OverlapBoxNonAlloc(attackInformations[attackIndex].hitBox.position,
-<<<<<<< HEAD
-        attackInformations[attackIndex].hitBox.lossyScale / 2f,
-=======
         attackInformations[attackIndex].hitBox.lossyScale / 2,
->>>>>>> AI-Implementation
         overlapBoxBuffer, attackInformations[attackIndex].hitBox.rotation, playerLayerMask);
 
       if (size == 0) return;
