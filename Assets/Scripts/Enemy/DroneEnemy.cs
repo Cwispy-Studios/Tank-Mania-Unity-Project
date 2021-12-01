@@ -3,18 +3,18 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Enemy
 {
-  [RequireComponent(typeof(AiMovementController))]
+  [RequireComponent(typeof(AIMovementController))]
   public class DroneEnemy : MonoBehaviour
   {
     [SerializeField] private float desiredHeight;
     [HideInInspector] public Rigidbody rb;
 
-    private AiMovementController mc;
+    private AIMovementController mc;
     private GunController gc;
 
     private void Awake()
     {
-      mc = GetComponent<AiMovementController>();
+      mc = GetComponent<AIMovementController>();
       gc = GetComponentInChildren<GunController>();
 
       // TODO TEMP

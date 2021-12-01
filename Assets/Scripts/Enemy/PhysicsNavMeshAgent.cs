@@ -4,7 +4,7 @@ using UnityEngine.AI;
 namespace CwispyStudios.TankMania.Enemy
 {
   [RequireComponent(typeof(Rigidbody))]
-  public class PhysicsNavMeshAgent : AiMovementController
+  public class PhysicsNavMeshAgent : AIMovementController
   {
    [Header("Debug options")] [SerializeField]
     private bool showPath;
@@ -26,12 +26,22 @@ namespace CwispyStudios.TankMania.Enemy
     {
       bool hasPath = NavMesh.CalculatePath(physicsController.position, newPosition, NavMesh.AllAreas, currentPath);
 
-      if (!hasPath) return;
+      if (!hasPath)
+      {
+        movingOnPath = false;
+        return;
+      }
+
+      if (currentPath.corners.Length == 1)
+        print("fuck off");
 
       if (showPath)
       {
         for (int i = 0; i < currentPath.corners.Length - 1; i++)
+        {
           Debug.DrawLine(currentPath.corners[i], currentPath.corners[i + 1], Color.green, 1, false);
+          Debug.DrawRay(currentPath.corners[i], Vector3.up * 2, Color.blue);
+        }
       }
       
       Debug.Log("Calculated new path");

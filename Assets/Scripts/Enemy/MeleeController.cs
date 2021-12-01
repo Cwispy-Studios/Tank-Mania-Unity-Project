@@ -1,3 +1,4 @@
+using System;
 using CwispyStudios.TankMania.Combat;
 using UnityEngine;
 
@@ -6,9 +7,8 @@ namespace CwispyStudios.TankMania.Enemy
   public class MeleeController : MonoBehaviour
   {
     // Hit boxes should be added as children of this game object
-    [Header("Melee attack information")] 
-    [SerializeField] 
-    private AttackInformation[] attackInformations;
+    [Header("Melee attack information")] [SerializeField]
+    private AttackInformation[] attackInformations = new AttackInformation[0];
 
     private Collider[] overlapBoxBuffer = new Collider[4];
     private LayerMask playerLayerMask;
@@ -20,8 +20,10 @@ namespace CwispyStudios.TankMania.Enemy
 
     public void MeleeAttack(int attackIndex)
     {
+      if (attackIndex > attackInformations.Length)
+        throw new NullReferenceException($"No hitbox with index with {attackIndex} on this melee controller");
       int size = Physics.OverlapBoxNonAlloc(attackInformations[attackIndex].hitBox.position,
-        attackInformations[attackIndex].hitBox.lossyScale/2,
+        attackInformations[attackIndex].hitBox.lossyScale / 2,
         overlapBoxBuffer, attackInformations[attackIndex].hitBox.rotation, playerLayerMask);
 
       if (size == 0) return;

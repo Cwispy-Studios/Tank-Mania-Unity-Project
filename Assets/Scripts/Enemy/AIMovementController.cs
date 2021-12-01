@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Enemy
 {
-  public class AiMovementController : MonoBehaviour
+  // ReSharper disable once InconsistentNaming
+  public class AIMovementController : MonoBehaviour
   {
     [Header("Agent movement parameters")] [SerializeField]
     protected AiMovementStats aiMovementStats;
@@ -27,6 +28,7 @@ namespace CwispyStudios.TankMania.Enemy
       if ((velocity + Time.deltaTime * forceFactor * force).magnitude <= aiMovementStats.MaxVelocity.Value)
       {
         physicsController.AddForce(Time.deltaTime * forceFactor * force, ForceMode.Acceleration);
+        //print(Time.deltaTime * forceFactor * force);
       }
 
       if (!aiMovementStats.RotatesWithForce || direction == Vector3.zero) return;
