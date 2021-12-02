@@ -3,7 +3,7 @@ using UnityEngine;
 namespace CwispyStudios.TankMania.Stats
 {
   [CreateAssetMenu(menuName = "Stats/Enemies/AiMovement")]
-  public class AiMovementStats : StatsGroup
+  public class AIMovementControllerStats : StatsGroup
   {
     [Header("Velocity")] [StatRange(0f, 50f)]
     public Stat MaxVelocity; // 4.5f
