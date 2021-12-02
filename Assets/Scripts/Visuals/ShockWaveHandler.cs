@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using CwispyStudios.TankMania.Combat;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Visuals
 {
+  using Combat;
   public class ShockWaveHandler : MonoBehaviour
   {
     [SerializeField] private Shader shockWaveShader;

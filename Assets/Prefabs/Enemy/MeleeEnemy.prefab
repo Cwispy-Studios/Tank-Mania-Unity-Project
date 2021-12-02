@@ -747,7 +747,6 @@ MonoBehaviour:
   firingInformation: {fileID: 11400000, guid: 645e9b639595e28428713ffcb49dba2e, type: 2}
   fireZone: {fileID: 7301602042223953738}
   baseDamage: {fileID: 11400000, guid: 5e11269a810fa334fae517722358b50d, type: 2}
-  upgradedUpgrades: {fileID: 11400000, guid: d0ba8a4d4ceb7a14cb05a25cb9d2b2d5, type: 2}
   fireCountdown: {fileID: 11400000, guid: 527011822a499114b96da93b5da01188, type: 2}
   reloadCountdown: {fileID: 11400000, guid: 527011822a499114b96da93b5da01188, type: 2}
   currentAmmo: {fileID: 11400000, guid: 481efe3aae28d1f4ab4a4441f07e09ad, type: 2}
@@ -886,7 +885,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e395fc3a5ad044eb70d4c1e513563e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitTeam: 1
+  unitProperties:
+    Team: 1
+    UnitType: 1
   health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
   healthText: {fileID: 4487744097844603530}
 --- !u!114 &8454413252481527665
@@ -901,7 +902,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff6c0aaec3e7ab940b0bcb23d1aeea11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiMovementStats: {fileID: 11400000, guid: 656438adf2e6f214e982d68e260545a4, type: 2}
+  aiMovementControllerStats: {fileID: 11400000, guid: 656438adf2e6f214e982d68e260545a4,
+    type: 2}
+  usesAcceleration: 1
+  rotatesWithForce: 1
   showPath: 1
 --- !u!114 &8454413252481527678
 MonoBehaviour:

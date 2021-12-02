@@ -9,12 +9,10 @@ namespace CwispyStudios.TankMania.Stats
     public Stat MaxVelocity; // 4.5f
 
     [Header("Acceleration")]
-    public bool UsesAcceleration;
     [StatRange(0f, 5f)] 
     public Stat AccelerationForce; // 15f
 
     [Header("Steering")] [StatRange(1f, 5f)]
-    public bool RotatesWithForce;
     public Stat TurningSpeed;
   }
 }
