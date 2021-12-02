@@ -61,10 +61,7 @@ namespace CwispyStudios.TankMania.Enemy
         coh *= cohesionFactor;
         seek *= seekFactor;
         // Add the force vectors to acceleration	
-        flockingDrones[i].ApplyForce(sep);
-        flockingDrones[i].ApplyForce(ali);
-        flockingDrones[i].ApplyForce(coh);
-        flockingDrones[i].ApplyForce(seek);
+        flockingDrones[i].ApplyForce(sep + ali + coh + seek);
       }
     }
 
@@ -127,7 +124,7 @@ namespace CwispyStudios.TankMania.Enemy
       }
 
       // As long as the vector is greater than 0	
-      if (steer.magnitude > 0)
+      if (steer.sqrMagnitude > 0)
       {
         // First two lines of code below could be condensed with new PVector setMag() method	
         // Not using this method until Processing.js catches up	
@@ -136,7 +133,7 @@ namespace CwispyStudios.TankMania.Enemy
         steer.Normalize();
         steer *= aiMovementStats.MaxVelocity.Value;
         steer -= flockingDrones[index].rb.velocity;
-        if (steer.magnitude > aiMovementStats.AccelerationForce.Value)
+        if (steer.sqrMagnitude > aiMovementStats.AccelerationForce.Value)
         {
           steer.Normalize();
           steer *= aiMovementStats.AccelerationForce.Value;

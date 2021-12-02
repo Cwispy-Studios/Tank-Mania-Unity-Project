@@ -40,7 +40,7 @@ namespace CwispyStudios.TankMania.Enemy
       
       Scheduler.Instance.GetTimer(.2f) += FollowTransform;
       
-      movementController.StartPath(followedTransform.position);
+      //movementController.StartPath(followedTransform.position);
     }
 
     private void FollowTransform()

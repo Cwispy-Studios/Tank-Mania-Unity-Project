@@ -1,3 +1,4 @@
+using System;
 using CwispyStudios.TankMania.Stats;
 using Unity.Mathematics;
 using UnityEngine;
@@ -5,37 +6,49 @@ using UnityEngine;
 namespace CwispyStudios.TankMania.Enemy
 {
   // ReSharper disable once InconsistentNaming
+  [RequireComponent(typeof(Rigidbody))]
   public class AIMovementController : MonoBehaviour
   {
-    [Header("Agent movement parameters")]
-    [SerializeField]
+    [Header("Agent movement parameters")] [SerializeField]
     protected AiMovementStats aiMovementStats;
 
     protected Rigidbody physicsController;
 
-    private float forceFactor = 100;
+    private float squaredMaxVelocity;
 
     protected virtual void Awake()
     {
       physicsController = GetComponent<Rigidbody>();
+
+      squaredMaxVelocity = Mathf.Pow(aiMovementStats.MaxVelocity.Value, 2f);
     }
 
-    public void ApplyMovementForce( Vector3 direction )
+    public void ApplyMovementForce(Vector3 direction, ForceMode forceMode)
     {
-      Vector3 velocity = physicsController.velocity;
-      velocity.y = 0f;
+      Vector3 force = aiMovementStats.UsesAcceleration
+        ? direction * aiMovementStats.AccelerationForce.Value
+        : direction;
 
-      Vector3 force = aiMovementStats.UsesAcceleration ? direction * aiMovementStats.AccelerationForce.Value : direction;
-      if ((velocity + Time.deltaTime * forceFactor * force).magnitude <= aiMovementStats.MaxVelocity.Value)
-      {
-        physicsController.AddForce(Time.deltaTime * forceFactor * force, ForceMode.Acceleration);
-        //print(Time.deltaTime * forceFactor * force);
-      }
+      physicsController.AddForce(force, forceMode);
+
+      if (physicsController.velocity.sqrMagnitude > squaredMaxVelocity)
+        physicsController.velocity = physicsController.velocity.normalized * aiMovementStats.MaxVelocity.Value;
 
       if (!aiMovementStats.RotatesWithForce || direction == Vector3.zero) return;
+    }
+
+    protected virtual void FixedUpdate()
+    {
+      Vector3 turnVector = physicsController.velocity;
+      turnVector.y = 0;
+      turnVector.Normalize();
+      
+      if (turnVector.sqrMagnitude == 0) return;
+
       Quaternion newRotation =
         Quaternion.RotateTowards(physicsController.rotation,
-          quaternion.LookRotation(direction.normalized, Vector3.up), aiMovementStats.TurningSpeed.Value * 1000 * Time.deltaTime);
+          quaternion.LookRotation(turnVector, Vector3.up),
+          aiMovementStats.TurningSpeed.Value);
       physicsController.MoveRotation(newRotation);
     }
   }

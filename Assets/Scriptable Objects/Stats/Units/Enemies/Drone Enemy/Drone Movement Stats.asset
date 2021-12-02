@@ -24,5 +24,5 @@ MonoBehaviour:
   MaxVelocity: {fileID: 11400000, guid: c7e68f2c7252d2e4796cbed40c7440a9, type: 2}
   UsesAcceleration: 0
   AccelerationForce: {fileID: 11400000, guid: 9b9652ffb39819541a0442626148760b, type: 2}
-  RotatesWithForce: 0
+  RotatesWithForce: 1
   TurningSpeed: {fileID: 11400000, guid: a161710b07d378e4bb65633c053d9817, type: 2}
