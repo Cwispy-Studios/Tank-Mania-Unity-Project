@@ -31,6 +31,8 @@ namespace CwispyStudios.TankMania.Combat
 
     // Damage from the object firing the projectile
     private Damage damageInformation;
+    // Team the projectile belongs to
+    private Team damageFrom;
 
     // Cache accessible rigidbody
     [HideInInspector] public Rigidbody PhysicsController;
@@ -152,7 +154,7 @@ namespace CwispyStudios.TankMania.Combat
     /// <param name="objectToDamage"></param>
     private void ProjectileDamage( GameObject objectToDamage, bool isDudCollision = false )
     {
-      damageInformation.DamageObject(objectToDamage, isDudCollision);
+      damageInformation.DamageObject(damageFrom, objectToDamage, isDudCollision);
     }
 
     /// <summary>
@@ -170,7 +172,7 @@ namespace CwispyStudios.TankMania.Combat
     /// <param name="explosionPoint"></param>
     private void ProjectileExplosion( GameObject collisionObject, Vector3 explosionPoint )
     {
-      damageInformation.SplashDamageOnPoint(collisionObject, explosionPoint);
+      damageInformation.SplashDamageOnPoint(damageFrom, collisionObject, explosionPoint);
     }
 
     /// <summary>
@@ -213,9 +215,10 @@ namespace CwispyStudios.TankMania.Combat
     /// Passes damage information from the firer to the projectile.
     /// </summary>
     /// <param name="damage"></param>
-    public void SetDamage( Damage damage )
+    public void SetDamage( Damage damage, Team team )
     {
       damageInformation = damage;
+      this.damageFrom = team; 
     }
   }
 }

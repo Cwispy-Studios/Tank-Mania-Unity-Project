@@ -7,9 +7,6 @@ namespace CwispyStudios.TankMania.Stats
   [CreateAssetMenu(menuName = "Stats/Damage")]
   public class Damage : StatsGroup
   {
-    [HideInInspector]
-    public Team DamageFrom;
-
     [Header("Damage Information"), Tooltip("How much damage is dealt on a direct hit.")]
     public Stat DirectDamage; // 10f
 

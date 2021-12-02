@@ -20,39 +20,65 @@ namespace CwispyStudios.TankMania.Combat
     /// <summary>
     /// Checks if a target unit can be damaged and retrieve the Damageable component.
     /// </summary>
-    /// <param name="damage"></param>
-    /// <param name="collisionObject"> Object to check if it can be damaged. </param>
-    /// <param name="hitObjectHealth"> The Damageable component to retrieve. </param>
-    /// <returns></returns>
-    public static bool CheckIfDamageable( this Damage damage, GameObject collisionObject, out Damageable hitObjectHealth )
+    /// <param name="damage">
+    /// The damage information.
+    /// </param>
+    /// <param name="damageFrom">
+    /// The team the damage is coming from.
+    /// </param>
+    /// <param name="collisionObject">
+    /// Object to check if it can be damaged.
+    /// </param>
+    /// <param name="hitObjectHealth">
+    /// The Damageable component to retrieve.
+    /// </param>
+    /// <returns>
+    /// Whether the object can be damaged.
+    /// </returns>
+    public static bool CheckIfDamageable( this Damage damage, Team damageFrom, GameObject collisionObject, out Damageable hitObjectHealth )
     {
       // Check if object has a health component so it can be damaged
       hitObjectHealth = collisionObject.GetComponent<Damageable>();
-      Team projectileTeam = damage.DamageFrom;
 
-      return hitObjectHealth && hitObjectHealth.CanTakeDamageFromTeam(projectileTeam);
+      return hitObjectHealth && hitObjectHealth.CanTakeDamageFromTeam(damageFrom);
     }
 
     /// <summary>
     /// Checks if a target unit can be damaged.
     /// </summary>
-    /// <param name="damage"></param>
-    /// <param name="collisionObject"> Object to check if it can be damaged. </param>
-    /// <returns></returns>
-    public static bool CheckIfDamageable( this Damage damage, GameObject collisionObject )
+    /// <param name="damage">
+    /// The damage information.
+    /// </param>
+    /// <param name="damageFrom">
+    /// The team the damage is coming from.
+    /// </param>
+    /// <param name="collisionObject">
+    /// Object to check if it can be damaged.
+    /// </param>
+    /// <returns>
+    /// Whether the object can be damaged.
+    /// </returns>
+    public static bool CheckIfDamageable( this Damage damage, Team damageFrom, GameObject collisionObject )
     {
-      return CheckIfDamageable(damage, collisionObject, out _);
+      return CheckIfDamageable(damage, damageFrom, collisionObject, out _);
     }
 
     /// <summary>
     /// Checks if a target unit can be damaged and damages them.
     /// </summary>
-    /// <param name="damage"></param>
-    /// <param name="collisionObject"> Target object to damage. </param>
-    public static void DamageObject( this Damage damage, GameObject collisionObject, bool isDudCollision )
+    /// <param name="damage">
+    /// The damage information.
+    /// </param>
+    /// <param name="damageFrom">
+    /// The team the damage is coming from.
+    /// </param>
+    /// <param name="collisionObject">
+    /// Target object to damage.
+    /// </param>
+    public static void DamageObject( this Damage damage, Team damageFrom, GameObject collisionObject, bool isDudCollision )
     {
       // Also check if unit is from a different team, no friendly fire
-      if (CheckIfDamageable(damage, collisionObject, out Damageable hitObjectHealth))
+      if (CheckIfDamageable(damage, damageFrom, collisionObject, out Damageable hitObjectHealth))
       {
         float damageAmount = damage.DirectDamage.Value;
         if (isDudCollision) damageAmount *= damage.DudCollisionDamagePercentage.Value;
@@ -64,20 +90,27 @@ namespace CwispyStudios.TankMania.Combat
     /// <summary>
     /// If splash damage is enabled on Damage instance, retrieves all objects around a point of damage.
     /// </summary>
-    /// <param name="damage"></param>
-    /// <param name="collisionObject"> Object that was directly hit by the Damage. Can be null. </param>
-    /// <param name="collisionPoint"></param>
-    public static void SplashDamageOnPoint( this Damage damage, GameObject collisionObject, Vector3 collisionPoint )
+    /// <param name="damage">
+    /// The damage information.
+    /// </param>
+    /// <param name="damageFrom">
+    /// The team the damage is coming from.
+    /// </param>
+    /// <param name="collisionObject"> 
+    /// Object that was directly hit by the Damage. Can be null.
+    /// </param>
+    /// <param name="collisionPoint">
+    /// The point where splash damage is emitted from.
+    /// </param>
+    public static void SplashDamageOnPoint( this Damage damage, Team damageFrom, GameObject collisionObject, Vector3 collisionPoint )
     {
       if (!damage.HasSplashDamage) return;
-
-      Team projectileTeam = damage.DamageFrom;
 
       // If this object took a direct hit already, it should not take additional splash damage
       splashedObjects.Add(collisionObject);
 
       // 8 is enemy, 3 is player
-      int opponentLayerMask = damage.DamageFrom == Team.Player ? 1 << 8 : 1 << 3;
+      int opponentLayerMask = damageFrom == Team.Player ? 1 << 8 : 1 << 3;
 
       // Find the number of objects within the splash radius, this counts all composite colliders
       int numHits = Physics.OverlapSphereNonAlloc(
@@ -105,7 +138,7 @@ namespace CwispyStudios.TankMania.Combat
           splashedObjects.Add(splashedObject);
 
           // Object has health, then check the team
-          if (damage.CheckIfDamageable(splashedObject, out Damageable splashedObjectHealth))
+          if (damage.CheckIfDamageable(damageFrom, splashedObject, out Damageable splashedObjectHealth))
           {
             float splashDamageDealt = damage.CalculateSplashDamage(splashedRigidbody, collisionPoint);
             splashedObjectHealth.TakeDamage(splashDamageDealt);
@@ -121,10 +154,18 @@ namespace CwispyStudios.TankMania.Combat
     /// <summary>
     /// Calculates the amount of splash damage to deal to a rigidbody based on its distance to the collision point of the splash damage.
     /// </summary>
-    /// <param name="damage"></param>
-    /// <param name="splashedRigidbody"> Rigidbody to check. </param>
-    /// <param name="collisionPoint"> Point of collision of splash damage. </param>
-    /// <returns></returns>
+    /// <param name="damage">
+    /// The damage information
+    /// </param>
+    /// <param name="splashedRigidbody">
+    /// Rigidbody to check.
+    /// </param>
+    /// <param name="collisionPoint">
+    /// Point of collision of splash damage.
+    /// </param>
+    /// <returns>
+    /// The amount of splash damage the rigidbody should receive.
+    /// </returns>
     public static float CalculateSplashDamage( this Damage damage, Rigidbody splashedRigidbody, Vector3 collisionPoint )
     {
       // Object is eligible to be damaged from splash damage, calculate damage
