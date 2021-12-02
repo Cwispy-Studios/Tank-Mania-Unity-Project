@@ -16,6 +16,7 @@ namespace CwispyStudios.TankMania.SceneLoading
 
         private void Start()
         {
+            sceneText.text = LoadingData.sceneToLoad;
             Invoke("StartLoad", 2f);
         }
 
@@ -35,9 +36,7 @@ namespace CwispyStudios.TankMania.SceneLoading
         private void StartLoad()
         {
             loadingOperation = SceneManager.LoadSceneAsync(LoadingData.sceneToLoad);
-            sceneText.text = LoadingData.sceneToLoad;
-
-            loadingScreen.SetActive(false);
+            loadingScreen.SetActive(true);
         }
     }
 }
