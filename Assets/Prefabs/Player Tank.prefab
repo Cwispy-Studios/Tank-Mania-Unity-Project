@@ -45,7 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretRotationLimits: {fileID: 11400000, guid: 9eade0d409769774181abd72bd6c0b26,
     type: 2}
-  turretRotation: {x: 0, y: 0, z: -90}
 --- !u!1 &1030629102
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +90,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretRotationLimits: {fileID: 11400000, guid: 38f706fb26fa36842b2f57936e249001,
     type: 2}
-  turretRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &552336382994259157
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,7 +671,7 @@ GameObject:
   - component: {fileID: 1153093374058250065}
   m_Layer: 3
   m_Name: Player Tank
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

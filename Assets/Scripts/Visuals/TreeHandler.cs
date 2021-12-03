@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-
+using CwispyStudios.TankMania.Combat;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Visuals
 {
-  using Combat;
-
   public class TreeHandler : MonoBehaviour
   {
     private List<Projectile> bulletTransforms = new List<Projectile>();

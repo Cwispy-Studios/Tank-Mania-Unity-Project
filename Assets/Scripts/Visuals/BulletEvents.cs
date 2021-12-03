@@ -1,11 +1,9 @@
 using System;
-
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Visuals
 {
   using Combat;
-
   public class BulletEvents : MonoBehaviour
   {
     public static event Action<Projectile> OnBulletFired;
