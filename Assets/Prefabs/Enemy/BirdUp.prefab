@@ -16,13 +16,14 @@ GameObject:
   - component: {fileID: 293700009727857137}
   - component: {fileID: 293700009727857140}
   - component: {fileID: 4441263854141526703}
+  - component: {fileID: -2170006017632550610}
   m_Layer: 8
   m_Name: BirdUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &293700009727857150
 Transform:
   m_ObjectHideFlags: 0
@@ -161,6 +162,20 @@ MonoBehaviour:
     UnitType: 10
   health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
   healthText: {fileID: 5638592229459629410}
+--- !u!114 &-2170006017632550610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293700009727857151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4ef233b6dcab8649b5cfea67a0d2c26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnemyKilled: {fileID: 11400000, guid: e9180ab6bbea1d44aab90b1e428a8c5a, type: 2}
+  experiencePoints: 10
 --- !u!1 &3662236316591728404
 GameObject:
   m_ObjectHideFlags: 0

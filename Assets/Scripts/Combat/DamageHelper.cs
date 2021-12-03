@@ -128,6 +128,7 @@ namespace CwispyStudios.TankMania.Combat
       {
         // Retrieve from attached rigidbody and not from the collision component
         // to check only the main gameobject and not all its colliders
+        Debug.Log(splashCollisionResults[i].gameObject);
         Rigidbody splashedRigidbody = splashCollisionResults[i].attachedRigidbody;
         GameObject splashedObject = splashedRigidbody.gameObject;
 

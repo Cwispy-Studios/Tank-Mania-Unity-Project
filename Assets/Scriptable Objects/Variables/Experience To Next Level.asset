@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fac696a1aa0d114abd2ac4c11528c3b, type: 3}
-  m_Name: SplashRadius
+  m_Script: {fileID: 11500000, guid: ca4f54acbc286ac41baa069c729f765f, type: 3}
+  m_Name: Experience To Next Level
   m_EditorClassIdentifier: 
-  useInt: 0
-  baseValue: 4
+  DeveloperDescription: 
+  Value: 0

@@ -19,6 +19,7 @@ namespace CwispyStudios.TankMania.Player
 
     private void LateUpdate()
     {
+      // TODO: Trigger only when health changes
       float currentHealth = currentPlayerHealth.Value;
       float maxHealth = playerMaxHealthStat.Value;
 

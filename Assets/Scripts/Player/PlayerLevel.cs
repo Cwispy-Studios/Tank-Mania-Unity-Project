@@ -5,11 +5,38 @@ namespace CwispyStudios.TankMania.Player
 {
   public class PlayerLevel : MonoBehaviour
   {
-    private IntVariable playerLevel;
-    private FloatVariable playerExperience;
+    [SerializeField] private IntVariable playerLevel;
+    [SerializeField] private IntVariable playerExperience;
+    [SerializeField] private IntVariable experienceToNextLevel;
 
-    private static float ExperiencePerLevel = 500f;
+    private static int ExperiencePerLevel = 50;
 
-    private float currentExperience = 0f;
+    private void Awake()
+    {
+      playerLevel.Value = 1;
+      playerExperience.Value = 0;
+
+      CalculateExperienceNeededToNextLevel();
+    }
+
+    private void CalculateExperienceNeededToNextLevel()
+    {
+      experienceToNextLevel.Value = playerLevel.Value * ExperiencePerLevel;
+    }
+
+    public void GainExperience( int experience )
+    {
+      playerExperience.Value += experience;
+
+      if (playerExperience.Value > experienceToNextLevel.Value) LevelUp();
+    }
+
+    private void LevelUp()
+    {
+      ++playerLevel.Value;
+      playerExperience.Value -= experienceToNextLevel.Value;
+
+      CalculateExperienceNeededToNextLevel();
+    }
   }
 }

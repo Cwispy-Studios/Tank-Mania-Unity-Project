@@ -16,7 +16,7 @@ namespace CwispyStudios.TankMania.Combat
 
     protected float currentHealth;
 
-    private void Awake()
+    private void OnEnable()
     {
       currentHealth = health.MaxHealth.Value;
     }
@@ -44,7 +44,7 @@ namespace CwispyStudios.TankMania.Combat
 
     public void TakeDamage( float damage )
     {
-      Debug.Log($"{gameObject} took {damage} damage.");
+      //Debug.Log($"{gameObject} took {damage} damage.");
       currentHealth -= damage;
 
       if (currentHealth < 0f)

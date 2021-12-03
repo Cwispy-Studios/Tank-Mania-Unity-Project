@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Cannon Turret Rotation
   m_EditorClassIdentifier: 
   stats:
-  - {fileID: 11400000, guid: 94b38d28bd21e114e8d7abe1802ad8bf, type: 2}
-  - {fileID: 11400000, guid: 5ebfa4c5bc74ff14a98f0301d41af5c5, type: 2}
+  - {fileID: 11400000, guid: f45406e15ffeb0c4aab89d1751a69d53, type: 2}
+  - {fileID: 11400000, guid: f1442bb10c4526845a1b3d20b1f8a941, type: 2}
   statsNames:
   - TurretRotationSpeed
   - GunRotationSpeed
   nameOfStatsFolder: Cannon Turret Rotation
-  TurretRotationSpeed: {fileID: 11400000, guid: 94b38d28bd21e114e8d7abe1802ad8bf,
+  TurretRotationSpeed: {fileID: 11400000, guid: f45406e15ffeb0c4aab89d1751a69d53,
     type: 2}
-  GunRotationSpeed: {fileID: 11400000, guid: 5ebfa4c5bc74ff14a98f0301d41af5c5, type: 2}
+  GunRotationSpeed: {fileID: 11400000, guid: f1442bb10c4526845a1b3d20b1f8a941, type: 2}

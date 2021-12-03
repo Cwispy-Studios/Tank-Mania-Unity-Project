@@ -10,6 +10,11 @@ namespace CwispyStudios.TankMania
     private bool isPaused = false;
     private float timeScale;
 
+    private void OnEnable()
+    {
+      isPaused = false;
+    }
+
     public void PauseGame()
     {
       if (isPaused) return;
