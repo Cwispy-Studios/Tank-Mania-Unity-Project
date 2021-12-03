@@ -23,7 +23,7 @@ namespace CwispyStudios.TankMania.Player
       levelText.text = $"Level {playerLevel.Value}";
       experienceText.text = $"{playerExperience.Value}/{experienceToNextLevel.Value}";
 
-      experienceBar.fillAmount = playerExperience.Value / experienceToNextLevel.Value;
+      experienceBar.fillAmount = (float)playerExperience.Value / (float)experienceToNextLevel.Value;
     }
   }
 }
