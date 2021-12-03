@@ -49,7 +49,7 @@ namespace CwispyStudios.TankMania.Combat
 
       if (currentHealth < 0f)
       {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         // Remove
         gameObject.SetActive(false);
       }

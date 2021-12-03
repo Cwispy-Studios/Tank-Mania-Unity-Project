@@ -1,38 +1,75 @@
+using System;
 using System.Collections.Generic;
 using CwispyStudios.TankMania.Stats;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CwispyStudios.TankMania.Enemy
 {
   public class DroneFlock : MonoBehaviour
   {
     public List<DroneEnemy> flockingDrones = new List<DroneEnemy>();
-    public Transform playerTransform;
+    private Rigidbody targetRigidbody;
 
-    [Header("Component parameters")] [SerializeField]
+    [Header("MovementB behaviour, if offset is 0, flock will go directly to target without strafing")] [SerializeField]
+    private float targetOffsetDistance;
+
+    [SerializeField] private float targetStrokeDuration;
+
+    private Vector3 rightOffsetVector;
+    private float targetStrokeTimer = 0f;
+
+    [Header("Force component parameters")] [SerializeField]
     private float neighbourDistance;
 
     [SerializeField] private float desiredSeparation;
-    
-    //[SerializeField] private float maxSpeed;
-    //[SerializeField] private float maxForce;
 
-    [SerializeField] private AiMovementStats aiMovementStats;
+    [SerializeField] private AIMovementControllerStats aiMovementControllerStats;
 
-    [Header("Component weight")] [SerializeField]
+    [Header("Component weights")] [SerializeField]
     private float separationFactor = 1.5f;
 
     [SerializeField] private float alignFactor = 1f;
     [SerializeField] private float cohesionFactor = 1f;
     [SerializeField] private float seekFactor = 4f;
-    private List<DroneEnemy> queuedDrones = new List<DroneEnemy>();
+    private readonly List<DroneEnemy> queuedDrones = new List<DroneEnemy>();
+
+    private void Awake()
+    {
+      SetTarget(GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>());
+
+      rightOffsetVector = new Vector3(targetOffsetDistance, 0, 0);
+    }
+
+    // Can be called to have the flock target another entity;
+    public void SetTarget(Rigidbody target)
+    {
+      targetRigidbody = target;
+    }
+
+    private Vector3 GetDynamicTargetPosition()
+    {
+      targetStrokeTimer += Time.deltaTime;
+
+      if (targetStrokeTimer >= targetStrokeDuration)
+      {
+        targetStrokeTimer = 0;
+      }
+      
+      Vector3 returnTarget =  targetRigidbody.position + targetRigidbody.velocity + targetRigidbody.transform.rotation *
+                              Vector3.Lerp(rightOffsetVector, -rightOffsetVector, Mathf.PingPong(Time.time  / targetStrokeDuration, 1));
+      
+      Debug.DrawRay(returnTarget, Vector3.up, Color.red, 1);
+
+      return returnTarget;
+    }
 
     private void AddDrone(DroneEnemy drone)
     {
       queuedDrones.Add(drone);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
       UpdateFlock();
     }
@@ -54,12 +91,14 @@ namespace CwispyStudios.TankMania.Enemy
         Vector3 sep = Separate(i); // Separation	
         Vector3 ali = Align(i); // Alignment	
         Vector3 coh = Cohesion(i); // Cohesion	
-        Vector3 seek = Seek(i, playerTransform.position);
+        Vector3 seek = Seek(i, GetDynamicTargetPosition());
+
         // Arbitrarily weight these forces	
         sep *= separationFactor;
         ali *= alignFactor;
         coh *= cohesionFactor;
         seek *= seekFactor;
+
         // Add the force vectors to acceleration	
         flockingDrones[i].ApplyForce(sep + ali + coh + seek);
       }
@@ -79,19 +118,18 @@ namespace CwispyStudios.TankMania.Enemy
       Vector3 dronePosition = flockingDrones[index].rb.position;
       dronePosition.y = 0;
       target.y = 0;
-      
-      Vector3
-        desired = target - dronePosition; // A vector pointing from the position to the target	
+
+      Vector3 desired = target - dronePosition; // A vector pointing from the position to the target	
+
       // Scale to maximum speed	
       desired.Normalize();
-      desired *= aiMovementStats.MaxVelocity.Value;
-      // Above two lines of code below could be condensed with new PVector setMag() method	
-      // Not using this method until Processing.js catches up	
-      // desired.setMag(maxspeed);	
+      desired *= aiMovementControllerStats.MaxVelocity.Value;
+
       // Steering = Desired minus Velocity	
       Vector3 steer = desired - flockingDrones[index].rb.velocity;
+
       // Limit to maximum steering force	
-      LimitVector(ref steer, aiMovementStats.AccelerationForce.Value);
+      LimitVector(ref steer, aiMovementControllerStats.AccelerationForce.Value);
       return steer;
     }
 
@@ -99,12 +137,15 @@ namespace CwispyStudios.TankMania.Enemy
     {
       Vector3 position = flockingDrones[index].rb.position;
       Vector3 steer = new Vector3(0, 0, 0);
+
       int inRangeCount = 0;
       for (int i = 0; i < flockingDrones.Count; i++)
       {
         if (i == index) continue;
+
         // For every boid in the system, check if it's too close	
         float d = Vector3.Distance(position, flockingDrones[i].rb.position);
+
         // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)	
         if (d < desiredSeparation)
         {
@@ -126,17 +167,15 @@ namespace CwispyStudios.TankMania.Enemy
       // As long as the vector is greater than 0	
       if (steer.sqrMagnitude > 0)
       {
-        // First two lines of code below could be condensed with new PVector setMag() method	
-        // Not using this method until Processing.js catches up	
-        // steer.setMag(maxspeed);	
         // Implement Reynolds: Steering = Desired - Velocity	
         steer.Normalize();
-        steer *= aiMovementStats.MaxVelocity.Value;
+        steer *= aiMovementControllerStats.MaxVelocity.Value;
         steer -= flockingDrones[index].rb.velocity;
-        if (steer.sqrMagnitude > aiMovementStats.AccelerationForce.Value)
+
+        if (steer.sqrMagnitude > aiMovementControllerStats.AccelerationForce.Value)
         {
           steer.Normalize();
-          steer *= aiMovementStats.AccelerationForce.Value;
+          steer *= aiMovementControllerStats.AccelerationForce.Value;
         }
       }
 
@@ -149,6 +188,7 @@ namespace CwispyStudios.TankMania.Enemy
     {
       Vector3 sum = new Vector3(0, 0, 0);
       int count = 0;
+
       for (int i = 0; i < flockingDrones.Count; i++)
       {
         float d = Vector3.Distance(flockingDrones[index].rb.position, flockingDrones[i].rb.position);
@@ -162,14 +202,14 @@ namespace CwispyStudios.TankMania.Enemy
       if (count > 0)
       {
         sum /= ((float) count);
-        // First two lines of code below could be condensed with new PVector setMag() method	
-        // Not using this method until Processing.js catches up	
-        // sum.setMag(maxspeed);	
+
         // Implement Reynolds: Steering = Desired - Velocity	
         sum.Normalize();
-        sum *= aiMovementStats.MaxVelocity.Value;
+        sum *= aiMovementControllerStats.MaxVelocity.Value;
+
         Vector3 steer = sum - flockingDrones[index].rb.velocity;
-        LimitVector(ref steer, aiMovementStats.AccelerationForce.Value);
+        LimitVector(ref steer, aiMovementControllerStats.AccelerationForce.Value);
+
         return steer;
       }
 
@@ -182,6 +222,7 @@ namespace CwispyStudios.TankMania.Enemy
     {
       Vector3 sum = new Vector3(0, 0, 0); // Start with empty vector to accumulate all positions	
       int count = 0;
+
       for (int i = 0; i < flockingDrones.Count; i++)
       {
         float d = Vector3.Distance(flockingDrones[index].rb.position, flockingDrones[i].rb.position);

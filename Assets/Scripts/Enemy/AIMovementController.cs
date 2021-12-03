@@ -1,16 +1,18 @@
-using System;
-using CwispyStudios.TankMania.Stats;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Enemy
 {
+  using Stats;
+  
   // ReSharper disable once InconsistentNaming
   [RequireComponent(typeof(Rigidbody))]
   public class AIMovementController : MonoBehaviour
   {
     [Header("Agent movement parameters")] [SerializeField]
-    protected AiMovementStats aiMovementStats;
+    protected AIMovementControllerStats aiMovementControllerStats;
+    [SerializeField] private bool usesAcceleration;
+    [SerializeField] private bool rotatesWithForce;
 
     protected Rigidbody physicsController;
 
@@ -20,25 +22,32 @@ namespace CwispyStudios.TankMania.Enemy
     {
       physicsController = GetComponent<Rigidbody>();
 
-      squaredMaxVelocity = Mathf.Pow(aiMovementStats.MaxVelocity.Value, 2f);
+      UpdateSquaredMaxVelocity();
+
+      aiMovementControllerStats.MaxVelocity.OnStatUpgrade += UpdateSquaredMaxVelocity;
+    }
+
+    private void UpdateSquaredMaxVelocity()
+    {
+      squaredMaxVelocity = Mathf.Pow(aiMovementControllerStats.MaxVelocity.Value, 2f);
     }
 
     public void ApplyMovementForce(Vector3 direction, ForceMode forceMode)
     {
-      Vector3 force = aiMovementStats.UsesAcceleration
-        ? direction * aiMovementStats.AccelerationForce.Value
+      Vector3 force = usesAcceleration
+        ? direction * aiMovementControllerStats.AccelerationForce.Value
         : direction;
 
       physicsController.AddForce(force, forceMode);
 
       if (physicsController.velocity.sqrMagnitude > squaredMaxVelocity)
-        physicsController.velocity = physicsController.velocity.normalized * aiMovementStats.MaxVelocity.Value;
-
-      if (!aiMovementStats.RotatesWithForce || direction == Vector3.zero) return;
+        physicsController.velocity = Vector3.ClampMagnitude(physicsController.velocity, aiMovementControllerStats.MaxVelocity.Value);
     }
 
     protected virtual void FixedUpdate()
     {
+      if (!rotatesWithForce) return;
+      
       Vector3 turnVector = physicsController.velocity;
       turnVector.y = 0;
       turnVector.Normalize();
@@ -48,7 +57,7 @@ namespace CwispyStudios.TankMania.Enemy
       Quaternion newRotation =
         Quaternion.RotateTowards(physicsController.rotation,
           quaternion.LookRotation(turnVector, Vector3.up),
-          aiMovementStats.TurningSpeed.Value);
+          aiMovementControllerStats.TurningSpeed.Value);
       physicsController.MoveRotation(newRotation);
     }
   }
