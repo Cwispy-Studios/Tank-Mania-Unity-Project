@@ -1,13 +1,18 @@
 using UnityEngine;
-using System;
 
 namespace CwispyStudios.TankMania.Player
 {
+  using GameEvents;
+
   public class PlayerLevel : MonoBehaviour
   {
+    [Header("Level and Experience")]
     [SerializeField] private IntVariable playerLevel;
     [SerializeField] private IntVariable playerExperience;
     [SerializeField] private IntVariable experienceToNextLevel;
+
+    [Header("Events")]
+    [SerializeField] private VoidEvent onPlayerLevelUp;
 
     private static int ExperiencePerLevel = 50;
 
@@ -28,7 +33,7 @@ namespace CwispyStudios.TankMania.Player
     {
       playerExperience.Value += experience;
 
-      if (playerExperience.Value > experienceToNextLevel.Value) LevelUp();
+      if (playerExperience.Value >= experienceToNextLevel.Value) LevelUp();
     }
 
     private void LevelUp()
@@ -37,6 +42,8 @@ namespace CwispyStudios.TankMania.Player
       playerExperience.Value -= experienceToNextLevel.Value;
 
       CalculateExperienceNeededToNextLevel();
+
+      onPlayerLevelUp.Raise();
     }
   }
 }
