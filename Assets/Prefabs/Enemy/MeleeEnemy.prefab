@@ -902,11 +902,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff6c0aaec3e7ab940b0bcb23d1aeea11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateWithPath: 1
-  movementSpeed: 4
-  accelerationSpeed: 5
-  turningSpeed: 3
-  showPath: 0
+  aiMovementStats: {fileID: 11400000, guid: 656438adf2e6f214e982d68e260545a4, type: 2}
+  showPath: 1
 --- !u!114 &8454413252481527678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -919,7 +916,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c0d4d341ea4274a9887b7feef051b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followedTransform: {fileID: 0}
   minDistance: 5
 --- !u!114 &7045846540979785746
 MonoBehaviour:

@@ -129,10 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff6c0aaec3e7ab940b0bcb23d1aeea11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateWithPath: 0
-  movementSpeed: 10
-  accelerationSpeed: 5
-  turningSpeed: 5
+  aiMovementStats: {fileID: 11400000, guid: 4789388683d0740478d175d9f1696565, type: 2}
   showPath: 0
 --- !u!114 &293700009727857140
 MonoBehaviour:

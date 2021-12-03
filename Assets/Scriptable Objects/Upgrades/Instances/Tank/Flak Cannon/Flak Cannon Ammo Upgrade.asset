@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf4556e128744744a255272f638564c, type: 3}
+  m_Name: Flak Cannon Ammo Upgrade
+  m_EditorClassIdentifier: 
+  UpgradeRarity: {fileID: 11400000, guid: b6084244a6783bd48b2d3c3a5d4afb8d, type: 2}
+  UpgradeName: Flak Cannon Ammo
+  UpgradeImage: {fileID: 21300000, guid: e20430cfb0301b649bd9a0f2f6773fe1, type: 3}
+  UpgradeDescription: Increases Flak Cannon ammo count by 1.
+  PlayerStatUpgraders:
+  - statModifier:
+      additiveValue: 1
+      multiplicativeValue: 0
+      useInt: 1
+    statUpgraded: {fileID: 11400000, guid: b3550f08532b62f4485df40afa23cb14, type: 2}
+  PlayerStatsCategoryUpgraders: []
+  EnemyStatUpgraders: []
+  EnemyStatsCategoryUpgraders:
+  - statModifier:
+      additiveValue: 0
+      multiplicativeValue: 0.5
+      useInt: 0
+    statsCategoryUpgraded: {fileID: 11400000, guid: 23f7c2e3d839c024c8af6c6987d0ec1b,
+      type: 2}
