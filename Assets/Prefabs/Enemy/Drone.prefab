@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4441263854141526703}
   - component: {fileID: 293700009106499947}
   m_Layer: 0
-  m_Name: BirdUp
+  m_Name: Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,6 +161,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiMovementControllerStats: {fileID: 11400000, guid: 4789388683d0740478d175d9f1696565,
     type: 2}
+  usesAcceleration: 0
+  rotatesWithForce: 1
 --- !u!1 &3662236316591728404
 GameObject:
   m_ObjectHideFlags: 0
