@@ -46,12 +46,13 @@ namespace CwispyStudios.TankMania.Enemy
 
     private void FollowTransform()
     {
-      float sqrDistanceToPlayer = Vector3.SqrMagnitude(followedTransform.position - transform.position);
+      bool isInRangeOfTarget = meleeController.IsInRangeOfTarget();
 
-      if (sqrDistanceToPlayer > minDistance * minDistance)
+      if (!isInRangeOfTarget)
       {
         Following = true;
       }
+
       else
       {
         Following = false;

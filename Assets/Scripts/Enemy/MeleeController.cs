@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -32,7 +33,22 @@ namespace CwispyStudios.TankMania.Enemy
       if (attackCountdown <= 0f) MeleeAttack(0);
     }
 
-    public void MeleeAttack(int attackIndex)
+    public bool IsInRangeOfTarget()
+    {
+      return GetCollidersInRange(overlapBoxBuffer) != 0;
+    }
+
+    private int GetCollidersInRange(Collider[] results)
+    {
+      MeleeAttackType chosenAttackType = attackTypes[0];
+
+      Transform hitBox = chosenAttackType.HitBox;
+
+      return Physics.OverlapBoxNonAlloc(hitBox.position, hitBox.lossyScale * 0.5f,
+        results, hitBox.rotation, playerLayerMask);
+    }
+
+    private void MeleeAttack(int attackIndex)
     {
       if (attackIndex > attackTypes.Length)
         throw new NullReferenceException($"No hitbox with index with {attackIndex} on this melee controller");
@@ -41,19 +57,25 @@ namespace CwispyStudios.TankMania.Enemy
 
       attackCountdown = chosenAttackType.AttackAttributes.AttackRate.Value;
 
-      int size = Physics.OverlapBoxNonAlloc(chosenAttackType.HitBox.position,
-        chosenAttackType.HitBox.lossyScale / 2f,
-        overlapBoxBuffer, chosenAttackType.HitBox.rotation, playerLayerMask);
+      int size = GetCollidersInRange(overlapBoxBuffer);
 
       if (size == 0) return;
+
+      // Prevents the same object with multiple colliders from being damaged multiple times
+      List<Damageable> objectsToBeDamaged = new List<Damageable>();
 
       for (int i = 0; i < size; i++)
       {
         Damageable otherDamageable = overlapBoxBuffer[i].GetComponentInParent<Damageable>();
 
-        // Seems like this check is unnecessary since we already filter the enemies when using the player's layer mask @Cwispy
-        if (otherDamageable.CanTakeDamageFromTeam(Team.Enemy))
-          otherDamageable.TakeDamage(chosenAttackType.AttackAttributes.Damage.DirectDamage.Value);
+        if (!objectsToBeDamaged.Contains(otherDamageable))
+        {
+          objectsToBeDamaged.Add(otherDamageable);
+
+          // Seems like this check is unnecessary since we already filter the enemies when using the player's layer mask @Cwispy
+          if (otherDamageable.CanTakeDamageFromTeam(Team.Enemy))
+            otherDamageable.TakeDamage(chosenAttackType.AttackAttributes.Damage.DirectDamage.Value);
+        }
       }
     }
 

@@ -2294,6 +2294,23 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4576436753813825290, guid: 8a4903ab655e6644aa94a2a5f95660d1,
+        type: 3}
+      propertyPath: enemiesToSpawn.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576436753813825290, guid: 8a4903ab655e6644aa94a2a5f95660d1,
+        type: 3}
+      propertyPath: enemiesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: -2170006017632550610, guid: ce3427767de02d043b1a3dab82e01125,
+        type: 3}
+    - target: {fileID: 4576436753813825290, guid: 8a4903ab655e6644aa94a2a5f95660d1,
+        type: 3}
+      propertyPath: enemiesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2024344312013028847, guid: 0e192f5c266f8be4f8e826a467feb6d9,
+        type: 3}
     - target: {fileID: 4576436753813825291, guid: 8a4903ab655e6644aa94a2a5f95660d1,
         type: 3}
       propertyPath: m_RootOrder
