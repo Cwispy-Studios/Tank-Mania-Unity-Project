@@ -29,7 +29,7 @@ namespace CwispyStudios.TankMania.Enemy
 
     private void UpdateSquaredMaxVelocity()
     {
-      squaredMaxVelocity = Mathf.Pow(aiMovementControllerStats.MaxVelocity.Value, 2f);
+      squaredMaxVelocity = aiMovementControllerStats.MaxVelocity.Value * aiMovementControllerStats.MaxVelocity.Value;
     }
 
     public void ApplyMovementForce(Vector3 direction, ForceMode forceMode)

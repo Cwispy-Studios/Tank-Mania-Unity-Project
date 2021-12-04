@@ -22,15 +22,15 @@ namespace CwispyStudios.TankMania.Poolers
       {
         if (objectPrefab != null)
         {
-          List<T> pbjectList = new List<T>();
+          List<T> objectList = new List<T>();
 
           for (int i = 0; i < numberPooledPerPrefab; ++i)
           {
             T pooledObject = InstantiateObject(objectPrefab, i);
-            pbjectList.Add(pooledObject);
+            objectList.Add(pooledObject);
           }
 
-          pooledObjectsDictionary.Add(objectPrefab.name, pbjectList);
+          pooledObjectsDictionary.Add(objectPrefab.name, objectList);
         }
       }
     }

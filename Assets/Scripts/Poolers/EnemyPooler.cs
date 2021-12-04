@@ -1,6 +1,6 @@
 namespace CwispyStudios.TankMania.Poolers
 {
-  using Combat;
+  using Enemy;
 
-  public class EnemyPooler : ObjectPooler<Damageable> { }
+  public class EnemyPooler : ObjectPooler<Enemy> { }
 }

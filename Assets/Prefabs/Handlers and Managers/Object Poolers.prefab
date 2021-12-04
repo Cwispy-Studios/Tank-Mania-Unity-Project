@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefabsList:
-  - {fileID: 4441263854141526703, guid: ce3427767de02d043b1a3dab82e01125, type: 3}
-  - {fileID: 8454413252481527676, guid: 0e192f5c266f8be4f8e826a467feb6d9, type: 3}
+  - {fileID: 2024344312013028847, guid: 0e192f5c266f8be4f8e826a467feb6d9, type: 3}
+  - {fileID: -2170006017632550610, guid: ce3427767de02d043b1a3dab82e01125, type: 3}
   numberPooledPerPrefab: 5
 --- !u!1 &6515029138149380092
 GameObject:

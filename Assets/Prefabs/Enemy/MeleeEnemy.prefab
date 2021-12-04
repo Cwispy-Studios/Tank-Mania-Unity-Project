@@ -903,7 +903,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff6c0aaec3e7ab940b0bcb23d1aeea11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiMovementStats: {fileID: 11400000, guid: 656438adf2e6f214e982d68e260545a4, type: 2}
+  aiMovementControllerStats: {fileID: 11400000, guid: 656438adf2e6f214e982d68e260545a4,
+    type: 2}
+  usesAcceleration: 0
+  rotatesWithForce: 1
   showPath: 1
 --- !u!114 &8454413252481527678
 MonoBehaviour:
@@ -947,6 +950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onEnemyKilled: {fileID: 11400000, guid: e9180ab6bbea1d44aab90b1e428a8c5a, type: 2}
   experiencePoints: 10
+  creditsCost: 0
 --- !u!1 &8516835320364725477
 GameObject:
   m_ObjectHideFlags: 0
