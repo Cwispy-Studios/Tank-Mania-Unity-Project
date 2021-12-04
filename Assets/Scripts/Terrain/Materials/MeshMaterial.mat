@@ -180,8 +180,8 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - maxHeight: 50.111126
-    - minHeight: -4.90641
+    - maxHeight: 80.928825
+    - minHeight: -7.9237895
     m_Colors:
     - Color_acd3c8f08fcd491291934191ed78b90b: {r: 0, g: 0, b: 0, a: 0}
     - Color_d5fa3baf144a4055a4f4db8c963748c6: {r: 0, g: 0, b: 0, a: 0}
