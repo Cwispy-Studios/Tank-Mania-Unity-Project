@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6241113991950374141}
   - component: {fileID: 6241113991950374140}
+  - component: {fileID: -4908123337904144868}
   m_Layer: 0
   m_Name: DroneFlock
   m_TagString: Untagged
@@ -43,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39c1c917f5b4a0dbc2c061a72528095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flockingDrones: []
   targetOffsetDistance: 20
   targetStrokeDuration: 4
   neighbourDistance: 4
@@ -54,3 +54,31 @@ MonoBehaviour:
   alignFactor: 1
   cohesionFactor: 1.5
   seekFactor: 3
+--- !u!114 &-4908123337904144868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6241113991950374143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6392f40cfd799e14e93796926d159be0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 219fae9a7d2c52049bdb3e10ee52879b, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6241113991950374143}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

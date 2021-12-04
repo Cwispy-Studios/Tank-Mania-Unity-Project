@@ -1,14 +1,13 @@
-using System;
 using System.Collections.Generic;
-using CwispyStudios.TankMania.Stats;
+
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CwispyStudios.TankMania.Enemy
 {
+  using Stats;
+
   public class DroneFlock : MonoBehaviour
   {
-    public List<DroneEnemy> flockingDrones = new List<DroneEnemy>();
     private Rigidbody targetRigidbody;
 
     [Header("MovementB behaviour, if offset is 0, flock will go directly to target without strafing")] [SerializeField]
@@ -32,7 +31,8 @@ namespace CwispyStudios.TankMania.Enemy
     [SerializeField] private float alignFactor = 1f;
     [SerializeField] private float cohesionFactor = 1f;
     [SerializeField] private float seekFactor = 4f;
-    private readonly List<DroneEnemy> queuedDrones = new List<DroneEnemy>();
+
+    private List<DroneEnemy> flockingDrones = new List<DroneEnemy>();
 
     private void Awake()
     {
@@ -64,9 +64,14 @@ namespace CwispyStudios.TankMania.Enemy
       return returnTarget;
     }
 
-    private void AddDrone(DroneEnemy drone)
+    public void AddDrone(DroneEnemy drone)
     {
-      queuedDrones.Add(drone);
+      flockingDrones.Add(drone);
+    }
+
+    public void RemoveDrone( DroneEnemy drone )
+    {
+      flockingDrones.Remove(drone);
     }
 
     private void FixedUpdate()
@@ -76,16 +81,6 @@ namespace CwispyStudios.TankMania.Enemy
 
     private void UpdateFlock()
     {
-      if (queuedDrones.Count > 0)
-      {
-        foreach (var drone in queuedDrones)
-        {
-          flockingDrones.Add(drone);
-        }
-
-        queuedDrones.Clear();
-      }
-
       for (int i = 0; i < flockingDrones.Count; i++)
       {
         Vector3 sep = Separate(i); // Separation	

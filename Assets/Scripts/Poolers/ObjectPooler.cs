@@ -64,9 +64,15 @@ namespace CwispyStudios.TankMania.Poolers
       return pooledObject;
     }
 
-    public T EnablePooledObject( T objectPrefab, Vector3 spawnLocation, Quaternion rotation )
+    public T EnablePooledObject( T objectPrefab, Vector3 spawnLocation, Quaternion rotation, bool usePrefabHeight = false )
     {
       T pooledObject = FindInactiveObject(objectPrefab);
+
+      if (usePrefabHeight)
+      {
+        spawnLocation.y += objectPrefab.transform.position.y;
+      }
+
       pooledObject.transform.position = spawnLocation;
       pooledObject.transform.rotation = rotation;
       pooledObject.gameObject.SetActive(true);

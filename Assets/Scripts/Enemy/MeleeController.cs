@@ -37,9 +37,13 @@ namespace CwispyStudios.TankMania.Enemy
       if (attackIndex > attackTypes.Length)
         throw new NullReferenceException($"No hitbox with index with {attackIndex} on this melee controller");
 
-      int size = Physics.OverlapBoxNonAlloc(attackTypes[attackIndex].HitBox.position,
-        attackTypes[attackIndex].HitBox.lossyScale / 2f,
-        overlapBoxBuffer, attackTypes[attackIndex].HitBox.rotation, playerLayerMask);
+      MeleeAttackType chosenAttackType = attackTypes[attackIndex];
+
+      attackCountdown = chosenAttackType.AttackAttributes.AttackRate.Value;
+
+      int size = Physics.OverlapBoxNonAlloc(chosenAttackType.HitBox.position,
+        chosenAttackType.HitBox.lossyScale / 2f,
+        overlapBoxBuffer, chosenAttackType.HitBox.rotation, playerLayerMask);
 
       if (size == 0) return;
 
@@ -49,7 +53,7 @@ namespace CwispyStudios.TankMania.Enemy
 
         // Seems like this check is unnecessary since we already filter the enemies when using the player's layer mask @Cwispy
         if (otherDamageable.CanTakeDamageFromTeam(Team.Enemy))
-          otherDamageable.TakeDamage(attackTypes[attackIndex].AttackAttributes.Damage.DirectDamage.Value);
+          otherDamageable.TakeDamage(chosenAttackType.AttackAttributes.Damage.DirectDamage.Value);
       }
     }
 

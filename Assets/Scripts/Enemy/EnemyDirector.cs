@@ -50,7 +50,7 @@ namespace CwispyStudios.TankMania.Enemy
       // Second, get an enemy type to spawn
       Enemy enemyToSpawn = GetRandomEnemyToSpawn();
 
-      enemyPooler.EnablePooledObject(enemyToSpawn, spawnLocation.position, Quaternion.identity);
+      enemyPooler.EnablePooledObject(enemyToSpawn, spawnLocation.position, Quaternion.identity, true);
 
       RandomiseSpawnInterval();
     }

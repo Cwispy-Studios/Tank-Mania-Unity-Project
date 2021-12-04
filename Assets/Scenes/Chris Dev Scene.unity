@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1bc21dde205ba647853695a94c53afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradePanel: {fileID: 0}
+  upgradePanel: {fileID: 781494248}
   gunTurretsMenu: {fileID: 277011955}
   turretHandler: {fileID: 8633598789043070840}
 --- !u!4 &29381367
@@ -789,6 +789,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 774117048}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &781494248 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 402986012, guid: f28b8ce6beb3c2a44a930947bef904a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1376460443}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bcc2ef1a46354e479e318e07105177a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &801368492
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,34 +1708,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 148d990b4da2b1a4b9c679095916046a, type: 3}
---- !u!1 &1570570882 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4576436753813825288, guid: 8a4903ab655e6644aa94a2a5f95660d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 4576436755421408545}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1570570883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1570570882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c39c1c917f5b4a0dbc2c061a72528095, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flockingDrones: []
-  targetOffsetDistance: 0
-  targetStrokeDuration: 0
-  neighbourDistance: 0
-  desiredSeparation: 0
-  aiMovementControllerStats: {fileID: 0}
-  separationFactor: 1.5
-  alignFactor: 1
-  cohesionFactor: 1
-  seekFactor: 4
 --- !u!224 &1838070402 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6208288524351878232, guid: bfc58dffdff799148bdf1568150c53d8,
@@ -2304,6 +2288,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Director
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576436753813825290, guid: 8a4903ab655e6644aa94a2a5f95660d1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4576436753813825291, guid: 8a4903ab655e6644aa94a2a5f95660d1,
         type: 3}
@@ -3096,6 +3085,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player Tank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633598789043070843, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: unityEventResponse.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633598789043070843, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: unityEventResponse.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633598789043070843, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: unityEventResponse.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633598789043070843, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: unityEventResponse.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633598789043070843, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: unityEventResponse.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633598789043070843, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: unityEventResponse.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: CwispyStudios.TankMania.Player.PlayerLevel, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633598789043070843, guid: d23cfcb9d00038f44831cb8873b5af50,
+        type: 3}
+      propertyPath: unityEventResponse.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9116554923332464521, guid: d23cfcb9d00038f44831cb8873b5af50,
         type: 3}

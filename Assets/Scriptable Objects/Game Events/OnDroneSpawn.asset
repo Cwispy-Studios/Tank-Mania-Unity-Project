@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fac696a1aa0d114abd2ac4c11528c3b, type: 3}
-  m_Name: AttackRate
+  m_Script: {fileID: 11500000, guid: 77380d5f02de7a14d90dfe3251270b0c, type: 3}
+  m_Name: OnDroneSpawn
   m_EditorClassIdentifier: 
-  useInt: 0
-  baseValue: 2
