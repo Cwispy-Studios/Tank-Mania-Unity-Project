@@ -185,6 +185,8 @@ namespace CwispyStudios.TankMania.Stats
       string objectPath = AssetDatabase.GetAssetPath(serializedObject.targetObject);
       string folderPath = objectPath.Replace($"{serializedObject.targetObject.name}.asset", folderName);
 
+      nameOfStatsFolder.stringValue = folderName;
+
       // Check if folder exists
       if (!AssetDatabase.IsValidFolder(folderPath)) return;
 

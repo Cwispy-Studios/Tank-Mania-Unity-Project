@@ -306,9 +306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433eab5279560814a8ba660aa01218f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firingInformation: {fileID: 11400000, guid: 62bd20d5294647b429c4202292efd5af, type: 2}
+  attackAttributes: {fileID: 11400000, guid: 62bd20d5294647b429c4202292efd5af, type: 2}
   fireZone: {fileID: 5185428225952278087}
-  baseDamage: {fileID: 11400000, guid: b88d5c97be1c13146acea4a0272a2f41, type: 2}
   fireCountdown: {fileID: 11400000, guid: b2fa54292ed2e2c44838e48891e6058d, type: 2}
   reloadCountdown: {fileID: 11400000, guid: 33a11a52dbf457a4bab03bb2fed0b8e0, type: 2}
   currentAmmo: {fileID: 11400000, guid: bc6e362cb27ab5e41ac83e87cc87cf0e, type: 2}

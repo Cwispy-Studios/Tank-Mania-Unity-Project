@@ -8,12 +8,9 @@ namespace CwispyStudios.TankMania.Player
 
   public class GunController : MonoBehaviour
   {
-    [Header("Firing Information")]
-    [SerializeField] private FiringInformation firingInformation;
+    [Header("Attack and Firing Attributes")]
+    [SerializeField] private ProjectileAttackAttributes attackAttributes;
     [SerializeField] private Transform fireZone = null;
-
-    [Header("Damage Information")]
-    [SerializeField] private Damage baseDamage;
 
     [Header("Attributes")]
     [SerializeField] private FloatVariable fireCountdown;
@@ -37,13 +34,13 @@ namespace CwispyStudios.TankMania.Player
       projectilePooler = FindObjectOfType<ProjectilePooler>();
       vfxPooler = FindObjectOfType<VfxPooler>();
 
-      currentAmmo.Value = (int)firingInformation.AmmoCount.Value;
+      currentAmmo.Value = (int)attackAttributes.AmmoCount.Value;
       fireCountdown.Value = 0f;
-      reloadCountdown.Value = firingInformation.ReloadSpeed.Value;
+      reloadCountdown.Value = attackAttributes.ReloadSpeed.Value;
 
-      previousAmmoCount = (int)firingInformation.AmmoCount.Value;
+      previousAmmoCount = (int)attackAttributes.AmmoCount.Value;
 
-      firingInformation.AmmoCount.OnStatUpgrade += OnAmmoChange;
+      attackAttributes.AmmoCount.OnStatUpgrade += OnAmmoChange;
 
       damageFrom = GetComponentInParent<Damageable>().UnitProperties.Team;
     }
@@ -76,7 +73,7 @@ namespace CwispyStudios.TankMania.Player
 
     private void UpdateReloadCooldown()
     {
-      if (currentAmmo.Value == firingInformation.AmmoCount.Value) return;
+      if (currentAmmo.Value == attackAttributes.AmmoCount.Value) return;
 
       // Check if reload countdown is still ticking down
       if (reloadCountdown.Value > 0f)
@@ -88,25 +85,25 @@ namespace CwispyStudios.TankMania.Player
         ++currentAmmo.Value;
 
         // Ammo count at max, set to max time
-        if (currentAmmo.Value == firingInformation.AmmoCount.Value)
-          reloadCountdown.Value = firingInformation.ReloadSpeed.Value;
+        if (currentAmmo.Value == attackAttributes.AmmoCount.Value)
+          reloadCountdown.Value = attackAttributes.ReloadSpeed.Value;
 
         // Compensate for overflow for the next ammunition to be loaded in
         else
-          reloadCountdown.Value += firingInformation.ReloadSpeed.Value;
+          reloadCountdown.Value += attackAttributes.ReloadSpeed.Value;
       }
     }
 
     private void FireProjectile()
     {
-      Projectile projectile = projectilePooler.EnablePooledObject(firingInformation.ProjectilePrefab, fireZone.position, transform.rotation);
-      projectile.PhysicsController.AddForce(transform.forward * firingInformation.FiringForce.Value, ForceMode.VelocityChange);
-      projectile.SetDamage(baseDamage, damageFrom);
-      vfxPooler.EnablePooledObject(firingInformation.FiringVfx, fireZone.position, transform.rotation);
+      Projectile projectile = projectilePooler.EnablePooledObject(attackAttributes.ProjectilePrefab, fireZone.position, transform.rotation);
+      projectile.PhysicsController.AddForce(transform.forward * attackAttributes.FiringForce.Value, ForceMode.VelocityChange);
+      projectile.SetDamage(attackAttributes.Damage, damageFrom);
+      vfxPooler.EnablePooledObject(attackAttributes.FiringVfx, fireZone.position, transform.rotation);
 
       --currentAmmo.Value;
 
-      fireCountdown.Value += firingInformation.FireRate.Value;
+      fireCountdown.Value += attackAttributes.AttackRate.Value;
 
       firingIsQueued = false;
     }
@@ -114,19 +111,19 @@ namespace CwispyStudios.TankMania.Player
     private void OnAmmoChange()
     {
       // Ammo added
-      if (firingInformation.AmmoCount.Value > previousAmmoCount)
+      if (attackAttributes.AmmoCount.Value > previousAmmoCount)
       {
-        int diff = (int)firingInformation.AmmoCount.Value - previousAmmoCount;
+        int diff = (int)attackAttributes.AmmoCount.Value - previousAmmoCount;
         currentAmmo.Value += diff;
       }
 
       // Ammo removed
       else
       {
-        currentAmmo.Value = Mathf.Clamp(currentAmmo.Value, 0, (int)firingInformation.AmmoCount.Value);
+        currentAmmo.Value = Mathf.Clamp(currentAmmo.Value, 0, (int)attackAttributes.AmmoCount.Value);
       }
 
-      previousAmmoCount = (int)firingInformation.AmmoCount.Value;
+      previousAmmoCount = (int)attackAttributes.AmmoCount.Value;
     }
 
     public void YouMayFireIfReady()
@@ -137,7 +134,7 @@ namespace CwispyStudios.TankMania.Player
     public void QueueFiring()
     {
       // Queue firing which will be executed in update
-      if (fireCountdown.Value <= firingInformation.TimeToQueueFiring.Value)
+      if (fireCountdown.Value <= attackAttributes.TimeToQueueFiring.Value)
         firingIsQueued = true;
     }
   }

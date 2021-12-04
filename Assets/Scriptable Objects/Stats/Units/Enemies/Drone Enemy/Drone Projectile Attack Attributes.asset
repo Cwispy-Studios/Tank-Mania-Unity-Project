@@ -9,27 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af38206fbef97144a85684330c52851b, type: 3}
-  m_Name: Drone Firing Information
+  m_Script: {fileID: 11500000, guid: c1ea94b4e75d84e4f934289f1710e0cf, type: 3}
+  m_Name: Drone Projectile Attack Attributes
   m_EditorClassIdentifier: 
   stats:
   - {fileID: 11400000, guid: 7e92cb4b4a8c6a846b411b9b91bd3007, type: 2}
-  - {fileID: 11400000, guid: c2e50dd2565a0af43abe35c72373ec1d, type: 2}
   - {fileID: 11400000, guid: 069ae48f2b5b9414da3ca4d2770c00d7, type: 2}
   - {fileID: 11400000, guid: 5adc8e5e4307aa94a9d6e548c1a84ace, type: 2}
   - {fileID: 11400000, guid: 53a49ee221debbd4b9a92f05f25744a6, type: 2}
+  - {fileID: 11400000, guid: c2e50dd2565a0af43abe35c72373ec1d, type: 2}
   statsNames:
   - FiringForce
-  - FireRate
   - ReloadSpeed
   - TimeToQueueFiring
   - AmmoCount
-  nameOfStatsFolder: Drone Firing Information
+  - AttackRate
+  nameOfStatsFolder: Drone Projectile Attack Attributes
+  Damage: {fileID: 11400000, guid: 5e11269a810fa334fae517722358b50d, type: 2}
+  AttackRate: {fileID: 11400000, guid: c2e50dd2565a0af43abe35c72373ec1d, type: 2}
   ProjectilePrefab: {fileID: 7051859430511138134, guid: 96f387c4febf159469290a2fdd002b2b,
     type: 3}
   FiringVfx: {fileID: 2051231272, guid: cb4917dcdcb9ee848bf1a0474e66b7f3, type: 3}
   FiringForce: {fileID: 11400000, guid: 7e92cb4b4a8c6a846b411b9b91bd3007, type: 2}
-  FireRate: {fileID: 11400000, guid: c2e50dd2565a0af43abe35c72373ec1d, type: 2}
   ReloadSpeed: {fileID: 11400000, guid: 069ae48f2b5b9414da3ca4d2770c00d7, type: 2}
   TimeToQueueFiring: {fileID: 11400000, guid: 5adc8e5e4307aa94a9d6e548c1a84ace, type: 2}
   AmmoCount: {fileID: 11400000, guid: 53a49ee221debbd4b9a92f05f25744a6, type: 2}

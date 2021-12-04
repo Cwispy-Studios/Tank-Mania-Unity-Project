@@ -1696,6 +1696,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 148d990b4da2b1a4b9c679095916046a, type: 3}
+--- !u!1 &1570570882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4576436753813825288, guid: 8a4903ab655e6644aa94a2a5f95660d1,
+    type: 3}
+  m_PrefabInstance: {fileID: 4576436755421408545}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1570570883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570570882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c39c1c917f5b4a0dbc2c061a72528095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flockingDrones: []
+  targetOffsetDistance: 0
+  targetStrokeDuration: 0
+  neighbourDistance: 0
+  desiredSeparation: 0
+  aiMovementControllerStats: {fileID: 0}
+  separationFactor: 1.5
+  alignFactor: 1
+  cohesionFactor: 1
+  seekFactor: 4
 --- !u!224 &1838070402 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6208288524351878232, guid: bfc58dffdff799148bdf1568150c53d8,
@@ -3132,63 +3160,12 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 8633598789043070839}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8633598789043070841}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc7c7ba22ff3794438206207de5a4a85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &8633598789043070841 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7480523010445580344, guid: d23cfcb9d00038f44831cb8873b5af50,
-    type: 3}
-  m_PrefabInstance: {fileID: 8633598789043070839}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8633598789043070842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8633598789043070841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bec9285171878864e84b118ab82f9f8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerLevel: {fileID: 11400000, guid: df45b4c4912ed5240ad1214c9c7dfa85, type: 2}
-  playerExperience: {fileID: 11400000, guid: a2731e78a52cd7b48ba87bd49e3fe94d, type: 2}
-  experienceToNextLevel: {fileID: 11400000, guid: fc51dfc0d438f5640ba49cd40140633a,
-    type: 2}
-  onPlayerLevelUp: {fileID: 11400000, guid: c7fd419cbdaf1474a88036c50a8460d3, type: 2}
---- !u!114 &8633598789043070843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8633598789043070841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f215076b01073824a9dc64151a0f1055, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: e9180ab6bbea1d44aab90b1e428a8c5a, type: 2}
-  unityEventResponse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8633598789043070842}
-        m_TargetAssemblyTypeName: CwispyStudios.TankMania.Player.PlayerLevel, Assembly-CSharp
-        m_MethodName: GainExperience
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!33 &8748686693340284632
 MeshFilter:
   m_ObjectHideFlags: 0

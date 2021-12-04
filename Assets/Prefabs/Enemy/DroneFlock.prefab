@@ -43,13 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39c1c917f5b4a0dbc2c061a72528095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flockingDrones:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  flockingDrones: []
   targetOffsetDistance: 20
   targetStrokeDuration: 4
   neighbourDistance: 4

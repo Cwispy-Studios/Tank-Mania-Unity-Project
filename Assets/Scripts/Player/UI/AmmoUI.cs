@@ -14,7 +14,7 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private AmmoImage ammoImagePrefab;
 
     [Header("Turret Stats and Attributes"), Tooltip("Firing information of the desired turret to track")]
-    [SerializeField] private FiringInformation firingInformation;
+    [SerializeField] private ProjectileAttackAttributes firingInformation;
     [SerializeField] private FloatVariable reloadCountdown;
     [SerializeField] private IntVariable currentAmmo;
 

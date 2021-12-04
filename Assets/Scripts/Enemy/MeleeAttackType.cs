@@ -5,12 +5,12 @@ using UnityEngine;
 namespace CwispyStudios.TankMania.Enemy
 {
   [Serializable]
-  public class AttackInformation
+  public class MeleeAttackType
   {
     [Header("Attach transform as child of main object as hit box")]
-    public Transform hitBox;
+    public Transform HitBox;
 
     [Header("Stats")]
-    public Damage damageStats;
+    public AttackAttributes AttackAttributes;
   }
 }
