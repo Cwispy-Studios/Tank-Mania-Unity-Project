@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Flak Cannon Radius Upgrade
   m_EditorClassIdentifier: 
   UpgradeRarity: {fileID: 11400000, guid: 758f9b74d0f7da54f99685e97acaf0fa, type: 2}
-  UpgradeName: Tank Cannon Splash Radius
+  UpgradeName: Flak Cannon Splash Radius
   UpgradeImage: {fileID: 21300000, guid: a12b96eb888a1b44bb2fd316ebc0bf90, type: 3}
   UpgradeDescription: Increases the Flak Cannon splash radius by 20%.
   PlayerStatUpgraders:
