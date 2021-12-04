@@ -1,13 +1,19 @@
-using System;
-using CwispyStudios.TankMania.Player;
-using CwispyStudios.TankMania.Stats;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Enemy
 {
+  using GameEvents;
+  using Player;
+
   [RequireComponent(typeof(AIMovementController))]
   public class DroneEnemy : MonoBehaviour
   {
+    [Header("Events")]
+    [Tooltip("Notifies the flocking manager to manage this drone.")]
+    [SerializeField] private DroneEnemyEvent onDroneSpawn;
+    [Tooltip("Notifies the flocking manager to stop managing this drone.")]
+    [SerializeField] private DroneEnemyEvent onDroneDespawn;
+
     private const float DesiredHeight = 10f;
     private const float HeightChangeFactor = .05f;
     
@@ -23,6 +29,16 @@ namespace CwispyStudios.TankMania.Enemy
       rb = GetComponent<Rigidbody>();
 
       Scheduler.Instance.GetTimer(3) += Folley;
+    }
+
+    private void OnEnable()
+    {
+      onDroneSpawn.Raise(this);
+    }
+
+    private void OnDisable()
+    {
+      onDroneDespawn.Raise(this);
     }
 
     private void Folley()

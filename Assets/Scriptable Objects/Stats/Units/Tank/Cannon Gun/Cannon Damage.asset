@@ -15,12 +15,12 @@ MonoBehaviour:
   stats:
   - {fileID: 11400000, guid: 616b349b945b8c14d9e8112060d75f4e, type: 2}
   - {fileID: 11400000, guid: a6e28b64d9be40742bb6ac74d38b7819, type: 2}
-  - {fileID: 11400000, guid: 7f93923483a2f1c44ae928c940381ad9, type: 2}
-  - {fileID: 11400000, guid: fdaf247085025c94e9d2ccefa32dc6ee, type: 2}
-  - {fileID: 11400000, guid: 4de097240007bd14eb4a72ef92eaadea, type: 2}
-  - {fileID: 11400000, guid: be82a13d60f4cc84f96c02f81f3b4044, type: 2}
-  - {fileID: 11400000, guid: b5e09cbe129ba2147a37f4de22d3c94a, type: 2}
-  - {fileID: 11400000, guid: ef9118e9cd7e94745927002ae01995d6, type: 2}
+  - {fileID: 11400000, guid: 74d78b1af8b2d5348bb5fc1ead8b8f61, type: 2}
+  - {fileID: 11400000, guid: a919ec340a00cbb4698784e669972f89, type: 2}
+  - {fileID: 11400000, guid: 174a6881e58d15a498188e190b780d0b, type: 2}
+  - {fileID: 11400000, guid: 21cdabcbdc5701144bef24bd9317a8cb, type: 2}
+  - {fileID: 11400000, guid: f0101f38d6919fb4184148e1e7b98b22, type: 2}
+  - {fileID: 11400000, guid: 285267f53e733144d92b7734ef04b7bf, type: 2}
   statsNames:
   - DirectDamage
   - DudCollisionDamagePercentage
@@ -36,15 +36,15 @@ MonoBehaviour:
   DudCollisionDamagePercentage: {fileID: 11400000, guid: a6e28b64d9be40742bb6ac74d38b7819,
     type: 2}
   HasSplashDamage: 1
-  SplashRadius: {fileID: 11400000, guid: 7f93923483a2f1c44ae928c940381ad9, type: 2}
-  SplashDamagePercentage: {fileID: 11400000, guid: fdaf247085025c94e9d2ccefa32dc6ee,
+  SplashRadius: {fileID: 11400000, guid: 74d78b1af8b2d5348bb5fc1ead8b8f61, type: 2}
+  SplashDamagePercentage: {fileID: 11400000, guid: a919ec340a00cbb4698784e669972f89,
     type: 2}
   HasSplashDamageRolloff: 1
-  SplashMinRadiusPercentageRolloff: {fileID: 11400000, guid: 4de097240007bd14eb4a72ef92eaadea,
+  SplashMinRadiusPercentageRolloff: {fileID: 11400000, guid: 174a6881e58d15a498188e190b780d0b,
     type: 2}
-  SplashMaxRadiusPercentageRolloff: {fileID: 11400000, guid: be82a13d60f4cc84f96c02f81f3b4044,
+  SplashMaxRadiusPercentageRolloff: {fileID: 11400000, guid: 21cdabcbdc5701144bef24bd9317a8cb,
     type: 2}
-  SplashMinRadiusDamagePercentageRolloff: {fileID: 11400000, guid: b5e09cbe129ba2147a37f4de22d3c94a,
+  SplashMinRadiusDamagePercentageRolloff: {fileID: 11400000, guid: f0101f38d6919fb4184148e1e7b98b22,
     type: 2}
-  SplashMaxRadiusDamagePercentageRolloff: {fileID: 11400000, guid: ef9118e9cd7e94745927002ae01995d6,
+  SplashMaxRadiusDamagePercentageRolloff: {fileID: 11400000, guid: 285267f53e733144d92b7734ef04b7bf,
     type: 2}

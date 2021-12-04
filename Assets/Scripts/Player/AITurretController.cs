@@ -347,9 +347,7 @@ namespace CwispyStudios.TankMania.Player
           // Return since we only need to select 1 object to aim at
           return;
         }
-      }  
-
-
+      }
     }
 
     /// <summary>

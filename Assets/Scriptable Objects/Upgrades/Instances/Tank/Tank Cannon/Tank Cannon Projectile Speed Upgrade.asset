@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf4556e128744744a255272f638564c, type: 3}
+  m_Name: Tank Cannon Projectile Speed Upgrade
+  m_EditorClassIdentifier: 
+  UpgradeRarity: {fileID: 11400000, guid: 96bed023bef0704489db576ab77873de, type: 2}
+  UpgradeName: Tank Cannon Projectile Speed
+  UpgradeImage: {fileID: 21300000, guid: bc2716f2ce2d91144b02c048611aef70, type: 3}
+  UpgradeDescription: Increases the projectile speed of the Tank Cannon by 5%.
+  PlayerStatUpgraders:
+  - statModifier:
+      additiveValue: 0
+      multiplicativeValue: 0.049999997
+      useInt: 0
+    statUpgraded: {fileID: 11400000, guid: 798b2f098a99e0b4cbcbe8f8a740e833, type: 2}
+  PlayerStatsCategoryUpgraders: []
+  EnemyStatUpgraders: []
+  EnemyStatsCategoryUpgraders:
+  - statModifier:
+      additiveValue: 0
+      multiplicativeValue: 0.049999997
+      useInt: 0
+    statsCategoryUpgraded: {fileID: 11400000, guid: 23f7c2e3d839c024c8af6c6987d0ec1b,
+      type: 2}

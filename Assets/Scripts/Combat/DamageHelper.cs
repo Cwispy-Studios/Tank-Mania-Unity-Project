@@ -126,6 +126,9 @@ namespace CwispyStudios.TankMania.Combat
       // Loop through each hit
       for (int i = 0; i < numHits; ++i)
       {
+        // If object is already disabled, do not check
+        if (!splashCollisionResults[i].gameObject.activeInHierarchy) continue;
+
         // Retrieve from attached rigidbody and not from the collision component
         // to check only the main gameobject and not all its colliders
         Rigidbody splashedRigidbody = splashCollisionResults[i].attachedRigidbody;

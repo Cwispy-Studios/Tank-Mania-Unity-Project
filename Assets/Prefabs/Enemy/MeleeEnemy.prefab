@@ -826,9 +826,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433eab5279560814a8ba660aa01218f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firingInformation: {fileID: 11400000, guid: 645e9b639595e28428713ffcb49dba2e, type: 2}
+  attackAttributes: {fileID: 0}
   fireZone: {fileID: 7301602042223953738}
-  baseDamage: {fileID: 11400000, guid: 5e11269a810fa334fae517722358b50d, type: 2}
   fireCountdown: {fileID: 11400000, guid: 527011822a499114b96da93b5da01188, type: 2}
   reloadCountdown: {fileID: 11400000, guid: 527011822a499114b96da93b5da01188, type: 2}
   currentAmmo: {fileID: 11400000, guid: 481efe3aae28d1f4ab4a4441f07e09ad, type: 2}
@@ -855,7 +854,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7782420690764519628
 Transform:
   m_ObjectHideFlags: 0
@@ -1001,7 +1000,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c0d4d341ea4274a9887b7feef051b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistance: 4
 --- !u!114 &7045846540979785746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1014,9 +1012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f1a39880168abb40bad995e4eab8af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackInformations:
-  - hitBox: {fileID: 479731888}
-    damageStats: {fileID: 11400000, guid: bb884591549b2774a9c1cc98812e307f, type: 2}
+  attackTypes: []
 --- !u!1 &8516835320364725477
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ea94b4e75d84e4f934289f1710e0cf, type: 3}
+  m_Name: Cannon Projectile Attack Attributes
+  m_EditorClassIdentifier: 
+  stats:
+  - {fileID: 11400000, guid: 798b2f098a99e0b4cbcbe8f8a740e833, type: 2}
+  - {fileID: 11400000, guid: 516a1df02ae0ac74187a5ef33dfc2edc, type: 2}
+  - {fileID: 11400000, guid: 189bd06b7cd096a4fbd87d14cc9272e7, type: 2}
+  - {fileID: 11400000, guid: f6482867cf0b37344bba9881dc23aa4b, type: 2}
+  - {fileID: 11400000, guid: 6893d67043f367e4ebe779128006a502, type: 2}
+  statsNames:
+  - FiringForce
+  - ReloadSpeed
+  - TimeToQueueFiring
+  - AmmoCount
+  - AttackRate
+  nameOfStatsFolder: Cannon Projectile Attack Attributes
+  Damage: {fileID: 11400000, guid: 5e11269a810fa334fae517722358b50d, type: 2}
+  AttackRate: {fileID: 11400000, guid: 6893d67043f367e4ebe779128006a502, type: 2}
+  ProjectilePrefab: {fileID: 7051859430511138134, guid: e12447defeff40d47a09319a02099a26,
+    type: 3}
+  FiringVfx: {fileID: 2051231272, guid: cb4917dcdcb9ee848bf1a0474e66b7f3, type: 3}
+  FiringForce: {fileID: 11400000, guid: 798b2f098a99e0b4cbcbe8f8a740e833, type: 2}
+  ReloadSpeed: {fileID: 11400000, guid: 516a1df02ae0ac74187a5ef33dfc2edc, type: 2}
+  TimeToQueueFiring: {fileID: 11400000, guid: 189bd06b7cd096a4fbd87d14cc9272e7, type: 2}
+  AmmoCount: {fileID: 11400000, guid: f6482867cf0b37344bba9881dc23aa4b, type: 2}

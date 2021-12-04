@@ -22,15 +22,15 @@ namespace CwispyStudios.TankMania.Poolers
       {
         if (objectPrefab != null)
         {
-          List<T> pbjectList = new List<T>();
+          List<T> objectList = new List<T>();
 
           for (int i = 0; i < numberPooledPerPrefab; ++i)
           {
             T pooledObject = InstantiateObject(objectPrefab, i);
-            pbjectList.Add(pooledObject);
+            objectList.Add(pooledObject);
           }
 
-          pooledObjectsDictionary.Add(objectPrefab.name, pbjectList);
+          pooledObjectsDictionary.Add(objectPrefab.name, objectList);
         }
       }
     }
@@ -64,9 +64,15 @@ namespace CwispyStudios.TankMania.Poolers
       return pooledObject;
     }
 
-    public T EnablePooledObject( T objectPrefab, Vector3 spawnLocation, Quaternion rotation )
+    public T EnablePooledObject( T objectPrefab, Vector3 spawnLocation, Quaternion rotation, bool usePrefabHeight = false )
     {
       T pooledObject = FindInactiveObject(objectPrefab);
+
+      if (usePrefabHeight)
+      {
+        spawnLocation.y += objectPrefab.transform.position.y;
+      }
+
       pooledObject.transform.position = spawnLocation;
       pooledObject.transform.rotation = rotation;
       pooledObject.gameObject.SetActive(true);

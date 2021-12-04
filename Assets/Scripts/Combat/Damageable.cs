@@ -10,12 +10,13 @@ namespace CwispyStudios.TankMania.Combat
     public UnitProperties UnitProperties => unitProperties;
     [SerializeField] private Health health;
 
+    [Header("Debug")]
     // DEBUG
     [SerializeField] private TMPro.TMP_Text healthText;
 
-    private float currentHealth;
+    protected float currentHealth;
 
-    private void Awake()
+    private void OnEnable()
     {
       currentHealth = health.MaxHealth.Value;
     }
@@ -43,13 +44,14 @@ namespace CwispyStudios.TankMania.Combat
 
     public void TakeDamage( float damage )
     {
-      Debug.Log($"{gameObject} took {damage} damage.");
+      //Debug.Log($"{gameObject} took {damage} damage.");
       currentHealth -= damage;
 
       if (currentHealth < 0f)
       {
         //gameObject.SetActive(false);
         // Remove
+        gameObject.SetActive(false);
       }
     }
   }

@@ -2,8 +2,6 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  using Combat;
-
   [CreateAssetMenu(menuName = "Stats/Damage")]
   public class Damage : StatsGroup
   {

@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1531798127843113828}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 47.634, y: 1.6, z: 28.628195}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 6489255675555579333}
@@ -127,8 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146d1787306c0894a92320c9793fa7dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectiveAgainst: 0
   impactVfxPrefab: {fileID: 5924228815087809842, guid: c2e8a4041da5b044695329274c91a26e,
     type: 3}
+  dudImpactVfxPrefab: {fileID: 0}
   usesCustomGravity: 0
   customGravityValue: 0
   PhysicsController: {fileID: 0}

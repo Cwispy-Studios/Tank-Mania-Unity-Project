@@ -8,7 +8,7 @@ namespace CwispyStudios.TankMania.Player
   public class ReticleFill : MonoBehaviour
   {
     [SerializeField] private FloatVariable firingCountdown;
-    [SerializeField] private FiringInformation firingInformation;
+    [SerializeField] private ProjectileAttackAttributes firingInformation;
 
     private Image reticleImage;
 
@@ -19,7 +19,7 @@ namespace CwispyStudios.TankMania.Player
 
     private void Update()
     {
-      reticleImage.fillAmount = 1f - Mathf.Clamp01(firingCountdown.Value / firingInformation.FireRate.Value);
+      reticleImage.fillAmount = 1f - Mathf.Clamp01(firingCountdown.Value / firingInformation.AttackRate.Value);
     }
   }
 }
