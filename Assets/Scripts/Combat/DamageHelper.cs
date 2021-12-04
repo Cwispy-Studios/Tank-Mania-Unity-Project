@@ -132,7 +132,7 @@ namespace CwispyStudios.TankMania.Combat
         // Retrieve from attached rigidbody and not from the collision component
         // to check only the main gameobject and not all its colliders
         Rigidbody splashedRigidbody = splashCollisionResults[i].attachedRigidbody;
-        GameObject splashedObject = null;
+        GameObject splashedObject = splashedRigidbody.gameObject;
 
         // Check if object has already been searched
         if (!splashedObjects.Contains(splashedObject))
