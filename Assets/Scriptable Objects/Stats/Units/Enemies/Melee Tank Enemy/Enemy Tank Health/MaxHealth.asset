@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MaxHealth
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 15
+  baseValue: 10
