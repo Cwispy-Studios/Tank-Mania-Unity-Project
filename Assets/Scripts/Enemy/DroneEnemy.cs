@@ -14,7 +14,7 @@ namespace CwispyStudios.TankMania.Enemy
     [Tooltip("Notifies the flocking manager to stop managing this drone.")]
     [SerializeField] private DroneEnemyEvent onDroneDespawn;
 
-    private const float DesiredHeight = 10f;
+    private const float DesiredHeight = 15f;
     private const float HeightChangeFactor = .05f;
     
     [HideInInspector] public Rigidbody rb; // used by DroneFlock for calculations

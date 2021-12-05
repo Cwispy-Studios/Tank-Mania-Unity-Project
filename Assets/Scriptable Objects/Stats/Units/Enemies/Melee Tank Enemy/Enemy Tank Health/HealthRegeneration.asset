@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: HealthRegeneration
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 2
+  baseValue: 0.5

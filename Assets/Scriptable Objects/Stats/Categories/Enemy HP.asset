@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statsInCategory:
   - {fileID: 11400000, guid: cd755f1a867e1b9489ebf8dbbd440b27, type: 2}
+  - {fileID: 11400000, guid: 8147bbdeb9aa03f4eaf0cbcd834ffc39, type: 2}

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Enemy Projectile Speed
   m_EditorClassIdentifier: 
   statsInCategory:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 7e92cb4b4a8c6a846b411b9b91bd3007, type: 2}

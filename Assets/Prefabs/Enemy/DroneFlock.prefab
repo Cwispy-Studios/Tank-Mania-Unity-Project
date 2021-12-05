@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6241113991950374141
 Transform:
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39c1c917f5b4a0dbc2c061a72528095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetOffsetDistance: 20
+  targetOffsetDistance: 40
   targetStrokeDuration: 4
   neighbourDistance: 4
   desiredSeparation: 3

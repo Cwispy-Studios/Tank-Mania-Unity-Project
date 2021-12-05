@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Enemy Ammo
   m_EditorClassIdentifier: 
   statsInCategory:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 53a49ee221debbd4b9a92f05f25744a6, type: 2}

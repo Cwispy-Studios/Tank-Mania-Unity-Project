@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293700009727857151}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6797842302941445871}
@@ -113,7 +113,7 @@ MonoBehaviour:
   unitProperties:
     Team: 1
     UnitType: 10
-  health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
+  health: {fileID: 11400000, guid: c603f794dc66c7242bc8d17d28c2bf46, type: 2}
   healthText: {fileID: 5638592229459629410}
 --- !u!114 &-2170006017632550610
 MonoBehaviour:
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onEnemyKilled: {fileID: 11400000, guid: e9180ab6bbea1d44aab90b1e428a8c5a, type: 2}
-  experiencePoints: 10
+  experiencePoints: 5
   creditsCost: 0
 --- !u!1 &4125530290365767949
 GameObject:

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: baf4556e128744744a255272f638564c, type: 3}
-  m_Name: Tank Cannon Radius Upgrade
+  m_Name: Tank Cannon Splash Radius Upgrade
   m_EditorClassIdentifier: 
   UpgradeRarity: {fileID: 11400000, guid: 758f9b74d0f7da54f99685e97acaf0fa, type: 2}
   UpgradeName: Tank Cannon Splash Radius
@@ -27,7 +27,7 @@ MonoBehaviour:
   EnemyStatsCategoryUpgraders:
   - statModifier:
       additiveValue: 0
-      multiplicativeValue: 0.049999997
+      multiplicativeValue: 0.02
       useInt: 0
-    statsCategoryUpgraded: {fileID: 11400000, guid: 23f7c2e3d839c024c8af6c6987d0ec1b,
+    statsCategoryUpgraded: {fileID: 11400000, guid: d87e2a810330dcf40b22b8aa343bb316,
       type: 2}

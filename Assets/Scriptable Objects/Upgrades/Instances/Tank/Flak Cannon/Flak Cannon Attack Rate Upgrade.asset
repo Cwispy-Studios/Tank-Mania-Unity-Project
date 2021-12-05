@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: baf4556e128744744a255272f638564c, type: 3}
-  m_Name: Tank Cannon Fire Rate Upgrade
+  m_Name: Flak Cannon Attack Rate Upgrade
   m_EditorClassIdentifier: 
   UpgradeRarity: {fileID: 11400000, guid: 96bed023bef0704489db576ab77873de, type: 2}
-  UpgradeName: Tank Cannon Reload
+  UpgradeName: Flak Cannon Attack Rate
   UpgradeImage: {fileID: 21300000, guid: 32f44ccf015947342bd67de7eed7d3c5, type: 3}
-  UpgradeDescription: Decreases the time taken to fire each round by the Tank Cannon
+  UpgradeDescription: Decreases the time taken to fire each round by the Flak Cannon
     by 5%.
   PlayerStatUpgraders:
   - statModifier:
       additiveValue: 0
       multiplicativeValue: -0.049999997
       useInt: 0
-    statUpgraded: {fileID: 11400000, guid: 6893d67043f367e4ebe779128006a502, type: 2}
+    statUpgraded: {fileID: 11400000, guid: d8c93a663e922b14b82f10dced6a3c70, type: 2}
   PlayerStatsCategoryUpgraders: []
   EnemyStatUpgraders: []
   EnemyStatsCategoryUpgraders:
   - statModifier:
       additiveValue: 0
-      multiplicativeValue: 0.049999997
+      multiplicativeValue: -0.02
       useInt: 0
-    statsCategoryUpgraded: {fileID: 11400000, guid: 23f7c2e3d839c024c8af6c6987d0ec1b,
+    statsCategoryUpgraded: {fileID: 11400000, guid: 03777337bbd5c44478bda960efbcb568,
       type: 2}

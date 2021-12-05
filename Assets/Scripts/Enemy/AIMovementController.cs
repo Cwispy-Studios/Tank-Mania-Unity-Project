@@ -50,15 +50,24 @@ namespace CwispyStudios.TankMania.Enemy
       
       Vector3 turnVector = physicsController.velocity;
       turnVector.y = 0;
-      turnVector.Normalize();
       
-      if (turnVector.sqrMagnitude == 0) return;
+      if (turnVector.sqrMagnitude <= 0.01f) return;
 
-      Quaternion newRotation =
-        Quaternion.RotateTowards(physicsController.rotation,
-          quaternion.LookRotation(turnVector, Vector3.up),
-          aiMovementControllerStats.TurningSpeed.Value);
-      physicsController.MoveRotation(newRotation);
+      turnVector.Normalize();
+
+      try
+      {
+        Quaternion newRotation =
+          Quaternion.RotateTowards(physicsController.rotation,
+            quaternion.LookRotation(turnVector, Vector3.up),
+            aiMovementControllerStats.TurningSpeed.Value);
+        physicsController.MoveRotation(newRotation);
+      }
+
+      catch
+      {
+        Debug.Log("Help");
+      }
     }
   }
 }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Enemy Reload
   m_EditorClassIdentifier: 
   statsInCategory:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 069ae48f2b5b9414da3ca4d2770c00d7, type: 2}

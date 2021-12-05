@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AttackRate
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 2
+  baseValue: 1.6

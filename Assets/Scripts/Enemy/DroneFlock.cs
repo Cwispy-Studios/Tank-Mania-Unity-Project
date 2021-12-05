@@ -57,7 +57,7 @@ namespace CwispyStudios.TankMania.Enemy
       }
       
       Vector3 returnTarget =  targetRigidbody.position + targetRigidbody.velocity + targetRigidbody.transform.rotation *
-                              Vector3.Lerp(rightOffsetVector, -rightOffsetVector, Mathf.PingPong(Time.time  / targetStrokeDuration, 1));
+                              Vector3.Lerp(rightOffsetVector, -rightOffsetVector, Mathf.PingPong(Time.time / targetStrokeDuration, 1f));
       
       Debug.DrawRay(returnTarget, Vector3.up, Color.red, 1);
 

@@ -14,7 +14,7 @@ namespace CwispyStudios.TankMania.Player
     [Header("Events")]
     [SerializeField] private VoidEvent onPlayerLevelUp;
 
-    private static int ExperiencePerLevel = 50;
+    private static int ExperiencePerLevel = 25;
 
     private void Awake()
     {

@@ -30,5 +30,5 @@ MonoBehaviour:
       additiveValue: 0
       multiplicativeValue: 0.049999997
       useInt: 0
-    statsCategoryUpgraded: {fileID: 11400000, guid: 23f7c2e3d839c024c8af6c6987d0ec1b,
+    statsCategoryUpgraded: {fileID: 11400000, guid: ca45be8b5adac6547b15dc28062136ae,
       type: 2}

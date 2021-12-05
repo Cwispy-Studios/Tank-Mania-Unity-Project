@@ -26,8 +26,8 @@ MonoBehaviour:
   EnemyStatUpgraders: []
   EnemyStatsCategoryUpgraders:
   - statModifier:
-      additiveValue: 0
-      multiplicativeValue: 0.5
-      useInt: 0
-    statsCategoryUpgraded: {fileID: 11400000, guid: 23f7c2e3d839c024c8af6c6987d0ec1b,
+      additiveValue: 1
+      multiplicativeValue: 0
+      useInt: 1
+    statsCategoryUpgraded: {fileID: 11400000, guid: 1146b6e5a74403245890779edd837b66,
       type: 2}
