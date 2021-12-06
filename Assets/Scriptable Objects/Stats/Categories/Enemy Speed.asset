@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a89ac47595359d4eb4c2ebcea45cc1d, type: 3}
   m_Name: Enemy Speed
   m_EditorClassIdentifier: 
+  statNamesInPaths:
+  - StatName: AccelerationForce
+    FindInsidePath: Assets/Scriptable Objects/Stats/Units/Enemies
+  - StatName: MaxVelocity
+    FindInsidePath: Assets/Scriptable Objects/Stats/Units/Enemies
+  autoRetrieve: 1
   statsInCategory:
   - {fileID: 11400000, guid: 9b9652ffb39819541a0442626148760b, type: 2}
-  - {fileID: 11400000, guid: c7e68f2c7252d2e4796cbed40c7440a9, type: 2}
   - {fileID: 11400000, guid: f5970895ac71cdd428efa821f83f6c43, type: 2}
+  - {fileID: 11400000, guid: c7e68f2c7252d2e4796cbed40c7440a9, type: 2}
   - {fileID: 11400000, guid: a5221af5511986c42b0a505f1e899ad6, type: 2}

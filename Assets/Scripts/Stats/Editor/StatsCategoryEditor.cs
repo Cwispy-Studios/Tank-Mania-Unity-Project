@@ -64,7 +64,7 @@ namespace CwispyStudios.TankMania.Stats
 
             Stat stat = AssetDatabase.LoadAssetAtPath<Stat>(assetPath);
 
-            if (stat != null) allStatObjects.Add(stat);
+            if (stat != null && !allStatObjects.Contains(stat)) allStatObjects.Add(stat);
           }
         }
       }

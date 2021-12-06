@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a89ac47595359d4eb4c2ebcea45cc1d, type: 3}
   m_Name: Enemy Splash Radius
   m_EditorClassIdentifier: 
+  statNamesInPaths:
+  - StatName: SplashRadius
+    FindInsidePath: Assets/Scriptable Objects/Stats/Units/Enemies
+  autoRetrieve: 1
   statsInCategory:
   - {fileID: 11400000, guid: 3e810c54a09fd71469bcfe9efe6a67a5, type: 2}
+  - {fileID: 11400000, guid: a7e52190a11fc6e47a22e9a0b83389e6, type: 2}
