@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a89ac47595359d4eb4c2ebcea45cc1d, type: 3}
   m_Name: Enemy Attack Rate
   m_EditorClassIdentifier: 
+  statNamesInPaths:
+  - StatName: AttackRate
+    FindInsidePath: Assets/Scriptable Objects/Stats/Units/Enemies
+  autoRetrieve: 1
   statsInCategory:
   - {fileID: 11400000, guid: c2e50dd2565a0af43abe35c72373ec1d, type: 2}
   - {fileID: 11400000, guid: dad3d883b7f4a564d9487079690899fe, type: 2}

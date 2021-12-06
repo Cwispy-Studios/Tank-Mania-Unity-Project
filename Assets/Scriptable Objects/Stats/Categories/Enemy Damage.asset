@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a89ac47595359d4eb4c2ebcea45cc1d, type: 3}
   m_Name: Enemy Damage
   m_EditorClassIdentifier: 
+  statNamesInPaths:
+  - StatName: DirectDamage
+    FindInsidePath: Assets/Scriptable Objects/Stats/Units/Enemies
+  autoRetrieve: 1
   statsInCategory:
   - {fileID: 11400000, guid: 98b532125b39f894f892dd22cc19588b, type: 2}
   - {fileID: 11400000, guid: e1f32dbff1b4c85438c0e478f1f25e21, type: 2}

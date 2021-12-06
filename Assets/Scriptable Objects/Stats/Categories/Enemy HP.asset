@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a89ac47595359d4eb4c2ebcea45cc1d, type: 3}
   m_Name: Enemy HP
   m_EditorClassIdentifier: 
+  statNamesInPaths:
+  - StatName: MaxHealth
+    FindInsidePath: Assets/Scriptable Objects/Stats/Units/Enemies
+  autoRetrieve: 1
   statsInCategory:
-  - {fileID: 11400000, guid: cd755f1a867e1b9489ebf8dbbd440b27, type: 2}
   - {fileID: 11400000, guid: 8147bbdeb9aa03f4eaf0cbcd834ffc39, type: 2}
+  - {fileID: 11400000, guid: cd755f1a867e1b9489ebf8dbbd440b27, type: 2}
