@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Terrain
 {
-    [CreateAssetMenu()]
+    [CreateAssetMenu(menuName = "Terrain/Terrain Data")]
     public class TerrainData : UpdatableData
     {
         public float uniformScale = 2f; //Change this to increase world scale / chunk size

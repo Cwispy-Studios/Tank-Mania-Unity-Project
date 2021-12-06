@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Terrain
 {
-    [CreateAssetMenu()]
+    [CreateAssetMenu(menuName = "Terrain/Texture Data")]
     public class TextureData : UpdatableData
     {
         const int textureSize = 512;

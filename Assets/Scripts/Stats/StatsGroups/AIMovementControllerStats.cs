@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  [CreateAssetMenu(menuName = "Stats/Enemies/AiMovement")]
+  [CreateAssetMenu(menuName = "Stats/Enemies/AIMovement")]
   public class AIMovementControllerStats : StatsGroup
   {
     [Header("Velocity")] [StatRange(0f, 50f)]

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Terrain
 {
-    [CreateAssetMenu()]
+    [CreateAssetMenu(menuName = "Terrain/Noise Data")]
     public class NoiseData : UpdatableData
     {
         public Noise.NormalizeMode normalizeMode;

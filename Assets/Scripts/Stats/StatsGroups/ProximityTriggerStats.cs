@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  [CreateAssetMenu(menuName = "Stats/Proximity Trigger Stats")]
+  [CreateAssetMenu(menuName = "Stats/Triggers/Proximity Trigger Stats")]
   public class ProximityTriggerStats : TriggerStats
   {
     [StatRange(1, 10)]

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  [CreateAssetMenu(menuName = "Stats/Damage")]
+  [CreateAssetMenu(menuName = "Stats/Combat/Damage")]
   public class Damage : StatsGroup
   {
     [Header("Damage Information"), Tooltip("How much damage is dealt on a direct hit.")]
