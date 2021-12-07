@@ -59,34 +59,48 @@ namespace CwispyStudios.TankMania.Stats
 
       GUI.color = Color.magenta;
 
-      if (GUILayout.Button("Create Stat Assets"))
+      GUIContent content = new GUIContent();
+      content.text = "Create Stat Assets";
+      content.tooltip = "Creates an asset for every missing Stat reference in a folder with the same name as this asset's name." +
+        " Also creates the folder if it does not exist.";
+
+      if (GUILayout.Button(content))
       {
         CreateAssets();
       }
 
       EditorGUILayout.Space();
 
-      GUI.color = Color.yellow;
+      GUI.color = Color.white;
 
-      if (GUILayout.Button("Rename Assets"))
+      content.text = "Rename Assets";
+      content.tooltip = "Checks every Stat reference if the asset name is the same as the variable name and renames them." +
+        " Also renames the folder to match this asset's name if it exists.";
+
+      if (GUILayout.Button(content))
       {
         RenameFolder();
       }
 
-      EditorGUILayout.Space();
+      content.text = "Retrieve References From Folder";
+      content.tooltip = "Searches for a folder with the same name as this asset. " +
+        "If it exists, searches for Stat assets with the same names as the variables in this StatsGroup and references them.";
 
-      GUI.color = Color.red;
-
-      if (GUILayout.Button("Clear References"))
-      {
-        ClearReferences();
-      }
-
-      GUI.color = Color.white;
-
-      if (GUILayout.Button("Retrieve References From Folder"))
+      if (GUILayout.Button(content))
       {
         RetrieveReferences();
+      }
+
+      EditorGUILayout.Space();
+
+      GUI.color = Color.yellow;
+
+      content.text = "Clear References";
+      content.tooltip = "Removes the reference to every Stat object but does not delete them.";
+
+      if (GUILayout.Button(content))
+      {
+        ClearReferences();
       }
 
       GUI.color = defaultColour;
