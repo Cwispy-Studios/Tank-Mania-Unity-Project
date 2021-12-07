@@ -10,15 +10,26 @@ namespace CwispyStudios.TankMania.Stats
     private SerializedProperty statsNames;
     private SerializedProperty nameOfStatsFolder;
 
-    private string folderName;
+    private string currentFolderPath;
 
     public virtual void OnEnable()
+    {
+      Initialise();
+    }
+
+    private void Initialise()
     {
       stats = serializedObject.FindProperty(nameof(stats));
       statsNames = serializedObject.FindProperty(nameof(statsNames));
       nameOfStatsFolder = serializedObject.FindProperty(nameof(nameOfStatsFolder));
 
-      folderName = nameOfStatsFolder.stringValue;
+      // This will be called on a new object, default name is the asset name
+      if (string.IsNullOrEmpty(nameOfStatsFolder.stringValue))
+      {
+        nameOfStatsFolder.stringValue = serializedObject.targetObject.name;
+
+        serializedObject.ApplyModifiedProperties();
+      }
     }
 
     public override void OnInspectorGUI()
@@ -41,29 +52,25 @@ namespace CwispyStudios.TankMania.Stats
       EditorGUILayout.Space();
 
       EditorGUILayout.LabelField($"Current Folder Name: {nameOfStatsFolder.stringValue}");
-      folderName = EditorGUILayout.TextField("Change Folder Name:", folderName);
 
-      if (GUILayout.Button("Use Asset Name as Folder Name"))
-      {
-        folderName = serializedObject.targetObject.name;
-      }
+      ValidateAssets();
 
       Color defaultColour = GUI.color;
 
       GUI.color = Color.magenta;
 
-      if (GUILayout.Button("Rename Assets"))
+      if (GUILayout.Button("Create Stat Assets"))
       {
-        RenameAssets();
+        CreateAssets();
       }
 
       EditorGUILayout.Space();
 
       GUI.color = Color.yellow;
 
-      if (GUILayout.Button("Create Stat Assets"))
+      if (GUILayout.Button("Rename Assets"))
       {
-        CreateAssets();
+        RenameFolder();
       }
 
       EditorGUILayout.Space();
@@ -87,21 +94,114 @@ namespace CwispyStudios.TankMania.Stats
       serializedObject.ApplyModifiedProperties();
     }
 
-    private void RenameAssets()
+    private void ValidateAssets()
     {
-      // First, rename the folder.
-      string objectPath = AssetDatabase.GetAssetPath(serializedObject.targetObject);
-      string originalFolderPath = objectPath.Replace($"{serializedObject.targetObject.name}.asset", nameOfStatsFolder.stringValue);
-      string newFolderPath = originalFolderPath.Replace(nameOfStatsFolder.stringValue, folderName);
+      currentFolderPath = GetCurrentFolderPath();
 
-      nameOfStatsFolder.stringValue = folderName;
+      bool hasAssetReference = HasStatsReference();
 
-      // Check that paths are different and original folder still exists
-      if (!string.Equals(originalFolderPath, newFolderPath) && AssetDatabase.IsValidFolder(originalFolderPath))
+      if (hasAssetReference)
       {
-        AssetDatabase.MoveAsset(originalFolderPath, newFolderPath);
+        bool folderExists = AssetDatabase.IsValidFolder(currentFolderPath);
+
+        if (!folderExists)
+        {
+          EditorGUILayout.HelpBox($"Warning! There are assets referenced but the folder \"{nameOfStatsFolder.stringValue}\"" +
+            $" cannot be found! Has the folder been renamed by another StatsGroup, or did you rename it manually?", MessageType.Warning);
+        }
+
+        bool statsInCorrectFolder = StatsInCorrectFolder();
+
+        if (!statsInCorrectFolder)
+        {
+          EditorGUILayout.HelpBox($"Warning! One or more Stat assets are in a different folder from \"{nameOfStatsFolder.stringValue}\"!", 
+            MessageType.Warning);
+        }
+      }
+    }
+
+    private string GetCurrentFolderPath()
+    {
+      // Get the path to the asset
+      string objectPath = AssetDatabase.GetAssetPath(serializedObject.targetObject);
+      // Find the current folder path from the asset path
+      string currentFolderPath = objectPath.Replace($"{serializedObject.targetObject.name}.asset", nameOfStatsFolder.stringValue);
+
+      return currentFolderPath;
+    }
+
+    private bool HasStatsReference()
+    {
+      for (int i = 0; i < stats.arraySize; ++i)
+      {
+        SerializedProperty statProperty = stats.GetArrayElementAtIndex(i);
+
+        // There is a reference to a stat
+        if (statProperty.objectReferenceValue != null)
+        {
+          return true;
+        }
       }
 
+      return false;
+    }
+
+    private bool StatsInCorrectFolder()
+    {
+      for (int i = 0; i < stats.arraySize; ++i)
+      {
+        SerializedProperty statProperty = stats.GetArrayElementAtIndex(i);
+        Object objectReferenceValue = statProperty.objectReferenceValue;
+
+        // There is a reference to a stat
+        if (objectReferenceValue != null)
+        {
+          string propertyPath = AssetDatabase.GetAssetPath(objectReferenceValue);
+          string replacedString = $"/{objectReferenceValue.name}.asset";
+          propertyPath = propertyPath.Replace(replacedString, string.Empty);
+
+          bool differentFolder = !propertyPath.EndsWith(nameOfStatsFolder.stringValue);
+
+          if (differentFolder)
+          {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    }
+
+    private void RenameAssets()
+    {
+      RenameFolder();
+      RenameStats();
+    }
+
+    private void RenameFolder()
+    {
+      // If no folder exists, there is nothing to be done
+      if (!AssetDatabase.IsValidFolder(currentFolderPath))
+      {
+        EditorUtility.DisplayDialog("Cannot rename folder!", $"Folder \"{nameOfStatsFolder.stringValue}\" does not exist.", "Close");
+        return;
+      }
+
+      // Get the new folder path we want (this will be the same as the asset)
+      string newFolderPath = currentFolderPath.Replace(nameOfStatsFolder.stringValue, serializedObject.targetObject.name);
+
+      // Overwrite the property, folder name should always be asset name
+      nameOfStatsFolder.stringValue = serializedObject.targetObject.name;
+
+      // Check that paths are different and original folder still exists
+      if (!string.Equals(currentFolderPath, newFolderPath))
+      {
+        AssetDatabase.MoveAsset(currentFolderPath, newFolderPath);
+      }
+    }
+
+    private void RenameStats()
+    {
       // Check asset names if they still match variable names
       for (int i = 0; i < stats.arraySize; ++i)
       {
@@ -127,22 +227,11 @@ namespace CwispyStudios.TankMania.Stats
 
     private void CreateAssets()
     {
-      // Do not allow creating folder with empty name
-      if (string.IsNullOrEmpty(folderName))
-      {
-        folderName = nameOfStatsFolder.stringValue = serializedObject.targetObject.name;
-      }
-
-      string objectPath = AssetDatabase.GetAssetPath(serializedObject.targetObject);
-      string folderPath = objectPath.Replace($"{serializedObject.targetObject.name}.asset", folderName);
-
-      nameOfStatsFolder.stringValue = folderName;
-
       // Check if folder exists, if does not exist, then create folder
-      if (!AssetDatabase.IsValidFolder(folderPath))
+      if (!AssetDatabase.IsValidFolder(currentFolderPath))
       {
-        string parentFolderPath = folderPath.Replace("/" + serializedObject.targetObject.name, "");
-        AssetDatabase.CreateFolder(parentFolderPath, folderName);
+        string parentFolderPath = currentFolderPath.Replace("/" + serializedObject.targetObject.name, "");
+        AssetDatabase.CreateFolder(parentFolderPath, nameOfStatsFolder.stringValue);
       }
 
       // Check every stat asset...
@@ -155,7 +244,7 @@ namespace CwispyStudios.TankMania.Stats
         {
           Stat statObject = CreateInstance<Stat>();
           string statName = statsNames.GetArrayElementAtIndex(i).stringValue;
-          string assetPath = folderPath + $"/{statName}.asset";
+          string assetPath = currentFolderPath + $"/{statName}.asset";
           AssetDatabase.CreateAsset(statObject, assetPath);
 
           serializedObject.FindProperty(statName).objectReferenceValue = statObject;
@@ -182,20 +271,15 @@ namespace CwispyStudios.TankMania.Stats
 
     private void RetrieveReferences()
     {
-      string objectPath = AssetDatabase.GetAssetPath(serializedObject.targetObject);
-      string folderPath = objectPath.Replace($"{serializedObject.targetObject.name}.asset", folderName);
-
-      nameOfStatsFolder.stringValue = folderName;
-
       // Check if folder exists
-      if (!AssetDatabase.IsValidFolder(folderPath)) return;
+      if (!AssetDatabase.IsValidFolder(currentFolderPath)) return;
 
       // For every stat of this group...
       for (int i = 0; i < stats.arraySize; ++i)
       {
         // Build the path to the desired asset path
         string statName = statsNames.GetArrayElementAtIndex(i).stringValue;
-        string assetPath = folderPath + $"/{statName}.asset";
+        string assetPath = currentFolderPath + $"/{statName}.asset";
 
         // Attempt to load the asset and assign it. If it is missing then it will be null.
         Stat statObject = AssetDatabase.LoadAssetAtPath(assetPath, typeof(Stat)) as Stat;

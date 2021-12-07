@@ -102,7 +102,14 @@ namespace CwispyStudios.TankMania.Stats
       bool guiStatus = GUI.enabled;
 
       GUI.enabled = !lockObjectField;
+
+      EditorGUI.BeginChangeCheck();
       EditorGUI.PropertyField(position, property, new GUIContent(" "));
+      if (EditorGUI.EndChangeCheck())
+      {
+        objectAssigned = property.objectReferenceValue != null;
+      }
+
       GUI.enabled = guiStatus;
 
       // Do not need to show or initialise any values if stat is not assigned yet.

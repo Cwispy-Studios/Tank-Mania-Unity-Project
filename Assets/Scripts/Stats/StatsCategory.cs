@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Stats
 {
-  [CreateAssetMenu(menuName = "Stats/Stats Category", order = 10)]
+  [CreateAssetMenu(menuName = "Stats/Stats Category", order = 100)]
   public class StatsCategory : ScriptableObject
   {
 #if UNITY_EDITOR
