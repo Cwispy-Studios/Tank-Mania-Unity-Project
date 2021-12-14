@@ -1,13 +1,16 @@
+using System;
+
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Combat
 {
   using Stats;
 
-  public class Damageable : PooledObject
+  public class Damageable : MonoBehaviour
   {
     [SerializeField] private UnitProperties unitProperties;
     public UnitProperties UnitProperties => unitProperties;
+
     [SerializeField] private Health health;
 
     [Header("Debug")]
@@ -15,6 +18,11 @@ namespace CwispyStudios.TankMania.Combat
     [SerializeField] private TMPro.TMP_Text healthText;
 
     protected float currentHealth;
+
+    /// <summary>
+    /// Used by TargetFinder to remove object when it is disabled
+    /// </summary>
+    public event Action<Damageable> OnObjectDie;
 
     private void OnEnable()
     {
@@ -49,9 +57,15 @@ namespace CwispyStudios.TankMania.Combat
 
       if (currentHealth < 0f)
       {
-        // Remove
-        gameObject.SetActive(false);
+        Die();
       }
+    }
+
+    protected virtual void Die()
+    {
+      OnObjectDie?.Invoke(this);
+
+      gameObject.SetActive(false);
     }
   }
 }

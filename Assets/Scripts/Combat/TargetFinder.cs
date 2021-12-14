@@ -21,15 +21,19 @@ namespace CwispyStudios.TankMania.Combat
     {
       Rigidbody rb = other.attachedRigidbody;
 
-      // First check if object has rigidbody and is not already a known target
-      if (rb == null || targetsInRange.Contains(rb)) return;
+      // Object must have a rigidbody
+      if (rb == null) return;
+      // Object must not already be found by TargetFinder
+      if (targetsInRange.Contains(rb)) return;
 
-      // Then check if the target has a Damageable component
       Damageable damageable = rb.GetComponent<Damageable>();
 
-      if (damageable != null && targetPreference.IsSoftMatchWith(damageable.UnitProperties))
+      // Object must be damageable to be targetable
+      if (damageable == null) return;
+
+      if (targetPreference.IsSoftMatchWith(damageable.UnitProperties))
       {
-        damageable.OnObjectDisabled += RemoveDisabledObject;
+        damageable.OnObjectDie += RemoveDeadObject;
         targetsInRange.Add(rb);
       }
     }
@@ -40,18 +44,20 @@ namespace CwispyStudios.TankMania.Combat
 
       if (targetsInRange.Contains(rb))
       {
-        rb.GetComponent<Damageable>().OnObjectDisabled -= RemoveDisabledObject; ;
+        Damageable damageable = rb.GetComponent<Damageable>();
+        damageable.OnObjectDie -= RemoveDeadObject;
+
         targetsInRange.Remove(rb);
       }
     }
 
-    private void RemoveDisabledObject( GameObject disabledObject )
+    private void RemoveDeadObject( Damageable disabledObject )
     {
       Rigidbody rb = disabledObject.GetComponent<Rigidbody>();
 
       if (targetsInRange.Contains(rb))
       {
-        rb.GetComponent<Damageable>().OnObjectDisabled -= RemoveDisabledObject; ;
+        disabledObject.OnObjectDie -= RemoveDeadObject; ;
         targetsInRange.Remove(rb);
       }
     }
