@@ -17,14 +17,14 @@ namespace CwispyStudios.TankMania.Enemy
     [SerializeField, Min(0f)] private float minSpawnDistance;
     [SerializeField, Range(25f, 250f)] private float maxSpawnDistance;
 
-    private EnemyPooler enemyPooler;
+    private ObjectPooler objectPooler;
     private Transform playerTransform;
 
     private float spawnCountdown;
 
     private void Awake()
     {
-      enemyPooler = FindObjectOfType<EnemyPooler>();
+      objectPooler = FindObjectOfType<ObjectPooler>();
       playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
       RandomiseSpawnInterval();
@@ -50,7 +50,7 @@ namespace CwispyStudios.TankMania.Enemy
       // Second, get an enemy type to spawn
       Enemy enemyToSpawn = GetRandomEnemyToSpawn();
 
-      enemyPooler.EnablePooledObject(enemyToSpawn, spawnLocation.position, Quaternion.identity, true);
+      objectPooler.EnablePooledObject(enemyToSpawn.gameObject, spawnLocation.position, Quaternion.identity, true);
 
       RandomiseSpawnInterval();
     }

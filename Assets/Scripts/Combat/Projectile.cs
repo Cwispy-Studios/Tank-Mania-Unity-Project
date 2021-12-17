@@ -23,7 +23,7 @@ namespace CwispyStudios.TankMania.Combat
     [SerializeField, Range(0, -100f), Tooltip("Default gravity is -9.81")] 
     private float customGravityValue;
 
-    private VfxPooler vfxPooler;
+    private ObjectPooler objectPooler;
 
     // Prevents OnEnable from running when being instantiated
     private bool disableOnEnabled = true;
@@ -39,7 +39,7 @@ namespace CwispyStudios.TankMania.Combat
 
     private void Awake()
     {
-      vfxPooler = FindObjectOfType<VfxPooler>();
+      objectPooler = FindObjectOfType<ObjectPooler>();
       unitTeam = GetComponent<UnitTeam>();
 
       PhysicsController = GetComponent<Rigidbody>();
@@ -188,7 +188,7 @@ namespace CwispyStudios.TankMania.Combat
       if (dudImpactVfxPrefab == null && impactVfxPrefab == null) return;
 
       VfxParentDisabler vfxParentDisabler = isDudCollision ? dudImpactVfxPrefab : impactVfxPrefab;
-      vfxPooler.EnablePooledObject(vfxParentDisabler, location, Quaternion.identity);
+      objectPooler.EnablePooledObject(vfxParentDisabler.gameObject, location, Quaternion.identity);
     }
 
     /// <summary>

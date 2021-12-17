@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Poolers
 {
-  public class ObjectPooler<T> : MonoBehaviour where T : MonoBehaviour
+  public class ObjectPooler : MonoBehaviour
   {
-    [SerializeField] private List<T> objectPrefabsList = null;
-    [SerializeField, Range(0, 100)] private int numberPooledPerPrefab = 50;
+    [SerializeField] private List<GameObject> objectPrefabsList = null;
+    [SerializeField, Range(0, 100)] private int numberPooledPerPrefab = 10;
 
-    private Dictionary<string, List<T>> pooledObjectsDictionary = new Dictionary<string, List<T>>();
+    private Dictionary<string, List<GameObject>> pooledObjectsDictionary = new Dictionary<string, List<GameObject>>();
 
     private void Awake()
     {
@@ -18,35 +18,40 @@ namespace CwispyStudios.TankMania.Poolers
 
     private void InitialiseObjectPooler()
     {
-      foreach (T objectPrefab in objectPrefabsList)
+      foreach (GameObject objectPrefab in objectPrefabsList)
       {
         if (objectPrefab != null)
         {
-          List<T> objectList = new List<T>();
-
-          for (int i = 0; i < numberPooledPerPrefab; ++i)
-          {
-            T pooledObject = InstantiateObject(objectPrefab, i);
-            objectList.Add(pooledObject);
-          }
-
-          pooledObjectsDictionary.Add(objectPrefab.name, objectList);
+          AddObjectToPooler(objectPrefab);
         }
       }
     }
 
-    private T InstantiateObject( T objectPrefab, int number )
+    private void AddObjectToPooler( GameObject objectPrefab )
     {
-      T pooledObject = Instantiate(objectPrefab, Vector3.zero, Quaternion.identity, transform);
+      List<GameObject> objectList = new List<GameObject>();
+
+      for (int i = 0; i < numberPooledPerPrefab; ++i)
+      {
+        GameObject pooledObject = InstantiateObject(objectPrefab, i);
+        objectList.Add(pooledObject);
+      }
+
+      pooledObjectsDictionary.Add(objectPrefab.name, objectList);
+    }
+
+    private GameObject InstantiateObject( GameObject objectPrefab, int number )
+    {
+      GameObject pooledObject = Instantiate(objectPrefab, Vector3.zero, Quaternion.identity);
       pooledObject.gameObject.SetActive(false);
       pooledObject.gameObject.name = objectPrefab.name + number;
 
       return pooledObject;
     }
 
-    private T FindInactiveObject( T objectPrefab )
+    private GameObject FindInactiveObject( GameObject objectPrefab )
     {
-      List<T> objectList = pooledObjectsDictionary[objectPrefab.name];
+      List<GameObject> objectList = pooledObjectsDictionary[objectPrefab.name];
 
       // Find an inactive projectile in the list
       for (int i = 0; i < objectList.Count; ++i)
@@ -58,15 +63,20 @@ namespace CwispyStudios.TankMania.Poolers
       }
 
       // If we reach here, there are no more inactive projectiles and we need to instantiate one
-      T pooledObject = InstantiateObject(objectPrefab, objectList.Count);
+      GameObject pooledObject = InstantiateObject(objectPrefab, objectList.Count);
       objectList.Add(pooledObject);
 
       return pooledObject;
     }
 
-    public T EnablePooledObject( T objectPrefab, Vector3 spawnLocation, Quaternion rotation, bool usePrefabHeight = false )
+    public GameObject EnablePooledObject( GameObject objectPrefab, Vector3 spawnLocation, Quaternion rotation, bool usePrefabHeight = false )
     {
-      T pooledObject = FindInactiveObject(objectPrefab);
+      if (!pooledObjectsDictionary.ContainsKey(objectPrefab.name))
+      {
+        AddObjectToPooler(objectPrefab);
+      }
+
+      GameObject pooledObject = FindInactiveObject(objectPrefab);
 
       if (usePrefabHeight)
       {
