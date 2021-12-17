@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Enemy
 {
+  using Combat;
   using GameEvents;
 
   public class Enemy : MonoBehaviour
@@ -15,7 +16,24 @@ namespace CwispyStudios.TankMania.Enemy
     [Tooltip("The cost of spawning this enemy for the director.")]
     [SerializeField, Min(0f)] private int creditsCost;
 
+    private Damageable damageable;
+
+    private void Awake()
+    {
+      damageable = GetComponent<Damageable>();
+    }
+
+    private void OnEnable()
+    {
+      damageable.OnObjectDie += GiveExperience;
+    }
+
     private void OnDisable()
+    {
+      damageable.OnObjectDie -= GiveExperience;
+    }
+
+    private void GiveExperience( Damageable _ )
     {
       onEnemyKilled.Raise(experiencePoints);
     }
