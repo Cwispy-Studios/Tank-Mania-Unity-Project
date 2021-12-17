@@ -168,7 +168,7 @@ MonoBehaviour:
   targetPreferences:
     TargetsFriendlies: 0
     TargetsOpponents: 1
-    TargetProperties: 0
+    TargetProperties: 2
 --- !u!114 &5869011662373809084
 MonoBehaviour:
   m_ObjectHideFlags: 0

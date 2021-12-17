@@ -45,7 +45,7 @@ namespace CwispyStudios.TankMania.Enemy
       Transform hitBox = chosenAttackType.HitBox;
 
       return Physics.OverlapBoxNonAlloc(hitBox.position, hitBox.lossyScale * 0.5f,
-        results, hitBox.rotation, playerLayerMask);
+        results, hitBox.rotation, playerLayerMask, QueryTriggerInteraction.Ignore);
     }
 
     private void MeleeAttack(int attackIndex)
