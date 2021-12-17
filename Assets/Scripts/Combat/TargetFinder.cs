@@ -7,7 +7,6 @@ namespace CwispyStudios.TankMania.Combat
   [RequireComponent(typeof(UnitTeam))]
   public class TargetFinder : MonoBehaviour
   {
-    [Tooltip("Target must match the Team preference, and must contain ANY of the UnitType selected. If UnitType is 0, accepts anything.")]
     [SerializeField] private TargetPreferences targetPreferences;
 
     private List<Rigidbody> targetsInRange = new List<Rigidbody>();

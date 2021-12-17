@@ -15,10 +15,10 @@ namespace CwispyStudios.TankMania.Combat
     private static LayerMask PlayerLayerMask = 1 << PlayerLayer;
     private static LayerMask EnemyLayerMask = 1 << EnemyLayer;
 
-    private LayerMask friendlyLayerMask;
+    private LayerMask thisLayerMask;
     private LayerMask opponentLayerMask;
 
-    public LayerMask ThisLayerMask => friendlyLayerMask;
+    public LayerMask ThisLayerMask => thisLayerMask;
     public LayerMask OpponentLayerMask => opponentLayerMask;
 
     private void Awake()
@@ -28,14 +28,14 @@ namespace CwispyStudios.TankMania.Combat
       // Unit belongs to Player
       if (unitLayer == PlayerLayer || unitLayer == PlayerProjectileLayer)
       {
-        friendlyLayerMask = PlayerLayerMask;
+        thisLayerMask = PlayerLayerMask;
         opponentLayerMask = EnemyLayerMask;
       }
 
       // Unit belongs to Enemy
       else if (unitLayer == EnemyLayer || unitLayer == EnemyProjectileLayer)
       {
-        friendlyLayerMask = EnemyLayerMask;
+        thisLayerMask = EnemyLayerMask;
         opponentLayerMask = PlayerLayerMask;
       }
 
@@ -61,7 +61,7 @@ namespace CwispyStudios.TankMania.Combat
 
       LayerMask otherLayerMask = 1 << otherLayer;
 
-      return ((friendlyLayerMask & otherLayerMask) != 0);
+      return ((thisLayerMask & otherLayerMask) != 0);
     }
 
     /// <summary>
