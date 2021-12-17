@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 261113770}
   - component: {fileID: 261113771}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Turret Right Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1030629103}
   - component: {fileID: 1030629104}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Turret Top Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2130609235}
   - component: {fileID: 2130609236}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: BirdAttractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 7082818049455842004}
   - component: {fileID: 796699828494440997}
   - component: {fileID: 634311417722805550}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Player Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 2888227914412202974}
   - component: {fileID: 4142169000836360784}
   - component: {fileID: 727757926982147004}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: TankFree_Wheel_b_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 6008121938645766604}
   - component: {fileID: 6172758674856281492}
   - component: {fileID: 8107526685486584073}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: TankFree_Wheel_f_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 605061748959569569}
   - component: {fileID: 3279255781393004154}
   - component: {fileID: 6322631795037006238}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Chassis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1751288720933615790}
   - component: {fileID: 3762733266694321173}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: CameraAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +591,7 @@ GameObject:
   - component: {fileID: 7289899335542054064}
   - component: {fileID: 931606982997192331}
   - component: {fileID: 2785755200167231177}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: TankFree_Wheel_b_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 7478768042007443769}
   - component: {fileID: 241998692792532794}
   - component: {fileID: 4629647060965722678}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 8843186355275564873}
   - component: {fileID: 8401938898469673866}
   - component: {fileID: 3574932998523166381}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: TankFree_Wheel_f_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -838,12 +838,13 @@ GameObject:
   - component: {fileID: 8633598788674284614}
   - component: {fileID: 1659550491239997941}
   - component: {fileID: 8633598788674284632}
+  - component: {fileID: 6792551388281937427}
   - component: {fileID: -2948365163213748665}
   - component: {fileID: 1153093374058250064}
   - component: {fileID: 1153093374058250065}
   - component: {fileID: 8633598789043070842}
   - component: {fileID: 8633598789043070843}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Player Tank
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -945,6 +946,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 11400000, guid: a525e39d52a1397469481d35d57cd485, type: 2}
+--- !u!114 &6792551388281937427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7480523010445580344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a56e46981d14a4cba2cd6695bdfddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
 --- !u!114 &-2948365163213748665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -957,9 +971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3454032f8f81a824296162866c6342cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitProperties:
-    Team: 0
-    UnitType: 1
+  unitProperties: 9
   health: {fileID: 11400000, guid: eb70d2b91920df04c89e825df6ff81e4, type: 2}
   healthText: {fileID: 0}
   currentPlayerHealth: {fileID: 11400000, guid: 463697db7838acc41a079c23ed6ee4bc,
@@ -1056,7 +1068,7 @@ GameObject:
   - component: {fileID: 1161101691281302698}
   - component: {fileID: 8454741730612689687}
   - component: {fileID: 8454741730612689704}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Cannon Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1169,7 +1181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8633598789061193743}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Fire Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1203,7 +1215,7 @@ GameObject:
   - component: {fileID: 8397927466259402765}
   - component: {fileID: 9153037211866373909}
   - component: {fileID: 1530951065}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Cannon Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

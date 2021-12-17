@@ -6,6 +6,7 @@ namespace CwispyStudios.TankMania.Combat
 {
   using Stats;
 
+  [RequireComponent(typeof(UnitTeam))]
   public class Damageable : MonoBehaviour
   {
     [SerializeField] private UnitProperties unitProperties;
@@ -43,11 +44,6 @@ namespace CwispyStudios.TankMania.Combat
     {
       currentHealth += health.HealthRegeneration.Value * Time.deltaTime;
       currentHealth = Mathf.Clamp(currentHealth, 0f, health.MaxHealth.Value);
-    }
-
-    public bool CanTakeDamageFromTeam( Team team )
-    {
-      return unitProperties.Team != team;
     }
 
     public void TakeDamage( float damage )

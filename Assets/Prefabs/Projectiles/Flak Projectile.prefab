@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 7051859430511138134}
   - component: {fileID: 7698484323720113316}
   - component: {fileID: 3506631775432023416}
+  - component: {fileID: 5869011662373809084}
   - component: {fileID: 4685843817965642556}
   - component: {fileID: -3237600328331388279}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Flak Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,9 +165,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432e21a90d2e44f4a9dbec88345b9ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPreference:
-    Team: 1
-    UnitType: 2
+  targetPreferences:
+    TargetsFriendlies: 0
+    TargetsOpponents: 1
+    TargetProperties: 0
+--- !u!114 &5869011662373809084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531798127843113828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a56e46981d14a4cba2cd6695bdfddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4685843817965642556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6489255675555579333}
   - component: {fileID: 7506779071624192130}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 293700009727857136}
   - component: {fileID: 1201365868627696318}
   - component: {fileID: 293700009727857140}
+  - component: {fileID: 8450378571782045069}
   - component: {fileID: 4441263854141526703}
   - component: {fileID: -2170006017632550610}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,6 +99,19 @@ MonoBehaviour:
   onDroneSpawn: {fileID: 11400000, guid: 219fae9a7d2c52049bdb3e10ee52879b, type: 2}
   onDroneDespawn: {fileID: 11400000, guid: f1dfa0c061244aa459111e831bb32e7e, type: 2}
   rb: {fileID: 0}
+--- !u!114 &8450378571782045069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293700009727857151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a56e46981d14a4cba2cd6695bdfddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
 --- !u!114 &4441263854141526703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,9 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e395fc3a5ad044eb70d4c1e513563e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitProperties:
-    Team: 1
-    UnitType: 10
+  unitProperties: 10
   health: {fileID: 11400000, guid: c603f794dc66c7242bc8d17d28c2bf46, type: 2}
   healthText: {fileID: 5638592229459629410}
 --- !u!114 &-2170006017632550610
@@ -139,7 +151,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8430305750667873953}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: Fire Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +183,7 @@ GameObject:
   - component: {fileID: 3351699602317027721}
   - component: {fileID: 3802456103279149283}
   - component: {fileID: 5638592229459629410}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +318,7 @@ GameObject:
   - component: {fileID: 5485103571563911447}
   - component: {fileID: 7526541244207968039}
   - component: {fileID: 6087074037516831151}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,10 +413,73 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 293700009727857150}
     m_Modifications:
+    - target: {fileID: 194809669, guid: 42c2ee25e8df1784d95b52002f42af97, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 880303260, guid: 42c2ee25e8df1784d95b52002f42af97, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2380719156074622025, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405871514878806863, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2882456379801629647, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3457424351594319210, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3549747672973379193, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863277104173243716, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5931262147674693181, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 6133085903051149576, guid: 42c2ee25e8df1784d95b52002f42af97,
         type: 3}
       propertyPath: m_Name
       value: BirdModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6133085903051149576, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421824578204798366, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6475174556707447357, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6475174557309331147, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6797842303561075634, guid: 42c2ee25e8df1784d95b52002f42af97,
         type: 3}
@@ -460,6 +535,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7738692049596572249, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886308151602416463, guid: 42c2ee25e8df1784d95b52002f42af97,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42c2ee25e8df1784d95b52002f42af97, type: 3}

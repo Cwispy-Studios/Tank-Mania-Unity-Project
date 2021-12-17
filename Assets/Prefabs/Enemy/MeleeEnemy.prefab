@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 479731888}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Hitbox1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 1631905221778139926}
   - component: {fileID: 9143625323318712435}
   - component: {fileID: 6933914672764426722}
-  m_Layer: 3
+  m_Layer: 12
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 4220224662318263451}
   - component: {fileID: 3170469020583779605}
   - component: {fileID: 1773776132907494649}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: TankFree_Wheel_b_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 4748226765540615817}
   - component: {fileID: 5129106618222359249}
   - component: {fileID: 7063769110896125516}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: TankFree_Wheel_f_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 4487744096761292756}
   - component: {fileID: 4487744096761292757}
   - component: {fileID: 4487744096761292754}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 4487744097844603531}
   - component: {fileID: 4487744097844603533}
   - component: {fileID: 4487744097844603530}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 8624068751679925237}
   - component: {fileID: 2191440582376200654}
   - component: {fileID: 3759601462813952396}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: TankFree_Wheel_b_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -601,7 +601,7 @@ GameObject:
   - component: {fileID: 8491622757116509021}
   - component: {fileID: 187246632806896623}
   - component: {fileID: 7480886673214901330}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: TankFree_Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 8691701767672743550}
   - component: {fileID: 7354196280217298760}
   - component: {fileID: 7890916626923563088}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: TankFree_Canon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,12 +795,13 @@ GameObject:
   - component: {fileID: 2263130843788657894}
   - component: {fileID: 7301602042141137666}
   - component: {fileID: 7301602042141137667}
+  - component: {fileID: 56031197365929023}
   - component: {fileID: 8454413252481527676}
   - component: {fileID: 8454413252481527665}
   - component: {fileID: 8454413252481527678}
   - component: {fileID: 7045846540979785746}
   - component: {fileID: 2024344312013028847}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: MeleeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -906,6 +907,19 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &56031197365929023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8454413252481527677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a56e46981d14a4cba2cd6695bdfddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
 --- !u!114 &8454413252481527676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -918,9 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e395fc3a5ad044eb70d4c1e513563e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitProperties:
-    Team: 1
-    UnitType: 5
+  unitProperties: 0
   health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
   healthText: {fileID: 4487744097844603530}
 --- !u!114 &8454413252481527665
@@ -993,7 +1005,7 @@ GameObject:
   - component: {fileID: 7511295161594458124}
   - component: {fileID: 7358207711087488207}
   - component: {fileID: 2528914793972181480}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: TankFree_Wheel_f_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}

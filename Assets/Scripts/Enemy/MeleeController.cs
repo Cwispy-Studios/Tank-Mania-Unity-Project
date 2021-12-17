@@ -72,9 +72,7 @@ namespace CwispyStudios.TankMania.Enemy
         {
           objectsToBeDamaged.Add(otherDamageable);
 
-          // Seems like this check is unnecessary since we already filter the enemies when using the player's layer mask @Cwispy
-          if (otherDamageable.CanTakeDamageFromTeam(Team.Enemy))
-            otherDamageable.TakeDamage(chosenAttackType.AttackAttributes.Damage.DirectDamage.Value);
+          otherDamageable.TakeDamage(chosenAttackType.AttackAttributes.Damage.DirectDamage.Value);
         }
       }
     }

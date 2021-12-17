@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8333938171496464973}
   - component: {fileID: 7030726712476480238}
   - component: {fileID: 7051859430511138134}
-  m_Layer: 7
+  m_Layer: 13
   m_Name: MachineGun Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6489255675555579333}
   - component: {fileID: 7506779071624192130}
-  m_Layer: 7
+  m_Layer: 13
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

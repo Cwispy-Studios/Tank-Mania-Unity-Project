@@ -18,72 +18,24 @@ namespace CwispyStudios.TankMania.Combat
     private static HashSet<GameObject> splashedObjects = new HashSet<GameObject>();
 
     /// <summary>
-    /// Checks if a target unit can be damaged and retrieve the Damageable component.
-    /// </summary>
-    /// <param name="damage">
-    /// The damage information.
-    /// </param>
-    /// <param name="damageFrom">
-    /// The team the damage is coming from.
-    /// </param>
-    /// <param name="collisionObject">
-    /// Object to check if it can be damaged.
-    /// </param>
-    /// <param name="hitObjectHealth">
-    /// The Damageable component to retrieve.
-    /// </param>
-    /// <returns>
-    /// Whether the object can be damaged.
-    /// </returns>
-    public static bool CheckIfDamageable( this Damage damage, Team damageFrom, GameObject collisionObject, out Damageable hitObjectHealth )
-    {
-      // Check if object has a health component so it can be damaged
-      hitObjectHealth = collisionObject.GetComponent<Damageable>();
-
-      return hitObjectHealth && hitObjectHealth.CanTakeDamageFromTeam(damageFrom);
-    }
-
-    /// <summary>
-    /// Checks if a target unit can be damaged.
-    /// </summary>
-    /// <param name="damage">
-    /// The damage information.
-    /// </param>
-    /// <param name="damageFrom">
-    /// The team the damage is coming from.
-    /// </param>
-    /// <param name="collisionObject">
-    /// Object to check if it can be damaged.
-    /// </param>
-    /// <returns>
-    /// Whether the object can be damaged.
-    /// </returns>
-    public static bool CheckIfDamageable( this Damage damage, Team damageFrom, GameObject collisionObject )
-    {
-      return CheckIfDamageable(damage, damageFrom, collisionObject, out _);
-    }
-
-    /// <summary>
     /// Checks if a target unit can be damaged and damages them.
     /// </summary>
     /// <param name="damage">
     /// The damage information.
     /// </param>
-    /// <param name="damageFrom">
-    /// The team the damage is coming from.
-    /// </param>
     /// <param name="collisionObject">
     /// Target object to damage.
     /// </param>
-    public static void DamageObject( this Damage damage, Team damageFrom, GameObject collisionObject, bool isDudCollision )
+    public static void DamageObject( this Damage damage, GameObject collisionObject, bool isDudCollision )
     {
-      // Also check if unit is from a different team, no friendly fire
-      if (CheckIfDamageable(damage, damageFrom, collisionObject, out Damageable hitObjectHealth))
+      Damageable damageable = collisionObject.GetComponent<Damageable>();
+
+      if (damageable != null)
       {
         float damageAmount = damage.DirectDamage.Value;
         if (isDudCollision) damageAmount *= damage.DudCollisionDamagePercentage.Value;
 
-        hitObjectHealth.TakeDamage(damageAmount);
+        damageable.TakeDamage(damageAmount);
       }
     }
 
@@ -93,33 +45,28 @@ namespace CwispyStudios.TankMania.Combat
     /// <param name="damage">
     /// The damage information.
     /// </param>
-    /// <param name="damageFrom">
-    /// The team the damage is coming from.
-    /// </param>
     /// <param name="collisionObject"> 
     /// Object that was directly hit by the Damage. Can be null.
     /// </param>
     /// <param name="collisionPoint">
     /// The point where splash damage is emitted from.
     /// </param>
-    public static void SplashDamageOnPoint( this Damage damage, Team damageFrom, GameObject collisionObject, Vector3 collisionPoint )
+    public static void SplashDamageOnPoint( this Damage damage, GameObject collisionObject, Vector3 collisionPoint, int layerMask )
     {
       if (!damage.HasSplashDamage) return;
 
       // If this object took a direct hit already, it should not take additional splash damage
       splashedObjects.Add(collisionObject);
 
-      // 8 is enemy, 3 is player
-      int opponentLayerMask = damageFrom == Team.Player ? 1 << 8 : 1 << 3;
-
       // Find the number of objects within the splash radius, this counts all composite colliders
       int numHits = Physics.OverlapSphereNonAlloc(
         collisionPoint,
         damage.SplashRadius.Value,
         splashCollisionResults,
-        opponentLayerMask,
+        layerMask,
         QueryTriggerInteraction.Ignore
         );
+
       // Prevents out of range
       numHits = Mathf.Clamp(numHits, 0, splashCollisionResults.Length);
 
@@ -140,11 +87,12 @@ namespace CwispyStudios.TankMania.Combat
           // Do not check this object again
           splashedObjects.Add(splashedObject);
 
-          // Object has health, then check the team
-          if (damage.CheckIfDamageable(damageFrom, splashedObject, out Damageable splashedObjectHealth))
+          Damageable damageable = splashedObject.GetComponent<Damageable>();
+
+          if (damageable != null)
           {
             float splashDamageDealt = damage.CalculateSplashDamage(splashedRigidbody, collisionPoint);
-            splashedObjectHealth.TakeDamage(splashDamageDealt);
+            damageable.TakeDamage(splashDamageDealt);
           }
         }
 

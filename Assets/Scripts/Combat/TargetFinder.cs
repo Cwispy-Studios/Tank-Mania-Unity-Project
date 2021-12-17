@@ -4,13 +4,21 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Combat
 {
+  [RequireComponent(typeof(UnitTeam))]
   public class TargetFinder : MonoBehaviour
   {
     [Tooltip("Target must match the Team preference, and must contain ANY of the UnitType selected. If UnitType is 0, accepts anything.")]
-    [SerializeField] private UnitProperties targetPreference;
+    [SerializeField] private TargetPreferences targetPreferences;
 
     private List<Rigidbody> targetsInRange = new List<Rigidbody>();
     public IList<Rigidbody> TargetsInRange => targetsInRange.AsReadOnly();
+
+    private UnitTeam unitTeam;
+
+    private void Awake()
+    {
+      unitTeam = GetComponent<UnitTeam>();
+    }
 
     private void OnDisable()
     {
@@ -26,12 +34,19 @@ namespace CwispyStudios.TankMania.Combat
       // Object must not already be found by TargetFinder
       if (targetsInRange.Contains(rb)) return;
 
-      Damageable damageable = rb.GetComponent<Damageable>();
+      // Object must match the team criterias
+      bool objectIsOpponent = unitTeam.OnOpposingTeam(rb.gameObject);
+      bool matchesTeamCriterias = (targetPreferences.TargetsFriendlies && !objectIsOpponent) ||
+        (targetPreferences.TargetsOpponents && objectIsOpponent);
 
+      if (!matchesTeamCriterias) return;
+
+      Damageable damageable = rb.GetComponent<Damageable>();
+      
       // Object must be damageable to be targetable
       if (damageable == null) return;
 
-      if (targetPreference.IsSoftMatchWith(damageable.UnitProperties))
+      if (targetPreferences.TargetProperties.IsSoftMatchWith(damageable.UnitProperties))
       {
         damageable.OnObjectDie += RemoveDeadObject;
         targetsInRange.Add(rb);

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6241113991950374141}
   - component: {fileID: 6241113991950374140}
   - component: {fileID: -4908123337904144868}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DroneFlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}

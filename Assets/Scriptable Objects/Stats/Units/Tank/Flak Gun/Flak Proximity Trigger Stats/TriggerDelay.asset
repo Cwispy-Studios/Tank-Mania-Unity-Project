@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: TriggerDelay
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 0.1
+  baseValue: 0.15

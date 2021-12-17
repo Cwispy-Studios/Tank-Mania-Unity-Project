@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5185428224408193304}
   - component: {fileID: 5185428224407423290}
   - component: {fileID: 5185428224406424570}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,8 +93,9 @@ GameObject:
   - component: {fileID: -5160245361474242028}
   - component: {fileID: 1084657753}
   - component: {fileID: 1084657754}
+  - component: {fileID: 1342603318344353976}
   - component: {fileID: 1084657755}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Flak Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,9 +160,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432e21a90d2e44f4a9dbec88345b9ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPreference:
-    Team: 1
-    UnitType: -1
+  targetPreferences:
+    TargetsFriendlies: 0
+    TargetsOpponents: 1
+    TargetProperties: 0
+--- !u!114 &1342603318344353976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5185428224408360250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a56e46981d14a4cba2cd6695bdfddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1084657755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,11 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiTurretStats: {fileID: 11400000, guid: e90a7959dd77a1c4b9c53eba2091842d, type: 2}
-  targetingCriterias:
-  - Team: 1
-    UnitType: 2
-  - Team: 1
-    UnitType: 1
+  targetingCriterias: 02000000
 --- !u!1 &5185428224408360254
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +201,7 @@ GameObject:
   - component: {fileID: 5185428224408193310}
   - component: {fileID: 5185428224407423288}
   - component: {fileID: 5185428224406424568}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +281,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5185428224412944763}
   - component: {fileID: 2994746530872003337}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Turret + Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5185428225952278087}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Fire Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

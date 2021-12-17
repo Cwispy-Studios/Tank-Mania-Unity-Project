@@ -8,10 +8,11 @@ namespace CwispyStudios.TankMania.Combat
   using Stats;
   using Visuals;
 
+  [RequireComponent(typeof(UnitTeam))]
   public class Projectile : MonoBehaviour
   {
     [Tooltip("Units without a soft match with these properties do weakened damage and do not do splash damage.")]
-    [SerializeField] private UnitType effectiveAgainst;
+    [SerializeField] private UnitProperties effectiveAgainst;
     [Tooltip("Particle system/vfx to play when projectile impacts normally")]
     [SerializeField] private VfxParentDisabler impactVfxPrefab = null;
     [Tooltip("Particle system/vfx to play when projectile impacts something it is not effective against")]
@@ -31,8 +32,7 @@ namespace CwispyStudios.TankMania.Combat
 
     // Damage from the object firing the projectile
     private Damage damageInformation;
-    // Team the projectile belongs to
-    private Team damageFrom;
+    private UnitTeam unitTeam;
 
     // Cache accessible rigidbody
     [HideInInspector] public Rigidbody PhysicsController;
@@ -40,11 +40,15 @@ namespace CwispyStudios.TankMania.Combat
     private void Awake()
     {
       vfxPooler = FindObjectOfType<VfxPooler>();
+      unitTeam = GetComponent<UnitTeam>();
 
       PhysicsController = GetComponent<Rigidbody>();
       if (usesCustomGravity) PhysicsController.useGravity = false;
 
       disableOnEnabled = true;
+
+      if (gameObject.layer < 10 || gameObject.layer > 13) 
+        Debug.LogWarning($"Warning, invalid layer mask {gameObject.layer} in projectile: ", this);
     }
 
     private void OnEnable()
@@ -111,21 +115,15 @@ namespace CwispyStudios.TankMania.Combat
     private bool CheckIfIsDudCollision( Collision collision )
     {
       // If there is no effective type, it will never be a dud collision
-      if (effectiveAgainst == 0 || effectiveAgainst == (UnitType)~0) return false;
+      if (effectiveAgainst == 0 || effectiveAgainst == (UnitProperties)~0) return false;
 
-      else
-      {
-        Damageable damageable = collision.gameObject.GetComponent<Damageable>();
+      Damageable damageable = collision.gameObject.GetComponent<Damageable>();
 
-        if (damageable != null)
-        {
-          // Dud collision if none of the unit's properties match against the effectiveAgainst
-          return (effectiveAgainst & damageable.UnitProperties.UnitType) == 0;
-        }
+      // If object cannot be damaged (hitting terrain), default to dud collision
+      if (damageable == null) return true;
 
-        // If object cannot be damaged (hitting terrain), default to dud collision
-        else return true;
-      }
+      // Dud collision if none of the unit's properties match against the effectiveAgainst
+      return !effectiveAgainst.IsSoftMatchWith(damageable.UnitProperties);
     }
 
     /// <summary>
@@ -154,7 +152,7 @@ namespace CwispyStudios.TankMania.Combat
     /// <param name="objectToDamage"></param>
     private void ProjectileDamage( GameObject objectToDamage, bool isDudCollision = false )
     {
-      damageInformation.DamageObject(damageFrom, objectToDamage, isDudCollision);
+      damageInformation.DamageObject(objectToDamage, isDudCollision);
     }
 
     /// <summary>
@@ -172,7 +170,7 @@ namespace CwispyStudios.TankMania.Combat
     /// <param name="explosionPoint"></param>
     private void ProjectileExplosion( GameObject collisionObject, Vector3 explosionPoint )
     {
-      damageInformation.SplashDamageOnPoint(damageFrom, collisionObject, explosionPoint);
+      damageInformation.SplashDamageOnPoint(collisionObject, explosionPoint, unitTeam.OpponentLayerMask);
     }
 
     /// <summary>
@@ -215,10 +213,9 @@ namespace CwispyStudios.TankMania.Combat
     /// Passes damage information from the firer to the projectile.
     /// </summary>
     /// <param name="damage"></param>
-    public void SetDamage( Damage damage, Team team )
+    public void SetDamage( Damage damage )
     {
       damageInformation = damage;
-      this.damageFrom = team; 
     }
   }
 }

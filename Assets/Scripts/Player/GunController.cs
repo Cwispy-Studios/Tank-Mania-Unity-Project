@@ -24,8 +24,6 @@ namespace CwispyStudios.TankMania.Player
 
     private bool CanFire => fireCountdown.Value <= 0f && currentAmmo.Value > 0;
 
-    private Team damageFrom;
-
     private bool firingIsQueued = false;
     private int previousAmmoCount;
 
@@ -41,8 +39,6 @@ namespace CwispyStudios.TankMania.Player
       previousAmmoCount = (int)attackAttributes.AmmoCount.Value;
 
       attackAttributes.AmmoCount.OnStatUpgrade += OnAmmoChange;
-
-      damageFrom = GetComponentInParent<Damageable>().UnitProperties.Team;
     }
 
     private void Update()
@@ -98,7 +94,7 @@ namespace CwispyStudios.TankMania.Player
     {
       Projectile projectile = projectilePooler.EnablePooledObject(attackAttributes.ProjectilePrefab, fireZone.position, transform.rotation);
       projectile.PhysicsController.AddForce(transform.forward * attackAttributes.FiringForce.Value, ForceMode.VelocityChange);
-      projectile.SetDamage(attackAttributes.Damage, damageFrom);
+      projectile.SetDamage(attackAttributes.Damage);
       vfxPooler.EnablePooledObject(attackAttributes.FiringVfx, fireZone.position, transform.rotation);
 
       --currentAmmo.Value;
