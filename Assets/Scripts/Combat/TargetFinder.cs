@@ -5,7 +5,7 @@ using UnityEngine;
 namespace CwispyStudios.TankMania.Combat
 {
   [RequireComponent(typeof(UnitTeam))]
-  public class TargetFinder : MonoBehaviour
+  public class TargetsFinder : MonoBehaviour
   {
     [SerializeField] private TargetPreferences targetPreferences;
 

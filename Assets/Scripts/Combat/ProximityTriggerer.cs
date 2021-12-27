@@ -4,20 +4,20 @@ namespace CwispyStudios.TankMania.Combat
 {
   using Stats;
 
-  [RequireComponent(typeof(TargetFinder))]
+  [RequireComponent(typeof(TargetsFinder))]
   public class ProximityTriggerer : Triggerer<ProximityTriggerStats>
   {
     [Header("Proximity Values")]
     [SerializeField, Range(0f, 5f)] private float checkingInterval = 0.5f;
 
-    private TargetFinder targetFinder;
+    private TargetsFinder targetsFinder;
     private SphereCollider proximityCollider;
 
     private float checkingCountdown = 0f;
 
     private void Awake()
     {
-      targetFinder = GetComponent<TargetFinder>();
+      targetsFinder = GetComponent<TargetsFinder>();
       proximityCollider = GetComponent<SphereCollider>();
 
       SetProximityColliderRadius();
@@ -35,7 +35,7 @@ namespace CwispyStudios.TankMania.Combat
     /// </summary>
     private void CheckTriggerCondition()
     {
-      int validTargetsInProximity = targetFinder.TargetsInRange.Count;
+      int validTargetsInProximity = targetsFinder.TargetsInRange.Count;
 
       if (validTargetsInProximity >= TriggerStats.NumberToTrigger.IntValue) CommenceTrigger();
 

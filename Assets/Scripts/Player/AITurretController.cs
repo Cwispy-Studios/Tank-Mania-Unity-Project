@@ -7,6 +7,9 @@ namespace CwispyStudios.TankMania.Player
   using Combat;
   using Stats;
 
+  // AI that priorities valid found targets from TargetFinder
+  // TargetPrioritiser -> Distance to search, sorts targets based on AI
+  // TurretGunTargetPrioritiser -> Determines which targets its turret and gun can rotate to face
   public class AITurretController : MonoBehaviour
   {
     [SerializeField] private AITurretStats aiTurretStats;
@@ -14,7 +17,7 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private List<UnitProperties> targetingCriterias;
 
     // Refresh rate to check for targets is the same for every instance.
-    private static float s_targetRefreshInterval = 0.5f;
+    private static float TargetRefreshInterval = 0.4f;
 
     /// <summary>
     /// Stores multiple lists of targets that the turret can rotate to face. 
@@ -23,8 +26,8 @@ namespace CwispyStudios.TankMania.Player
     private List<List<Rigidbody>> validTargetsSortedByCriterias = new List<List<Rigidbody>>();
 
     // Cache components
-    private SphereCollider sphereCollider;
-    private TargetFinder targetFinder;
+    private SphereCollider detectionCollider;
+    private TargetsFinder targetsFinder;
     private TurretHub turretHub;
     private GunController gun;
 
@@ -38,8 +41,8 @@ namespace CwispyStudios.TankMania.Player
 
     private void Awake()
     {
-      sphereCollider = GetComponent<SphereCollider>();
-      targetFinder = GetComponent<TargetFinder>();
+      detectionCollider = GetComponent<SphereCollider>();
+      targetsFinder = GetComponent<TargetsFinder>();
       turretHub = GetComponentInChildren<TurretHub>();
       gun = GetComponentInChildren<GunController>();
     }
@@ -65,7 +68,7 @@ namespace CwispyStudios.TankMania.Player
     {
       targetRefreshTimer += Time.deltaTime;
 
-      if (targetRefreshTimer >= s_targetRefreshInterval)
+      if (targetRefreshTimer >= TargetRefreshInterval)
       {
         // First refresh and sort the targets that can be hit by the turret by criteria
         int numberOfValidTargets = RefreshAndSortValidTargets();
@@ -89,7 +92,7 @@ namespace CwispyStudios.TankMania.Player
     /// </returns>
     private int RefreshAndSortValidTargets()
     {
-      List<Rigidbody> targetsInRange = new List<Rigidbody>(targetFinder.TargetsInRange);
+      List<Rigidbody> targetsInRange = new List<Rigidbody>(targetsFinder.TargetsInRange);
       foreach (List<Rigidbody> targetsPerCriteria in validTargetsSortedByCriterias) targetsPerCriteria.Clear();
       selectedTarget = null;
 
@@ -384,7 +387,7 @@ namespace CwispyStudios.TankMania.Player
     /// </summary>
     private void AdjustDetectionSphereRadius()
     {
-      sphereCollider.radius = aiTurretStats.DetectionRange.Value;
+      detectionCollider.radius = aiTurretStats.DetectionRange.Value;
     }
   }
 }
