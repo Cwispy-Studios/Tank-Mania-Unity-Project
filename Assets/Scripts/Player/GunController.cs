@@ -19,7 +19,8 @@ namespace CwispyStudios.TankMania.Player
 
     public Transform FireZone => fireZone;
 
-    private ObjectPooler objectPooler;
+    private ProjectilePool projectilePool;
+    private VfxPool vfxPool;
 
     private bool CanFire => fireCountdown.Value <= 0f && currentAmmo.Value > 0;
 
@@ -28,7 +29,8 @@ namespace CwispyStudios.TankMania.Player
 
     private void Awake()
     {
-      objectPooler = FindObjectOfType<ObjectPooler>();
+      projectilePool = FindObjectOfType<ProjectilePool>();
+      vfxPool = FindObjectOfType<VfxPool>();
 
       currentAmmo.Value = (int)attackAttributes.AmmoCount.Value;
       fireCountdown.Value = 0f;
@@ -90,12 +92,11 @@ namespace CwispyStudios.TankMania.Player
 
     private void FireProjectile()
     {
-      Projectile projectile = objectPooler.EnablePooledObject(
-        attackAttributes.ProjectilePrefab.gameObject, fireZone.position, transform.rotation).GetComponent<Projectile>();
+      Projectile projectile = projectilePool.EnablePooledObject(attackAttributes.ProjectilePrefab, fireZone.position, transform.rotation);
       projectile.PhysicsController.AddForce(transform.forward * attackAttributes.FiringForce.Value, ForceMode.VelocityChange);
       projectile.SetDamage(attackAttributes.Damage);
 
-      objectPooler.EnablePooledObject(attackAttributes.FiringVfx.gameObject, fireZone.position, transform.rotation);
+      vfxPool.EnablePooledObject(attackAttributes.FiringVfx, fireZone.position, transform.rotation);
 
       --currentAmmo.Value;
 
