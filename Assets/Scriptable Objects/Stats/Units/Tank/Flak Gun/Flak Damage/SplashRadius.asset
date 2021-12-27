@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SplashRadius
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 5
+  baseValue: 6

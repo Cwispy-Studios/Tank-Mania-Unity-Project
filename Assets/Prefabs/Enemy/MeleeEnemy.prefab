@@ -919,7 +919,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31a56e46981d14a4cba2cd6695bdfddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 2
 --- !u!114 &8454413252481527676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,7 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e395fc3a5ad044eb70d4c1e513563e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitProperties: 0
+  unitProperties: 5
   health: {fileID: 11400000, guid: 428a2ff4ce510eb459191d279a9a5d77, type: 2}
   healthText: {fileID: 4487744097844603530}
 --- !u!114 &8454413252481527665

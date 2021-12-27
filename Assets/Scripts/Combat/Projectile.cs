@@ -133,6 +133,8 @@ namespace CwispyStudios.TankMania.Combat
     {
       if (disableProjectileCollisions) return;
 
+      Debug.Log("Explosion");
+
       EnableImpactVFX(transform.position);
 
       // If projectile has splash damage, also do splash damage

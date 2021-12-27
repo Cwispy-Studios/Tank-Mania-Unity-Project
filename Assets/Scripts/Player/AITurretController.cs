@@ -31,12 +31,14 @@ namespace CwispyStudios.TankMania.Player
     private TurretHub turretHub;
     private GunController gun;
 
+    private bool hasTurret;
+    private bool hasGun;
+
     /// <summary>
     /// The highest priority target found that the turret can rotate to.
     /// </summary>
     private Rigidbody selectedTarget = null;
 
-    //private bool isActive = true;
     private float targetRefreshTimer = 0f;
 
     private void Awake()
@@ -45,18 +47,21 @@ namespace CwispyStudios.TankMania.Player
       targetsFinder = GetComponent<TargetsFinder>();
       turretHub = GetComponentInChildren<TurretHub>();
       gun = GetComponentInChildren<GunController>();
-    }
 
-    private void OnEnable()
-    {
-      aiTurretStats.DetectionRange.OnStatUpgrade += AdjustDetectionSphereRadius;
-      AdjustDetectionSphereRadius();
+      hasTurret = turretHub != null;
+      hasGun = gun != null;
 
       // Add a list of valid targets for every targeting criteria, +1 for a list that accepts everything else
       for (int i = 0; i <= targetingCriterias.Count; ++i)
       {
         validTargetsSortedByCriterias.Add(new List<Rigidbody>());
       }
+    }
+
+    private void OnEnable()
+    {
+      aiTurretStats.DetectionRange.OnStatUpgrade += AdjustDetectionSphereRadius;
+      AdjustDetectionSphereRadius();
     }
 
     private void OnDisable()
