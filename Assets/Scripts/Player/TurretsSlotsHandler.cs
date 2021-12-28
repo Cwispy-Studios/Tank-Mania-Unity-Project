@@ -18,9 +18,9 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private TurretContainer availableTurrets;
 
     // Unlocked turrets and which slots they are assigned to
-    private Dictionary<TurretHub, TurretSlot> unlockedTurretsToSlots = new Dictionary<TurretHub, TurretSlot>();
+    private Dictionary<TurretController, TurretSlot> unlockedTurretsToSlots = new Dictionary<TurretController, TurretSlot>();
     // List of all unlocked turrets
-    public IEnumerable<TurretHub> UnlockedTurrets => unlockedTurretsToSlots.Keys;
+    public IEnumerable<TurretController> UnlockedTurrets => unlockedTurretsToSlots.Keys;
 
     public void UnlockRandomTurret()
     {
@@ -28,10 +28,10 @@ namespace CwispyStudios.TankMania.Player
 
       if (availableTurrets.ListOfTurrets.Count > unlockedTurrets.Count)
       {
-        List<TurretHub> unlockableTurrets = new List<TurretHub>(availableTurrets.ListOfTurrets);
+        List<TurretController> unlockableTurrets = new List<TurretController>(availableTurrets.ListOfTurrets);
 
         // XOR the two lists to get turrets that have not been unlocked yet
-        foreach (TurretHub unlockedTurret in unlockedTurrets)
+        foreach (TurretController unlockedTurret in unlockedTurrets)
           if (unlockableTurrets.Contains(unlockedTurret)) unlockableTurrets.Remove(unlockedTurret);
 
         int index;
@@ -40,7 +40,7 @@ namespace CwispyStudios.TankMania.Player
         else index = Random.Range(0, unlockableTurrets.Count);
 
         // Create an instance of the turret
-        TurretHub turretInstance = Instantiate(unlockableTurrets[index], transform);
+        TurretController turretInstance = Instantiate(unlockableTurrets[index], transform);
         turretInstance.name = unlockableTurrets[index].name;
         turretInstance.gameObject.SetActive(false);
 
@@ -48,7 +48,7 @@ namespace CwispyStudios.TankMania.Player
       }
     }
 
-    public void AssignTurretToSlot( TurretHub turret, TurretSlot slot )
+    public void AssignTurretToSlot( TurretController turret, TurretSlot slot )
     {
       if (IsTurretAssigned(turret))
       {
@@ -60,26 +60,26 @@ namespace CwispyStudios.TankMania.Player
       turret.AssignToSlot(slot);
     }
 
-    public void UnassignTurret( TurretHub turret )
+    public void UnassignTurret( TurretController turret )
     {
       unlockedTurretsToSlots[turret] = null;
 
       turret.gameObject.SetActive(false);
     }
 
-    public bool IsTurretAssigned( TurretHub turret )
+    public bool IsTurretAssigned( TurretController turret )
     {
       return unlockedTurretsToSlots[turret] != null;
     }
 
-    public TurretSlot GetSlotOfTurret( TurretHub turret )
+    public TurretSlot GetSlotOfTurret( TurretController turret )
     {
       return unlockedTurretsToSlots[turret];
     }
 
-    public TurretHub GetTurretOfSlot( TurretSlot slot )
+    public TurretController GetTurretOfSlot( TurretSlot slot )
     {
-      foreach (TurretHub turret in unlockedTurretsToSlots.Keys)
+      foreach (TurretController turret in unlockedTurretsToSlots.Keys)
       {
         if (unlockedTurretsToSlots[turret] == slot) return turret;
       }

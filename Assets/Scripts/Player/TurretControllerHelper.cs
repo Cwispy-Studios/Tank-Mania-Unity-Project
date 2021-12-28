@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CwispyStudios.TankMania.Player
 {
-  public static class TurretHubHelper
+  public static class TurretControllerHelper
   {
     /// <summary>
     /// Checks whether the turret can rotate to face the inputted target.
@@ -13,9 +13,9 @@ namespace CwispyStudios.TankMania.Player
     /// <returns>
     /// Whether the turret can rotate to face the inputted target.
     /// </returns>
-    public static bool CheckTargetInRotationRange( this TurretHub turretHub, Rigidbody target )
+    public static bool CheckTargetInRotationRange( this TurretController turretController, Rigidbody target )
     {
-      return turretHub.CheckTargetInRotationRange(target, out _, out _);
+      return turretController.CheckTargetInRotationRange(target, out _, out _);
     }
 
     /// <summary>
@@ -31,39 +31,39 @@ namespace CwispyStudios.TankMania.Player
     /// The x-axis angular distance the turret has to rotate to face the target.
     /// </param>
     /// <returns> Whether the turret can rotate to face the inputted target. </returns>
-    public static bool CheckTargetInRotationRange( this TurretHub turretHub, Rigidbody target, out float horizontalAngleDistance, out float verticalAngleDistance )
+    public static bool CheckTargetInRotationRange( this TurretController turretController, Rigidbody target, out float horizontalAngleDistance, out float verticalAngleDistance )
     {
       horizontalAngleDistance = 0f;
       verticalAngleDistance = 0f;
 
       bool targetIsInRotationLimit = true;
 
-      horizontalAngleDistance = turretHub.GetTurretAngleDifferenceFromTarget(target);
+      horizontalAngleDistance = turretController.GetMountAngleDifferenceFromTarget(target);
 
       // Check if turret can rotate horizontally (y-axis) to face the target
-      if (turretHub.RotationLimits.HasYLimits)
+      if (turretController.RotationLimits.HasYLimits)
       {
-        // Check if turret can rotate by this much
-        float targetAngle = turretHub.TurretRotationValue + horizontalAngleDistance;
+        // Check if mount can rotate by this much
+        float targetAngle = turretController.MountRotationValue + horizontalAngleDistance;
 
-        targetIsInRotationLimit = targetAngle >= turretHub.RotationLimits.MinYRot && targetAngle <= turretHub.RotationLimits.MaxYRot;
+        targetIsInRotationLimit = targetAngle >= turretController.RotationLimits.MinYRot && targetAngle <= turretController.RotationLimits.MaxYRot;
       }
 
       // Check if gun can rotate vertically (x-axis) to face the target
-      if (targetIsInRotationLimit && turretHub.RotationLimits.HasXLimits)
+      if (targetIsInRotationLimit && turretController.RotationLimits.HasXLimits)
       {
-        verticalAngleDistance = turretHub.GetGunAngleDifferenceFromTarget(target, horizontalAngleDistance);
+        verticalAngleDistance = turretController.GetGunAngleDifferenceFromTarget(target, horizontalAngleDistance);
 
         // Check if turret can rotate by this much
-        float targetAngle = turretHub.GunRotationValue + verticalAngleDistance;
-        targetIsInRotationLimit = targetAngle >= turretHub.RotationLimits.MinXRot && targetAngle <= turretHub.RotationLimits.MaxXRot;
+        float targetAngle = turretController.GunRotationValue + verticalAngleDistance;
+        targetIsInRotationLimit = targetAngle >= turretController.RotationLimits.MinXRot && targetAngle <= turretController.RotationLimits.MaxXRot;
       }
 
       return targetIsInRotationLimit;
     }
 
     /// <summary>
-    /// Finds the angular distance between the turret's y-axis and the target. This is typically the turret's rotation (left and right).
+    /// Finds the angular distance between the mount's y-axis and the target. This is typically the mount's rotation (left and right).
     /// </summary>
     /// <param name="target">
     /// The target to check against.
@@ -71,7 +71,7 @@ namespace CwispyStudios.TankMania.Player
     /// <returns>
     /// The y-axis angular distance the turret has to rotate to face the target.
     /// </returns>
-    public static float GetTurretAngleDifferenceFromTarget( this TurretHub turretHub, Rigidbody target )
+    public static float GetMountAngleDifferenceFromTarget( this TurretController turretController, Rigidbody target )
     {
       // Find the angle the turret must rotate to face the target
       // To do this, we must "rotate" the target around the turret until it is in line of sight of the fire zone direction
@@ -83,32 +83,32 @@ namespace CwispyStudios.TankMania.Player
 
       // Find the closest point from the turret to the fire direction ray
       // https://stackoverflow.com/questions/51905268/how-to-find-closest-point-on-line
-      Vector3 turretPosition = turretHub.Turret.position;
-      Vector3 firePosition = turretHub.FireZone.position;
-      Vector3 fireDirectionEnd = firePosition + turretHub.FireZone.forward;
+      Vector3 mountPosition = turretController.Mount.position;
+      Vector3 firePosition = turretController.FireZone.position;
+      Vector3 fireDirectionEnd = firePosition + turretController.FireZone.forward;
 
       // Projected vector of offset direction of fire zone from turret onto fire direction
-      Vector3 projectedVector = Vector3.Project(turretPosition - firePosition, fireDirectionEnd - firePosition);
+      Vector3 projectedVector = Vector3.Project(mountPosition - firePosition, fireDirectionEnd - firePosition);
       // Closest point from the turret to the fire direction
       Vector3 closestPoint = firePosition + projectedVector;
 
       // Pythogras theorem to get distance to expected position
-      float SqrMagToTarget = Vector3.SqrMagnitude(turretPosition - target.position);
-      float SqrMagToClosestPoint = Vector3.SqrMagnitude(turretPosition - closestPoint);
+      float SqrMagToTarget = Vector3.SqrMagnitude(mountPosition - target.position);
+      float SqrMagToClosestPoint = Vector3.SqrMagnitude(mountPosition - closestPoint);
       float distToExpectedPosition = Mathf.Sqrt(SqrMagToTarget - SqrMagToClosestPoint);
 
       // Expected position is from the closest point moved forward by the fire direction 
-      Vector3 expectedTargetPosition = closestPoint + Vector3.Normalize(turretHub.FireZone.forward) * distToExpectedPosition;
+      Vector3 expectedTargetPosition = closestPoint + Vector3.Normalize(turretController.FireZone.forward) * distToExpectedPosition;
 
       // Local position of the target to the turret
-      Vector3 targetLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(target.position);
+      Vector3 targetLocalPositionFromMount = turretController.Mount.InverseTransformPoint(target.position);
       // Local position of where the projectile leaves the gun to the turret
-      Vector3 expectedLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(expectedTargetPosition);
+      Vector3 expectedLocalPositionFromMount = turretController.Mount.InverseTransformPoint(expectedTargetPosition);
 
       // Remove y-axis
-      Vector3 from = targetLocalPositionFromTurret;
+      Vector3 from = targetLocalPositionFromMount;
       from.y = 0f;
-      Vector3 to = expectedLocalPositionFromTurret;
+      Vector3 to = expectedLocalPositionFromMount;
       to.y = 0f;
 
       // Since we are not using y-axis, axis just points downward locally
@@ -130,21 +130,21 @@ namespace CwispyStudios.TankMania.Player
     /// <returns>
     /// The x-axis angular distance the gun has to rotate to face the target.
     /// </returns>
-    public static float GetGunAngleDifferenceFromTarget( this TurretHub turretHub, Rigidbody target, float horizontalRotation )
+    public static float GetGunAngleDifferenceFromTarget( this TurretController turretController, Rigidbody target, float horizontalRotation )
     {
       // Assume the turret can rotate horizontally to face the target.
 
       // Find the rotation vector to rotate the target so that it lines up with the gun on its local vertical plane.
       // This is rotated by the hub's base rotation (transform.rotation) taken from the slot's rotation.
-      Vector3 rotationAngles = turretHub.transform.rotation * new Vector3(0f, -horizontalRotation, 0f);
+      Vector3 rotationAngles = turretController.transform.rotation * new Vector3(0f, -horizontalRotation, 0f);
       // Rotate the target about the pivot point so that it is on the same local vertical plane as the turret
-      Vector3 horizontallyRotatedTargetPosition = MathHelper.RotatePointAroundPivot(target.position, turretHub.Turret.position, rotationAngles);
+      Vector3 horizontallyRotatedTargetPosition = MathHelper.RotatePointAroundPivot(target.position, turretController.Mount.position, rotationAngles);
 
       // Find the closest point from the turret to the fire direction ray
       // https://stackoverflow.com/questions/51905268/how-to-find-closest-point-on-line
-      Vector3 gunPosition = turretHub.Gun.position;
-      Vector3 firePosition = turretHub.FireZone.position;
-      Vector3 fireDirectionEnd = firePosition + turretHub.FireZone.forward;
+      Vector3 gunPosition = turretController.Gun.position;
+      Vector3 firePosition = turretController.FireZone.position;
+      Vector3 fireDirectionEnd = firePosition + turretController.FireZone.forward;
 
       // Projected vector of offset direction of fire zone from turret onto fire direction
       Vector3 projectedVector = Vector3.Project(gunPosition - firePosition, fireDirectionEnd - firePosition);
@@ -157,12 +157,12 @@ namespace CwispyStudios.TankMania.Player
       float distToExpectedPosition = Mathf.Sqrt(SqrMagToTarget - SqrMagToClosestPoint);
 
       // Expected position is from the closest point moved forward by the fire direction 
-      Vector3 expectedTargetPosition = closestPoint + Vector3.Normalize(turretHub.FireZone.forward) * distToExpectedPosition;
+      Vector3 expectedTargetPosition = closestPoint + Vector3.Normalize(turretController.FireZone.forward) * distToExpectedPosition;
 
       // Local position of the target to the turret
-      Vector3 targetLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(horizontallyRotatedTargetPosition);
+      Vector3 targetLocalPositionFromTurret = turretController.Mount.InverseTransformPoint(horizontallyRotatedTargetPosition);
       // Local position of where the projectile leaves the gun to the turret
-      Vector3 expectedLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(expectedTargetPosition);
+      Vector3 expectedLocalPositionFromTurret = turretController.Mount.InverseTransformPoint(expectedTargetPosition);
 
       // Since we are not using x-axis, axis just points leftwards locally
       float angularDistance = Vector3.SignedAngle(targetLocalPositionFromTurret, expectedLocalPositionFromTurret, Vector3.left);

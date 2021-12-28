@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fac696a1aa0d114abd2ac4c11528c3b, type: 3}
-  m_Name: TurretRotationSpeed
+  m_Name: MountRotationSpeed
   m_EditorClassIdentifier: 
-  StatModifiers: []
   useInt: 0
   baseValue: 120

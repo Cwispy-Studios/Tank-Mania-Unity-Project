@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99c9791a54448e14183ac356254af480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turret: {fileID: 5185428224412944763}
+  mount: {fileID: 5185428224412944763}
   gun: {fileID: 5185428224412944763}
   turretRotation: {fileID: 11400000, guid: 08dbc3b98d48d4c4991effb2382324be, type: 2}
   rotationLimits: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 5185428224412944763}
   - component: {fileID: 2994746530872003337}
   m_Layer: 10
-  m_Name: Turret + Gun
+  m_Name: Mount + Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

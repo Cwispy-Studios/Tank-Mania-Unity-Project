@@ -79,7 +79,7 @@ namespace CwispyStudios.TankMania.Stats
 
       if (GUILayout.Button(content))
       {
-        RenameFolder();
+        RenameAssets();
       }
 
       content.text = "Retrieve References From Folder";

@@ -15,17 +15,17 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private Button unassignButton;
 
     private Button button;
-    private TurretHub turret;
+    private TurretController turret;
 
-    public event Action<TurretHub> OnClickEvent;
-    public event Action<TurretHub> OnUnassignEvent;
+    public event Action<TurretController> OnClickEvent;
+    public event Action<TurretController> OnUnassignEvent;
 
     private void Awake()
     {
       button = GetComponent<Button>();
     }
 
-    public void SetContent( TurretHub t, TurretSlot assignedSlot )
+    public void SetContent( TurretController t, TurretSlot assignedSlot )
     {
       turret = t;
 

@@ -958,7 +958,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31a56e46981d14a4cba2cd6695bdfddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 1
 --- !u!114 &-2948365163213748665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1167,7 +1166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99c9791a54448e14183ac356254af480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turret: {fileID: 5470462584147821441}
+  mount: {fileID: 5470462584147821441}
   gun: {fileID: 8062888275378704935}
   turretRotation: {fileID: 11400000, guid: 025c2c61a5a7dcf409ed531ed46669b8, type: 2}
   rotationLimits: {fileID: 11400000, guid: 6bc6557f40d7d314ead9c13a32fda94d, type: 2}

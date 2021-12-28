@@ -4,10 +4,10 @@ namespace CwispyStudios.TankMania.Player
 {
   using Stats;
 
-  public class TurretHub : MonoBehaviour
+  public class TurretController : MonoBehaviour
   {
     [Header("Turret Components")]
-    [SerializeField] private Transform turret;
+    [SerializeField] private Transform mount;
     [SerializeField] private Transform gun;
 
     [Header("Turret and Gun Rotation")]
@@ -19,15 +19,15 @@ namespace CwispyStudios.TankMania.Player
 
     private Transform fireZone;
 
-    private Vector3 turretEulerAngles;
+    private Vector3 mountEulerAngles;
     private Vector3 gunEulerAngles;
 
-    public Transform Turret => turret;
+    public Transform Mount => mount;
     public Transform Gun => gun;
     public Transform FireZone => fireZone;
     public TurretRotationLimits RotationLimits => rotationLimits;
 
-    public float TurretRotationValue => turretEulerAngles.y;
+    public float MountRotationValue => mountEulerAngles.y;
     public float GunRotationValue => gunEulerAngles.x;
 
     private void Awake()
@@ -37,34 +37,34 @@ namespace CwispyStudios.TankMania.Player
 
     private void OnEnable()
     {
-      turretEulerAngles = useLocalAngles ? turret.localEulerAngles : turret.eulerAngles;
+      mountEulerAngles = useLocalAngles ? mount.localEulerAngles : mount.eulerAngles;
       gunEulerAngles = useLocalAngles ? gun.localEulerAngles : gun.eulerAngles;
     }
 
-    public void RotateTurretToValue( float cameraHorizontalRotation )
+    public void RotateMountToValue( float cameraHorizontalRotation )
     {
-      turretEulerAngles.x = useLocalAngles ? turret.localEulerAngles.x : turret.eulerAngles.x;
-      turretEulerAngles.z = useLocalAngles ? turret.localEulerAngles.z : turret.eulerAngles.z;
-      turretEulerAngles.y = Mathf.MoveTowardsAngle(turretEulerAngles.y, cameraHorizontalRotation, turretRotation.TurretRotationSpeed.Value * Time.deltaTime);
+      mountEulerAngles.x = useLocalAngles ? mount.localEulerAngles.x : mount.eulerAngles.x;
+      mountEulerAngles.z = useLocalAngles ? mount.localEulerAngles.z : mount.eulerAngles.z;
+      mountEulerAngles.y = Mathf.MoveTowardsAngle(mountEulerAngles.y, cameraHorizontalRotation, turretRotation.MountRotationSpeed.Value * Time.deltaTime);
 
-      if (useLocalAngles) turret.localEulerAngles = turretEulerAngles;
-      else turret.eulerAngles = turretEulerAngles;
+      if (useLocalAngles) mount.localEulerAngles = mountEulerAngles;
+      else mount.eulerAngles = mountEulerAngles;
     }
 
-    public float RotateTurretByValue( float value )
+    public float RotateMountByValue( float value )
     {
-      float maxDeltaRotation = turretRotation.TurretRotationSpeed.Value * Time.deltaTime;
+      float maxDeltaRotation = turretRotation.MountRotationSpeed.Value * Time.deltaTime;
       float deltaRotation = Mathf.Clamp(value, -maxDeltaRotation, maxDeltaRotation);
 
-      turretEulerAngles.x = useLocalAngles ? turret.localEulerAngles.x : turret.eulerAngles.x;
-      turretEulerAngles.z = useLocalAngles ? turret.localEulerAngles.z : turret.eulerAngles.z;
-      turretEulerAngles.y += deltaRotation;
+      mountEulerAngles.x = useLocalAngles ? mount.localEulerAngles.x : mount.eulerAngles.x;
+      mountEulerAngles.z = useLocalAngles ? mount.localEulerAngles.z : mount.eulerAngles.z;
+      mountEulerAngles.y += deltaRotation;
 
       if (rotationLimits.HasYLimits) 
-        turretEulerAngles.y = Mathf.Clamp(turretEulerAngles.y, rotationLimits.MinYRot, rotationLimits.MaxYRot);
+        mountEulerAngles.y = Mathf.Clamp(mountEulerAngles.y, rotationLimits.MinYRot, rotationLimits.MaxYRot);
 
-      if (useLocalAngles) turret.localEulerAngles = turretEulerAngles;
-      else turret.eulerAngles = turretEulerAngles;
+      if (useLocalAngles) mount.localEulerAngles = mountEulerAngles;
+      else mount.eulerAngles = mountEulerAngles;
 
       return deltaRotation;
     }
@@ -105,7 +105,7 @@ namespace CwispyStudios.TankMania.Player
 
       rotationLimits = slot.RotationLimits;
 
-      turret.localRotation = Quaternion.identity;
+      mount.localRotation = Quaternion.identity;
       gun.localRotation = Quaternion.identity;
 
       gameObject.SetActive(true);

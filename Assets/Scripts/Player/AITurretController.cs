@@ -7,7 +7,7 @@ namespace CwispyStudios.TankMania.Player
   using Combat;
   using Stats;
 
-  [RequireComponent(typeof(TurretHub))]
+  [RequireComponent(typeof(TurretController))]
   public class AITurretController : MonoBehaviour
   {
     [SerializeField] private AITurretStats aiTurretStats;
@@ -26,7 +26,7 @@ namespace CwispyStudios.TankMania.Player
     // Cache components
     private SphereCollider detectionCollider;
     private TargetsFinder targetsFinder;
-    private TurretHub turretHub;
+    private TurretController turretController;
     private GunController gun;
 
     /// <summary>
@@ -40,7 +40,7 @@ namespace CwispyStudios.TankMania.Player
     {
       detectionCollider = GetComponent<SphereCollider>();
       targetsFinder = GetComponent<TargetsFinder>();
-      turretHub = GetComponentInChildren<TurretHub>();
+      turretController = GetComponentInChildren<TurretController>();
       gun = GetComponentInChildren<GunController>();
 
       // Add a list of valid targets for every targeting criteria, +1 for a list that accepts everything else
@@ -104,12 +104,12 @@ namespace CwispyStudios.TankMania.Player
         float sqrMag = Vector3.SqrMagnitude(target.position - transform.position);
         float minDetectionRange = aiTurretStats.MinDetectionRange.Value;
         // First check if target is not too close to the turret
-        bool targetNotInMinDetectionRange = minDetectionRange > 0f && sqrMag <= minDetectionRange * minDetectionRange;
+        bool targetNotInMinDetectionRange = (minDetectionRange > 0f) && (sqrMag >= minDetectionRange * minDetectionRange);
 
         if (!targetNotInMinDetectionRange) continue;
 
         // Second, check that turret can rotate to face target
-        bool targetIsInRotationLimit = turretHub.CheckTargetInRotationRange(target);
+        bool targetIsInRotationLimit = turretController.CheckTargetInRotationRange(target);
 
         if (!targetIsInRotationLimit) continue;
 
@@ -192,10 +192,10 @@ namespace CwispyStudios.TankMania.Player
     private void AimAtTarget()
     {
       // First make sure that the target can still be reached and get the angular distances to rotate
-      if (turretHub.CheckTargetInRotationRange(selectedTarget, out float horizontalAngularDistance, out float verticalAngularDistance))
+      if (turretController.CheckTargetInRotationRange(selectedTarget, out float horizontalAngularDistance, out float verticalAngularDistance))
       {
-        float horizontalRotationAmount = turretHub.RotateTurretByValue(horizontalAngularDistance);
-        float verticalRotationAmount = turretHub.RotateGunByValue(verticalAngularDistance);
+        float horizontalRotationAmount = turretController.RotateMountByValue(horizontalAngularDistance);
+        float verticalRotationAmount = turretController.RotateGunByValue(verticalAngularDistance);
 
         // Since turret has already moved by the amount above, we want to find how much more it has left to rotate before it faces its target
         float remainingHorizontalAngularDistance = 

@@ -16,9 +16,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c5e33d8b2edca3c4cb3f525868b60ce8, type: 2}
   - {fileID: 11400000, guid: 8d8a015e6480c6a40a24e65256829587, type: 2}
   statsNames:
-  - TurretRotationSpeed
+  - MountRotationSpeed
   - GunRotationSpeed
   nameOfStatsFolder: Flak Turret Rotation
-  TurretRotationSpeed: {fileID: 11400000, guid: c5e33d8b2edca3c4cb3f525868b60ce8,
-    type: 2}
+  MountRotationSpeed: {fileID: 11400000, guid: c5e33d8b2edca3c4cb3f525868b60ce8, type: 2}
   GunRotationSpeed: {fileID: 11400000, guid: 8d8a015e6480c6a40a24e65256829587, type: 2}

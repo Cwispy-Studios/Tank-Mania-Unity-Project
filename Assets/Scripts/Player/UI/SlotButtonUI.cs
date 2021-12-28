@@ -23,7 +23,7 @@ namespace CwispyStudios.TankMania.Player
       button = GetComponent<Button>();
     }
 
-    public void SetContent( TurretSlot turretSlot, TurretHub turretInSlot )
+    public void SetContent( TurretSlot turretSlot, TurretController turretInSlot )
     {
       slot = turretSlot;
 

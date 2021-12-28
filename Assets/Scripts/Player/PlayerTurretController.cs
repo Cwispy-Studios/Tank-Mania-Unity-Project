@@ -9,11 +9,11 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private FloatVariable cameraVerticalRotation;
 
     [Header("Starting Turret")]
-    [SerializeField] private TurretHub startingTurret;
+    [SerializeField] private TurretController startingTurret;
 
     private CameraController playerCamera;
 
-    private TurretHub turretHub;
+    private TurretController turretHub;
     private GunController gun;
 
     private void Awake()
@@ -28,11 +28,11 @@ namespace CwispyStudios.TankMania.Player
 
     private void Update()
     {
-      turretHub.RotateTurretToValue(cameraHorizontalRotation.Value);
+      turretHub.RotateMountToValue(cameraHorizontalRotation.Value);
       turretHub.RotateGunToValue(cameraVerticalRotation.Value);
     }
 
-    public void SetControlledTurret( TurretHub controlledTurret )
+    public void SetControlledTurret( TurretController controlledTurret )
     {
       // Enable AI turret controller of previous turret
 

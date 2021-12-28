@@ -25,7 +25,7 @@ namespace CwispyStudios.TankMania.Player
     [SerializeField] private FloatVariable targetVerticalRotation;
 
     // Target turret that camera is controlling
-    private TurretHub trackedTarget;
+    private TurretController trackedTarget;
     private Camera playerCamera;
 
     private TurretRotationLimits rotationLimits;
@@ -95,7 +95,7 @@ namespace CwispyStudios.TankMania.Player
       targetVerticalRotation.Value = 0f;
     }
 
-    public void SetTrackingTarget( TurretHub target )
+    public void SetTrackingTarget( TurretController target )
     {
       trackedTarget = target;
       targetHorizontalRotation.Value = target.transform.rotation.eulerAngles.y;
