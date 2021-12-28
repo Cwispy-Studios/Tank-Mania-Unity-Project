@@ -17,15 +17,23 @@ namespace CwispyStudios.TankMania.Player
     [Header("Rotation Type")]
     [SerializeField] private bool useLocalAngles = true;
 
+    private Transform fireZone;
+
     private Vector3 turretEulerAngles;
     private Vector3 gunEulerAngles;
 
     public Transform Turret => turret;
     public Transform Gun => gun;
+    public Transform FireZone => fireZone;
     public TurretRotationLimits RotationLimits => rotationLimits;
 
     public float TurretRotationValue => turretEulerAngles.y;
     public float GunRotationValue => gunEulerAngles.x;
+
+    private void Awake()
+    {
+      fireZone = gun.GetComponent<GunController>().FireZone;
+    }
 
     private void OnEnable()
     {

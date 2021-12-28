@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AccelerationForce
   m_EditorClassIdentifier: 
   useInt: 0
-  baseValue: 0.2
+  baseValue: 0.15

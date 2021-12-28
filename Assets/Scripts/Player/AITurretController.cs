@@ -7,13 +7,11 @@ namespace CwispyStudios.TankMania.Player
   using Combat;
   using Stats;
 
-  // AI that priorities valid found targets from TargetFinder
-  // TargetPrioritiser -> Distance to search, sorts targets based on AI
-  // TurretGunTargetPrioritiser -> Determines which targets its turret and gun can rotate to face
+  [RequireComponent(typeof(TurretHub))]
   public class AITurretController : MonoBehaviour
   {
     [SerializeField] private AITurretStats aiTurretStats;
-    [Tooltip("Hard criterias that AI will prefer from 0 to n.")]
+    [Tooltip("Ordered hard criterias that AI will prefer.")]
     [SerializeField] private List<UnitProperties> targetingCriterias;
 
     // Refresh rate to check for targets is the same for every instance.
@@ -31,9 +29,6 @@ namespace CwispyStudios.TankMania.Player
     private TurretHub turretHub;
     private GunController gun;
 
-    private bool hasTurret;
-    private bool hasGun;
-
     /// <summary>
     /// The highest priority target found that the turret can rotate to.
     /// </summary>
@@ -47,9 +42,6 @@ namespace CwispyStudios.TankMania.Player
       targetsFinder = GetComponent<TargetsFinder>();
       turretHub = GetComponentInChildren<TurretHub>();
       gun = GetComponentInChildren<GunController>();
-
-      hasTurret = turretHub != null;
-      hasGun = gun != null;
 
       // Add a list of valid targets for every targeting criteria, +1 for a list that accepts everything else
       for (int i = 0; i <= targetingCriterias.Count; ++i)
@@ -106,215 +98,51 @@ namespace CwispyStudios.TankMania.Player
       // Loop through every target in range...
       for (int i = 0; i < targetsInRange.Count; ++i)
       {
+        // Validate that the target is not too near the turret and the turret and gun can rotate to face it.
         Rigidbody target = targetsInRange[i];
 
-        // Check that turret can rotate to face target
-        bool targetIsInRotationLimit = CheckTargetCanBeHit(target);
+        float sqrMag = Vector3.SqrMagnitude(target.position - transform.position);
+        float minDetectionRange = aiTurretStats.MinDetectionRange.Value;
+        // First check if target is not too close to the turret
+        bool targetNotInMinDetectionRange = minDetectionRange > 0f && sqrMag <= minDetectionRange * minDetectionRange;
 
-        if (targetIsInRotationLimit)
+        if (!targetNotInMinDetectionRange) continue;
+
+        // Second, check that turret can rotate to face target
+        bool targetIsInRotationLimit = turretHub.CheckTargetInRotationRange(target);
+
+        if (!targetIsInRotationLimit) continue;
+
+        // Loop through every targeting criteria...
+        for (int criteriaIndex = 0; criteriaIndex <= targetingCriterias.Count; ++criteriaIndex)
         {
-          // Loop through every targeting criteria...
-          for (int criteriaIndex = 0; criteriaIndex <= targetingCriterias.Count; ++criteriaIndex)
+          // and check if the target's unit properties matches the criteria.
+          // No need to check for null since this is already checked by the TargetFinder
+          Damageable damageable = target.GetComponent<Damageable>();
+
+          // As it is right now, we only need to sort targets that matches the first criteria found
+          // but I am sorting them already cause we will likely need it in the future.
+
+          bool targetMatchesCriteria;
+
+          // Check if index is within range of list of criterias
+          if (criteriaIndex < targetingCriterias.Count)
           {
-            // and check if the target's unit properties matches the criteria.
-            // No need to check for null since this is already checked by the TargetFinder
-            Damageable damageable = target.GetComponent<Damageable>();
+            targetMatchesCriteria = targetingCriterias[criteriaIndex].IsHardMatchWith(damageable.UnitProperties);
+          }
 
-            // As it is right now, we only need to sort targets that matches the first criteria found
-            // but I am sorting them already cause we will likely need it in the future.
+          // If out of range, that means every other criteria has failed and this target belongs to the lowest priority, auto match.
+          else targetMatchesCriteria = true;
 
-            bool targetMatchesCriteria;
-
-            // Check if index is within range of list of criterias
-            if (criteriaIndex < targetingCriterias.Count)
-            {
-              targetMatchesCriteria = targetingCriterias[criteriaIndex].IsHardMatchWith(damageable.UnitProperties);
-            }
-
-            // If out of range, that means every other criteria has failed and this target belongs to the lowest priority, auto match.
-            else targetMatchesCriteria = true;
-
-            if (targetMatchesCriteria)
-            {
-              ++numberOfValidTargets;
-              validTargetsSortedByCriterias[criteriaIndex].Add(target);
-            }
+          if (targetMatchesCriteria)
+          {
+            ++numberOfValidTargets;
+            validTargetsSortedByCriterias[criteriaIndex].Add(target);
           }
         }
       }
 
       return numberOfValidTargets;
-    }
-
-    /// <summary>
-    /// Checks whether the turret can rotate to face the inputted target.
-    /// </summary>
-    /// <param name="target">
-    /// Target to check for.
-    /// </param>
-    /// <returns>
-    /// Whether the turret can rotate to face the inputted target.
-    /// </returns>
-    private bool CheckTargetCanBeHit( Rigidbody target )
-    {
-      return CheckTargetCanBeHit(target, out _, out _);
-    }
-
-    /// <summary>
-    /// Checks whether the turret can rotate to face the inputted target.
-    /// </summary>
-    /// <param name="target">
-    /// Target to check for.
-    /// </param>
-    /// <param name="horizontalAngleDistance">
-    /// The y-axis angular distance the turret has to rotate to face the target.
-    /// </param>
-    /// <param name="verticalAngleDistance">
-    /// The x-axis angular distance the turret has to rotate to face the target.
-    /// </param>
-    /// <returns> Whether the turret can rotate to face the inputted target. </returns>
-    private bool CheckTargetCanBeHit( Rigidbody target, out float horizontalAngleDistance, out float verticalAngleDistance )
-    {
-      horizontalAngleDistance = 0f;
-      verticalAngleDistance = 0f;
-
-      float minDetectionRange = aiTurretStats.MinDetectionRange.Value;
-
-      // First check if target is too close to the turret
-      if (minDetectionRange > 0f && Vector3.SqrMagnitude(target.position - transform.position) <= minDetectionRange * minDetectionRange) 
-        return false;
-
-      bool targetIsInRotationLimit = true;
-
-      horizontalAngleDistance = GetTurretAngleDifferenceFromTarget(target);
-
-      // Check if turret can rotate horizontally (y-axis) to face the target
-      if (turretHub.RotationLimits.HasYLimits)
-      { 
-        // Check if turret can rotate by this much
-        float targetAngle = turretHub.TurretRotationValue + horizontalAngleDistance;
-
-        targetIsInRotationLimit = targetAngle >= turretHub.RotationLimits.MinYRot && targetAngle <= turretHub.RotationLimits.MaxYRot;
-      }
-
-      // Check if gun can rotate vertically (x-axis) to face the target
-      if (targetIsInRotationLimit && turretHub.RotationLimits.HasXLimits)
-      {
-        verticalAngleDistance = GetGunAngleDifferenceFromTarget(target, horizontalAngleDistance);
-
-        // Check if turret can rotate by this much
-        float targetAngle = turretHub.GunRotationValue + verticalAngleDistance;
-        targetIsInRotationLimit = targetAngle >= turretHub.RotationLimits.MinXRot && targetAngle <= turretHub.RotationLimits.MaxXRot;
-      }
-
-      return targetIsInRotationLimit;
-    }
-
-    /// <summary>
-    /// Checks whether the turret can rotate in the y-axis to face the inputted target.
-    /// </summary>
-    /// <param name="target">
-    /// The target to check for.
-    /// </param>
-    /// <returns>
-    /// The y-axis angular distance the turret has to rotate to face the target.
-    /// </returns>
-    private float GetTurretAngleDifferenceFromTarget( Rigidbody target )
-    {
-      // Find the angle the turret must rotate to face the target
-      // To do this, we must "rotate" the target around the turret until it is in line of sight of the fire zone direction
-      // Since the fire zone position and rotation may not be the same as the turret, we must perform additional calculations
-      // Solution taken from:
-      // https://gamedev.stackexchange.com/questions/147714/rotate-object-such-that-a-child-object-is-facing-a-target-3d
-
-      // TODO (Optimisation): Check if there is any offset, then perform simplified calculations if there is no offset
-
-      // Find the closest point from the turret to the fire direction ray
-      // https://stackoverflow.com/questions/51905268/how-to-find-closest-point-on-line
-      Vector3 turretPosition = turretHub.Turret.position;
-      Vector3 firePosition = gun.FireZone.position;
-      Vector3 fireDirectionEnd = firePosition + gun.FireZone.forward;
-
-      // Projected vector of offset direction of fire zone from turret onto fire direction
-      Vector3 projectedVector = Vector3.Project(turretPosition - firePosition, fireDirectionEnd - firePosition);
-      // Closest point from the turret to the fire direction
-      Vector3 closestPoint = firePosition + projectedVector;
-
-      // Pythogras theorem to get distance to expected position
-      float SqrMagToTarget = Vector3.SqrMagnitude(turretPosition - target.position);
-      float SqrMagToClosestPoint = Vector3.SqrMagnitude(turretPosition - closestPoint);
-      float distToExpectedPosition = Mathf.Sqrt(SqrMagToTarget - SqrMagToClosestPoint);
-
-      // Expected position is from the closest point moved forward by the fire direction 
-      Vector3 expectedTargetPosition = closestPoint + Vector3.Normalize(gun.FireZone.forward) * distToExpectedPosition;
-
-      // Local position of the target to the turret
-      Vector3 targetLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(target.position);
-      // Local position of where the projectile leaves the gun to the turret
-      Vector3 expectedLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(expectedTargetPosition);
-
-      // Remove y-axis
-      Vector3 from = targetLocalPositionFromTurret;
-      from.y = 0f;
-      Vector3 to = expectedLocalPositionFromTurret;
-      to.y = 0f;
-
-      // Since we are not using y-axis, axis just points downward locally
-      float angularDistance = Vector3.SignedAngle(from, to, Vector3.down);
-
-      return angularDistance;
-    }
-
-    /// <summary>
-    /// Checks whether the turret can rotate in the x-axis to face the inputted target.
-    /// </summary>
-    /// <param name="target">
-    /// The target to check for.
-    /// </param>
-    /// <param name="horizontalRotation">
-    /// The x-axis angular distance the turret has to rotate to face the target.
-    /// </param>
-    /// <returns>
-    /// The y-axis angular distance the turret has to rotate to face the target.
-    /// </returns>
-    private float GetGunAngleDifferenceFromTarget( Rigidbody target, float horizontalRotation )
-    {
-      // If we get here, we know the turret can rotate horizontally to face the target
-
-      // Find the rotation vector to rotate the target so that it lines up with the gun on its local vertical plane.
-      // This is rotated by the hub's base rotation (transform.rotation) taken from the slot's rotation.
-      Vector3 rotationAngles = transform.rotation * new Vector3(0f, -horizontalRotation, 0f);
-      // Rotate the target about the pivot point so that it is on the same local vertical plane as the turret
-      Vector3 horizontallyRotatedTargetPosition = MathHelper.RotatePointAroundPivot(target.position, turretHub.Turret.position, rotationAngles);
-
-      // Find the closest point from the turret to the fire direction ray
-      // https://stackoverflow.com/questions/51905268/how-to-find-closest-point-on-line
-      Vector3 gunPosition = turretHub.Gun.position;
-      Vector3 firePosition = gun.FireZone.position;
-      Vector3 fireDirectionEnd = firePosition + gun.FireZone.forward;
-
-      // Projected vector of offset direction of fire zone from turret onto fire direction
-      Vector3 projectedVector = Vector3.Project(gunPosition - firePosition, fireDirectionEnd - firePosition);
-      // Closest point from the turret to the fire direction
-      Vector3 closestPoint = firePosition + projectedVector;
-
-      // Pythogras theorem to get distance to expected position
-      float SqrMagToTarget = Vector3.SqrMagnitude(gunPosition - horizontallyRotatedTargetPosition);
-      float SqrMagToClosestPoint = Vector3.SqrMagnitude(gunPosition - closestPoint);
-      float distToExpectedPosition = Mathf.Sqrt(SqrMagToTarget - SqrMagToClosestPoint);
-
-      // Expected position is from the closest point moved forward by the fire direction 
-      Vector3 expectedTargetPosition = closestPoint + Vector3.Normalize(gun.FireZone.forward) * distToExpectedPosition;
-
-      // Local position of the target to the turret
-      Vector3 targetLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(horizontallyRotatedTargetPosition);
-      // Local position of where the projectile leaves the gun to the turret
-      Vector3 expectedLocalPositionFromTurret = turretHub.Turret.InverseTransformPoint(expectedTargetPosition);
-
-      // Since we are not using x-axis, axis just points leftwards locally
-      float angularDistance = Vector3.SignedAngle(targetLocalPositionFromTurret, expectedLocalPositionFromTurret, Vector3.left);
-
-      return angularDistance;
     }
 
     /// <summary>
@@ -363,8 +191,8 @@ namespace CwispyStudios.TankMania.Player
     /// </summary>
     private void AimAtTarget()
     {
-      // First make sure that the target can still be reached
-      if (CheckTargetCanBeHit(selectedTarget, out float horizontalAngularDistance, out float verticalAngularDistance))
+      // First make sure that the target can still be reached and get the angular distances to rotate
+      if (turretHub.CheckTargetInRotationRange(selectedTarget, out float horizontalAngularDistance, out float verticalAngularDistance))
       {
         float horizontalRotationAmount = turretHub.RotateTurretByValue(horizontalAngularDistance);
         float verticalRotationAmount = turretHub.RotateGunByValue(verticalAngularDistance);

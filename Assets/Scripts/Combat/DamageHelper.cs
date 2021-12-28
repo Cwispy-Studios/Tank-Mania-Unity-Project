@@ -11,7 +11,7 @@ namespace CwispyStudios.TankMania.Combat
   /// </summary>
   public static class DamageHelper
   {
-    // Below collections are cleared immediately after each calculation and can be reused over every projectile
+    // Below collections are cleared immediately after each calculation and can be reused over every damager
     // Used to hold the results of spherecast, reduces garbage collection
     private static Collider[] splashCollisionResults = new Collider[100];
     // Used for caching objects in splash calculations to prevent checking the same object more than once
