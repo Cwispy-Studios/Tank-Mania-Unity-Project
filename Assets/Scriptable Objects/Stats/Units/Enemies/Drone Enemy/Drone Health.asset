@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 149633593d677d34bb4427d0b84147ed, type: 3}
+  m_Name: Drone Health
+  m_EditorClassIdentifier: 
+  stats:
+  - {fileID: 11400000, guid: 8147bbdeb9aa03f4eaf0cbcd834ffc39, type: 2}
+  - {fileID: 11400000, guid: ffbfec0aed9314a40875d355dc33d843, type: 2}
+  statsNames:
+  - MaxHealth
+  - HealthRegeneration
+  nameOfStatsFolder: Drone Health
+  MaxHealth: {fileID: 11400000, guid: 8147bbdeb9aa03f4eaf0cbcd834ffc39, type: 2}
+  HealthRegeneration: {fileID: 11400000, guid: ffbfec0aed9314a40875d355dc33d843, type: 2}

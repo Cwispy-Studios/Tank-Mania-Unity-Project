@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a4ec0387295f34b817ef511ebce420, type: 3}
+  m_Name: Flak Proximity Trigger Stats
+  m_EditorClassIdentifier: 
+  stats:
+  - {fileID: 11400000, guid: 82bdc7d8185829e4b9edb3491385a7f4, type: 2}
+  - {fileID: 11400000, guid: deea39000ea65d4479049e4a14192b95, type: 2}
+  - {fileID: 11400000, guid: b62aa6ec52754044194cb3d18845aa07, type: 2}
+  statsNames:
+  - NumberToTrigger
+  - TriggerRadius
+  - TriggerDelay
+  nameOfStatsFolder: Flak Proximity Trigger Stats
+  NumberToTrigger: {fileID: 11400000, guid: 82bdc7d8185829e4b9edb3491385a7f4, type: 2}
+  TriggerRadius: {fileID: 11400000, guid: deea39000ea65d4479049e4a14192b95, type: 2}
+  TriggerDelay: {fileID: 11400000, guid: b62aa6ec52754044194cb3d18845aa07, type: 2}

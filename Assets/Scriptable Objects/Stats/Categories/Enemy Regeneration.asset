@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a89ac47595359d4eb4c2ebcea45cc1d, type: 3}
+  m_Name: Enemy Regeneration
+  m_EditorClassIdentifier: 
+  statsInCategory:
+  - {fileID: 11400000, guid: ffbfec0aed9314a40875d355dc33d843, type: 2}
+  - {fileID: 11400000, guid: 13e2d41981703af41bee81d53ad5320c, type: 2}

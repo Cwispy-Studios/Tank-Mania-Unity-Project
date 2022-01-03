@@ -3,8 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - FxTemporaire
+  tags: [FxTemporaire]
   layers:
   - Default
   - TransparentFX
@@ -14,6 +13,7 @@ TagManager:
   - UI
   - Player Projectile
   - Enemy Projectile
+  - Enemy
   - Enemy
   - 
   - 
@@ -25,8 +25,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Spawn Location
   - 
   - 
   - 

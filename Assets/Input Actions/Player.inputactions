@@ -2,7 +2,7 @@
     "name": "Player",
     "maps": [
         {
-            "name": "KBM",
+            "name": "Player Controls",
             "id": "957a5095-3925-4e4b-b48b-eb61cb4a29f2",
             "actions": [
                 {
@@ -22,18 +22,18 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Aim",
-                    "type": "Value",
-                    "id": "292474ea-8cfb-4d1a-bd1f-9bf850bb174e",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Main Fire",
                     "type": "Button",
                     "id": "3e5c856b-4bc5-426b-8753-816cc2430dde",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "0240f9b9-7451-4d7d-8120-4a654343bc1a",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 }
@@ -107,23 +107,23 @@
                 },
                 {
                     "name": "",
-                    "id": "4dd72735-10a6-487a-96fc-33682ac2804a",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "39a06143-893e-4a11-b720-0ae73397dbac",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Main Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ba35253b-cdef-4b89-8e88-8cafad763d6b",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

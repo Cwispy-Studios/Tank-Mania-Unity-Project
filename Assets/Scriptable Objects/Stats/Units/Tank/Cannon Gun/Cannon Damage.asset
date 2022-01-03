@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ebd006d3edd6c468b2162c94f65781, type: 3}
+  m_Name: Cannon Damage
+  m_EditorClassIdentifier: 
+  stats:
+  - {fileID: 11400000, guid: 616b349b945b8c14d9e8112060d75f4e, type: 2}
+  - {fileID: 11400000, guid: a6e28b64d9be40742bb6ac74d38b7819, type: 2}
+  - {fileID: 11400000, guid: 74d78b1af8b2d5348bb5fc1ead8b8f61, type: 2}
+  - {fileID: 11400000, guid: a919ec340a00cbb4698784e669972f89, type: 2}
+  - {fileID: 11400000, guid: 174a6881e58d15a498188e190b780d0b, type: 2}
+  - {fileID: 11400000, guid: 21cdabcbdc5701144bef24bd9317a8cb, type: 2}
+  - {fileID: 11400000, guid: f0101f38d6919fb4184148e1e7b98b22, type: 2}
+  - {fileID: 11400000, guid: 285267f53e733144d92b7734ef04b7bf, type: 2}
+  statsNames:
+  - DirectDamage
+  - DudCollisionDamagePercentage
+  - SplashRadius
+  - SplashDamagePercentage
+  - SplashMinRadiusPercentageRolloff
+  - SplashMaxRadiusPercentageRolloff
+  - SplashMinRadiusDamagePercentageRolloff
+  - SplashMaxRadiusDamagePercentageRolloff
+  nameOfStatsFolder: Cannon Damage
+  DamageFrom: 0
+  DirectDamage: {fileID: 11400000, guid: 616b349b945b8c14d9e8112060d75f4e, type: 2}
+  DudCollisionDamagePercentage: {fileID: 11400000, guid: a6e28b64d9be40742bb6ac74d38b7819,
+    type: 2}
+  HasSplashDamage: 1
+  SplashRadius: {fileID: 11400000, guid: 74d78b1af8b2d5348bb5fc1ead8b8f61, type: 2}
+  SplashDamagePercentage: {fileID: 11400000, guid: a919ec340a00cbb4698784e669972f89,
+    type: 2}
+  HasSplashDamageRolloff: 1
+  SplashMinRadiusPercentageRolloff: {fileID: 11400000, guid: 174a6881e58d15a498188e190b780d0b,
+    type: 2}
+  SplashMaxRadiusPercentageRolloff: {fileID: 11400000, guid: 21cdabcbdc5701144bef24bd9317a8cb,
+    type: 2}
+  SplashMinRadiusDamagePercentageRolloff: {fileID: 11400000, guid: f0101f38d6919fb4184148e1e7b98b22,
+    type: 2}
+  SplashMaxRadiusDamagePercentageRolloff: {fileID: 11400000, guid: 285267f53e733144d92b7734ef04b7bf,
+    type: 2}

@@ -9,7 +9,11 @@ namespace CwispyStudios.TankMania.Poolers
     [SerializeField] private List<T> objectPrefabsList = null;
     [SerializeField, Range(0, 100)] private int numberPooledPerPrefab = 50;
 
+<<<<<<< HEAD
     private Dictionary<string, List<T>> pooledObjectsDictionary;
+=======
+    private Dictionary<string, List<T>> pooledObjectsDictionary = new Dictionary<string, List<T>>();
+>>>>>>> develop
 
     private void Awake()
     {
@@ -18,21 +22,35 @@ namespace CwispyStudios.TankMania.Poolers
 
     private void InitialiseObjectPooler()
     {
+<<<<<<< HEAD
       pooledObjectsDictionary = new Dictionary<string, List<T>>();
 
+=======
+>>>>>>> develop
       foreach (T objectPrefab in objectPrefabsList)
       {
         if (objectPrefab != null)
         {
+<<<<<<< HEAD
           List<T> pbjectList = new List<T>();
+=======
+          List<T> objectList = new List<T>();
+>>>>>>> develop
 
           for (int i = 0; i < numberPooledPerPrefab; ++i)
           {
             T pooledObject = InstantiateObject(objectPrefab, i);
+<<<<<<< HEAD
             pbjectList.Add(pooledObject);
           }
 
           pooledObjectsDictionary.Add(objectPrefab.name, pbjectList);
+=======
+            objectList.Add(pooledObject);
+          }
+
+          pooledObjectsDictionary.Add(objectPrefab.name, objectList);
+>>>>>>> develop
         }
       }
     }
@@ -66,9 +84,21 @@ namespace CwispyStudios.TankMania.Poolers
       return pooledObject;
     }
 
+<<<<<<< HEAD
     public T EnablePooledObject( T objectPrefab, Vector3 spawnLocation, Quaternion rotation )
     {
       T pooledObject = FindInactiveObject(objectPrefab);
+=======
+    public T EnablePooledObject( T objectPrefab, Vector3 spawnLocation, Quaternion rotation, bool usePrefabHeight = false )
+    {
+      T pooledObject = FindInactiveObject(objectPrefab);
+
+      if (usePrefabHeight)
+      {
+        spawnLocation.y += objectPrefab.transform.position.y;
+      }
+
+>>>>>>> develop
       pooledObject.transform.position = spawnLocation;
       pooledObject.transform.rotation = rotation;
       pooledObject.gameObject.SetActive(true);

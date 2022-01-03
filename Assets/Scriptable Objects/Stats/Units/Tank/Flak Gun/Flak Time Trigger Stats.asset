@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3430184f1133b6d4ca64d174b5e8084f, type: 3}
+  m_Name: Flak Time Trigger Stats
+  m_EditorClassIdentifier: 
+  stats:
+  - {fileID: 11400000, guid: b3909359a96ce3147b59ae41460161a4, type: 2}
+  - {fileID: 11400000, guid: e542cbcfa9c61194a8455183b25a3aba, type: 2}
+  statsNames:
+  - TimeToTrigger
+  - TriggerDelay
+  nameOfStatsFolder: Flak Time Trigger Stats
+  TriggerDelay: {fileID: 11400000, guid: e542cbcfa9c61194a8455183b25a3aba, type: 2}
+  TimeToTrigger: {fileID: 11400000, guid: b3909359a96ce3147b59ae41460161a4, type: 2}

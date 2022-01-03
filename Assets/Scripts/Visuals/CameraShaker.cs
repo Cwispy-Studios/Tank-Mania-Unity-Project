@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
-using CwispyStudios.TankMania.Projectile;
 using UnityEngine;
 
 namespace CwispyStudios.TankMania.Visuals
 {
+  using Combat;
   public class CameraShaker : MonoBehaviour
   {
     [SerializeField] private float shakeDuration;
@@ -20,12 +19,12 @@ namespace CwispyStudios.TankMania.Visuals
       halfIntensity = shakeIntensity / 2;
     }
 
-    private void StartShake(Projectile.Projectile projectile)
+    private void StartShake(Projectile projectile)
     {
       StartCoroutine(Shake());
     }
 
-    private void StartExtremeShake(Projectile.Projectile projectile)
+    private void StartExtremeShake(Projectile projectile)
     {
       StartCoroutine(Shake());
     }

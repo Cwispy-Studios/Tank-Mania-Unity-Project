@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ea94b4e75d84e4f934289f1710e0cf, type: 3}
+  m_Name: Flak Projectile Attack Attributes
+  m_EditorClassIdentifier: 
+  stats:
+  - {fileID: 11400000, guid: 783e33b8cec3ef441ba63e46fd434c70, type: 2}
+  - {fileID: 11400000, guid: 4f46cbfc6d532784ca4cab3f07bd2cfe, type: 2}
+  - {fileID: 11400000, guid: 492405e195b7fbe468f4e016f7a15add, type: 2}
+  - {fileID: 11400000, guid: b3550f08532b62f4485df40afa23cb14, type: 2}
+  - {fileID: 11400000, guid: d8c93a663e922b14b82f10dced6a3c70, type: 2}
+  statsNames:
+  - FiringForce
+  - ReloadSpeed
+  - TimeToQueueFiring
+  - AmmoCount
+  - AttackRate
+  nameOfStatsFolder: Flak Projectile Attack Attributes
+  Damage: {fileID: 11400000, guid: b88d5c97be1c13146acea4a0272a2f41, type: 2}
+  AttackRate: {fileID: 11400000, guid: d8c93a663e922b14b82f10dced6a3c70, type: 2}
+  ProjectilePrefab: {fileID: 7051859430511138134, guid: f3148d2d3465792408ba261f1db92fc6,
+    type: 3}
+  FiringVfx: {fileID: 2051231272, guid: cb4917dcdcb9ee848bf1a0474e66b7f3, type: 3}
+  FiringForce: {fileID: 11400000, guid: 783e33b8cec3ef441ba63e46fd434c70, type: 2}
+  ReloadSpeed: {fileID: 11400000, guid: 4f46cbfc6d532784ca4cab3f07bd2cfe, type: 2}
+  TimeToQueueFiring: {fileID: 11400000, guid: 492405e195b7fbe468f4e016f7a15add, type: 2}
+  AmmoCount: {fileID: 11400000, guid: b3550f08532b62f4485df40afa23cb14, type: 2}
